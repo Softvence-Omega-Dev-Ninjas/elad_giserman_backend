@@ -6,6 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
+import { randomInt } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -80,9 +81,12 @@ export class UtilsService {
   }
 
   generateOtpAndExpiry(): { otp: number; expiryTime: Date } {
-    const otp = Math.floor(100000 + Math.random() * 9000); // 4-digit code
-    const expiryTime = new Date();
-    expiryTime.setMinutes(expiryTime.getMinutes() + 10);
+    // Use crypto for more secure randomness
+    const otp = randomInt(1000, 10000); // 4-digit OTP
+
+    // Set expiry 10 minutes from now
+    const expiryTime = new Date(Date.now() + 10 * 60 * 1000);
+
     return { otp, expiryTime };
   }
 
@@ -96,5 +100,19 @@ export class UtilsService {
     const user = await this.prisma.user.findUniqueOrThrow({ where: { id } });
 
     return user.email;
+  }
+
+  async generateUsername(email: string) {
+    const username = email.split('@')[0];
+
+    // Check if username already exists
+    const existingUsernameUser = await this.prisma.user.findUnique({
+      where: { username },
+    });
+    if (existingUsernameUser) {
+      return `${username}_${Date.now()}`;
+    }
+
+    return username;
   }
 }
