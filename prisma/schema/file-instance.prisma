@@ -5,7 +5,7 @@ model FileInstance {
   originalFilename String
   path             String
   url              String
-  fileType         FileType @default(ANY)
+  fileType         FileType @default(any)
   mimeType         String
   size             Int
 
@@ -16,11 +16,11 @@ model FileInstance {
 }
 
 enum FileType {
-  IMAGE
-  DOCS
-  LINK
-  DOCUMENT
-  ANY
-  VIDEO
-  AUDIO
+  image
+  docs
+  link
+  document
+  any
+  video
+  audio
 }

@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -39,27 +40,18 @@ async function bootstrap() {
 
   app.useGlobalFilters(new AllExceptionsFilter());
 
-  // ✅ Swagger config with Bearer Auth
+  // Swagger config with Bearer Auth
   const config = new DocumentBuilder()
-    .setTitle('Elias Creed API')
-    .setDescription('The Elias Creed API description')
+    .setTitle('Elad Giserman API')
+    .setDescription('The Elad Giserman API description')
     .setVersion('1.0')
-    .addBearerAuth
-    // {
-    //   type: 'http',
-    //   scheme: 'bearer',
-    //   bearerFormat: 'JWT',
-    //   name: 'Authorization',
-    //   in: 'header',
-    // },
-    // 'access-token',
-    ()
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('api/docs', app, document);
 
-  const port = parseInt(configService.get<string>(ENVEnum.PORT) ?? '5052', 10);
+  const port = parseInt(configService.get<string>(ENVEnum.PORT) ?? '5060', 10);
   await app.listen(port);
 }
 

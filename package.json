@@ -30,7 +30,6 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.908.0",
     "@nestjs/bullmq": "^11.0.4",
     "@nestjs/cache-manager": "^3.0.1",
     "@nestjs/common": "^11.1.6",
@@ -44,7 +43,6 @@
     "@nestjs/platform-socket.io": "^11.1.6",
     "@nestjs/schedule": "^6.0.1",
     "@nestjs/serve-static": "^5.0.4",
-    "@nestjs/websockets": "^11.1.6",
     "@prisma/client": "^6.17.1",
     "bcrypt": "^6.0.0",
     "bullmq": "^5.61.0",
@@ -57,13 +55,11 @@
     "mime-types": "^3.0.1",
     "multer": "^2.0.2",
     "nodemailer": "^7.0.9",
-    "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "socket.io": "^4.8.1",
-    "uuid": "^12.0.0",
-    "yocto-spinner": "^1.0.0"
+    "uuid": "^12.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -85,6 +81,7 @@
     "@types/passport-jwt": "^4.0.1",
     "chalk": "^5.6.2",
     "eslint": "^9.37.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "globals": "^16.4.0",
     "husky": "^9.1.7",
@@ -96,6 +93,8 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.0"  },
+    "typescript-eslint": "^8.46.0",
+    "yocto-spinner": "^1.0.0"
+  },
   "packageManager": "pnpm@10.16.1+sha512.0e155aa2629db8672b49e8475da6226aa4bdea85fdcdfdc15350874946d4f3c91faaf64cbdc4a5d1ab8002f473d5c3fcedcd197989cf0390f9badd3c04678706"
 }

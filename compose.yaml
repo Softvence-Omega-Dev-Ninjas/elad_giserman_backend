@@ -12,10 +12,13 @@ services:
       JWT_EXPIRES_IN: 90d
 
       BASE_URL: 'https://lgcglobalcontractingltd.com/js'
-      PORT: 5052
+      PORT: 5060
 
       MAIL_USER: 'arafatmannan2019@gmail.com'
       MAIL_PASS: 'eurp zvyi gnoy enag'
+
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
 
       SUPER_ADMIN_EMAIL: 'sajib.softvence@gmail.com'
       SUPER_ADMIN_PASS: 'superadmin'
@@ -24,17 +27,17 @@ services:
       OAUTH_CLIENT_SECRET: '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'
 
     ports:
-      - 5052:5052
+      - 5060:5060
     depends_on:
       - db
+      - redis
     command: >
       sh -c "
-        echo '🏁 Waiting for DB...';
-        sleep 5;
-        npx prisma migrate deploy;
-        echo '🚀 Starting app...';
+        npx prisma migrate deploy &&
         pnpm start
       "
+    volumes:
+      - files-data:/app/uploads
 
   db:
     image: postgres
@@ -48,7 +51,15 @@ services:
     volumes:
       - elad_giserman_data:/var/lib/postgresql/data
     ports:
-      - '5444:5432'
+      - '5448:5432'
+
+  redis:
+    image: redis
+    container_name: jesus_redis
+    restart: always
+    ports:
+      - '6383:6379'
 
 volumes:
   elad_giserman_data:
+  files-data:

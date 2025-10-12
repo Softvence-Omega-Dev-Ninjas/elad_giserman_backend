@@ -46,9 +46,10 @@ lerna-debug.log*
 # temp directory
 .temp
 .tmp
-grayson.pem
+
 # uploads directory
 uploads
+temp
 
 # Runtime data
 pids

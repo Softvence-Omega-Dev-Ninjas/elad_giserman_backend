@@ -25,6 +25,6 @@ COPY . .
 RUN pnpm build
 
 # Expose the port
-EXPOSE 5010
+EXPOSE 5060
 
-CMD ["pnpm", "run", "start"]
+CMD ["pnpm", "start"]

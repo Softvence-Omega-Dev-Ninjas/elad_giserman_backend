@@ -84,7 +84,8 @@ export class FileService {
       file.mimetype ||
       mime.lookup(file.originalname) ||
       'application/octet-stream';
-    const fileType = mimeType.split('/')[0] || 'unknown';
+
+    const fileType = this.mapMimeToPrismaFileType(mimeType);
 
     const uploadDir = path.join(process.cwd(), 'uploads');
     if (!fs.existsSync(uploadDir)) {
@@ -105,7 +106,7 @@ export class FileService {
       originalFilename: file.originalname,
       path: filePath,
       url: fileUrl,
-      fileType: this.transFormFileType(fileType),
+      fileType,
       mimeType,
       size: file.size,
     };
@@ -113,19 +114,27 @@ export class FileService {
     return this.create(createFileDto);
   }
 
-  private transFormFileType(fileType: string): FileType {
-    switch (fileType) {
-      case 'image':
-        return FileType.IMAGE;
-      case 'video':
-        return FileType.VIDEO;
-      case 'audio':
-        return FileType.AUDIO;
-      case 'document':
-        return FileType.DOCUMENT;
+  private mapMimeToPrismaFileType(
+    mimeType: string | null | undefined,
+  ): FileType {
+    const top = (mimeType || '').split('/')[0].toLowerCase();
 
+    switch (top) {
+      case 'image':
+        return FileType.image;
+      case 'video':
+        return FileType.video;
+      case 'audio':
+        return FileType.audio;
+      case 'text':
+        return FileType.document;
+      case 'application':
+        // Most "application/*" files are documents (pdf/doc/xls/json/etc.)
+        // If you have a special enum value for other application types, handle here.
+        return FileType.docs;
       default:
-        return FileType.ANY;
+        // Fallback — change to FileType.ANY if your schema supports it and you prefer that.
+        return FileType.any;
     }
   }
 }

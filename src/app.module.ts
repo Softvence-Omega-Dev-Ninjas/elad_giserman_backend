@@ -1,3 +1,4 @@
+import { BullModule } from '@nestjs/bullmq';
 import { CacheModule } from '@nestjs/cache-manager';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -23,7 +24,23 @@ import { MainModule } from './main/main.module';
 
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'uploads'),
-      serveRoot: '/files',
+      serveRoot: '/api/files',
+    }),
+
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        const host = configService.getOrThrow<string>(ENVEnum.REDIS_HOST);
+        const port = configService.getOrThrow<string>(ENVEnum.REDIS_PORT);
+
+        return {
+          connection: {
+            host,
+            port: parseInt(port, 10),
+          },
+        };
+      },
     }),
 
     PassportModule,

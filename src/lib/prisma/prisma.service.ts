@@ -1,4 +1,9 @@
-import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  OnModuleDestroy,
+  OnModuleInit,
+} from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
 import chalk from 'chalk';
 
@@ -7,8 +12,7 @@ export class PrismaService
   extends PrismaClient<Prisma.PrismaClientOptions, 'error'>
   implements OnModuleInit, OnModuleDestroy
 {
-  // * Expose Prisma utils (enums, filters, etc.)
-  readonly utils = Prisma;
+  private readonly logger = new Logger(PrismaService.name);
 
   constructor() {
     super({
@@ -16,9 +20,7 @@ export class PrismaService
     });
 
     this.$on('error', (e: Prisma.LogEvent) => {
-      console.group(chalk.bgRed.white.bold('❌ Prisma Error'));
-      console.error(e);
-      console.groupEnd();
+      this.logger.error('Error IN PRISMA', e.message);
     });
   }
 

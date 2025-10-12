@@ -1,5 +1,5 @@
 # Docker image name
-APP_IMAGE := sajibsv/grayson-server:latest
+APP_IMAGE := sajibsv/elad_giserman_server:latest
 
 # Compose file
 COMPOSE_FILE := compose.yaml
@@ -23,7 +23,7 @@ build:
 
 # Start containers
 up:
-	docker compose -f $(COMPOSE_FILE) up -d --build
+	docker compose -f $(COMPOSE_FILE) up
 
 # Stop containers
 down:
@@ -34,11 +34,11 @@ restart: down up
 
 # Show logs of the app container
 logs:
-	docker compose -f $(COMPOSE_FILE) logs -f grayson-server-api
+	docker compose -f $(COMPOSE_FILE) logs -f elad_giserman_api
 
 # Cleanup everything
 clean: down
-	docker volume rm grayson_db files || true
+	docker volume rm elad_giserman_data files-data || true
 	docker rmi $(APP_IMAGE) || true
 
 # Push to Docker Hub
