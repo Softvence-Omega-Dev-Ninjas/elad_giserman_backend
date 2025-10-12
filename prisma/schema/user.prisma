@@ -1,0 +1,56 @@
+model User {
+  id String @id @default(uuid())
+
+  email String @unique
+  username String @unique
+  googleId String? @unique // google id
+  password String? // hashed password (nullable for social accounts)
+
+  name      String? @default("Unnamed User")
+  avatarUrl String? @default("https://www.gravatar.com/avatar/000000000000000000000000000000?d=mp&f=y")
+
+  role         UserRole     @default(USER)
+  status       UserStatus   @default(ACTIVE)
+
+  // Logout tracking
+  isLoggedIn   Boolean   @default(false)
+  lastLoginAt  DateTime?
+  lastLogoutAt DateTime?
+  lastActiveAt DateTime?
+
+  // timezone
+  timezone String @default("UTC") // e.g., "America/New_York"
+
+  // Messaging Preferences
+  allowPushNotification Boolean @default(true)
+
+  // OTP
+  otp             String? // hashed OTP
+  otpExpiresAt    DateTime?
+  isVerified      Boolean   @default(false)
+
+  // Reset password
+  resetToken          String? // hashed reset token
+  resetTokenExpiresAt DateTime?
+
+  // Notifications
+  notifications UserNotification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("users")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  ORGANIZER
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BANNED
+}

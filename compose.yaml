@@ -1,0 +1,54 @@
+services:
+  server:
+    platform: linux/amd64
+    image: sajibsv/elad_giserman_server:latest
+    container_name: elad_giserman_api
+    restart: always
+    environment:
+      NODE_ENV: 'production'
+      DATABASE_URL: 'postgresql://postgres:postgres@db:5432/elad_giserman_db'
+
+      JWT_SECRET: 'secret'
+      JWT_EXPIRES_IN: 90d
+
+      BASE_URL: 'https://lgcglobalcontractingltd.com/js'
+      PORT: 5052
+
+      MAIL_USER: 'arafatmannan2019@gmail.com'
+      MAIL_PASS: 'eurp zvyi gnoy enag'
+
+      SUPER_ADMIN_EMAIL: 'sajib.softvence@gmail.com'
+      SUPER_ADMIN_PASS: 'superadmin'
+
+      OAUTH_CLIENT_ID: '1074646902032-5ab3gkkggb7mrejjfnvr7ra65qos4o8s.apps.googleusercontent.com'
+      OAUTH_CLIENT_SECRET: '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'
+
+    ports:
+      - 5052:5052
+    depends_on:
+      - db
+    command: >
+      sh -c "
+        echo '🏁 Waiting for DB...';
+        sleep 5;
+        npx prisma migrate deploy;
+        echo '🚀 Starting app...';
+        pnpm start
+      "
+
+  db:
+    image: postgres
+    container_name: elad_giserman_db
+    restart: always
+    user: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: elad_giserman_db
+    volumes:
+      - elad_giserman_data:/var/lib/postgresql/data
+    ports:
+      - '5444:5432'
+
+volumes:
+  elad_giserman_data:
