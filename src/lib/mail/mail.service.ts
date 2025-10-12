@@ -1,53 +1,41 @@
-import { ENVEnum } from '@/common/enum/env.enum';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ENVEnum } from '@/common/enum/env.enum';
 import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class MailService {
   private transporter: nodemailer.Transporter;
+  private fromEmail: string;
 
   constructor(private configService: ConfigService) {
+    const user = this.configService.getOrThrow<string>(ENVEnum.MAIL_USER);
+    const pass = this.configService.getOrThrow<string>(ENVEnum.MAIL_PASS);
+
+    this.fromEmail = user;
     this.transporter = nodemailer.createTransport({
       service: 'gmail',
-
-      auth: {
-        user: this.configService.get<string>(ENVEnum.MAIL_USER),
-        pass: this.configService.get<string>(ENVEnum.MAIL_PASS),
-      },
+      auth: { user, pass },
     });
   }
 
-  async sendLoginCodeEmail(
-    email: string,
-    code: string,
-  ): Promise<nodemailer.SentMessageInfo> {
-    const mailOptions = {
-      from: `"No Reply" <${this.configService.get<string>(ENVEnum.MAIL_USER)}>`,
-      to: email,
-      subject: 'Login Code',
-      html: `
-        <h3>Welcome!</h3>
-        <p>Please login by using the code below:</p>
-        <p>Your login code is ${code}</p>
-      `,
-    };
-
-    return this.transporter.sendMail(mailOptions);
-  }
-
-  async sendEmail(
-    email: string,
-    subject: string,
-    message: string,
-  ): Promise<nodemailer.SentMessageInfo> {
-    const mailOptions = {
-      from: `"No Reply" <${this.configService.get<string>(ENVEnum.MAIL_USER)}>`,
-      to: email,
+  public async sendMail({
+    to,
+    subject,
+    html,
+    text,
+  }: {
+    to: string;
+    subject: string;
+    html: string;
+    text: string;
+  }): Promise<nodemailer.SentMessageInfo> {
+    return this.transporter.sendMail({
+      from: `"No Reply" <${this.fromEmail}>`,
+      to,
       subject,
-      html: message,
-    };
-
-    return this.transporter.sendMail(mailOptions);
+      html,
+      text,
+    });
   }
 }
