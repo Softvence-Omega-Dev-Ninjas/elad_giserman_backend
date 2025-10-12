@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import * as he from 'he';
 import * as nodemailer from 'nodemailer';
 import { MailService } from '../mail.service';
-import { passwordResetConfirmationTemplate } from '../templates/reset-password-confirm.template';
 import { otpTemplate } from '../templates/otp.template';
+import { passwordResetConfirmationTemplate } from '../templates/reset-password-confirm.template';
 
 interface EmailOptions {
   subject?: string;
@@ -75,17 +75,18 @@ export class AuthMailService {
 
   async sendPasswordResetConfirmationEmail(
     to: string,
-    { subject, message }: { subject?: string; message?: string } = {},
+    options: EmailOptions = {},
   ): Promise<nodemailer.SentMessageInfo> {
-    const safeMessage = he.encode(
-      message || 'Your password has been successfully reset.',
+    const message = this.sanitize(
+      options.message || 'Password Reset Confirmation',
     );
+    const subject = options.subject || 'Password Reset Confirmation';
 
-    return this.mailService.sendMail({
+    return this.sendEmail(
       to,
-      subject: subject || 'Password Reset Confirmation',
-      text: `${safeMessage}\n\nIf you did not initiate this change, please reset your password immediately.`,
-      html: passwordResetConfirmationTemplate(safeMessage),
-    });
+      subject,
+      passwordResetConfirmationTemplate(message),
+      message,
+    );
   }
 }
