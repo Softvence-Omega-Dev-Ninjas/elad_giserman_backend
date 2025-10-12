@@ -1,11 +1,12 @@
+import { UserResponseDto } from '@/common/dto/user-response.dto';
+import { ENVEnum } from '@/common/enum/env.enum';
+import { JWTPayload } from '@/common/jwt/jwt.interface';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { PrismaService } from '../prisma/prisma.service';
-import { JWTPayload } from '@/common/jwt/jwt.interface';
-import { ENVEnum } from '@/common/enum/env.enum';
 
 @Injectable()
 export class UtilsService {
@@ -79,14 +80,21 @@ export class UtilsService {
   }
 
   generateOtpAndExpiry(): { otp: number; expiryTime: Date } {
-    const otp = Math.floor(100000 + Math.random() * 900000); // 6-digit code
+    const otp = Math.floor(100000 + Math.random() * 9000); // 4-digit code
     const expiryTime = new Date();
     expiryTime.setMinutes(expiryTime.getMinutes() + 10);
     return { otp, expiryTime };
   }
 
-  calculateTotalCoins(volume: number, extraBonus: number) {
-    const bonus = Math.floor((volume * extraBonus) / 100);
-    return volume + bonus;
+  async getUserByEmail(email: string) {
+    const user = await this.prisma.user.findUnique({ where: { email } });
+
+    return this.sanitizedResponse(UserResponseDto, user);
+  }
+
+  async getUserEmailById(id: string) {
+    const user = await this.prisma.user.findUniqueOrThrow({ where: { id } });
+
+    return user.email;
   }
 }
