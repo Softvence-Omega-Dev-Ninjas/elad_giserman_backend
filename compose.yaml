@@ -12,7 +12,7 @@ services:
       JWT_EXPIRES_IN: 90d
 
       BASE_URL: 'https://lgcglobalcontractingltd.com/js'
-      PORT: 5060
+      PORT: 5050
 
       MAIL_USER: 'arafatmannan2019@gmail.com'
       MAIL_PASS: 'eurp zvyi gnoy enag'
@@ -27,13 +27,16 @@ services:
       OAUTH_CLIENT_SECRET: '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'
 
     ports:
-      - 5060:5060
+      - '5050:5050'
     depends_on:
       - db
       - redis
     command: >
       sh -c "
-        npx prisma migrate deploy &&
+        echo '🏁 Waiting for DB...';
+        sleep 5;
+        npx prisma migrate deploy;
+        echo '🚀 Starting app...';
         pnpm start
       "
     volumes:
@@ -55,7 +58,7 @@ services:
 
   redis:
     image: redis
-    container_name: jesus_redis
+    container_name: elad_giserman_redis
     restart: always
     ports:
       - '6383:6379'

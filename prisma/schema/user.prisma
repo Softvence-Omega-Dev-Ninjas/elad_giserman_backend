@@ -1,16 +1,26 @@
 model User {
   id String @id @default(uuid())
 
-  email String @unique
-  username String @unique
+  // Auth
+  email    String  @unique
+  username String  @unique
   googleId String? @unique // google id
   password String? // hashed password (nullable for social accounts)
 
+  // Contact
+  mobile String?
+
+  // Profile
   name      String? @default("Unnamed User")
   avatarUrl String? @default("https://www.gravatar.com/avatar/000000000000000000000000000000?d=mp&f=y")
 
-  role         UserRole     @default(USER)
-  status       UserStatus   @default(ACTIVE)
+  // Settings
+  role              UserRole     @default(USER)
+  status            UserStatus   @default(ACTIVE)
+  isVerified        Boolean      @default(false)
+  timezone          String       @default("UTC") // e.g., "America/New_York"
+  language          UserLanguage @default(EN)
+  allowNotification Boolean      @default(true)
 
   // Logout tracking
   isLoggedIn   Boolean   @default(false)
@@ -18,20 +28,10 @@ model User {
   lastLogoutAt DateTime?
   lastActiveAt DateTime?
 
-  // timezone
-  timezone String @default("UTC") // e.g., "America/New_York"
-
-  // Messaging Preferences
-  allowPushNotification Boolean @default(true)
-
   // OTP
-  otp             String? // hashed OTP
-  otpExpiresAt    DateTime?
-  isVerified      Boolean   @default(false)
-
-  // Reset password
-  resetToken          String? // hashed reset token
-  resetTokenExpiresAt DateTime?
+  otp          String? // 4 digit hashed OTP code
+  otpExpiresAt DateTime?
+  otpType      OtpType?
 
   // Notifications
   notifications UserNotification[]
@@ -53,4 +53,26 @@ enum UserStatus {
   ACTIVE
   INACTIVE
   BANNED
+  DELETED
+}
+
+enum OtpType {
+  REGISTER // for register (one time per user)
+  LOGIN
+  RESET //for reset password
+  PHONE //for adding phone
+}
+
+enum UserLanguage {
+  EN
+  ES
+  DE
+  FR
+  IT
+  JA
+  KO
+  NL
+  PT
+  RU
+  ZH
 }

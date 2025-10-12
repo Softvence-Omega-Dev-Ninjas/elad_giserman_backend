@@ -1,43 +1,64 @@
-import { UserRole } from '@prisma/client';
+import { UserLanguage, UserRole, UserStatus } from '@prisma/client';
 import { Expose } from 'class-transformer';
 
 export class UserResponseDto {
   @Expose()
   id: string;
 
+  // ===== Auth =====
   @Expose()
   email: string;
 
   @Expose()
-  role: UserRole;
+  username: string;
 
+  // ===== Contact =====
+  @Expose()
+  mobile?: string;
+
+  // ===== Profile =====
   @Expose()
   name: string;
 
   @Expose()
-  mobile?: string;
+  avatarUrl: string;
+
+  // ===== Settings =====
+  @Expose()
+  role: UserRole;
 
   @Expose()
-  Ethnicity?: string;
+  status: UserStatus;
 
   @Expose()
-  profilePic?: string;
+  isVerified: boolean;
 
-  // @Expose()
-  // isVerified: boolean;
+  @Expose()
+  timezone: string;
 
-  // @Expose()
-  // isActive: boolean;
+  @Expose()
+  language: UserLanguage;
 
-  // @Expose()
-  // isDeleted: boolean;
+  @Expose()
+  allowNotification: boolean;
 
-  // @Expose()
-  // createdAt: Date;
+  // ===== Activity tracking =====
+  @Expose()
+  isLoggedIn: boolean;
 
-  // @Expose()
-  // updatedAt: Date;
+  @Expose()
+  lastLoginAt?: Date;
 
-  // @Expose()
-  // deletedAt?: Date;
+  @Expose()
+  lastLogoutAt?: Date;
+
+  @Expose()
+  lastActiveAt?: Date;
+
+  // ===== Meta =====
+  @Expose()
+  createdAt: Date;
+
+  @Expose()
+  updatedAt: Date;
 }
