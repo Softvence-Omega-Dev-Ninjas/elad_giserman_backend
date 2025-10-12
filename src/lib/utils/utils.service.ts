@@ -1,11 +1,13 @@
+import { UserResponseDto } from '@/common/dto/user-response.dto';
+import { ENVEnum } from '@/common/enum/env.enum';
+import { JWTPayload } from '@/common/jwt/jwt.interface';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
+import { randomInt } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
-import { JWTPayload } from '@/common/jwt/jwt.interface';
-import { ENVEnum } from '@/common/enum/env.enum';
 
 @Injectable()
 export class UtilsService {
@@ -79,14 +81,38 @@ export class UtilsService {
   }
 
   generateOtpAndExpiry(): { otp: number; expiryTime: Date } {
-    const otp = Math.floor(100000 + Math.random() * 900000); // 6-digit code
-    const expiryTime = new Date();
-    expiryTime.setMinutes(expiryTime.getMinutes() + 10);
+    // Use crypto for more secure randomness
+    const otp = randomInt(1000, 10000); // 4-digit OTP
+
+    // Set expiry 10 minutes from now
+    const expiryTime = new Date(Date.now() + 10 * 60 * 1000);
+
     return { otp, expiryTime };
   }
 
-  calculateTotalCoins(volume: number, extraBonus: number) {
-    const bonus = Math.floor((volume * extraBonus) / 100);
-    return volume + bonus;
+  async getUserByEmail(email: string) {
+    const user = await this.prisma.user.findUnique({ where: { email } });
+
+    return this.sanitizedResponse(UserResponseDto, user);
+  }
+
+  async getUserEmailById(id: string) {
+    const user = await this.prisma.user.findUniqueOrThrow({ where: { id } });
+
+    return user.email;
+  }
+
+  async generateUsername(email: string) {
+    const username = email.split('@')[0];
+
+    // Check if username already exists
+    const existingUsernameUser = await this.prisma.user.findUnique({
+      where: { username },
+    });
+    if (existingUsernameUser) {
+      return `${username}_${Date.now()}`;
+    }
+
+    return username;
   }
 }
