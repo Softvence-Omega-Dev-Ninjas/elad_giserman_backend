@@ -34,15 +34,15 @@ enum BillingPeriod {
 model UserSubscription {
   id String @id @default(uuid())
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  plan   SubscriptionPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
   planId String
+  plan   SubscriptionPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
 
-  stripeSubscriptionId String @unique
+  stripeTransactionId String @unique // payment_intent_id or checkout_session.payment_intent
 
-  status SubscriptionStatus @default(ACTIVE) // one active plan at a time per user
+  status SubscriptionStatus @default(PENDING) // one active plan at a time per user
 
   planStartedAt DateTime @default(now())
   planEndedAt   DateTime // calculated based on billing period
@@ -58,6 +58,7 @@ enum SubscriptionStatus {
   ACTIVE
   PAST_DUE
   CANCELED
+  PENDING
   INCOMPLETE
   INCOMPLETE_EXPIRED
   UNPAID
