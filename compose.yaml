@@ -23,8 +23,10 @@ services:
       SUPER_ADMIN_EMAIL: 'sajib.softvence@gmail.com'
       SUPER_ADMIN_PASS: 'superadmin'
 
+      OAUTH_GMAIL_USER: 'sajib.softvence@gmail.com'
       OAUTH_CLIENT_ID: '1074646902032-5ab3gkkggb7mrejjfnvr7ra65qos4o8s.apps.googleusercontent.com'
       OAUTH_CLIENT_SECRET: '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'
+      OAUTH_REFRESH_TOKEN: '1//04SUwLw_8b7FDCgYIARAAGAQSNwF-L9Irwz3Z5iESR60F-krCC_MCz6RQ-vP4Do5csu78u4mPFxcy9-_AGNDjYss5sDbO_nX0wwQ'
 
     ports:
       - '5050:5050'
