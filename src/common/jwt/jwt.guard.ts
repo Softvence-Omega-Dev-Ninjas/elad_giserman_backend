@@ -36,10 +36,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   // Ensure we return a meaningful error if no user
-  handleRequest(err: any, user: any, info: any) {
-    if (info) {
-      this.logger.error(`Info: ${info}`);
-    }
+  handleRequest(err: any, user: any) {
     if (err) {
       this.logger.error(`Auth error: ${err}`);
       throw err;

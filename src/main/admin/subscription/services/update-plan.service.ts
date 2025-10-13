@@ -36,35 +36,29 @@ export class UpdatePlanService {
       discountPercent: dto.discountPercent ?? existingPlan.discountPercent,
     };
 
-    // Step 3: Handle price & discount changes
-    let stripePriceId = existingPlan.stripePriceId;
-    let priceWithoutDiscount = existingPlan.priceWithoutDiscount;
-    let price = existingPlan.price;
+    // Step 3: Determine if price actually changed
+    const newPriceWithoutDiscount =
+      dto.price !== undefined ? dto.price : existingPlan.priceWithoutDiscount;
+    const newDiscountPercent =
+      dto.discountPercent !== undefined
+        ? dto.discountPercent
+        : existingPlan.discountPercent;
+    const newBillingPeriod = dto.billingPeriod ?? existingPlan.billingPeriod;
+
+    const finalPrice = Number(
+      (newPriceWithoutDiscount * (1 - newDiscountPercent / 100)).toFixed(2),
+    );
 
     const priceChanged =
-      dto.price !== undefined ||
-      dto.discountPercent !== undefined ||
-      dto.billingPeriod !== undefined;
+      finalPrice !== existingPlan.price ||
+      newPriceWithoutDiscount !== existingPlan.priceWithoutDiscount ||
+      newBillingPeriod !== existingPlan.billingPeriod;
 
     if (priceChanged) {
-      // Compute new prices (in USD dollars for Stripe service)
-      const newPriceWithoutDiscount =
-        dto.price !== undefined
-          ? dto.price
-          : existingPlan.priceWithoutDiscount / 100;
-      const discountPercent =
-        dto.discountPercent ?? existingPlan.discountPercent;
-      const finalPrice = Number(
-        (newPriceWithoutDiscount * (1 - discountPercent / 100)).toFixed(2),
-      );
+      // Step 3a: Determine billing interval for Stripe
+      const interval = newBillingPeriod === 'MONTHLY' ? 'month' : 'year';
 
-      // Determine billing interval
-      const interval =
-        (dto.billingPeriod ?? existingPlan.billingPeriod) === 'MONTHLY'
-          ? 'month'
-          : 'year';
-
-      // Step 3a: Create new Stripe price
+      // Step 3b: Create new Stripe price
       const newStripePrice = await this.stripeService.updatePrice({
         productId: existingPlan.stripeProductId,
         newPrice: finalPrice,
@@ -72,16 +66,13 @@ export class UpdatePlanService {
         interval,
       });
 
-      stripePriceId = newStripePrice.id;
-      priceWithoutDiscount = newPriceWithoutDiscount;
-      price = finalPrice;
-
-      updatedData.stripePriceId = stripePriceId;
-      updatedData.price = price;
-      updatedData.priceWithoutDiscount = priceWithoutDiscount;
+      // Step 3c: Update DB payload
+      updatedData.stripePriceId = newStripePrice.id;
+      updatedData.priceWithoutDiscount = newPriceWithoutDiscount;
+      updatedData.price = finalPrice;
 
       this.logger.log(
-        `Stripe price updated: oldPriceId=${existingPlan.stripePriceId}, newPriceId=${stripePriceId}`,
+        `Stripe price updated: oldPriceId=${existingPlan.stripePriceId}, newPriceId=${newStripePrice.id}`,
       );
     }
 
