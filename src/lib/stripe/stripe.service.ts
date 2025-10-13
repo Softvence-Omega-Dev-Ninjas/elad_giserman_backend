@@ -123,6 +123,30 @@ export class StripeService {
     return session;
   }
 
+  // Payment Intent (for one-time payments)
+  async createPaymentIntent({
+    amount,
+    currency,
+    customerId,
+    metadata,
+  }: {
+    amount: number;
+    currency: string;
+    customerId?: string;
+    metadata?: Record<string, string>;
+  }) {
+    const intent = await this.stripe.paymentIntents.create({
+      amount,
+      currency,
+      customer: customerId,
+      automatic_payment_methods: { enabled: true },
+      metadata,
+    });
+
+    this.logger.log(`Created payment intent ${intent.id}`);
+    return intent;
+  }
+
   // Customer Management
   async createCustomer({
     email,
