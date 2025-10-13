@@ -41,7 +41,11 @@ export class AuthLoginService {
     // 2. Regular login
     const updatedUser = await this.prisma.user.update({
       where: { email },
-      data: { isLoggedIn: true, lastLoginAt: new Date() },
+      data: {
+        isLoggedIn: true,
+        lastLoginAt: new Date(),
+        lastActiveAt: new Date(),
+      },
     });
 
     const token = this.utils.generateToken({
