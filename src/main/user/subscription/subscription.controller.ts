@@ -1,14 +1,18 @@
 import { GetUser, ValidateAuth } from '@/common/jwt/jwt.decorator';
-import { Controller, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { SubscriptionService } from './services/subscription.service';
+import { CreateIntentService } from './services/create-intent.service';
 
 @ApiTags('User -- Subscription')
 @ApiBearerAuth()
 @ValidateAuth()
 @Controller('subscription')
 export class SubscriptionController {
-  constructor(private readonly subscriptionService: SubscriptionService) {}
+  constructor(private readonly createIntentService: CreateIntentService) {}
+
+  @ApiOperation({ summary: 'Get plans for user' })
+  @Get()
+  async getPlansForUser() {}
 
   @ApiOperation({ summary: 'Create payment intent' })
   @Post(':planId')
@@ -16,6 +20,6 @@ export class SubscriptionController {
     @GetUser('sub') userId: string,
     @Param('planId') planId: string,
   ) {
-    return this.subscriptionService.createPaymentIntent(userId, planId);
+    return this.createIntentService.createPaymentIntent(userId, planId);
   }
 }

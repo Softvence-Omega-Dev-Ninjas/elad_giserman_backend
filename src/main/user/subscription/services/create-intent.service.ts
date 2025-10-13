@@ -5,8 +5,8 @@ import { StripeService } from '@/lib/stripe/stripe.service';
 import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
-export class SubscriptionService {
-  private readonly logger = new Logger(SubscriptionService.name);
+export class CreateIntentService {
+  private readonly logger = new Logger(CreateIntentService.name);
 
   constructor(
     private readonly prismaService: PrismaService,
