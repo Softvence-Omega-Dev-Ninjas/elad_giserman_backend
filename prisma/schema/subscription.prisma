@@ -1,0 +1,65 @@
+model SubscriptionPlan {
+  id String @id @default(uuid())
+
+  title       String
+  description String?
+  benefits    String[] // Array of text lines
+
+  isPopular Boolean @default(false)
+  isActive  Boolean @default(true)
+
+  stripeProductId String @unique
+  stripePriceId   String @unique // will be changed when price or billing period changes
+
+  currency             String        @default("usd")
+  price                Float // Stored in smallest currency unit (e.g., cents) for Stripe
+  billingPeriod        BillingPeriod
+  discountPercent      Int           @default(0) // optional discount shown in UI
+  priceWithoutDiscount Float // price without discount
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  user             User[] // for a direct link, overwrite the previous one for a user
+  userSubscription UserSubscription[] // for details with transactions history
+
+  @@map("subscription_plans")
+}
+
+enum BillingPeriod {
+  MONTHLY
+  YEARLY
+}
+
+model UserSubscription {
+  id String @id @default(uuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  planId String
+  plan   SubscriptionPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  stripeTransactionId String @unique // payment_intent_id or checkout_session.payment_intent
+
+  status SubscriptionStatus @default(PENDING) // one active plan at a time per user
+
+  planStartedAt DateTime @default(now())
+  planEndedAt   DateTime // calculated based on billing period
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("user_subscriptions")
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  PENDING
+  INCOMPLETE
+  INCOMPLETE_EXPIRED
+  UNPAID
+}

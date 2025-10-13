@@ -5,7 +5,7 @@ import { OrganizerModule } from './organizer/organizer.module';
 import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [AdminModule, OrganizerModule, AuthModule, UserModule],
+  imports: [AuthModule, AdminModule, OrganizerModule, UserModule],
   controllers: [],
   providers: [],
 })

@@ -23,6 +23,9 @@ services:
       SUPER_ADMIN_EMAIL: 'sajib.softvence@gmail.com'
       SUPER_ADMIN_PASS: 'superadmin'
 
+      STRIPE_SECRET_KEY: 'sk_test_51RlFNRQNJ9V9C9o5lWnJ0ZoVAb5almOirTaBvWZZOU74qXTIUaPeCRtnaHjGxts71VkVaK7tJA5JRjfjpKkeXJGo00dt24jNLx'
+      STRIPE_WEBHOOK_SECRET: 'whsec_9Q1CdmnbOBvrajNmXM9n4U0Qz3OHYMUv'
+
       OAUTH_GMAIL_USER: 'sajib.softvence@gmail.com'
       OAUTH_CLIENT_ID: '1074646902032-5ab3gkkggb7mrejjfnvr7ra65qos4o8s.apps.googleusercontent.com'
       OAUTH_CLIENT_SECRET: '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'

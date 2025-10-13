@@ -1,0 +1,161 @@
+import { ENVEnum } from '@/common/enum/env.enum';
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import Stripe from 'stripe';
+
+@Injectable()
+export class StripeService {
+  private readonly stripe: Stripe;
+  private readonly logger = new Logger(StripeService.name);
+
+  constructor(private readonly configService: ConfigService) {
+    const secretKey = this.configService.getOrThrow<string>(
+      ENVEnum.STRIPE_SECRET_KEY,
+    );
+    this.stripe = new Stripe(secretKey);
+  }
+
+  // Product & Price Management
+  async createProductWithPrice({
+    title,
+    description,
+    price,
+    currency = 'usd',
+    interval = 'month',
+  }: {
+    title: string;
+    description?: string;
+    price: number;
+    currency?: string;
+    interval?: 'month' | 'year';
+  }) {
+    const product = await this.stripe.products.create({
+      name: title,
+      description,
+    });
+
+    const stripePrice = await this.stripe.prices.create({
+      product: product.id,
+      unit_amount: Math.round(price * 100), // convert to cents
+      currency,
+      recurring: { interval },
+    });
+
+    this.logger.log(
+      `Created Stripe product ${product.id} with price ${stripePrice.id}`,
+    );
+
+    return { product, stripePrice };
+  }
+
+  async updatePrice({
+    productId,
+    newPrice,
+    currency = 'usd',
+    interval = 'month',
+  }: {
+    productId: string;
+    newPrice: number;
+    currency?: string;
+    interval?: 'month' | 'year';
+  }) {
+    const stripePrice = await this.stripe.prices.create({
+      product: productId,
+      unit_amount: Math.round(newPrice * 100),
+      currency,
+      recurring: { interval },
+    });
+
+    this.logger.log(
+      `Created new price ${stripePrice.id} for product ${productId}`,
+    );
+
+    return stripePrice;
+  }
+
+  async deleteProduct(productId: string) {
+    // Step 1: Mark the product inactive
+    const deletedProduct = await this.stripe.products.update(productId, {
+      active: false,
+    });
+    this.logger.log(`Product ${productId} marked inactive`);
+
+    // Step 2: Fetch all related prices
+    const prices = await this.stripe.prices.list({
+      product: productId,
+      active: true,
+    });
+
+    // Step 3: Deactivate all associated prices
+    for (const price of prices.data) {
+      await this.stripe.prices.update(price.id, { active: false });
+      this.logger.log(`Price ${price.id} marked inactive`);
+    }
+
+    return deletedProduct;
+  }
+
+  // Checkout Session
+  async createCheckoutSession({
+    customerId,
+    priceId,
+    successUrl,
+    cancelUrl,
+    metadata,
+  }: {
+    customerId?: string;
+    priceId: string;
+    successUrl: string;
+    cancelUrl: string;
+    metadata?: Record<string, string>;
+  }) {
+    const session = await this.stripe.checkout.sessions.create({
+      mode: 'payment',
+      payment_method_types: ['card'],
+      customer: customerId,
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: successUrl,
+      cancel_url: cancelUrl,
+      metadata,
+    });
+
+    this.logger.log(`Created checkout session ${session.id}`);
+    return session;
+  }
+
+  // Customer Management
+  async createCustomer({
+    email,
+    name,
+    metadata,
+  }: {
+    email: string;
+    name?: string;
+    metadata?: Record<string, string>;
+  }) {
+    const customer = await this.stripe.customers.create({
+      email,
+      name,
+      metadata,
+    });
+    this.logger.log(`Created Stripe customer ${customer.id}`);
+    return customer;
+  }
+
+  // Webhook Utility
+  constructWebhookEvent(rawBody: Buffer, signature: string) {
+    const endpointSecret = this.configService.getOrThrow<string>(
+      ENVEnum.STRIPE_WEBHOOK_SECRET,
+    );
+    try {
+      return this.stripe.webhooks.constructEvent(
+        rawBody,
+        signature,
+        endpointSecret,
+      );
+    } catch (err) {
+      this.logger.error('Invalid webhook signature', err);
+      throw new Error('Invalid webhook signature');
+    }
+  }
+}
