@@ -1,9 +1,16 @@
 import { HandleError } from '@/common/error/handle-error.decorator';
-import { successResponse, TResponse } from '@/common/utils/response.util';
+import {
+  successPaginatedResponse,
+  successResponse,
+  TPaginatedResponse,
+  TResponse,
+} from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { StripeService } from '@/lib/stripe/stripe.service';
 import { Injectable, Logger } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { CreateSubscriptionPlanDto } from '../dto/create-plan.dto';
+import { GetAllPlansDto } from '../dto/plan.dto';
 
 @Injectable()
 export class SubscriptionService {
@@ -57,5 +64,47 @@ export class SubscriptionService {
     this.logger.log(`Created new subscription plan: ${plan.title}`);
 
     return successResponse(plan, 'Plan created successfully');
+  }
+
+  @HandleError('Failed to fetch plans', 'Plans')
+  async getPlans(query: GetAllPlansDto): Promise<TPaginatedResponse<any>> {
+    const page = query.page && query.page > 0 ? query.page : 1;
+    const limit = query.limit && query.limit > 0 ? query.limit : 10;
+    const skip = (page - 1) * limit;
+
+    const search = query.search?.trim() ?? '';
+
+    const where: Prisma.SubscriptionPlanWhereInput = {};
+
+    if (search) {
+      where.title = {
+        contains: search,
+        mode: 'insensitive',
+      };
+    }
+
+    const [plans, total] = await this.prismaService.$transaction([
+      this.prismaService.subscriptionPlan.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: {
+          createdAt: 'desc',
+        },
+      }),
+      this.prismaService.subscriptionPlan.count({
+        where,
+      }),
+    ]);
+
+    return successPaginatedResponse(
+      plans,
+      {
+        page,
+        limit,
+        total,
+      },
+      'Plans fetched successfully',
+    );
   }
 }
