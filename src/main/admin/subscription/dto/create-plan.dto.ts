@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { BillingPeriod } from '@prisma/client';
 import { Transform, Type } from 'class-transformer';
 import {
@@ -88,3 +88,7 @@ export class CreateSubscriptionPlanDto {
   @Max(100)
   discountPercent?: number;
 }
+
+export class UpdateSubscriptionPlanDto extends PartialType(
+  CreateSubscriptionPlanDto,
+) {}
