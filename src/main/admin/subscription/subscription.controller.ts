@@ -1,5 +1,13 @@
 import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateSubscriptionPlanDto } from './dto/create-plan.dto';
 import { GetAllPlansDto } from './dto/plan.dto';
@@ -22,5 +30,17 @@ export class SubscriptionController {
   @Get('plans')
   async getPlans(@Query() query: GetAllPlansDto) {
     return this.subscriptionService.getPlans(query);
+  }
+
+  @ApiOperation({ summary: 'Get a single plan' })
+  @Get('plans/:planId')
+  async getASinglePlan(@Param('planId') planId: string) {
+    return this.subscriptionService.getASinglePlan(planId);
+  }
+
+  @ApiOperation({ summary: 'Delete a plan' })
+  @Delete('plans/:planId')
+  async deletePlan(@Param('planId') planId: string) {
+    return this.subscriptionService.deletePlan(planId);
   }
 }

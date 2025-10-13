@@ -74,7 +74,9 @@ export class SubscriptionService {
 
     const search = query.search?.trim() ?? '';
 
-    const where: Prisma.SubscriptionPlanWhereInput = {};
+    const where: Prisma.SubscriptionPlanWhereInput = {
+      isActive: true,
+    };
 
     if (search) {
       where.title = {
@@ -106,5 +108,47 @@ export class SubscriptionService {
       },
       'Plans fetched successfully',
     );
+  }
+
+  @HandleError('Failed to fetch plan', 'Plan')
+  async getASinglePlan(planId: string): Promise<TResponse<any>> {
+    const plan = await this.prismaService.subscriptionPlan.findUniqueOrThrow({
+      where: { id: planId, isActive: true }, // Only if it is active
+      include: {
+        userSubscription: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                avatarUrl: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return successResponse(plan, 'Plan fetched successfully');
+  }
+
+  @HandleError('Failed to delete plan', 'Plan')
+  async deletePlan(planId: string): Promise<TResponse<any>> {
+    const existingPlan =
+      await this.prismaService.subscriptionPlan.findUniqueOrThrow({
+        where: { id: planId },
+      });
+
+    // Archive the product and all its prices in Stripe
+    await this.stripeService.deleteProduct(existingPlan.stripeProductId);
+
+    // Mark plan as inactive in DB
+    await this.prismaService.subscriptionPlan.update({
+      where: { id: planId },
+      data: { isActive: false },
+    });
+
+    return successResponse(null, 'Plan deleted successfully');
   }
 }

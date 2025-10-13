@@ -74,11 +74,25 @@ export class StripeService {
   }
 
   async deleteProduct(productId: string) {
-    const deleted = await this.stripe.products.update(productId, {
+    // Step 1: Mark the product inactive
+    const deletedProduct = await this.stripe.products.update(productId, {
       active: false,
     });
     this.logger.log(`Product ${productId} marked inactive`);
-    return deleted;
+
+    // Step 2: Fetch all related prices
+    const prices = await this.stripe.prices.list({
+      product: productId,
+      active: true,
+    });
+
+    // Step 3: Deactivate all associated prices
+    for (const price of prices.data) {
+      await this.stripe.prices.update(price.id, { active: false });
+      this.logger.log(`Price ${price.id} marked inactive`);
+    }
+
+    return deletedProduct;
   }
 
   // Checkout Session
