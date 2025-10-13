@@ -90,9 +90,10 @@ export class SubscriptionService {
         where,
         skip,
         take: limit,
-        orderBy: {
-          createdAt: 'desc',
-        },
+        orderBy: [
+          { updatedAt: Prisma.SortOrder.desc },
+          { createdAt: Prisma.SortOrder.desc },
+        ],
       }),
       this.prismaService.subscriptionPlan.count({
         where,
