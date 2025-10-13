@@ -33,8 +33,16 @@ model User {
   otpExpiresAt DateTime?
   otpType      OtpType?
 
+  // Subscription
+  subscriptionStatus SubscriptionStatus?
+  stripeCustomerId   String?             @unique
+
+  currentPlanId String?
+  currentPlan   SubscriptionPlan? @relation(fields: [currentPlanId], references: [id], onDelete: SetNull)
+
   // Notifications
-  notifications UserNotification[]
+  notifications    UserNotification[]
+  userSubscription UserSubscription[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
