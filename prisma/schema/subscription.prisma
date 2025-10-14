@@ -47,6 +47,9 @@ model UserSubscription {
   planStartedAt DateTime @default(now())
   planEndedAt   DateTime // calculated based on billing period
 
+  paidAt DateTime?
+  failedAt DateTime?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
@@ -56,6 +59,7 @@ model UserSubscription {
 enum SubscriptionStatus {
   TRIALING
   ACTIVE
+  FAILED
   PAST_DUE
   CANCELED
   PENDING

@@ -2,6 +2,7 @@ import { ENVEnum } from '@/common/enum/env.enum';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
+import { StripePaymentMetadata } from './stripe.types';
 
 @Injectable()
 export class StripeService {
@@ -95,32 +96,11 @@ export class StripeService {
     return deletedProduct;
   }
 
-  // Checkout Session
-  async createCheckoutSession({
-    customerId,
-    priceId,
-    successUrl,
-    cancelUrl,
-    metadata,
-  }: {
-    customerId?: string;
-    priceId: string;
-    successUrl: string;
-    cancelUrl: string;
-    metadata?: Record<string, string>;
-  }) {
-    const session = await this.stripe.checkout.sessions.create({
-      mode: 'payment',
-      payment_method_types: ['card'],
-      customer: customerId,
-      line_items: [{ price: priceId, quantity: 1 }],
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-      metadata,
-    });
-
-    this.logger.log(`Created checkout session ${session.id}`);
-    return session;
+  // Payment Intent Management
+  async retrievePaymentIntent(paymentIntentId: string) {
+    const pi = await this.stripe.paymentIntents.retrieve(paymentIntentId);
+    this.logger.log(`Retrieved PaymentIntent ${paymentIntentId}`);
+    return pi;
   }
 
   // Payment Intent (for one-time payments)
@@ -132,16 +112,25 @@ export class StripeService {
   }: {
     amount: number;
     currency: string;
-    customerId?: string;
-    metadata?: Record<string, string>;
+    customerId: string;
+    metadata: StripePaymentMetadata;
   }) {
-    const intent = await this.stripe.paymentIntents.create({
-      amount,
-      currency,
-      customer: customerId,
-      automatic_payment_methods: { enabled: true },
-      metadata,
-    });
+    const intent = await this.stripe.paymentIntents.create(
+      {
+        amount,
+        currency,
+        customer: customerId,
+        receipt_email: metadata.email,
+        automatic_payment_methods: {
+          enabled: true,
+          allow_redirects: 'never',
+        },
+        metadata,
+      },
+      {
+        idempotencyKey: `pi_${metadata.userId}_${metadata.planId}`,
+      },
+    );
 
     this.logger.log(`Created payment intent ${intent.id}`);
     return intent;
