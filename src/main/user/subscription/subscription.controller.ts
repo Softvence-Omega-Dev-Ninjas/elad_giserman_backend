@@ -55,4 +55,10 @@ export class SubscriptionController {
       return { received: false, error: error.message };
     }
   }
+
+  @ApiOperation({ summary: 'Get current subscription status' })
+  @Get('me')
+  async getCurrentSubscriptionStatus(@GetUser('sub') userId: string) {
+    return this.subscriptionService.getCurrentSubscriptionStatus(userId);
+  }
 }
