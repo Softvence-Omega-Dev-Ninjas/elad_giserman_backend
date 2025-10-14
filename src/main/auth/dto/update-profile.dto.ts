@@ -7,6 +7,11 @@ export class UpdateProfileDto {
   @IsString()
   name?: string;
 
+  @ApiPropertyOptional({ example: '1234567890', description: 'Optional phone' })
+  @IsOptional()
+  @IsString()
+  mobile?: string;
+
   @ApiPropertyOptional({
     type: 'string',
     format: 'binary',
