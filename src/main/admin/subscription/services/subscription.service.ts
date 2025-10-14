@@ -1,3 +1,4 @@
+import { AppError } from '@/common/error/handle-error.app';
 import { HandleError } from '@/common/error/handle-error.decorator';
 import {
   successPaginatedResponse,
@@ -23,7 +24,23 @@ export class SubscriptionService {
 
   @HandleError('Failed to create plan', 'Stripe Plan')
   async createNewPlan(dto: CreateSubscriptionPlanDto): Promise<TResponse<any>> {
-    // 1. Compute discounted and non-discounted amounts
+    // 1. Check if an active plan already exists for this billing period
+    const existingActivePlan =
+      await this.prismaService.subscriptionPlan.findFirst({
+        where: {
+          billingPeriod: dto.billingPeriod,
+          isActive: true,
+        },
+      });
+
+    if (existingActivePlan) {
+      throw new AppError(
+        400,
+        `An active ${dto.billingPeriod.toLowerCase()} plan already exists. Please deactivate it before creating a new one.`,
+      );
+    }
+
+    // 2. Compute discounted and non-discounted amounts
     const priceWithoutDiscount = dto.price;
     const discountPercent = dto.discountPercent ?? 0;
     const finalPrice = (
@@ -34,7 +51,7 @@ export class SubscriptionService {
 
     this.logger.log(`Final price: ${price}`);
 
-    // 2. Create Product & Price in Stripe
+    // 3. Create Product & Price in Stripe
     const { product, stripePrice } =
       await this.stripeService.createProductWithPrice({
         title: dto.title,
@@ -43,7 +60,7 @@ export class SubscriptionService {
         interval: dto.billingPeriod === 'MONTHLY' ? 'month' : 'year',
       });
 
-    // 3. Create Plan in Database
+    // 4. Create Plan in Database
     const plan = await this.prismaService.subscriptionPlan.create({
       data: {
         title: dto.title,
