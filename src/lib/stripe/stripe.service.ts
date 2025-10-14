@@ -115,16 +115,22 @@ export class StripeService {
     customerId: string;
     metadata: StripePaymentMetadata;
   }) {
-    const intent = await this.stripe.paymentIntents.create({
-      amount,
-      currency,
-      customer: customerId,
-      automatic_payment_methods: {
-        enabled: true,
-        allow_redirects: 'never',
+    const intent = await this.stripe.paymentIntents.create(
+      {
+        amount,
+        currency,
+        customer: customerId,
+        receipt_email: metadata.email,
+        automatic_payment_methods: {
+          enabled: true,
+          allow_redirects: 'never',
+        },
+        metadata,
       },
-      metadata,
-    });
+      {
+        idempotencyKey: `pi_${metadata.userId}_${metadata.planId}`,
+      },
+    );
 
     this.logger.log(`Created payment intent ${intent.id}`);
     return intent;

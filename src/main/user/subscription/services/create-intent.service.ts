@@ -126,6 +126,7 @@ export class CreateIntentService {
     // 6. Create metadata and payment intent
     const metadata: StripePaymentMetadata = {
       userId: user.id,
+      email: user.email,
       planId: plan.id,
       planTitle: plan.title,
       stripeProductId: plan.stripeProductId,
