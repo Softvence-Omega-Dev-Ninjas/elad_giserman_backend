@@ -139,7 +139,10 @@ export class StripeService {
       amount,
       currency,
       customer: customerId,
-      automatic_payment_methods: { enabled: true },
+      automatic_payment_methods: {
+        enabled: true,
+        allow_redirects: 'never',
+      },
       metadata,
     });
 

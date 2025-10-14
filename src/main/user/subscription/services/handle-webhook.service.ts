@@ -20,16 +20,16 @@ export class HandleWebhookService {
     let event: Stripe.Event;
     try {
       event = this.stripeService.constructWebhookEvent(rawBody, signature);
+
+      this.logger.log(`Received Stripe event: ${event.type}`);
+      this.logger.debug(JSON.stringify(event, null, 2));
+
+      // 2. Process the event
+      await this.handleEvent(event);
     } catch (error) {
       this.logger.error('Webhook signature verification failed', error);
       throw new AppError(400, 'Invalid webhook signature');
     }
-
-    this.logger.log(`Received Stripe event: ${event.type}`);
-    this.logger.debug(JSON.stringify(event, null, 2));
-
-    // 2. Process the event
-    await this.handleEvent(event);
   }
 
   private async handleEvent(event: Stripe.Event) {

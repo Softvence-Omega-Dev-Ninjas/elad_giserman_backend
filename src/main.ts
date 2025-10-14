@@ -38,6 +38,9 @@ async function bootstrap() {
   // * add global filters
   app.useGlobalFilters(new AllExceptionsFilter());
 
+  // * set global prefix before all routes & swagger
+  app.setGlobalPrefix('api');
+
   // Swagger config with Bearer Auth
   const config = new DocumentBuilder()
     .setTitle('Elad Giserman API')
@@ -48,9 +51,6 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
-
-  // * set global prefix
-  app.setGlobalPrefix('api');
 
   // * add body parser
   app.use(

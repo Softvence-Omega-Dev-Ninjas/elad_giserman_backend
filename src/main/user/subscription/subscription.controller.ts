@@ -40,7 +40,7 @@ export class SubscriptionController {
     return this.createIntentService.createPaymentIntent(userId, planId);
   }
 
-  @ApiOperation({ summary: 'Handle Stripe webhook events' })
+  @ApiOperation({ summary: 'Handle Stripe webhook events (Public Endpoint)' })
   @Public()
   @Post('webhook/stripe')
   @HttpCode(HttpStatus.OK)
