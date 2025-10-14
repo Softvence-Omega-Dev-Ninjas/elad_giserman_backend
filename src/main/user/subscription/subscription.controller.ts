@@ -55,4 +55,16 @@ export class SubscriptionController {
       return { received: false, error: error.message };
     }
   }
+
+  @ApiOperation({ summary: 'Get current subscription status' })
+  @Get('me')
+  async getCurrentSubscriptionStatus(@GetUser('sub') userId: string) {
+    return this.subscriptionService.getCurrentSubscriptionStatus(userId);
+  }
+
+  @ApiOperation({ summary: 'Create renew payment intent' })
+  @Post('me/renew')
+  async createRenewPaymentIntent(@GetUser('sub') userId: string) {
+    return this.createIntentService.createRenewPaymentIntent(userId);
+  }
 }

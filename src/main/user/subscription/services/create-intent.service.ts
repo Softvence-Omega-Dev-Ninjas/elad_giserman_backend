@@ -4,7 +4,8 @@ import { successResponse, TResponse } from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { StripeService } from '@/lib/stripe/stripe.service';
 import { StripePaymentMetadata } from '@/lib/stripe/stripe.types';
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class CreateIntentService {
@@ -176,5 +177,41 @@ export class CreateIntentService {
       },
       'Created one-time payment intent',
     );
+  }
+
+  /**
+   * @param userId
+   * @returns PaymentIntent
+   */
+  @HandleError('Failed to create renew payment intent', 'Subscription')
+  async createRenewPaymentIntent(userId: string) {
+    const userSubscription =
+      await this.prismaService.userSubscription.findFirst({
+        where: { userId, status: 'ACTIVE' },
+        include: {
+          plan: true,
+        },
+        orderBy: [
+          { updatedAt: Prisma.SortOrder.desc },
+          { createdAt: Prisma.SortOrder.desc },
+        ],
+      });
+
+    if (!userSubscription) {
+      throw new AppError(
+        HttpStatus.BAD_REQUEST,
+        'No completed subscription found.',
+      );
+    }
+
+    // check if plan is still active
+    if (!userSubscription.plan.isActive) {
+      throw new AppError(
+        HttpStatus.BAD_REQUEST,
+        'This plan is no longer active.',
+      );
+    }
+
+    return this.createPaymentIntent(userId, userSubscription.plan.id);
   }
 }
