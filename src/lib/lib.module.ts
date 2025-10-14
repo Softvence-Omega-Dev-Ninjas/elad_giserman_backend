@@ -6,6 +6,7 @@ import { SeedModule } from './seed/seed.module';
 import { UtilsModule } from './utils/utils.module';
 import { MulterModule } from './multer/multer.module';
 import { StripeModule } from './stripe/stripe.module';
+import { FirebaseModule } from './firebase/firebase.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { StripeModule } from './stripe/stripe.module';
     FileModule,
     MulterModule,
     StripeModule,
+    FirebaseModule,
   ],
   exports: [],
   providers: [],
