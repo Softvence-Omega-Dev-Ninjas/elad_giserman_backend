@@ -33,9 +33,9 @@ model User {
   otpExpiresAt DateTime?
   otpType      OtpType?
 
-  // Subscription
-  subscriptionStatus SubscriptionStatus?
-  stripeCustomerId   String?             @unique
+  // Subscription, based on last successful payment (overwrite previous one)
+  subscriptionStatus SubscriptionStatus? // ensure during successful payment in webhook
+  stripeCustomerId   String?             @unique // ensure during payment intent creation
 
   currentPlanId String?
   currentPlan   SubscriptionPlan? @relation(fields: [currentPlanId], references: [id], onDelete: SetNull)

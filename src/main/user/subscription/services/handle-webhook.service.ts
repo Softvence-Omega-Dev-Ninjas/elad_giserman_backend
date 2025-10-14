@@ -67,13 +67,30 @@ export class HandleWebhookService {
     }
 
     // Idempotent check
-    if (subscription.status === 'ACTIVE') return;
+    if (subscription.status === 'ACTIVE') {
+      this.logger.log(`Subscription ${subscription.id} already active`);
+      return;
+    }
 
     try {
-      await this.prisma.userSubscription.update({
-        where: { id: subscription.id },
-        data: { status: 'ACTIVE', paidAt: new Date() },
-      });
+      await this.prisma.$transaction([
+        this.prisma.userSubscription.update({
+          where: { id: subscription.id },
+          data: { status: 'ACTIVE', paidAt: new Date() },
+        }),
+        this.prisma.user.update({
+          where: { id: subscription.userId },
+          data: {
+            subscriptionStatus: 'ACTIVE',
+            currentPlan: {
+              connect: {
+                id: subscription.planId,
+              },
+            },
+          },
+        }),
+      ]);
+
       this.logger.log(`Payment succeeded for subscription ${subscription.id}`);
     } catch (err) {
       this.logger.error(
