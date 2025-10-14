@@ -21,7 +21,7 @@ export class LoginDto {
 
 export class GoogleLoginDto {
   @ApiProperty({
-    description: 'ID token from Google Sign-In',
+    description: 'ID token from Google Sign-In / Firebase',
     example: 'idToken',
   })
   @IsString()

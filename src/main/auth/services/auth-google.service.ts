@@ -1,45 +1,38 @@
 import { UserResponseDto } from '@/common/dto/user-response.dto';
-import { ENVEnum } from '@/common/enum/env.enum';
 import { AppError } from '@/common/error/handle-error.app';
 import { HandleError } from '@/common/error/handle-error.decorator';
 import { successResponse, TResponse } from '@/common/utils/response.util';
+import { FirebaseService } from '@/lib/firebase/firebase.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { UtilsService } from '@/lib/utils/utils.service';
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
-import { OAuth2Client, TokenPayload } from 'google-auth-library';
+import * as admin from 'firebase-admin';
 import { GoogleLoginDto } from '../dto/login.dto';
 
 @Injectable()
 export class AuthGoogleService {
-  private googleClient: OAuth2Client;
-
   constructor(
     private readonly prisma: PrismaService,
     private readonly utils: UtilsService,
-    private readonly configService: ConfigService,
-  ) {
-    this.googleClient = new OAuth2Client(
-      this.configService.getOrThrow<string>(ENVEnum.OAUTH_CLIENT_ID),
-    );
-  }
+    private readonly firebaseService: FirebaseService,
+  ) {}
 
   @HandleError('Google login failed', 'User')
   async googleLogin(dto: GoogleLoginDto): Promise<TResponse<any>> {
     if (!dto.idToken) {
-      throw new AppError(400, 'Google ID token is required');
+      throw new AppError(400, 'Firebase ID token is required');
     }
 
-    const payload = await this.verifyGoogleIdToken(dto.idToken);
+    // Verify Firebase token
+    const decodedToken = await this.firebaseService.verifyIdToken(dto.idToken);
+    const email = decodedToken.email?.toLowerCase();
 
-    if (!payload.email_verified) {
-      throw new AppError(400, 'Google email is not verified');
+    if (!email) {
+      throw new AppError(400, 'Firebase token does not contain an email');
     }
 
-    const email = (payload.email || '').toLowerCase();
-
-    const user = await this.findOrCreateGoogleUser(payload, email);
+    const user = await this.findOrCreateFirebaseUser(decodedToken, email);
 
     const token = this.utils.generateToken({
       sub: user.id,
@@ -56,68 +49,53 @@ export class AuthGoogleService {
     );
   }
 
-  private async verifyGoogleIdToken(idToken: string): Promise<TokenPayload> {
-    const ticket = await this.googleClient.verifyIdToken({
-      idToken,
-      audience: this.configService.getOrThrow<string>(ENVEnum.OAUTH_CLIENT_ID),
-    });
-
-    const payload = ticket.getPayload();
-    if (!payload?.sub || !payload?.email) {
-      throw new AppError(400, 'Invalid Google token: missing user information');
-    }
-
-    return payload;
-  }
-
   /**
-   * Finds existing user or creates a new one via Google login.
+   * Finds existing user or creates a new one via Firebase Google login.
    */
-  private async findOrCreateGoogleUser(
-    payload: TokenPayload,
+  private async findOrCreateFirebaseUser(
+    decodedToken: admin.auth.DecodedIdToken,
     email: string,
   ): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { email } });
 
-    // === CASE 1: No user exists → create new Google user ===
+    // === CASE 1: No user exists → create new Firebase Google user ===
     if (!user) {
       return this.prisma.user.create({
         data: {
           email,
           username: await this.utils.generateUsername(email),
-          googleId: payload.sub,
+          googleId: decodedToken.uid, // store Firebase UID
           isVerified: true,
           isLoggedIn: true,
           lastLoginAt: new Date(),
-          name: payload.name || 'Unnamed User',
+          name: decodedToken.name || 'Unnamed User',
           avatarUrl:
-            payload.picture ||
+            decodedToken.picture ||
             'https://www.gravatar.com/avatar/000000000000000000000000000000?d=mp&f=y',
         },
       });
     }
 
-    // === CASE 2: Existing user has no googleId → link Google account ===
+    // === CASE 2: Existing user has no googleId → link Firebase UID ===
     if (!user.googleId) {
       return this.prisma.user.update({
         where: { id: user.id },
         data: {
-          googleId: payload.sub,
+          googleId: decodedToken.uid,
           isVerified: true,
           isLoggedIn: true,
           lastLoginAt: new Date(),
-          // Optional: sync profile if user didn't set custom values
-          name: user.name === 'Unnamed User' ? payload.name : user.name,
-          avatarUrl: payload.picture || user.avatarUrl,
+          name: user.name === 'Unnamed User' ? decodedToken.name : user.name,
+          avatarUrl: decodedToken.picture || user.avatarUrl,
         },
       });
     }
 
     // === CASE 3: User already has googleId but mismatch (conflict) ===
-    if (user.googleId && user.googleId !== payload.sub) {
+    if (user.googleId && user.googleId !== decodedToken.uid) {
       throw new AppError(
         400,
-        'Google account does not match the linked account for this email',
+        'Firebase account does not match the linked account for this email',
       );
     }
 
@@ -127,8 +105,8 @@ export class AuthGoogleService {
       data: {
         isLoggedIn: true,
         lastLoginAt: new Date(),
-        name: payload.name || user.name,
-        avatarUrl: payload.picture || user.avatarUrl,
+        name: decodedToken.name || user.name,
+        avatarUrl: decodedToken.picture || user.avatarUrl,
       },
     });
   }

@@ -4,7 +4,7 @@ model User {
   // Auth
   email    String  @unique
   username String  @unique
-  googleId String? @unique // google id
+  googleId String? @unique // google id or firebase uid
   password String? // hashed password (nullable for social accounts)
 
   // Contact
