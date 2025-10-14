@@ -61,4 +61,10 @@ export class SubscriptionController {
   async getCurrentSubscriptionStatus(@GetUser('sub') userId: string) {
     return this.subscriptionService.getCurrentSubscriptionStatus(userId);
   }
+
+  @ApiOperation({ summary: 'Create renew payment intent' })
+  @Post('me/renew')
+  async createRenewPaymentIntent(@GetUser('sub') userId: string) {
+    return this.createIntentService.createRenewPaymentIntent(userId);
+  }
 }
