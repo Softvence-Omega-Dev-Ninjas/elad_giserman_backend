@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as bodyParser from 'body-parser';
 import { AppModule } from './app.module';
 import { ENVEnum } from './common/enum/env.enum';
 import { AllExceptionsFilter } from './common/filter/http-exception.filter';
@@ -12,6 +13,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { rawBody: true });
   const configService = app.get(ConfigService);
 
+  // * enable cors
   app.enableCors({
     origin: [
       'http://localhost:3000',
@@ -30,14 +32,10 @@ async function bootstrap() {
     credentials: true,
   });
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      // forbidNonWhitelisted: true,
-      transform: true,
-    }),
-  );
+  // * add global pipes
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
+  // * add global filters
   app.useGlobalFilters(new AllExceptionsFilter());
 
   // Swagger config with Bearer Auth
@@ -51,7 +49,16 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
-  const port = parseInt(configService.get<string>(ENVEnum.PORT) ?? '5060', 10);
+  // * set global prefix
+  app.setGlobalPrefix('api');
+
+  // * add body parser
+  app.use(
+    '/api/subscription/webhook/stripe',
+    bodyParser.raw({ type: 'application/json' }),
+  );
+
+  const port = parseInt(configService.get<string>(ENVEnum.PORT) ?? '5050', 10);
   await app.listen(port);
 }
 

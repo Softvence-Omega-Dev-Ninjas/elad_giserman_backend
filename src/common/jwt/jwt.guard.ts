@@ -26,9 +26,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       context.getHandler(),
       context.getClass(),
     ]);
-    if (isPublic) {
-      return true;
-    }
+    if (isPublic) return true;
 
     // Otherwise use default passport-jwt flow
     const activate = (await super.canActivate(context)) as boolean;
@@ -54,7 +52,13 @@ export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    // Get roles set on handler/class (handler priority)
+    // Skip if route is public
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+    if (isPublic) return true;
+
     const requiredRoles = this.reflector.getAllAndOverride<UserEnum[]>(
       ROLES_KEY,
       [context.getHandler(), context.getClass()],
@@ -70,7 +74,6 @@ export class RolesGuard implements CanActivate {
       throw new ForbiddenException('User roles not found');
     }
 
-    // support role as single value or array
     const userRoles = Array.isArray(user.role) ? user.role : [user.role];
 
     const hasRole = requiredRoles.some((role) => userRoles.includes(role));

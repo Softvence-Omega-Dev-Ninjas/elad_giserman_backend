@@ -67,17 +67,22 @@ export class CreateIntentService {
       },
     });
 
-    // 5. Record this payment intent in DB
-    const planDuration = plan.billingPeriod === 'MONTHLY' ? 1 : 12;
+    // 5. Calculate plan period based on billingPeriod
+    const planStartedAt = new Date();
+    const planEndedAt = new Date(planStartedAt);
+    if (plan.billingPeriod === 'MONTHLY') {
+      planEndedAt.setMonth(planEndedAt.getMonth() + 1);
+    } else if (plan.billingPeriod === 'YEARLY') {
+      planEndedAt.setFullYear(planEndedAt.getFullYear() + 1);
+    }
 
+    // 6. Record in DB
     await this.prismaService.userSubscription.create({
       data: {
         user: { connect: { id: user.id } },
         plan: { connect: { id: plan.id } },
-        planStartedAt: new Date(),
-        planEndedAt: new Date(
-          new Date().setFullYear(new Date().getFullYear() + planDuration),
-        ),
+        planStartedAt,
+        planEndedAt,
         stripeTransactionId: paymentIntent.id,
       },
     });

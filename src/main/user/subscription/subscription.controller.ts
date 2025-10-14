@@ -1,4 +1,4 @@
-import { GetUser, ValidateAuth } from '@/common/jwt/jwt.decorator';
+import { GetUser, Public, ValidateAuth } from '@/common/jwt/jwt.decorator';
 import { Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateIntentService } from './services/create-intent.service';
@@ -27,5 +27,12 @@ export class SubscriptionController {
     @Param('planId') planId: string,
   ) {
     return this.createIntentService.createPaymentIntent(userId, planId);
+  }
+
+  @ApiOperation({ summary: 'Handle webhook' })
+  @Public()
+  @Post('webhook/stripe')
+  async handleWebhook() {
+    return 'Testing webhook';
   }
 }
