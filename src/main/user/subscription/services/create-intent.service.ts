@@ -1,3 +1,4 @@
+import { AppError } from '@/common/error/handle-error.app';
 import { HandleError } from '@/common/error/handle-error.decorator';
 import { successResponse, TResponse } from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
@@ -23,17 +24,85 @@ export class CreateIntentService {
     userId: string,
     planId: string,
   ): Promise<TResponse<any>> {
+    // 0. Normalize current time
+    const now = new Date();
+
     // 1. Get user
     const user = await this.prismaService.user.findUniqueOrThrow({
       where: { id: userId },
     });
 
-    // 2. Get plan (must be active)
+    // 2. Prevent creating intent if user already has an active subscription
+    //    Active means status === 'ACTIVE' and ends in the future
+    const activeSub = await this.prismaService.userSubscription.findFirst({
+      where: {
+        userId: user.id,
+        status: 'ACTIVE',
+        planEndedAt: { gt: now },
+      },
+    });
+    if (activeSub) {
+      // Optionally include plan info in error message
+      throw new AppError(
+        400,
+        `User already has an active subscription until ${activeSub.planEndedAt.toISOString()}`,
+      );
+    }
+
+    // 3. Get plan (must be active)
     const plan = await this.prismaService.subscriptionPlan.findUniqueOrThrow({
       where: { id: planId, isActive: true },
     });
 
-    // 3. Ensure Stripe Customer exists
+    // 4. Prevent duplicate pending/incomplete intents
+    //    If user already has a pending/incomplete payment intent for same plan,
+    //    return that intent's client_secret if possible (so caller can reuse).
+    const existingPending = await this.prismaService.userSubscription.findFirst(
+      {
+        where: {
+          userId: user.id,
+          planId: plan.id,
+          status: { in: ['INCOMPLETE', 'PENDING'] }, // adjust strings to match your enum exactly
+        },
+        orderBy: { createdAt: 'desc' },
+      },
+    );
+
+    if (existingPending) {
+      this.logger.log(
+        `User ${user.id} already has a pending payment (${existingPending.stripeTransactionId}).`,
+      );
+
+      // Try to fetch the PaymentIntent to return client_secret (optional)
+      try {
+        const existingIntent = await this.stripeService.retrievePaymentIntent(
+          existingPending.stripeTransactionId,
+        );
+
+        // If client_secret still available, return it instead of creating a new one
+        if (existingIntent?.client_secret) {
+          return successResponse(
+            {
+              paymentIntentId: existingIntent.id,
+              clientSecret: existingIntent.client_secret,
+              amount: plan.price,
+              currency: plan.currency,
+              planTitle: plan.title,
+              message:
+                'A pending payment already exists for this plan. Use the returned clientSecret to complete it.',
+            },
+            'Pending payment found',
+          );
+        }
+      } catch (err) {
+        // retrieving failed: fall through and create a new intent
+        this.logger.warn(
+          `Failed to retrieve existing PaymentIntent ${existingPending.stripeTransactionId}: ${err?.message}`,
+        );
+      }
+    }
+
+    // 5. Ensure Stripe Customer exists
     let customerId = user.stripeCustomerId;
     if (!customerId) {
       const customer = await this.stripeService.createCustomer({
@@ -54,7 +123,7 @@ export class CreateIntentService {
       customerId = customer.id;
     }
 
-    // 4. Create a one-time payment intent (for card payments)
+    // 6. Create metadata and payment intent
     const metadata: StripePaymentMetadata = {
       userId: user.id,
       planId: plan.id,
@@ -62,6 +131,7 @@ export class CreateIntentService {
       stripeProductId: plan.stripeProductId,
       stripePriceId: plan.stripePriceId,
     };
+
     const paymentIntent = await this.stripeService.createPaymentIntent({
       amount: Math.round(plan.price * 100), // convert USD → cents
       currency: plan.currency,
@@ -69,7 +139,7 @@ export class CreateIntentService {
       metadata,
     });
 
-    // 5. Calculate plan period based on billingPeriod
+    // 7. Calculate plan period based on billingPeriod (start now, end in 1 month or 1 year)
     const planStartedAt = new Date();
     const planEndedAt = new Date(planStartedAt);
     if (plan.billingPeriod === 'MONTHLY') {
@@ -78,7 +148,7 @@ export class CreateIntentService {
       planEndedAt.setFullYear(planEndedAt.getFullYear() + 1);
     }
 
-    // 6. Record in DB
+    // 8. Record in DB with initial status = INCOMPLETE (waiting for webhook confirmation)
     await this.prismaService.userSubscription.create({
       data: {
         user: { connect: { id: user.id } },
@@ -86,6 +156,7 @@ export class CreateIntentService {
         planStartedAt,
         planEndedAt,
         stripeTransactionId: paymentIntent.id,
+        status: 'INCOMPLETE', // initial status — webhook will set ACTIVE or FAILED
       },
     });
 
@@ -93,7 +164,7 @@ export class CreateIntentService {
       `Created one-time payment intent ${paymentIntent.id} for user ${user.email}`,
     );
 
-    // Return client_secret to complete payment in app
+    // 9. Return client_secret to complete payment in app
     return successResponse(
       {
         paymentIntentId: paymentIntent.id,

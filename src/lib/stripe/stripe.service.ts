@@ -96,6 +96,13 @@ export class StripeService {
     return deletedProduct;
   }
 
+  // Payment Intent Management
+  async retrievePaymentIntent(paymentIntentId: string) {
+    const pi = await this.stripe.paymentIntents.retrieve(paymentIntentId);
+    this.logger.log(`Retrieved PaymentIntent ${paymentIntentId}`);
+    return pi;
+  }
+
   // Payment Intent (for one-time payments)
   async createPaymentIntent({
     amount,
