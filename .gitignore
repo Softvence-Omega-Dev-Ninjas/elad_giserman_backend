@@ -61,7 +61,7 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 /generated/prisma
-
+*.pem
 logs
 data
 .pnpm-store
@@ -69,3 +69,5 @@ data
 # temp dir
 temp
 tmp
+
+twist*.json
