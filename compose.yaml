@@ -1,40 +1,47 @@
 services:
+  caddy:
+    image: caddy
+    container_name: caddy
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      server:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', 'caddy validate --config /etc/caddy/Caddyfile']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
   server:
     platform: linux/amd64
-    image: sajibsv/elad_giserman_server:latest
-    container_name: elad_giserman_api
+    image: ${DOCKER_USERNAME}/${PACKAGE_NAME}:${PACKAGE_VERSION}
+    container_name: ${PACKAGE_NAME}_api
     restart: always
+    env_file:
+      - .env
     environment:
-      NODE_ENV: 'production'
-      DATABASE_URL: 'postgresql://postgres:postgres@db:5432/elad_giserman_db'
-
-      JWT_SECRET: 'secret'
-      JWT_EXPIRES_IN: 90d
-
-      BASE_URL: 'https://lgcglobalcontractingltd.com/js'
-      PORT: 5050
-
-      MAIL_USER: 'arafatmannan2019@gmail.com'
-      MAIL_PASS: 'eurp zvyi gnoy enag'
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/${PACKAGE_NAME}_db
 
       REDIS_HOST: redis
       REDIS_PORT: 6379
 
-      SUPER_ADMIN_EMAIL: 'sajib.softvence@gmail.com'
-      SUPER_ADMIN_PASS: 'superadmin'
-
-      STRIPE_SECRET_KEY: 'sk_test_51RlFNRQNJ9V9C9o5lWnJ0ZoVAb5almOirTaBvWZZOU74qXTIUaPeCRtnaHjGxts71VkVaK7tJA5JRjfjpKkeXJGo00dt24jNLx'
-      STRIPE_WEBHOOK_SECRET: 'whsec_9Q1CdmnbOBvrajNmXM9n4U0Qz3OHYMUv'
-
-      FIREBASE_PROJECT_ID: 'sippd-3c86c'
-      FIREBASE_CLIENT_EMAIL: 'firebase-adminsdk-fbsvc@sippd-3c86c.iam.gserviceaccount.com'
-      FIREBASE_PRIVATE_KEY: '-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDaMVd6X/14iCP9\nQxbH6nufirUwuj0JvKRjrpDQF5R6v1BHonNhb9WB9aMHrr21K5WlQh8FBKgjQ1II\nokEakd/l7fpNHNHm7xvADNrpUUOZb29gnWUuctW1ngrpBPExCskHtv/0Y7O37DWu\n3/rnJ3SrFHqinLRzkKHGJuHtOb19lEqFFDJyJ+kEHRTjl1lUdF9jPKDlKvWD7qS/\ngV2edEWB53xcV7TAjMRyJMEM3PlCATGnEtuAH8XqaNcY4hJ7V9WPuvKyB/fXc81U\nMoXuPAswaVQ1VSlk0BVLs9tf1DpK/XpvAV238Vp0ykheMTWlJKLDjePjzTdUJ8D9\nYIB3LZoVAgMBAAECggEACeXlHwMNv5MFdu69MNJ9Sy6Cq7Q3IqLxHiiEHzyCmtLk\n9Gr1Kv1kxSF8hNOzfW19u2J1f8fHTNo39XZO18K4UnjqOudMyloceyjaIW1zUJmS\nhuJ8/Y9uDHAf9JQp0Ny5Y+U0VUTUmUpY4Rb+DdBnZX9nVMshEIEGJbQL2bQd2X10\nNO/9VDo70AUbi4fbmIROQ23nVlBAJFHutHKwtILQ7lZbXYRkwm/v2HbnreMr+W5u\nAtL/q09x3j4aNP0VKtkdcXBbronrJrRWp3HAHON3Rm9rxzdb01R6h3v0BH+rNP4J\noyLyYjIlkQrkO6j92bjPfAjRRK1TVrKUnQJVvB2swQKBgQDyKhxJjqZmGEpLPeM6\nDQuQqT/XKM0rTkVuY3NDsJznIi4VY2+5/qe4FogGPALfWAaAle4yoTayqEabf+RS\nudCh2XJ28/QkzFQhmauXJDF5QUI0jzoqQu5lPp5GNtUZuYdaB7Iz0VUFq6ovQJvU\np49OHo+PlIfmdBM1Qwsl1kxUcQKBgQDmqJ8F43UbvdkyeOSBENNBnij7UMQ4NPc5\nbT4i8/8Gyd74l5/iDxLrbg+V+rai8kwGowKErbuYPIoKbASJxaMTdbgRwIXbxdm4\nUbLMzro3h2shfQUfGvd8N5SMmLTBRoaw9uM5pXeVWb91+pqscjQCrsioZRdVLcHE\n2l7DCfuh5QKBgH91Rpo4qMBHvKLJmhVt1E55po5afVJzyfuGAJ76EDtfNB4xzhZ5\nQFGWGlYds+1V6WY4g7zGOYHjK/agY85e2r61MpgFYtUTbpyYw0Wz2Q5XGL+NOzIP\nNGa5hJi0N4loqyLpthOr9DId3l8shFhzMOwPDcSmirjzE0EPXoi1uEshAoGAWHzb\n9PBb3vaoOnqyfukrgoLgiflkLYP0TC2iptogPkR3q7rPdXP++B7TD+CM7Foz3F/w\n+WGFFFQ1SOZDn28YrsB8iyLmt3dhnRqKk5PDUMY8zS4fJt27kAXqkT2MKpGZ3o34\nggb+p2c00lf/uqRdW6IeDKwrlVvmeFSmAgD0bhkCgYAlqSg0aMumoWi6juJVR7gH\nq0trHd/QI3KWmEveXKWvVWxOc0zbexQ+JAOVNGwuqpj0m2iLlaYK+mIyMqqRykUn\nA7EkgOYFw1rDUfXcjV3CGwvhduQ+hxyGKWBH86QG0BOacWxkeRhTMh32bQc9lo78\nN3fL9jiD3l/V0SM/n1yDDg==\n-----END PRIVATE KEY-----\n'
-
+      BASE_URL: http://0.0.0.0:5050/api
+      PORT: 5050
     ports:
       - '5050:5050'
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis-master:
+        condition: service_healthy
     command: >
       sh -c "
         echo '🏁 Waiting for DB...';
@@ -45,28 +52,81 @@ services:
       "
     volumes:
       - files-data:/app/uploads
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://0.0.0.0:5050/api/health']
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   db:
-    image: postgres
-    container_name: elad_giserman_db
+    image: postgres:17
+    container_name: ${PACKAGE_NAME}_db
     restart: always
     user: postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: elad_giserman_db
+      POSTGRES_DB: ${PACKAGE_NAME}_db
     volumes:
-      - elad_giserman_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     ports:
-      - '5448:5432'
+      - '5433:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  redis:
+  redis-master:
     image: redis
-    container_name: elad_giserman_redis
-    restart: always
+    container_name: ${PACKAGE_NAME}_redis-master
+    command:
+      [
+        'redis-server',
+        '--appendonly',
+        'yes',
+        '--bind',
+        '0.0.0.0',
+        '--protected-mode',
+        'no',
+      ]
     ports:
-      - '6383:6379'
+      - '22376:6379'
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: always
+
+  redis-replica:
+    image: redis
+    container_name: ${PACKAGE_NAME}_redis-replica
+    command:
+      [
+        'redis-server',
+        '--replicaof',
+        'redis-master',
+        '6379',
+        '--bind',
+        '0.0.0.0',
+        '--protected-mode',
+        'no',
+      ]
+    ports:
+      - '22377:6379'
+    depends_on:
+      - redis-master
+    restart: always
 
 volumes:
-  elad_giserman_data:
+  db_data:
   files-data:
+  caddy_data:
+  caddy_config:
+
+networks:
+  default:
+    name: ${PACKAGE_NAME}_network
+    labels:
+      - 'project=${PACKAGE_NAME}'
