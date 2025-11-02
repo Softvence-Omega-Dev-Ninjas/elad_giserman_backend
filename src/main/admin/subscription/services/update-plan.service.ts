@@ -1,3 +1,4 @@
+import { AppError } from '@/common/error/handle-error.app';
 import { HandleError } from '@/common/error/handle-error.decorator';
 import { successResponse, TResponse } from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
@@ -43,6 +44,26 @@ export class UpdatePlanService {
       dto.discountPercent ?? existingPlan.discountPercent;
 
     const newBillingPeriod = dto.billingPeriod ?? existingPlan.billingPeriod;
+
+    const isBillingPeriodChanged =
+      newBillingPeriod !== existingPlan.billingPeriod;
+
+    if (isBillingPeriodChanged) {
+      // * if billing period changed and there is already active plan with that period throw error
+      const existingActivePlan =
+        await this.prismaService.subscriptionPlan.findFirst({
+          where: {
+            billingPeriod: dto.billingPeriod,
+            isActive: true,
+          },
+        });
+      if (existingActivePlan && existingActivePlan.id !== planId) {
+        throw new AppError(
+          400,
+          `An active ${dto?.billingPeriod?.toLowerCase()} plan already exists. Please deactivate it before creating a new one.`,
+        );
+      }
+    }
 
     // Convert to cents for Stripe
     const priceWithoutDiscountCents = Math.round(

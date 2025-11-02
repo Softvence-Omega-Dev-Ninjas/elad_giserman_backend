@@ -49,19 +49,22 @@ export class SubscriptionController {
   }
 
   @ApiOperation({ summary: 'Create checkout session' })
-  @Post('me/checkout')
-  async createCheckOutSession(@GetUser('sub') userId: string) {
-    return this.createSessionService.createCheckOutSession(userId);
+  @Post(':planId/checkout')
+  async createCheckOutSession(
+    @GetUser('sub') userId: string,
+    @Param('planId') planId: string,
+  ) {
+    return this.createSessionService.createCheckOutSession(userId, planId);
   }
 
   @ApiOperation({ summary: 'Cancel subscription' })
-  @Post('me/cancel')
+  @Post('me/cancel/subscription')
   async cancelSubscription(@GetUser('sub') userId: string) {
     return this.createSessionService.cancelSubscription(userId);
   }
 
   @ApiOperation({ summary: 'Handle Stripe webhook events (Public Endpoint)' })
-  @Public()
+  @Public() // Allow public access
   @Post('webhook/stripe')
   @HttpCode(HttpStatus.OK)
   async handleWebhook(

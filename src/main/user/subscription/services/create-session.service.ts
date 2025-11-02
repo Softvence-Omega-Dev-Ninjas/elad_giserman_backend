@@ -14,8 +14,13 @@ export class CreateSessionService {
   ) {}
 
   @HandleError('Failed to create checkout session', 'Check out session')
-  async createCheckOutSession(userId: string): Promise<TResponse<any>> {
-    this.logger.log(`Creating checkout session for user ${userId}`);
+  async createCheckOutSession(
+    userId: string,
+    planId: string,
+  ): Promise<TResponse<any>> {
+    this.logger.log(
+      `Creating checkout session for user ${userId} with plan ${planId}`,
+    );
 
     return successResponse({});
   }

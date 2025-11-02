@@ -26,11 +26,11 @@ export class StripeService {
     intervalCount = 1,
   }: {
     title: string;
-    description?: string;
-    interval?: 'month' | 'year';
-    intervalCount?: number;
+    description: string;
     priceCents: number;
     currency?: string;
+    interval?: 'month' | 'year';
+    intervalCount?: number;
   }) {
     const product = await this.stripe.products.create({
       name: title,
@@ -43,12 +43,12 @@ export class StripeService {
       currency,
       recurring: {
         interval,
-        interval_count: intervalCount,
+        interval_count: intervalCount, // 6 for BIANNUAL
       },
     });
 
     this.logger.log(
-      `Created Stripe product ${product.id} with price ${stripePrice.id}`,
+      `Created Stripe product ${product.id} with price ${stripePrice.id} for interval ${interval} and interval count ${intervalCount}`,
     );
 
     return { product, stripePrice };

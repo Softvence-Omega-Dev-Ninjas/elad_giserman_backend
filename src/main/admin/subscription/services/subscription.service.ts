@@ -57,13 +57,30 @@ export class SubscriptionService {
 
     this.logger.log(`Final price: $${finalPriceDollars} (${priceCents}¢)`);
 
+    // Determine interval type and count
+    let interval: 'month' | 'year' = 'month';
+    let intervalCount = 1;
+
+    if (dto.billingPeriod === 'MONTHLY') {
+      interval = 'month';
+      intervalCount = 1;
+    } else if (dto.billingPeriod === 'BIANNUAL') {
+      interval = 'month';
+      intervalCount = 6;
+    } else if (dto.billingPeriod === 'YEARLY') {
+      interval = 'year';
+      intervalCount = 1;
+    }
+
     // 3. Create Product & Price in Stripe (Stripe expects amount in cents)
     const { product, stripePrice } =
       await this.stripeService.createProductWithPrice({
         title: dto.title,
         description: dto.description?.trim() ?? dto.benefits.join('\n'),
         priceCents,
-        interval: dto.billingPeriod === 'MONTHLY' ? 'month' : 'year',
+        currency: 'usd',
+        interval,
+        intervalCount,
       });
 
     // 4. Create Plan in Database
