@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateIntentService } from './services/create-intent.service';
+import { CreateSessionService } from './services/create-session.service';
 import { HandleWebhookService } from './services/handle-webhook.service';
 import { SubscriptionService } from './services/subscription.service';
 
@@ -22,6 +23,7 @@ export class SubscriptionController {
   constructor(
     private readonly subscriptionService: SubscriptionService,
     private readonly createIntentService: CreateIntentService,
+    private readonly createSessionService: CreateSessionService,
     private readonly handleWebhookService: HandleWebhookService,
   ) {}
 
@@ -32,12 +34,30 @@ export class SubscriptionController {
   }
 
   @ApiOperation({ summary: 'Create payment intent' })
-  @Post(':planId')
+  @Post(':planId/intent')
   async createPaymentIntent(
     @GetUser('sub') userId: string,
     @Param('planId') planId: string,
   ) {
     return this.createIntentService.createPaymentIntent(userId, planId);
+  }
+
+  @ApiOperation({ summary: 'Create renew payment intent' })
+  @Post('me/renew/intent')
+  async createRenewPaymentIntent(@GetUser('sub') userId: string) {
+    return this.createIntentService.createRenewPaymentIntent(userId);
+  }
+
+  @ApiOperation({ summary: 'Create checkout session' })
+  @Post('me/checkout')
+  async createCheckOutSession(@GetUser('sub') userId: string) {
+    return this.createSessionService.createCheckOutSession(userId);
+  }
+
+  @ApiOperation({ summary: 'Cancel subscription' })
+  @Post('me/cancel')
+  async cancelSubscription(@GetUser('sub') userId: string) {
+    return this.createSessionService.cancelSubscription(userId);
   }
 
   @ApiOperation({ summary: 'Handle Stripe webhook events (Public Endpoint)' })
@@ -60,11 +80,5 @@ export class SubscriptionController {
   @Get('me')
   async getCurrentSubscriptionStatus(@GetUser('sub') userId: string) {
     return this.subscriptionService.getCurrentSubscriptionStatus(userId);
-  }
-
-  @ApiOperation({ summary: 'Create renew payment intent' })
-  @Post('me/renew')
-  async createRenewPaymentIntent(@GetUser('sub') userId: string) {
-    return this.createIntentService.createRenewPaymentIntent(userId);
   }
 }
