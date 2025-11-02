@@ -70,9 +70,9 @@ export class SubscriptionService {
         stripeProductId: product.id,
         stripePriceId: stripePrice.id,
         billingPeriod: dto.billingPeriod,
-        price,
+        priceCents: price,
         discountPercent,
-        priceWithoutDiscount,
+        priceWithoutDiscountCents: priceWithoutDiscount,
         currency: stripePrice.currency,
         isActive: true,
       },
@@ -133,16 +133,22 @@ export class SubscriptionService {
     const plan = await this.prismaService.subscriptionPlan.findUniqueOrThrow({
       where: { id: planId, isActive: true }, // Only if it is active
       include: {
-        userSubscription: {
-          include: {
+        userSubscriptions: {
+          select: {
             user: {
               select: {
                 id: true,
                 name: true,
                 email: true,
-                avatarUrl: true,
               },
             },
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
           },
         },
       },

@@ -3,32 +3,30 @@ model SubscriptionPlan {
 
   title       String
   description String?
-  benefits    String[] // Array of text lines
+  benefits    String[] // text lines
 
   isPopular Boolean @default(false)
   isActive  Boolean @default(true)
 
   stripeProductId String @unique
-  stripePriceId   String @unique // will be changed when price or billing period changes
+  stripePriceId   String @unique
 
-  currency             String        @default("usd")
-  price                Float // Stored in smallest currency unit (e.g., cents) for Stripe
-  billingPeriod        BillingPeriod
-  discountPercent      Int           @default(0) // optional discount shown in UI
-  priceWithoutDiscount Float // price without discount
+  currency String @default("usd")
+
+  // monetary fields stored in smallest currency unit (cents)
+  priceCents                Int // e.g., 999 = $9.99
+  priceWithoutDiscountCents Int // original price in cents
+  discountPercent           Int @default(0)
+
+  billingPeriod BillingPeriod
+
+  user              User[]
+  userSubscriptions UserSubscription[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  user             User[] // for a direct link, overwrite the previous one for a user
-  userSubscription UserSubscription[] // for details with transactions history
-
   @@map("subscription_plans")
-}
-
-enum BillingPeriod {
-  MONTHLY
-  YEARLY
 }
 
 model UserSubscription {
@@ -40,30 +38,41 @@ model UserSubscription {
   planId String
   plan   SubscriptionPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
 
+  // Stripe subscription identifier (for recurring cancel/renew)
+  stripeSubscriptionId String? @unique
+
+  // Stripe payment intent identifier
   stripeTransactionId String @unique // payment_intent_id or checkout_session.payment_intent
 
-  status SubscriptionStatus @default(PENDING) // one active plan at a time per user
+  status SubscriptionStatus @default(PENDING)
 
   planStartedAt DateTime @default(now())
-  planEndedAt   DateTime // calculated based on billing period
+  planEndedAt   DateTime // calculated from billingPeriod (months)
 
-  paidAt DateTime?
+  paidAt   DateTime?
   failedAt DateTime?
+
+  invoices           Invoice[] // invoices for this subscription period(s)
+  paymentTransaction PaymentTransaction[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
+  @@index([userId])
+  @@index([planId])
   @@map("user_subscriptions")
 }
 
+enum BillingPeriod {
+  MONTHLY // 1 month
+  BIANNUAL // 6 months
+  YEARLY // 12 months
+}
+
 enum SubscriptionStatus {
-  TRIALING
-  ACTIVE
-  FAILED
-  PAST_DUE
-  CANCELED
-  PENDING
-  INCOMPLETE
-  INCOMPLETE_EXPIRED
-  UNPAID
+  PENDING // not yet paid
+  TRIALING // during free trial
+  ACTIVE // paid and active subscription
+  CANCELED // user canceled
+  FAILED // payment failed / incomplete
 }

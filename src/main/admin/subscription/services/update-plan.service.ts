@@ -38,7 +38,9 @@ export class UpdatePlanService {
 
     // Step 3: Determine if price actually changed
     const newPriceWithoutDiscount =
-      dto.price !== undefined ? dto.price : existingPlan.priceWithoutDiscount;
+      dto.price !== undefined
+        ? dto.price
+        : existingPlan.priceWithoutDiscountCents;
     const newDiscountPercent =
       dto.discountPercent !== undefined
         ? dto.discountPercent
@@ -50,8 +52,8 @@ export class UpdatePlanService {
     );
 
     const priceChanged =
-      finalPrice !== existingPlan.price ||
-      newPriceWithoutDiscount !== existingPlan.priceWithoutDiscount ||
+      finalPrice !== existingPlan.priceCents ||
+      newPriceWithoutDiscount !== existingPlan.priceWithoutDiscountCents ||
       newBillingPeriod !== existingPlan.billingPeriod;
 
     if (priceChanged) {
@@ -68,8 +70,8 @@ export class UpdatePlanService {
 
       // Step 3c: Update DB payload
       updatedData.stripePriceId = newStripePrice.id;
-      updatedData.priceWithoutDiscount = newPriceWithoutDiscount;
-      updatedData.price = finalPrice;
+      updatedData.priceWithoutDiscountCents = newPriceWithoutDiscount;
+      updatedData.priceCents = finalPrice;
 
       this.logger.log(
         `Stripe price updated: oldPriceId=${existingPlan.stripePriceId}, newPriceId=${newStripePrice.id}`,

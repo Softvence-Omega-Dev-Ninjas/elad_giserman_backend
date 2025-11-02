@@ -63,7 +63,7 @@ export class CreateIntentService {
         where: {
           userId: user.id,
           planId: plan.id,
-          status: { in: ['INCOMPLETE', 'PENDING'] }, // adjust strings to match your enum exactly
+          status: 'PENDING',
         },
         orderBy: { createdAt: 'desc' },
       },
@@ -86,7 +86,7 @@ export class CreateIntentService {
             {
               paymentIntentId: existingIntent.id,
               clientSecret: existingIntent.client_secret,
-              amount: plan.price,
+              amount: plan.priceCents,
               currency: plan.currency,
               planTitle: plan.title,
               message:
@@ -135,7 +135,7 @@ export class CreateIntentService {
     };
 
     const paymentIntent = await this.stripeService.createPaymentIntent({
-      amount: Math.round(plan.price * 100), // convert USD → cents
+      amount: plan.priceCents,
       currency: plan.currency,
       customerId,
       metadata,
@@ -158,7 +158,7 @@ export class CreateIntentService {
         planStartedAt,
         planEndedAt,
         stripeTransactionId: paymentIntent.id,
-        status: 'INCOMPLETE', // initial status — webhook will set ACTIVE or FAILED
+        status: 'PENDING',
       },
     });
 
@@ -171,7 +171,7 @@ export class CreateIntentService {
       {
         paymentIntentId: paymentIntent.id,
         clientSecret: paymentIntent.client_secret,
-        amount: plan.price,
+        amount: plan.priceCents,
         currency: plan.currency,
         planTitle: plan.title,
       },

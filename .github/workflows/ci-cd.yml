@@ -4,8 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches:
-      - '**'
+    branches: [main]
 
 jobs:
   ci-check:
@@ -91,13 +90,22 @@ jobs:
           source: 'compose.yaml'
           target: '/home/${{ secrets.VPS_USER }}/server'
 
-      - name: Copy Caddy File
+      - name: Copy CaddyFile
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
           source: 'Caddyfile'
+          target: '/home/${{ secrets.VPS_USER }}/server'
+
+      - name: Copy Makefile
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+          source: 'Makefile'
           target: '/home/${{ secrets.VPS_USER }}/server'
 
       - name: Deploy via SSH
@@ -109,6 +117,6 @@ jobs:
           script: |
             cd ~/server
             sudo docker compose pull
-            sudo docker compose down
-            sudo docker compose up -d --remove-orphans
+            sudo docker compose down --remove-orphans
+            sudo docker compose up -d
             sudo docker system prune -f
