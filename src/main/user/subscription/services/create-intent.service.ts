@@ -106,15 +106,11 @@ export class CreateIntentService {
     // 5. Ensure Stripe Customer exists
     let customerId = user.stripeCustomerId;
     if (!customerId) {
-      const customer = await this.stripeService.createCustomer({
-        email: user.email,
-        name: user.name || user.username,
-        metadata: {
-          userId: user.id,
-          email: user.email,
-          name: user.name || user.username,
-        },
-      });
+      const customer = await this.stripeService.getOrCreateCustomerId(
+        user.id,
+        user.email,
+        user.name || user.username,
+      );
 
       await this.prismaService.user.update({
         where: { id: user.id },
@@ -128,6 +124,7 @@ export class CreateIntentService {
     const metadata: StripePaymentMetadata = {
       userId: user.id,
       email: user.email,
+      name: user.name || user.username,
       planId: plan.id,
       planTitle: plan.title,
       stripeProductId: plan.stripeProductId,

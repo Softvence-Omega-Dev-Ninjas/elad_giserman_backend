@@ -26,7 +26,7 @@ export class UpdatePlanService {
         where: { id: planId },
       });
 
-    // Step 2: Prepare updated data for DB
+    // Step 2: Prepare default updates
     const updatedData: Prisma.SubscriptionPlanUpdateInput = {
       title: dto.title ?? existingPlan.title,
       description: dto.description ?? existingPlan.description,
@@ -36,56 +36,68 @@ export class UpdatePlanService {
       discountPercent: dto.discountPercent ?? existingPlan.discountPercent,
     };
 
-    // Step 3: Determine if price actually changed
-    const newPriceWithoutDiscount =
-      dto.price !== undefined
-        ? dto.price
-        : existingPlan.priceWithoutDiscountCents;
+    // Step 3: Calculate new prices
+    const newPriceWithoutDiscountDollars =
+      dto.price ?? existingPlan.priceWithoutDiscountCents / 100;
     const newDiscountPercent =
-      dto.discountPercent !== undefined
-        ? dto.discountPercent
-        : existingPlan.discountPercent;
+      dto.discountPercent ?? existingPlan.discountPercent;
+
     const newBillingPeriod = dto.billingPeriod ?? existingPlan.billingPeriod;
 
-    const finalPrice = Number(
-      (newPriceWithoutDiscount * (1 - newDiscountPercent / 100)).toFixed(2),
+    // Convert to cents for Stripe
+    const priceWithoutDiscountCents = Math.round(
+      newPriceWithoutDiscountDollars * 100,
+    );
+    const finalPriceCents = Math.round(
+      newPriceWithoutDiscountDollars * (1 - newDiscountPercent / 100) * 100,
     );
 
     const priceChanged =
-      finalPrice !== existingPlan.priceCents ||
-      newPriceWithoutDiscount !== existingPlan.priceWithoutDiscountCents ||
+      finalPriceCents !== existingPlan.priceCents ||
+      priceWithoutDiscountCents !== existingPlan.priceWithoutDiscountCents ||
       newBillingPeriod !== existingPlan.billingPeriod;
 
+    // Step 4: Update Stripe price if changed
     if (priceChanged) {
-      // Step 3a: Determine billing interval for Stripe
-      const interval = newBillingPeriod === 'MONTHLY' ? 'month' : 'year';
+      // Determine interval type and count
+      let interval: 'month' | 'year' = 'month';
+      let intervalCount = 1;
 
-      // Step 3b: Create new Stripe price
+      if (newBillingPeriod === 'MONTHLY') {
+        interval = 'month';
+        intervalCount = 1;
+      } else if (newBillingPeriod === 'BIANNUAL') {
+        interval = 'month';
+        intervalCount = 6;
+      } else if (newBillingPeriod === 'YEARLY') {
+        interval = 'year';
+        intervalCount = 1;
+      }
+
       const newStripePrice = await this.stripeService.updatePrice({
         productId: existingPlan.stripeProductId,
-        newPrice: finalPrice,
+        newPriceCents: finalPriceCents,
         currency: existingPlan.currency,
         interval,
+        intervalCount,
       });
 
-      // Step 3c: Update DB payload
       updatedData.stripePriceId = newStripePrice.id;
-      updatedData.priceWithoutDiscountCents = newPriceWithoutDiscount;
-      updatedData.priceCents = finalPrice;
+      updatedData.priceCents = finalPriceCents;
+      updatedData.priceWithoutDiscountCents = priceWithoutDiscountCents;
 
       this.logger.log(
-        `Stripe price updated: oldPriceId=${existingPlan.stripePriceId}, newPriceId=${newStripePrice.id}`,
+        `Stripe price updated for plan ${planId}: old=${existingPlan.stripePriceId}, new=${newStripePrice.id}`,
       );
     }
 
-    // Step 4: Update DB
+    // Step 5: Update DB
     const updatedPlan = await this.prismaService.subscriptionPlan.update({
       where: { id: planId },
       data: updatedData,
     });
 
     this.logger.log(`Subscription plan ${planId} updated successfully`);
-
     return successResponse(updatedPlan, 'Plan updated successfully');
   }
 }

@@ -40,23 +40,29 @@ export class SubscriptionService {
       );
     }
 
-    // 2. Compute discounted and non-discounted amounts
-    const priceWithoutDiscount = dto.price;
+    // 2. Compute discounted and non-discounted amounts (convert to cents)
+    const priceWithoutDiscountDollars = dto.price;
     const discountPercent = dto.discountPercent ?? 0;
-    const finalPrice = (
-      priceWithoutDiscount *
+
+    const finalPriceDollars = (
+      priceWithoutDiscountDollars *
       (1 - discountPercent / 100)
     ).toFixed(2);
-    const price = Number(finalPrice); // * Amount that will be paid by customer
 
-    this.logger.log(`Final price: ${price}`);
+    // Convert to cents for Stripe and DB
+    const priceCents = Math.round(Number(finalPriceDollars) * 100);
+    const priceWithoutDiscountCents = Math.round(
+      priceWithoutDiscountDollars * 100,
+    );
 
-    // 3. Create Product & Price in Stripe
+    this.logger.log(`Final price: $${finalPriceDollars} (${priceCents}¢)`);
+
+    // 3. Create Product & Price in Stripe (Stripe expects amount in cents)
     const { product, stripePrice } =
       await this.stripeService.createProductWithPrice({
         title: dto.title,
         description: dto.description?.trim() ?? dto.benefits.join('\n'),
-        price,
+        priceCents,
         interval: dto.billingPeriod === 'MONTHLY' ? 'month' : 'year',
       });
 
@@ -70,9 +76,9 @@ export class SubscriptionService {
         stripeProductId: product.id,
         stripePriceId: stripePrice.id,
         billingPeriod: dto.billingPeriod,
-        priceCents: price,
+        priceCents,
         discountPercent,
-        priceWithoutDiscountCents: priceWithoutDiscount,
+        priceWithoutDiscountCents,
         currency: stripePrice.currency,
         isActive: true,
       },
