@@ -44,11 +44,12 @@ model User {
   notifications       UserNotification[]
   userSubscription    UserSubscription[]
   paymentTransactions PaymentTransaction[]
-
+  reviews   Review[]
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
   @@map("users")
+  BusinessProfile BusinessProfile[]
 }
 
 enum UserRole {

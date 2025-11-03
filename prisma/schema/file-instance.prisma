@@ -13,6 +13,7 @@ model FileInstance {
   updatedAt DateTime @default(now()) @updatedAt
 
   @@map("file_instances")
+  BusinessProfile BusinessProfile[]
 }
 
 enum FileType {

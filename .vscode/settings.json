@@ -36,5 +36,9 @@
     "elad",
     "giserman",
     "healthcheck"
-  ]
+  ],
+  "prisma-smart-formatter.typescript.defaultFormatter": "esbenp.prettier-vscode",
+  "[prisma]": {
+    "editor.defaultFormatter": "KhanhhNe.prisma-smart-formatter"
+  }
 }

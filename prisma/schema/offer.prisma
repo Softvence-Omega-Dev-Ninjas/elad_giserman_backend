@@ -1,0 +1,30 @@
+enum OfferType {
+  FOOD_OFFER
+  DISCOUNT
+  PROMOTION
+  OTHER
+}
+
+enum OfferStatus {
+  ACTIVE
+  INACTIVE
+  EXPIRED
+}
+
+model Offer {
+  id          String       @id @default(uuid())
+  name        String
+  details     String?
+  type        OfferType
+  status      OfferStatus  @default(ACTIVE)
+  startDate   DateTime
+  endDate     DateTime
+
+  businessId  String
+  business    BusinessProfile @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  @@map("offers")
+}
