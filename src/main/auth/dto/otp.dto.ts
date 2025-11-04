@@ -3,7 +3,7 @@ import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class ResendOtpDto {
   @ApiProperty({
-    example: 'user@example.com',
+    example: 'john@gmail.com',
     description: 'User email address',
   })
   @IsEmail()
@@ -20,7 +20,7 @@ export class VerifyOTPDto {
   otp: string;
 
   @ApiPropertyOptional({
-    example: 'user@example.com',
+    example: 'john@gmail.com',
     description: 'Email address',
   })
   @IsEmail()
