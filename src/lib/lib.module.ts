@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { FileModule } from './file/file.module';
-import { MailModule } from './mail/mail.module';
-import { PrismaModule } from './prisma/prisma.module';
-import { SeedModule } from './seed/seed.module';
-import { UtilsModule } from './utils/utils.module';
-import { MulterModule } from './multer/multer.module';
-import { StripeModule } from './stripe/stripe.module';
 import { FirebaseModule } from './firebase/firebase.module';
+import { MailModule } from './mail/mail.module';
+import { MulterModule } from './multer/multer.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { S3BucketModule } from './s3/s3.module';
+import { SeedModule } from './seed/seed.module';
+import { StripeModule } from './stripe/stripe.module';
+import { UtilsModule } from './utils/utils.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { FirebaseModule } from './firebase/firebase.module';
     MulterModule,
     StripeModule,
     FirebaseModule,
+    S3BucketModule,
   ],
   exports: [],
   providers: [],

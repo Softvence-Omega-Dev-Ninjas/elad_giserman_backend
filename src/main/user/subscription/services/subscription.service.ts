@@ -98,7 +98,7 @@ export class SubscriptionService {
         canRenew,
         plan: {
           title: userSubscription.plan.title,
-          price: userSubscription.plan.price,
+          price: userSubscription.plan.priceCents,
           currency: userSubscription.plan.currency,
           billingPeriod: userSubscription.plan.billingPeriod,
         },

@@ -7,12 +7,10 @@ model User {
   googleId String? @unique // google id or firebase uid
   password String? // hashed password (nullable for social accounts)
 
-  // Contact
-  mobile String?
-
   // Profile
   name      String? @default("Unnamed User")
   avatarUrl String? @default("https://www.gravatar.com/avatar/000000000000000000000000000000?d=mp&f=y")
+  mobile    String?
 
   // Settings
   role              UserRole     @default(USER)
@@ -33,21 +31,25 @@ model User {
   otpExpiresAt DateTime?
   otpType      OtpType?
 
-  // Subscription, based on last successful payment (overwrite previous one)
-  subscriptionStatus SubscriptionStatus? // ensure during successful payment in webhook
-  stripeCustomerId   String?             @unique // ensure during payment intent creation
+  // Subscription-related
+  stripeCustomerId String? @unique // Stripe customer id
 
+  subscriptionStatus SubscriptionStatus? // last known overall status
+  trialEndsAt        DateTime? // 3-month free trial expiry timestamp
+
+  // current plan quick link 
   currentPlanId String?
   currentPlan   SubscriptionPlan? @relation(fields: [currentPlanId], references: [id], onDelete: SetNull)
 
-  // Notifications
-  notifications    UserNotification[]
-  userSubscription UserSubscription[]
-
+  notifications       UserNotification[]
+  userSubscription    UserSubscription[]
+  paymentTransactions PaymentTransaction[]
+  reviews   Review[]
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
   @@map("users")
+  BusinessProfile BusinessProfile[]
 }
 
 enum UserRole {
@@ -65,22 +67,12 @@ enum UserStatus {
 }
 
 enum OtpType {
-  REGISTER // for register (one time per user)
+  REGISTER
   LOGIN
-  RESET //for reset password
-  PHONE //for adding phone
+  RESET
 }
 
 enum UserLanguage {
   EN
-  ES
-  DE
-  FR
-  IT
-  JA
-  KO
-  NL
-  PT
-  RU
-  ZH
+  HE
 }

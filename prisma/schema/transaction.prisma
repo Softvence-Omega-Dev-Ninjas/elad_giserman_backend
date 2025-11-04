@@ -1,0 +1,88 @@
+model Invoice {
+  id            String @id @default(uuid())
+  invoiceNumber String @unique // e.g., "INV-2025-0001"
+
+  userSubscriptionId String
+  userSubscription   UserSubscription @relation(fields: [userSubscriptionId], references: [id], onDelete: Cascade)
+
+  // Optional mapping to Stripe invoice
+  stripeInvoiceId String? @unique
+
+  // amounts in smallest currency unit (cents)
+  amountDueCents  Int
+  amountPaidCents Int    @default(0)
+  currency        String @default("usd")
+  discountCents   Int    @default(0)
+  taxCents        Int    @default(0)
+  feeCents        Int    @default(0)
+
+  status      InvoiceStatus @default(DRAFT)
+  periodStart DateTime
+  periodEnd   DateTime
+  dueDate     DateTime?
+
+  payments PaymentTransaction[] // related payment attempts
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@index([userSubscriptionId])
+  @@map("invoices")
+}
+
+model PaymentTransaction {
+  id String @id @default(uuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  userSubscriptionId String?
+  userSubscription   UserSubscription? @relation(fields: [userSubscriptionId], references: [id], onDelete: Cascade)
+
+  invoiceId String?
+  invoice   Invoice? @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  // Stripe identifiers (store what you get from Stripe)
+  stripePaymentIntentId String? @unique
+  stripeChargeId        String? @unique
+
+  // amount in cents
+  amountCents Int
+  currency    String @default("usd")
+  feeCents    Int?
+  netCents    Int? // amount - fee - tax
+
+  status PaymentStatus @default(PENDING)
+
+  // failure info (if any)
+  failureCode    String?
+  failureMessage String?
+
+  paidAt      DateTime?
+  refundedAt  DateTime?
+  attemptedAt DateTime  @default(now())
+
+  receiptUrl String?
+
+  metadata Json? // raw webhook payload or custom metadata
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@index([userId])
+  @@index([invoiceId])
+  @@map("payment_transactions")
+}
+
+enum PaymentStatus {
+  PENDING // payment initiated, not completed
+  SUCCEEDED // payment successful
+  FAILED // payment failed
+  REFUNDED // refunded payments
+}
+
+enum InvoiceStatus {
+  DRAFT // created but not sent/charged
+  PAID // invoice fully paid
+  UNPAID // invoice unpaid / past due
+}

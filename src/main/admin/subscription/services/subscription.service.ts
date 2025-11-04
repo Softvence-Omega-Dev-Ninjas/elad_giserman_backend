@@ -40,24 +40,47 @@ export class SubscriptionService {
       );
     }
 
-    // 2. Compute discounted and non-discounted amounts
-    const priceWithoutDiscount = dto.price;
+    // 2. Compute discounted and non-discounted amounts (convert to cents)
+    const priceWithoutDiscountDollars = dto.price;
     const discountPercent = dto.discountPercent ?? 0;
-    const finalPrice = (
-      priceWithoutDiscount *
+
+    const finalPriceDollars = (
+      priceWithoutDiscountDollars *
       (1 - discountPercent / 100)
     ).toFixed(2);
-    const price = Number(finalPrice); // * Amount that will be paid by customer
 
-    this.logger.log(`Final price: ${price}`);
+    // Convert to cents for Stripe and DB
+    const priceCents = Math.round(Number(finalPriceDollars) * 100);
+    const priceWithoutDiscountCents = Math.round(
+      priceWithoutDiscountDollars * 100,
+    );
 
-    // 3. Create Product & Price in Stripe
+    this.logger.log(`Final price: $${finalPriceDollars} (${priceCents}¢)`);
+
+    // Determine interval type and count
+    let interval: 'month' | 'year' = 'month';
+    let intervalCount = 1;
+
+    if (dto.billingPeriod === 'MONTHLY') {
+      interval = 'month';
+      intervalCount = 1;
+    } else if (dto.billingPeriod === 'BIANNUAL') {
+      interval = 'month';
+      intervalCount = 6;
+    } else if (dto.billingPeriod === 'YEARLY') {
+      interval = 'year';
+      intervalCount = 1;
+    }
+
+    // 3. Create Product & Price in Stripe (Stripe expects amount in cents)
     const { product, stripePrice } =
       await this.stripeService.createProductWithPrice({
         title: dto.title,
         description: dto.description?.trim() ?? dto.benefits.join('\n'),
-        price,
-        interval: dto.billingPeriod === 'MONTHLY' ? 'month' : 'year',
+        priceCents,
+        currency: 'usd',
+        interval,
+        intervalCount,
       });
 
     // 4. Create Plan in Database
@@ -70,9 +93,9 @@ export class SubscriptionService {
         stripeProductId: product.id,
         stripePriceId: stripePrice.id,
         billingPeriod: dto.billingPeriod,
-        price,
+        priceCents,
         discountPercent,
-        priceWithoutDiscount,
+        priceWithoutDiscountCents,
         currency: stripePrice.currency,
         isActive: true,
       },
@@ -133,16 +156,22 @@ export class SubscriptionService {
     const plan = await this.prismaService.subscriptionPlan.findUniqueOrThrow({
       where: { id: planId, isActive: true }, // Only if it is active
       include: {
-        userSubscription: {
-          include: {
+        userSubscriptions: {
+          select: {
             user: {
               select: {
                 id: true,
                 name: true,
                 email: true,
-                avatarUrl: true,
               },
             },
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
           },
         },
       },
