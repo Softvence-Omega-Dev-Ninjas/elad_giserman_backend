@@ -1,3 +1,4 @@
+import { GetUser, ValidateOrganizer } from '@/common/jwt/jwt.decorator';
 import {
   Body,
   Controller,
@@ -16,17 +17,19 @@ import {
 } from '@nestjs/swagger';
 import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
 import { BusinessProfileService } from '../service/bussiness-profile.service';
-import { GetUser } from '@/common/jwt/jwt.decorator';
 
 @ApiTags('Business Profiles')
+@ApiBearerAuth()
+@ValidateOrganizer()
 @Controller('business-profiles')
 export class BusinessProfileController {
   constructor(
     private readonly businessProfileService: BusinessProfileService,
   ) {}
 
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Create New Bussiness Profile' })
+  @ApiOperation({
+    summary: 'Create New Bussiness Profile (only for organizer)',
+  })
   @Post('/create-profile')
   @UseInterceptors(FilesInterceptor('gallery', 10)) // Accept up to 10 files
   @ApiConsumes('multipart/form-data')
@@ -40,10 +43,6 @@ export class BusinessProfileController {
         location: { type: 'string', example: 'Banani, Dhaka' },
         openingTime: { type: 'string', example: '08:00 AM' },
         closingTime: { type: 'string', example: '10:00 PM' },
-        ownerId: {
-          type: 'string',
-          example: 'a4b3c4e2-d3f6-4b72-83a9-6b8b0adfa123',
-        },
         gallery: {
           type: 'array',
           items: { type: 'string', format: 'binary' },
@@ -52,19 +51,16 @@ export class BusinessProfileController {
       },
     },
   })
+  // create bussiness profile
   async create(
-    @Body() createBusinessProfileDto: CreateBusinessProfileDto,
-    @UploadedFiles() gallery: Express.Multer.File[],
     @GetUser('sub') id: string,
+    @Body() dto: CreateBusinessProfileDto,
+    @UploadedFiles() gallery: Express.Multer.File[],
   ) {
-    return this.businessProfileService.create(
-      createBusinessProfileDto,
-      gallery,
-      id,
-    );
+    return this.businessProfileService.create(id, dto, gallery);
   }
-
-  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get own Bussiness Profile (only for organizer)' })
+  // get business Profile
   @Get('myBusinessProfile')
   async getBusinessProfile(@GetUser('sub') id: string) {
     return this.businessProfileService.getBusinessProfile(id);

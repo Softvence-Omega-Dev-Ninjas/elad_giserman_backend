@@ -1,10 +1,13 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { S3Service } from '@/lib/s3/s3.service';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 import { FileType } from '@prisma/client';
 
-import { Express } from 'express';
 import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
 
 @Injectable()
@@ -21,9 +24,9 @@ export class BusinessProfileService {
    */
 
   async create(
+    id: string,
     dto: CreateBusinessProfileDto,
     galleryFiles: Express.Multer.File[] = [],
-    userId: string,
   ) {
     let uploadedFiles: {
       filename: any;
@@ -42,16 +45,20 @@ export class BusinessProfileService {
       );
     }
 
+    const existingProfile = await this.prisma.businessProfile.findUnique({
+      where: { ownerId: id },
+    });
+    if (existingProfile) {
+      throw new BadRequestException(
+        'You already have a bussiness profile. Each organizer can only create one.',
+      );
+    }
+
     // create business profile in Prisma
     return this.prisma.businessProfile.create({
       data: {
-        title: dto.title,
-        description: dto.description,
-        location: dto.location,
-        isActive: dto.isActive ?? true,
-        openingTime: dto.openingTime,
-        closingTime: dto.closingTime,
-        ownerId: userId,
+        ...dto,
+        ownerId: id,
         gallery:
           uploadedFiles.length > 0
             ? {
@@ -85,12 +92,19 @@ export class BusinessProfileService {
 
   // get my businessProfile
   async getBusinessProfile(id: string) {
-    const user = await this.prisma.user.findUnique({ where: { id } });
-    if (!user) throw new NotFoundException('Oranizer is not found');
-    return await this.prisma.businessProfile.findUnique({
-      where: {
-        ownerId: id,
+    const profile = await this.prisma.businessProfile.findUnique({
+      where: { ownerId: id },
+      include: {
+        gallery: true,
+        offers: true,
+        reviews: true,
       },
     });
+
+    if (!profile) {
+      throw new NotFoundException('You do not have a business profile yet.');
+    }
+
+    return profile;
   }
 }
