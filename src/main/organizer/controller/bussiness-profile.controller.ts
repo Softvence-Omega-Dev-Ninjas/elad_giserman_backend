@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Get,
+  Patch,
   Post,
   UploadedFiles,
   UseInterceptors,
@@ -17,6 +18,7 @@ import {
 } from '@nestjs/swagger';
 import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
 import { BusinessProfileService } from '../service/bussiness-profile.service';
+import { UpdateBusinessProfileDto } from '../dto/update-bussiness-profile.dto';
 
 @ApiTags('Business Profiles')
 @ApiBearerAuth()
@@ -59,10 +61,45 @@ export class BusinessProfileController {
   ) {
     return this.businessProfileService.create(id, dto, gallery);
   }
-  @ApiOperation({ summary: 'Get own Bussiness Profile (only for organizer)' })
+
   // get business Profile
+  @ApiOperation({ summary: 'Get own Bussiness Profile (only for organizer)' })
   @Get('myBusinessProfile')
   async getBusinessProfile(@GetUser('sub') id: string) {
     return this.businessProfileService.getBusinessProfile(id);
+  }
+
+  // user profile update.
+  @ApiOperation({
+    summary: 'Update existing Business Profile (Organizer only)',
+  })
+  @Patch('/update-profile')
+  @UseInterceptors(FilesInterceptor('gallery', 10))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'Update business profile with optional new gallery images',
+    schema: {
+      type: 'object',
+      properties: {
+        title: { type: 'string', example: 'Updated Coffee Spot' },
+        description: { type: 'string', example: 'Now with new pastries!' },
+        location: { type: 'string', example: 'Banani, Dhaka' },
+        openingTime: { type: 'string', example: '09:00 AM' },
+        closingTime: { type: 'string', example: '11:00 PM' },
+        isActive: { type: 'boolean', example: true },
+        gallery: {
+          type: 'array',
+          items: { type: 'string', format: 'binary' },
+          description: 'Upload up to 10 new images for the gallery',
+        },
+      },
+    },
+  })
+  async update(
+    @GetUser('sub') id: string,
+    @Body() dto: UpdateBusinessProfileDto,
+    @UploadedFiles() gallery: Express.Multer.File[],
+  ) {
+    return this.businessProfileService.update(id, dto, gallery);
   }
 }
