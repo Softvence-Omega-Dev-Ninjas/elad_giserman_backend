@@ -1,4 +1,8 @@
-import { GetUser, ValidateOrganizer } from '@/common/jwt/jwt.decorator';
+import {
+  GetUser,
+  ValidateAuth,
+  ValidateOrganizer,
+} from '@/common/jwt/jwt.decorator';
 import {
   Body,
   Controller,
@@ -14,7 +18,6 @@ import {
   ApiBody,
   ApiConsumes,
   ApiOperation,
-  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
@@ -26,7 +29,6 @@ import { OfferService } from '../service/offer.service';
 
 @ApiTags('Business Profiles')
 @ApiBearerAuth()
-@ValidateOrganizer()
 @Controller('business-profiles')
 export class BusinessProfileController {
   constructor(
@@ -34,6 +36,7 @@ export class BusinessProfileController {
     private readonly offerService: OfferService,
   ) {}
 
+  @ValidateOrganizer()
   @ApiOperation({
     summary: 'Create New Bussiness Profile (only for organizer)',
   })
@@ -68,6 +71,7 @@ export class BusinessProfileController {
   }
 
   // get business Profile
+  @ValidateOrganizer()
   @ApiOperation({ summary: 'Get own Bussiness Profile (only for organizer)' })
   @Get('myBusinessProfile')
   async getBusinessProfile(@GetUser('sub') id: string) {
@@ -75,6 +79,7 @@ export class BusinessProfileController {
   }
 
   // user profile update.
+  @ValidateOrganizer()
   @ApiOperation({
     summary: 'Update existing Business Profile (Organizer only)',
   })
@@ -109,12 +114,40 @@ export class BusinessProfileController {
   }
 
   // create offer...
+  @ValidateOrganizer()
+  @ApiOperation({
+    summary:
+      'Create new offer valid organizer who have have bussiness profile (Organizer only)',
+  })
   @Post('create-offer')
   @ApiOperation({ summary: 'Organizer creates a new offer (pending approval)' })
   createOffer(@GetUser('sub') userId: string, @Body() dto: CreateOfferDto) {
     return handleRequest(
       () => this.offerService.createOffer(userId, dto),
       'Offer created successfully (pending approval)',
+    );
+  }
+
+  // get all approvrd offer..
+  @ValidateAuth()
+  @ApiOperation({ summary: 'Get All Offer those admin has been approved' })
+  @Get('approved')
+  @ApiOperation({ summary: 'Get all approved offers (user view)' })
+  findApproved(@GetUser('sub') userId: string) {
+    return handleRequest(
+      () => this.offerService.findApprovedOffers(userId),
+      'Approved offers fetched successfully',
+    );
+  }
+
+  // get my my created offer
+  @ValidateOrganizer()
+  @Get('my')
+  @ApiOperation({ summary: 'Organizer sees all their offers' })
+  findMyOffers(@GetUser('sub') userId: string) {
+    return handleRequest(
+      () => this.offerService.findMyOffers(userId),
+      'My offers fetched successfully',
     );
   }
 }
