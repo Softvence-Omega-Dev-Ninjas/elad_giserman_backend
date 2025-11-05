@@ -135,4 +135,9 @@ export class AuthController {
   ) {
     return this.updateProfileService.updateProfile(id, dto, file);
   }
+
+  @Post('register-organizer')
+  registerOrganizer(@Body() body: RegisterDto) {
+    return this.authRegisterService.registerOrganizer(body);
+  }
 }
