@@ -6,6 +6,7 @@ import { PrismaService } from '@/lib/prisma/prisma.service';
 import { UtilsService } from '@/lib/utils/utils.service';
 import { Injectable } from '@nestjs/common';
 import { RegisterDto } from '../dto/register.dto';
+import { OtpType, UserRole } from '@prisma/client';
 
 @Injectable()
 export class AuthRegisterService {
@@ -69,5 +70,65 @@ export class AuthRegisterService {
       },
       `Registration successful. A verification email has been sent to ${newUser.email}.`,
     );
+  }
+
+  @HandleError('Registration failed', 'User')
+  async registerOrganizer(dto: RegisterDto): Promise<TResponse<any>> {
+    const { email, password, username } = dto;
+
+    // check if user email already exists
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email },
+    });
+    if (existingUser) {
+      throw new AppError(400, 'User already exists with this email');
+    }
+
+    // check if username already exists
+    const existingUsernameUser = await this.prisma.user.findUnique({
+      where: { username },
+    });
+    if (existingUsernameUser) {
+      throw new AppError(400, 'Username already taken');
+    }
+
+    // generate OTP and expiry
+    const { otp, expiryTime } = this.utils.generateOtpAndExpiry();
+    const hashedOtp = await this.utils.hash(otp.toString());
+
+    // create new user with ORGANIZER role
+    const newUser = await this.prisma.user.create({
+      data: {
+        email,
+        username,
+        password: await this.utils.hash(password),
+        role: UserRole.ORGANIZER,
+        otp: hashedOtp,
+        otpType: OtpType.REGISTER,
+        otpExpiresAt: expiryTime,
+      },
+    });
+
+    // Send verification email
+    await this.authMailService.sendVerificationCodeEmail(
+      email,
+      otp.toString(),
+      {
+        subject: 'Verify your email',
+        message:
+          'Welcome to our platform! Your account has been successfully created.',
+      },
+    );
+
+    return {
+      success: true,
+      message:
+        'Organizer registered successfully. Verify your email using OTP.',
+      data: {
+        userId: newUser.id,
+        email: newUser.email,
+        role: newUser.role,
+      },
+    };
   }
 }

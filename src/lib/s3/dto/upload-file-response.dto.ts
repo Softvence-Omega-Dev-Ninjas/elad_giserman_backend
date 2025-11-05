@@ -2,28 +2,28 @@ import { ApiProperty } from '@nestjs/swagger';
 import { FileType } from '@prisma/client';
 
 export class UploadedFileDto {
-  @ApiProperty({ example: '123e4567-e89b-12d3-a456-426614174000.mp4' })
+  @ApiProperty({ example: 'images/1699154587654-image1.jpg' })
   filename: string;
 
-  @ApiProperty({ example: 'my-video.mp4' })
+  @ApiProperty({ example: 'image1.jpg' })
   originalFilename: string;
 
-  @ApiProperty({ example: 'videos/123e4567-e89b-12d3-a456-426614174000.mp4' })
+  @ApiProperty({ example: 'images/1699154587654-image1.jpg' })
   path: string;
 
   @ApiProperty({
     example:
-      'https://bucket-name.s3.region.amazonaws.com/videos/123e4567-e89b-12d3-a456-426614174000.mp4',
+      'https://your-bucket-name.s3.ap-southeast-2.amazonaws.com/images/1699154587654-image1.jpg',
   })
   url: string;
 
-  @ApiProperty({ enum: FileType })
+  @ApiProperty({ enum: FileType, example: FileType.image })
   fileType: FileType;
 
-  @ApiProperty({ example: 'video/mp4' })
+  @ApiProperty({ example: 'image/jpeg' })
   mimeType: string;
 
-  @ApiProperty({ example: 1048576 })
+  @ApiProperty({ example: 2136665 })
   size: number;
 }
 

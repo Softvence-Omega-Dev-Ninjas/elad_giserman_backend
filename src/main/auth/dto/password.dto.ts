@@ -10,7 +10,7 @@ export class ChangePasswordDto {
   @IsString()
   password?: string;
 
-  @ApiProperty({ example: 'strongPassword123' })
+  @ApiProperty({ example: 'NewstrongPassword123' })
   @IsString()
   newPassword: string;
 }

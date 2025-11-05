@@ -150,7 +150,7 @@ export class S3Service {
   }
 
   // Private Helpers
-  private async uploadFile(file: Express.Multer.File) {
+  public async uploadFile(file: Express.Multer.File) {
     const fileExt = file.originalname.split('.').pop();
     const folder = this.getFolderByMimeType(file.mimetype);
     const uniqueFileName = `${uuid()}.${fileExt}`;
