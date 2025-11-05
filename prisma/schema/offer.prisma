@@ -3,7 +3,7 @@ model Offer {
   title        String
   description  String?
   isActive     Boolean          @default(true)
-
+  status       OfferStatus      @default(PENDING)
   // relation to the business
   businessId   String
   business     BusinessProfile  @relation(fields: [businessId], references: [id], onDelete: Cascade)
@@ -11,4 +11,10 @@ model Offer {
   updatedAt    DateTime         @default(now()) @updatedAt
 
   @@map("offers")
+}
+
+enum OfferStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }

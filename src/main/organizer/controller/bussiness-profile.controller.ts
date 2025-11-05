@@ -14,11 +14,15 @@ import {
   ApiBody,
   ApiConsumes,
   ApiOperation,
+  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
 import { BusinessProfileService } from '../service/bussiness-profile.service';
 import { UpdateBusinessProfileDto } from '../dto/update-bussiness-profile.dto';
+import { CreateOfferDto } from '../dto/create-offer.dto';
+import { handleRequest } from '@/common/utils/handle.request';
+import { OfferService } from '../service/offer.service';
 
 @ApiTags('Business Profiles')
 @ApiBearerAuth()
@@ -27,6 +31,7 @@ import { UpdateBusinessProfileDto } from '../dto/update-bussiness-profile.dto';
 export class BusinessProfileController {
   constructor(
     private readonly businessProfileService: BusinessProfileService,
+    private readonly offerService: OfferService,
   ) {}
 
   @ApiOperation({
@@ -101,5 +106,15 @@ export class BusinessProfileController {
     @UploadedFiles() gallery: Express.Multer.File[],
   ) {
     return this.businessProfileService.update(id, dto, gallery);
+  }
+
+  // create offer...
+  @Post('create-offer')
+  @ApiOperation({ summary: 'Organizer creates a new offer (pending approval)' })
+  createOffer(@GetUser('sub') userId: string, @Body() dto: CreateOfferDto) {
+    return handleRequest(
+      () => this.offerService.createOffer(userId, dto),
+      'Offer created successfully (pending approval)',
+    );
   }
 }
