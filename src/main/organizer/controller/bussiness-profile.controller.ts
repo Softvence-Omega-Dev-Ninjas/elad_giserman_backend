@@ -7,6 +7,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Patch,
   Post,
   UploadedFiles,
@@ -140,7 +141,7 @@ export class BusinessProfileController {
     );
   }
 
-  // get my my created offer
+  // get my created offer
   @ValidateOrganizer()
   @Get('my')
   @ApiOperation({ summary: 'Organizer sees all their offers' })
@@ -148,6 +149,17 @@ export class BusinessProfileController {
     return handleRequest(
       () => this.offerService.findMyOffers(userId),
       'My offers fetched successfully',
+    );
+  }
+
+  //find one offer...
+  @ValidateAuth()
+  @Get(':id')
+  @ApiOperation({ summary: 'Get single offer by ID' })
+  findOne(@Param('id') id: string) {
+    return handleRequest(
+      () => this.offerService.findOne(id),
+      'Offer fetched successfully',
     );
   }
 }

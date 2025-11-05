@@ -43,7 +43,7 @@ export class OfferService {
       include: { business: true },
     });
   }
-
+  // find oranizer offer
   async findMyOffers(userId: string) {
     // find the business profile of the logged-in user
     const business = await this.prisma.businessProfile.findUnique({
@@ -60,5 +60,14 @@ export class OfferService {
       where: { business: { id: business.id } },
       include: { business: true },
     });
+  }
+  // find one offer
+  async findOne(id: string) {
+    const offer = await this.prisma.offer.findUnique({
+      where: { id },
+      include: { business: true },
+    });
+    if (!offer) throw new NotFoundException(`Offer with ID ${id} not found`);
+    return offer;
   }
 }
