@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, IsBoolean, IsUUID } from 'class-validator';
+import { IsString, IsOptional, IsBoolean } from 'class-validator';
 
 export class CreateBusinessProfileDto {
   @ApiProperty({ example: 'The Coffee Spot' })
@@ -27,8 +27,4 @@ export class CreateBusinessProfileDto {
   @ApiProperty({ example: '10:00 PM' })
   @IsString()
   closingTime: string;
-
-  @ApiProperty({ example: '32e52bf8-c703-4e30-9384-fcacbfc06747' })
-  @IsUUID()
-  ownerId: string;
 }

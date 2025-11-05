@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   UploadedFiles,
   UseInterceptors,
@@ -15,6 +16,7 @@ import {
 } from '@nestjs/swagger';
 import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
 import { BusinessProfileService } from '../service/bussiness-profile.service';
+import { GetUser } from '@/common/jwt/jwt.decorator';
 
 @ApiTags('Business Profiles')
 @Controller('business-profiles')
@@ -53,10 +55,18 @@ export class BusinessProfileController {
   async create(
     @Body() createBusinessProfileDto: CreateBusinessProfileDto,
     @UploadedFiles() gallery: Express.Multer.File[],
+    @GetUser('sub') id: string,
   ) {
     return this.businessProfileService.create(
       createBusinessProfileDto,
       gallery,
+      id,
     );
+  }
+
+  @ApiBearerAuth()
+  @Get('myBusinessProfile')
+  async getBusinessProfile(@GetUser('sub') id: string) {
+    return this.businessProfileService.getBusinessProfile(id);
   }
 }

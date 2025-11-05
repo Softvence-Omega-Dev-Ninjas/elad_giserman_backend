@@ -1,6 +1,6 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { S3Service } from '@/lib/s3/s3.service';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { FileType } from '@prisma/client';
 
@@ -23,6 +23,7 @@ export class BusinessProfileService {
   async create(
     dto: CreateBusinessProfileDto,
     galleryFiles: Express.Multer.File[] = [],
+    userId: string,
   ) {
     let uploadedFiles: {
       filename: any;
@@ -50,7 +51,7 @@ export class BusinessProfileService {
         isActive: dto.isActive ?? true,
         openingTime: dto.openingTime,
         closingTime: dto.closingTime,
-        ownerId: dto.ownerId,
+        ownerId: userId,
         gallery:
           uploadedFiles.length > 0
             ? {
@@ -78,6 +79,17 @@ export class BusinessProfileService {
       },
       include: {
         gallery: true,
+      },
+    });
+  }
+
+  // get my businessProfile
+  async getBusinessProfile(id: string) {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+    if (!user) throw new NotFoundException('Oranizer is not found');
+    return await this.prisma.businessProfile.findUnique({
+      where: {
+        ownerId: id,
       },
     });
   }
