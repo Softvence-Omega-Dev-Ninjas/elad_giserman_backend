@@ -35,10 +35,10 @@
     "Caddyfile",
     "elad",
     "giserman",
-    "healthcheck"
+    "healthcheck",
+    "yamiz"
   ],
-  "prisma-smart-formatter.typescript.defaultFormatter": "esbenp.prettier-vscode",
   "[prisma]": {
-    "editor.defaultFormatter": "KhanhhNe.prisma-smart-formatter"
+    "editor.defaultFormatter": "Prisma.prisma"
   }
 }

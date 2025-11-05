@@ -1,6 +1,4 @@
-api.twist.com {
-  tls internal # TODO: remove this line
-
+api.yamiz.org {
   reverse_proxy /socket.io* app:5050
 
   reverse_proxy app:5050 {
@@ -11,9 +9,7 @@ api.twist.com {
   }
 }
 
-twist.com {
-  tls internal # TODO: remove this line
-
+yamiz.org {
   root * /var/www/dist
   try_files {path} /index.html
   file_server
