@@ -1,30 +1,20 @@
-enum OfferType {
-  FOOD_OFFER
-  DISCOUNT
-  PROMOTION
-  OTHER
+model Offer {
+  id           String           @id @default(uuid())
+  title        String
+  description  String?
+  isActive     Boolean          @default(true)
+  status       OfferStatus      @default(PENDING)
+  // relation to the business
+  businessId   String
+  business     BusinessProfile  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @default(now()) @updatedAt
+
+  @@map("offers")
 }
 
 enum OfferStatus {
-  ACTIVE
-  INACTIVE
-  EXPIRED
-}
-
-model Offer {
-  id          String       @id @default(uuid())
-  name        String
-  details     String?
-  type        OfferType
-  status      OfferStatus  @default(ACTIVE)
-  startDate   DateTime
-  endDate     DateTime
-
-  businessId  String
-  business    BusinessProfile @relation(fields: [businessId], references: [id], onDelete: Cascade)
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
-
-  @@map("offers")
+  PENDING
+  APPROVED
+  REJECTED
 }

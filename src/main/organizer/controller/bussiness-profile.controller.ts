@@ -1,7 +1,15 @@
 import {
+  GetUser,
+  ValidateAuth,
+  ValidateOrganizer,
+} from '@/common/jwt/jwt.decorator';
+import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
+  Patch,
   Post,
   UploadedFiles,
   UseInterceptors,
@@ -16,17 +24,25 @@ import {
 } from '@nestjs/swagger';
 import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
 import { BusinessProfileService } from '../service/bussiness-profile.service';
-import { GetUser } from '@/common/jwt/jwt.decorator';
+import { UpdateBusinessProfileDto } from '../dto/update-bussiness-profile.dto';
+import { CreateOfferDto } from '../dto/create-offer.dto';
+import { handleRequest } from '@/common/utils/handle.request';
+import { OfferService } from '../service/offer.service';
+import { UpdateOfferDto } from '../dto/update-offer.dto';
 
 @ApiTags('Business Profiles')
+@ApiBearerAuth()
 @Controller('business-profiles')
 export class BusinessProfileController {
   constructor(
     private readonly businessProfileService: BusinessProfileService,
+    private readonly offerService: OfferService,
   ) {}
 
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Create New Bussiness Profile' })
+  @ValidateOrganizer()
+  @ApiOperation({
+    summary: 'Create New Bussiness Profile (only for organizer)',
+  })
   @Post('/create-profile')
   @UseInterceptors(FilesInterceptor('gallery', 10)) // Accept up to 10 files
   @ApiConsumes('multipart/form-data')
@@ -40,10 +56,6 @@ export class BusinessProfileController {
         location: { type: 'string', example: 'Banani, Dhaka' },
         openingTime: { type: 'string', example: '08:00 AM' },
         closingTime: { type: 'string', example: '10:00 PM' },
-        ownerId: {
-          type: 'string',
-          example: 'a4b3c4e2-d3f6-4b72-83a9-6b8b0adfa123',
-        },
         gallery: {
           type: 'array',
           items: { type: 'string', format: 'binary' },
@@ -52,21 +64,130 @@ export class BusinessProfileController {
       },
     },
   })
+  // create bussiness profile
   async create(
-    @Body() createBusinessProfileDto: CreateBusinessProfileDto,
-    @UploadedFiles() gallery: Express.Multer.File[],
     @GetUser('sub') id: string,
+    @Body() dto: CreateBusinessProfileDto,
+    @UploadedFiles() gallery: Express.Multer.File[],
   ) {
-    return this.businessProfileService.create(
-      createBusinessProfileDto,
-      gallery,
-      id,
-    );
+    return this.businessProfileService.create(id, dto, gallery);
   }
 
-  @ApiBearerAuth()
+  // get business Profile
+  @ValidateOrganizer()
+  @ApiOperation({ summary: 'Get own Bussiness Profile (only for organizer)' })
   @Get('myBusinessProfile')
   async getBusinessProfile(@GetUser('sub') id: string) {
     return this.businessProfileService.getBusinessProfile(id);
+  }
+
+  // user profile update.
+  @ValidateOrganizer()
+  @ApiOperation({
+    summary: 'Update existing Business Profile (Organizer only)',
+  })
+  @Patch('/update-profile')
+  @UseInterceptors(FilesInterceptor('gallery', 10))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'Update business profile with optional new gallery images',
+    schema: {
+      type: 'object',
+      properties: {
+        title: { type: 'string', example: 'Updated Coffee Spot' },
+        description: { type: 'string', example: 'Now with new pastries!' },
+        location: { type: 'string', example: 'Banani, Dhaka' },
+        openingTime: { type: 'string', example: '09:00 AM' },
+        closingTime: { type: 'string', example: '11:00 PM' },
+        isActive: { type: 'boolean', example: true },
+        gallery: {
+          type: 'array',
+          items: { type: 'string', format: 'binary' },
+          description: 'Upload up to 10 new images for the gallery',
+        },
+      },
+    },
+  })
+  async update(
+    @GetUser('sub') id: string,
+    @Body() dto: UpdateBusinessProfileDto,
+    @UploadedFiles() gallery: Express.Multer.File[],
+  ) {
+    return this.businessProfileService.update(id, dto, gallery);
+  }
+
+  // create offer...
+  @ValidateOrganizer()
+  @ApiOperation({
+    summary:
+      'Create new offer valid organizer who have have bussiness profile (Organizer only)',
+  })
+  @Post('create-offer')
+  @ApiOperation({ summary: 'Organizer creates a new offer (pending approval)' })
+  createOffer(@GetUser('sub') userId: string, @Body() dto: CreateOfferDto) {
+    return handleRequest(
+      () => this.offerService.createOffer(userId, dto),
+      'Offer created successfully (pending approval)',
+    );
+  }
+
+  // get all approvrd offer..
+  @ValidateAuth()
+  @ApiOperation({ summary: 'Get All Offer those admin has been approved' })
+  @Get('approved')
+  @ApiOperation({ summary: 'Get all approved offers (user view)' })
+  findApproved(@GetUser('sub') userId: string) {
+    return handleRequest(
+      () => this.offerService.findApprovedOffers(userId),
+      'Approved offers fetched successfully',
+    );
+  }
+
+  // get my created offer
+  @ValidateOrganizer()
+  @Get('my')
+  @ApiOperation({ summary: 'Organizer sees all their offers' })
+  findMyOffers(@GetUser('sub') userId: string) {
+    return handleRequest(
+      () => this.offerService.findMyOffers(userId),
+      'My offers fetched successfully',
+    );
+  }
+
+  //find one offer...
+  @ValidateAuth()
+  @Get(':id')
+  @ApiOperation({ summary: 'Get single offer by ID (User View)' })
+  findOne(@GetUser('sub') userId: string, @Param('id') id: string) {
+    return handleRequest(
+      () => this.offerService.findOne(userId, id),
+      'Offer fetched successfully',
+    );
+  }
+
+  // update offer
+  @ValidateOrganizer()
+  @Patch(':id')
+  @ApiOperation({ summary: 'Organizer updates offer' })
+  updateOffer(
+    @GetUser('sub') userId: string,
+    @Param('id') offerId: string,
+    @Body() dto: UpdateOfferDto,
+  ) {
+    return handleRequest(
+      () => this.offerService.updateOffer(userId, offerId, dto),
+      'Offer updated successfully',
+    );
+  }
+
+  // delete offer
+  @ValidateOrganizer()
+  @Delete(':id')
+  @ApiOperation({ summary: 'Organizer deletes offer' })
+  deleteOffer(@GetUser('sub') userId: string, @Param('id') offerId: string) {
+    return handleRequest(
+      () => this.offerService.deleteOffer(userId, offerId),
+      'Offer deleted successfully',
+    );
   }
 }

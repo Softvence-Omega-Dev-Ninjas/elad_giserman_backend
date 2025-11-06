@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, IsBoolean } from 'class-validator';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateBusinessProfileDto {
   @ApiProperty({ example: 'The Coffee Spot' })
@@ -18,6 +19,7 @@ export class CreateBusinessProfileDto {
   @ApiProperty({ example: true, required: false })
   @IsOptional()
   @IsBoolean()
+  @Type(() => Boolean)
   isActive?: boolean;
 
   @ApiProperty({ example: '08:00 AM' })

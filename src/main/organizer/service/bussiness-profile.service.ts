@@ -1,11 +1,15 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { S3Service } from '@/lib/s3/s3.service';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 import { FileType } from '@prisma/client';
 
-import { Express } from 'express';
 import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
+import { UpdateBusinessProfileDto } from '../dto/update-bussiness-profile.dto';
 
 @Injectable()
 export class BusinessProfileService {
@@ -21,9 +25,9 @@ export class BusinessProfileService {
    */
 
   async create(
+    id: string,
     dto: CreateBusinessProfileDto,
     galleryFiles: Express.Multer.File[] = [],
-    userId: string,
   ) {
     let uploadedFiles: {
       filename: any;
@@ -42,16 +46,20 @@ export class BusinessProfileService {
       );
     }
 
+    const existingProfile = await this.prisma.businessProfile.findUnique({
+      where: { ownerId: id },
+    });
+    if (existingProfile) {
+      throw new BadRequestException(
+        'You already have a bussiness profile. Each organizer can only create one.',
+      );
+    }
+
     // create business profile in Prisma
     return this.prisma.businessProfile.create({
       data: {
-        title: dto.title,
-        description: dto.description,
-        location: dto.location,
-        isActive: dto.isActive ?? true,
-        openingTime: dto.openingTime,
-        closingTime: dto.closingTime,
-        ownerId: userId,
+        ...dto,
+        ownerId: id,
         gallery:
           uploadedFiles.length > 0
             ? {
@@ -85,12 +93,71 @@ export class BusinessProfileService {
 
   // get my businessProfile
   async getBusinessProfile(id: string) {
-    const user = await this.prisma.user.findUnique({ where: { id } });
-    if (!user) throw new NotFoundException('Oranizer is not found');
-    return await this.prisma.businessProfile.findUnique({
-      where: {
-        ownerId: id,
+    const profile = await this.prisma.businessProfile.findUnique({
+      where: { ownerId: id },
+      include: {
+        gallery: true,
+        offers: true,
+        reviews: true,
       },
     });
+
+    if (!profile) {
+      throw new NotFoundException('You do not have a business profile yet.');
+    }
+
+    return profile;
+  }
+  // update profile
+
+  async update(
+    userId: string,
+    dto: UpdateBusinessProfileDto,
+    galleryFiles: Express.Multer.File[] = [],
+  ) {
+    //  find existing profile
+    const existingProfile = await this.prisma.businessProfile.findUnique({
+      where: { ownerId: userId },
+      include: { gallery: true },
+    });
+
+    if (!existingProfile) {
+      throw new NotFoundException('No business profile found for this user.');
+    }
+
+    // upload new gallery images if provided
+    let uploadedFiles: any[] = [];
+    if (galleryFiles.length > 0) {
+      uploadedFiles = await Promise.all(
+        galleryFiles.map((file) => this.s3Service.uploadFile(file)),
+      );
+    }
+
+    //  create data payload for update
+    const updateData: any = { ...dto };
+
+    // append gallery creation if new files were uploaded
+    if (uploadedFiles.length > 0) {
+      updateData.gallery = {
+        create: uploadedFiles.map((f) => ({
+          filename: f.filename,
+          originalFilename: f.originalFilename,
+          path: f.path,
+          url: f.url,
+          fileType: f.fileType as FileType,
+          mimeType: f.mimeType,
+          size: f.size,
+        })),
+      };
+    }
+
+    //  update the profile
+    const updatedProfile = await this.prisma.businessProfile.update({
+      where: { id: existingProfile.id },
+      data: updateData,
+      include: { gallery: true },
+    });
+
+    return updatedProfile;
   }
 }
