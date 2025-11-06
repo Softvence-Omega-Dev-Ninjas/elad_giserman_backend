@@ -6,6 +6,7 @@ import {
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -27,6 +28,7 @@ import { UpdateBusinessProfileDto } from '../dto/update-bussiness-profile.dto';
 import { CreateOfferDto } from '../dto/create-offer.dto';
 import { handleRequest } from '@/common/utils/handle.request';
 import { OfferService } from '../service/offer.service';
+import { UpdateOfferDto } from '../dto/update-offer.dto';
 
 @ApiTags('Business Profiles')
 @ApiBearerAuth()
@@ -155,11 +157,37 @@ export class BusinessProfileController {
   //find one offer...
   @ValidateAuth()
   @Get(':id')
-  @ApiOperation({ summary: 'Get single offer by ID' })
-  findOne(@Param('id') id: string) {
+  @ApiOperation({ summary: 'Get single offer by ID (User View)' })
+  findOne(@GetUser('sub') userId: string, @Param('id') id: string) {
     return handleRequest(
-      () => this.offerService.findOne(id),
+      () => this.offerService.findOne(userId, id),
       'Offer fetched successfully',
+    );
+  }
+
+  // update offer
+  @ValidateOrganizer()
+  @Patch(':id')
+  @ApiOperation({ summary: 'Organizer updates offer' })
+  updateOffer(
+    @GetUser('sub') userId: string,
+    @Param('id') offerId: string,
+    @Body() dto: UpdateOfferDto,
+  ) {
+    return handleRequest(
+      () => this.offerService.updateOffer(userId, offerId, dto),
+      'Offer updated successfully',
+    );
+  }
+
+  // delete offer
+  @ValidateOrganizer()
+  @Delete(':id')
+  @ApiOperation({ summary: 'Organizer deletes offer' })
+  deleteOffer(@GetUser('sub') userId: string, @Param('id') offerId: string) {
+    return handleRequest(
+      () => this.offerService.deleteOffer(userId, offerId),
+      'Offer deleted successfully',
     );
   }
 }

@@ -1,4 +1,3 @@
-import { PartialType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
@@ -17,5 +16,3 @@ export class CreateOfferDto {
   @IsBoolean()
   isActive?: boolean;
 }
-
-export class UpdateOfferDto extends PartialType(CreateOfferDto) {}
