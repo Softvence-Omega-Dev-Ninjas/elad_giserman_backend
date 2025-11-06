@@ -1,55 +1,55 @@
 model User {
-  id String @id @default(uuid())
+  id                                                                  String                @id @default(uuid())
 
-  // Auth
-  email    String  @unique
-  username String  @unique
-  googleId String? @unique // google id or firebase uid
+  //                                                                  Auth
+  email                                                               String                @unique
+  username                                                            String                @unique
+  googleId                                                            String?               @unique // google id or firebase uid
   password String? // hashed password (nullable for social accounts)
 
-  // Profile
-  name      String? @default("Unnamed User")
-  avatarUrl String? @default("https://www.gravatar.com/avatar/000000000000000000000000000000?d=mp&f=y")
-  mobile    String?
+  //                                                                  Profile
+  name                                                                String?               @default("Unnamed User")
+  avatarUrl                                                           String?               @default("https://www.gravatar.com/avatar/000000000000000000000000000000?d=mp&f=y")
+  mobile                                                              String?
 
-  // Settings
-  role              UserRole     @default(USER)
-  status            UserStatus   @default(ACTIVE)
-  isVerified        Boolean      @default(false)
-  timezone          String       @default("UTC") // e.g., "America/New_York"
-  language          UserLanguage @default(EN)
-  allowNotification Boolean      @default(true)
+  //                                                                  Settings
+  role                                                                UserRole              @default(USER)
+  status                                                              UserStatus            @default(ACTIVE)
+  isVerified                                                          Boolean               @default(false)
+  timezone                                                            String                @default("UTC") // e.g., "America/New_York"
+  language                                                            UserLanguage          @default(EN)
+  allowNotification                                                   Boolean               @default(true)
 
   // Logout tracking
-  isLoggedIn   Boolean   @default(false)
-  lastLoginAt  DateTime?
-  lastLogoutAt DateTime?
-  lastActiveAt DateTime?
+  isLoggedIn                                                          Boolean               @default(false)
+  lastLoginAt                                                         DateTime?
+  lastLogoutAt                                                        DateTime?
+  lastActiveAt                                                        DateTime?
 
-  // OTP
+  //                                                                  OTP
   otp          String? // 4 digit hashed OTP code
-  otpExpiresAt DateTime?
-  otpType      OtpType?
+  otpExpiresAt                                                        DateTime?
+  otpType                                                             OtpType?
 
-  // Subscription-related
-  stripeCustomerId String? @unique // Stripe customer id
+  //                                                                  Subscription-related
+  stripeCustomerId                                                    String?               @unique // Stripe customer id
 
   subscriptionStatus SubscriptionStatus? // last known overall status
   trialEndsAt        DateTime? // 3-month free trial expiry timestamp
 
-  // current plan quick link 
-  currentPlanId String?
-  currentPlan   SubscriptionPlan? @relation(fields: [currentPlanId], references: [id], onDelete: SetNull)
+  // current plan quick link
+  currentPlanId                                                       String?
+  currentPlan                                                         SubscriptionPlan?    @relation(fields: [currentPlanId], references: [id], onDelete: SetNull)
 
-  notifications       UserNotification[]
-  userSubscription    UserSubscription[]
-  paymentTransactions PaymentTransaction[]
-  reviews   Review[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-
+  notifications                                                       UserNotification[]
+  userSubscription                                                    UserSubscription[]
+  paymentTransactions                                                 PaymentTransaction[]
+  reviews                                                             Review[]
+  createdAt                                                           DateTime              @default(now())
+  updatedAt                                                           DateTime              @default(now()) @updatedAt
+  businessProfile                                                     BusinessProfile?
   @@map("users")
-  BusinessProfile BusinessProfile[]
+
 }
 
 enum UserRole {
