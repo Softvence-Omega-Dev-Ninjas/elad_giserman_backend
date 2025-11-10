@@ -6,7 +6,6 @@ import { UserModule } from './user/user.module';
 import { ReviewModule } from './review/review.module';
 // import { ReviewController } from './review/review.controller';
 
-
 @Module({
   imports: [AuthModule, AdminModule, OrganizerModule, UserModule, ReviewModule],
   controllers: [],

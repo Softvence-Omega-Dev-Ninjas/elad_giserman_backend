@@ -5,29 +5,33 @@ import { PrismaService } from '@/lib/prisma/prisma.service';
 
 @Injectable()
 export class ReviewService {
-  constructor(private readonly prisma:PrismaService){}
-
+  constructor(private readonly prisma: PrismaService) {}
 
   // create review according to restaurnt or bussiness profile
-  async createReview(createReviewDto: CreateReviewDto,userId:string) {
-    if(!createReviewDto.businessProfileId){
-      throw new HttpException("BussinessProfile id is required",HttpStatus.BAD_REQUEST)
+  async createReview(createReviewDto: CreateReviewDto, userId: string) {
+    if (!createReviewDto.businessProfileId) {
+      throw new HttpException(
+        'BussinessProfile id is required',
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    const result=await this.prisma.review.create({
-      data:{
-        comment:createReviewDto.comment,
-        rating:createReviewDto.rating,
-        businessProfileId:createReviewDto.businessProfileId,
-        userId:userId
-      }
-    })
-    return result
+    const result = await this.prisma.review.create({
+      data: {
+        comment: createReviewDto.comment,
+        rating: createReviewDto.rating,
+        businessProfileId: createReviewDto.businessProfileId,
+        userId: userId,
+      },
+    });
+    return result;
   }
 
-  
   // update reivew----this review just can update by admin and review owner
-  async updateReview(id: string, updateReviewDto: UpdateReviewDto, userId: string) {
-
+  async updateReview(
+    id: string,
+    updateReviewDto: UpdateReviewDto,
+    userId: string,
+  ) {
     const review = await this.prisma.review.findUnique({
       where: { id },
     });
@@ -44,7 +48,7 @@ export class ReviewService {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
-    const isAdmin = user.role === 'ADMIN'; 
+    const isAdmin = user.role === 'ADMIN';
     const isOwner = review.userId === userId;
 
     // just admin and review owner can update his review
@@ -64,6 +68,4 @@ export class ReviewService {
 
     return updatedReview;
   }
-
-
 }
