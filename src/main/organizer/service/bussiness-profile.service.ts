@@ -10,6 +10,7 @@ import { FileType } from '@prisma/client';
 
 import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
 import { UpdateBusinessProfileDto } from '../dto/update-bussiness-profile.dto';
+import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
 
 @Injectable()
 export class BusinessProfileService {
@@ -158,8 +159,20 @@ export class BusinessProfileService {
 
   
   // get all profile
-async getAllProfiles() {
+async getAllProfiles(filter:ProfileFilter) {
+  const {search,profileType}=filter
+  const where:any={}
+  if(search){
+    where.OR=[
+      {title:{contains:search,mode:'insensitive'}},
+      {description:{contains:search,mode:'insensitive'}}
+    ]
+  }
+  if(profileType){
+    where.profileType=profileType
+  }
   const profiles = await this.prisma.businessProfile.findMany({
+    where,
     include: {
       gallery: true, 
     },
