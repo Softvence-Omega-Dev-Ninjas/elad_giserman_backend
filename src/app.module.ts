@@ -12,6 +12,7 @@ import { JwtStrategy } from './common/jwt/jwt.strategy';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { LibModule } from './lib/lib.module';
 import { MainModule } from './main/main.module';
+// import { ReviewModule } from './main/review/review.module';
 
 @Module({
   imports: [
@@ -59,7 +60,6 @@ import { MainModule } from './main/main.module';
     }),
 
     MainModule,
-
     LibModule,
   ],
   controllers: [AppController],
