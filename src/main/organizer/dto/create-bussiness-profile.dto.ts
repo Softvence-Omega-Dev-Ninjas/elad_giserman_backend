@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ProfileType } from '@prisma/client';
 
 export class CreateBusinessProfileDto {
   @ApiProperty({ example: 'The Coffee Spot' })
@@ -29,4 +30,11 @@ export class CreateBusinessProfileDto {
   @ApiProperty({ example: '10:00 PM' })
   @IsString()
   closingTime: string;
+
+  @ApiProperty({
+    description:"chose profile type"
+  })
+  @IsString()
+  @IsNotEmpty()
+  profileType:ProfileType
 }

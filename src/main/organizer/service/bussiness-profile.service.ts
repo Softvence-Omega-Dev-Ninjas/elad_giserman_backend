@@ -10,6 +10,11 @@ import { FileType } from '@prisma/client';
 
 import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
 import { UpdateBusinessProfileDto } from '../dto/update-bussiness-profile.dto';
+import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
+
+function shuffleArray<T>(array: T[]): T[] {
+  return array.sort(() => Math.random() - 0.5);
+}
 
 @Injectable()
 export class BusinessProfileService {
@@ -18,11 +23,6 @@ export class BusinessProfileService {
     private readonly s3Service: S3Service,
   ) {}
 
-  /**
-   * Create a business profile with optional gallery images
-   * @param dto CreateBusinessProfileDto
-   * @param galleryFiles array of Express.Multer.File
-   */
 
   async create(
     id: string,
@@ -162,4 +162,48 @@ export class BusinessProfileService {
   }
 
   
+  // get all profile
+async getAllProfiles(filter: ProfileFilter) {
+  const { search, profileType } = filter;
+  const where: any = {};
+
+  if (search) {
+    where.OR = [
+      { title: { contains: search, mode: 'insensitive' } },
+      { description: { contains: search, mode: 'insensitive' } },
+    ];
+  }
+
+  if (profileType) {
+    where.profileType = profileType;
+  }
+
+  const profiles = await this.prisma.businessProfile.findMany({
+    where,
+    include: {
+      gallery: true,
+    },
+  });
+
+  //  Randomize order after fetching
+  const shuffledProfiles = shuffleArray(profiles);
+
+  const reviewStats = await this.prisma.review.groupBy({
+    by: ['businessProfileId'],
+    _count: { rating: true },
+    _avg: { rating: true },
+  });
+
+  const profilesWithStats = shuffledProfiles.map((profile) => {
+    const stats = reviewStats.find((r) => r.businessProfileId === profile.id);
+    return {
+      ...profile,
+      reviewCount: stats?._count.rating || 0,
+      avgRating: stats?._avg.rating || null,
+    };
+  });
+
+  return profilesWithStats;
+}
+
 }

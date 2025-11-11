@@ -40,11 +40,12 @@ model User {
   // current plan quick link
   currentPlanId                                                       String?
   currentPlan                                                         SubscriptionPlan?    @relation(fields: [currentPlanId], references: [id], onDelete: SetNull)
-
+ memberShip                                                           MemberShip @default(FREE)
   notifications                                                       UserNotification[]
   userSubscription                                                    UserSubscription[]
   paymentTransactions                                                 PaymentTransaction[]
   reviews                                                             Review[]
+  reviewReply                                                         ReviewReply[]
   createdAt                                                           DateTime              @default(now())
   updatedAt                                                           DateTime              @default(now()) @updatedAt
   businessProfile                                                     BusinessProfile?
@@ -72,6 +73,10 @@ enum OtpType {
   RESET
 }
 
+enum MemberShip {
+  FREE
+  VIP
+}
 enum UserLanguage {
   EN
   HE

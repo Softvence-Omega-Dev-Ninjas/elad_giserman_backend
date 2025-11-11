@@ -8,9 +8,12 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Patch,
   Post,
+  Query,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -29,6 +32,8 @@ import { CreateOfferDto } from '../dto/create-offer.dto';
 import { handleRequest } from '@/common/utils/handle.request';
 import { OfferService } from '../service/offer.service';
 import { UpdateOfferDto } from '../dto/update-offer.dto';
+import { ProfileType } from '@prisma/client';
+import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
 
 @ApiTags('Business Profiles')
 @ApiBearerAuth()
@@ -56,6 +61,11 @@ export class BusinessProfileController {
         location: { type: 'string', example: 'Banani, Dhaka' },
         openingTime: { type: 'string', example: '08:00 AM' },
         closingTime: { type: 'string', example: '10:00 PM' },
+        profileType: {
+          type: 'string',
+          enum: Object.values(ProfileType),
+          example: ProfileType.BAR,
+        },
         gallery: {
           type: 'array',
           items: { type: 'string', format: 'binary' },
@@ -100,6 +110,11 @@ export class BusinessProfileController {
         openingTime: { type: 'string', example: '09:00 AM' },
         closingTime: { type: 'string', example: '11:00 PM' },
         isActive: { type: 'boolean', example: true },
+        profileType: {
+          type: 'string',
+          enum: Object.values(ProfileType),
+          example: ProfileType.BAR,
+        },
         gallery: {
           type: 'array',
           items: { type: 'string', format: 'binary' },
@@ -189,5 +204,22 @@ export class BusinessProfileController {
       () => this.offerService.deleteOffer(userId, offerId),
       'Offer deleted successfully',
     );
+  }
+
+
+
+  // get all bussinees profile
+  @Get('')
+  async getAllProfile(@Query() filter: ProfileFilter) {
+    try {
+      const res = await this.businessProfileService.getAllProfiles(filter);
+      return {
+        status: HttpStatus.OK,
+        message: "Profile fetched successful",
+        data: res
+      };
+    } catch (err) {
+      throw new HttpException(err.message, err.status);
+    }
   }
 }
