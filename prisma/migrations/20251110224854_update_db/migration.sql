@@ -2,6 +2,9 @@
 CREATE TYPE "FileType" AS ENUM ('image', 'docs', 'link', 'document', 'any', 'video', 'audio');
 
 -- CreateEnum
+CREATE TYPE "OfferStatus" AS ENUM ('PENDING', 'APPROVED', 'REJECTED');
+
+-- CreateEnum
 CREATE TYPE "BillingPeriod" AS ENUM ('MONTHLY', 'BIANNUAL', 'YEARLY');
 
 -- CreateEnum
@@ -24,6 +27,22 @@ CREATE TYPE "OtpType" AS ENUM ('REGISTER', 'LOGIN', 'RESET');
 
 -- CreateEnum
 CREATE TYPE "UserLanguage" AS ENUM ('EN', 'HE');
+
+-- CreateTable
+CREATE TABLE "business_profiles" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "location" TEXT NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "openingTime" TEXT NOT NULL,
+    "closingTime" TEXT NOT NULL,
+    "ownerId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "business_profiles_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "file_instances" (
@@ -64,6 +83,44 @@ CREATE TABLE "user_notifications" (
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "user_notifications_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "offers" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "status" "OfferStatus" NOT NULL DEFAULT 'PENDING',
+    "businessId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "offers_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "reviews" (
+    "id" TEXT NOT NULL,
+    "comment" TEXT NOT NULL,
+    "rating" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
+    "businessProfileId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "reviews_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ReviewReply" (
+    "id" TEXT NOT NULL,
+    "comment" TEXT NOT NULL,
+    "reviewId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "ReviewReply_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -186,6 +243,17 @@ CREATE TABLE "users" (
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "_BusinessProfileToFileInstance" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL,
+
+    CONSTRAINT "_BusinessProfileToFileInstance_AB_pkey" PRIMARY KEY ("A","B")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "business_profiles_ownerId_key" ON "business_profiles"("ownerId");
+
 -- CreateIndex
 CREATE UNIQUE INDEX "user_notifications_userId_notificationId_key" ON "user_notifications"("userId", "notificationId");
 
@@ -240,11 +308,29 @@ CREATE UNIQUE INDEX "users_googleId_key" ON "users"("googleId");
 -- CreateIndex
 CREATE UNIQUE INDEX "users_stripeCustomerId_key" ON "users"("stripeCustomerId");
 
+-- CreateIndex
+CREATE INDEX "_BusinessProfileToFileInstance_B_index" ON "_BusinessProfileToFileInstance"("B");
+
+-- AddForeignKey
+ALTER TABLE "business_profiles" ADD CONSTRAINT "business_profiles_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
 -- AddForeignKey
 ALTER TABLE "user_notifications" ADD CONSTRAINT "user_notifications_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "user_notifications" ADD CONSTRAINT "user_notifications_notificationId_fkey" FOREIGN KEY ("notificationId") REFERENCES "notifications"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "offers" ADD CONSTRAINT "offers_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "business_profiles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "reviews" ADD CONSTRAINT "reviews_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "reviews" ADD CONSTRAINT "reviews_businessProfileId_fkey" FOREIGN KEY ("businessProfileId") REFERENCES "business_profiles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ReviewReply" ADD CONSTRAINT "ReviewReply_reviewId_fkey" FOREIGN KEY ("reviewId") REFERENCES "reviews"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "user_subscriptions" ADD CONSTRAINT "user_subscriptions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -266,3 +352,9 @@ ALTER TABLE "payment_transactions" ADD CONSTRAINT "payment_transactions_invoiceI
 
 -- AddForeignKey
 ALTER TABLE "users" ADD CONSTRAINT "users_currentPlanId_fkey" FOREIGN KEY ("currentPlanId") REFERENCES "subscription_plans"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_BusinessProfileToFileInstance" ADD CONSTRAINT "_BusinessProfileToFileInstance_A_fkey" FOREIGN KEY ("A") REFERENCES "business_profiles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_BusinessProfileToFileInstance" ADD CONSTRAINT "_BusinessProfileToFileInstance_B_fkey" FOREIGN KEY ("B") REFERENCES "file_instances"("id") ON DELETE CASCADE ON UPDATE CASCADE;
