@@ -1,8 +1,9 @@
-import { Controller, Get, HttpException, HttpStatus, Param, Query } from "@nestjs/common";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Query } from "@nestjs/common";
+import { ApiBearerAuth, ApiConsumes, ApiTags } from "@nestjs/swagger";
 import { AdminPlatfromManagementService } from "../service/admin.platfromManagement.service";
 import { ValidateAdmin } from "@/common/jwt/jwt.decorator";
 import { PlatformFilter } from "../dto/getPlatform.dto";
+import { UpdateStatusDto } from "../dto/updateStatus.dto";
 
 
 @Controller('platform')
@@ -35,6 +36,29 @@ export class AdminPlatformManagementController {
         
     }catch(error){
         throw new HttpException(error.message,error.status)
+    }
+  }
+
+
+  @ValidateAdmin()
+  @Delete('delete-user/:id')
+  async deleteUserByAdmin(@Param('id') id:string){
+    try{
+     return this.platformManagementService.deleteuser(id)
+    }catch(error){
+        throw new HttpException(error.message,error.status)
+    }
+  }
+
+
+  @ValidateAdmin()
+  @Patch('update-status/:id')
+  @ApiConsumes('multipart/formdata')
+  async updateUserStatus(@Body() dto:UpdateStatusDto, @Param('id') id:string){
+    try{
+        
+    }catch(err){
+        throw new HttpException(err.message,err.status)
     }
   }
 }

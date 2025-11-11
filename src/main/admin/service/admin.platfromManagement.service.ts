@@ -1,6 +1,7 @@
 import { PrismaService } from "@/lib/prisma/prisma.service";
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { PlatformFilter } from "../dto/getPlatform.dto";
+import { UpdateStatusDto } from "../dto/updateStatus.dto";
 
 @Injectable()
 export class AdminPlatfromManagementService {
@@ -74,4 +75,58 @@ export class AdminPlatfromManagementService {
         }
       return isUserExist
      }
+
+
+    //  delete user 
+    async deleteuser(userId:string){
+        if(!userId){
+            throw new BadRequestException('User Id is requrid')
+        }
+        const isUserExist=await this.prisma.user.findUnique({
+            where:{
+                id:userId
+            }
+        })
+        if(!isUserExist){
+            throw new NotFoundException(`User not found with given id ${userId}`)
+        }
+        await this.prisma.user.delete({
+            where:{
+                id:userId
+            }
+        })
+        return{
+            status:HttpStatus.OK,
+            message:"User delete successful"
+        }
+    }
+
+
+    // update user status
+
+    async UpdateUserStatus(dto:UpdateStatusDto,userId:string){
+        if(!userId){
+            throw new BadRequestException("user id is required")
+        }
+        const isUserExist=await this.prisma.user.findUnique({
+            where:{
+                id:userId
+            }
+        })
+         if(!isUserExist){
+            throw new NotFoundException(`User not found with given id ${userId}`)
+        }
+       await this.prisma.user.update({
+        where:{
+            id:userId
+        },
+        data:{
+            status:dto.status
+        }
+       })
+       return{
+        status:HttpStatus.OK,
+        message:`User update to ${dto.status}`
+       }
+    }
 }
