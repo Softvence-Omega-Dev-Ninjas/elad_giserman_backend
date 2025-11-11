@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, HttpStatus, Query } from "@nestjs/common";
+import { Controller, Get, HttpException, HttpStatus, Param, Query } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { AdminPlatfromManagementService } from "../service/admin.platfromManagement.service";
 import { ValidateAdmin } from "@/common/jwt/jwt.decorator";
@@ -25,6 +25,16 @@ export class AdminPlatformManagementController {
       };
     } catch (error) {
       throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+
+  @Get('user/:id')
+  async getUserDetails(@Param('id') id:string){
+    try{
+        
+    }catch(error){
+        throw new HttpException(error.message,error.status)
     }
   }
 }

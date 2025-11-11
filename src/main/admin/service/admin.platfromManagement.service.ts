@@ -1,12 +1,12 @@
 import { PrismaService } from "@/lib/prisma/prisma.service";
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { PlatformFilter } from "../dto/getPlatform.dto";
 
 @Injectable()
 export class AdminPlatfromManagementService {
  constructor( private readonly prisma:PrismaService){}
 
- async getPlatfromStat(filter:PlatformFilter){
+    async getPlatfromStat(filter:PlatformFilter){
     const {search,date,userType}=filter
     const where:any={}
     if(search){
@@ -24,7 +24,6 @@ export class AdminPlatfromManagementService {
     const selected = new Date(date);
     const nextDay = new Date(selected);
     nextDay.setDate(selected.getDate() + 1);
-
     //This ensures only records created on that calendar date are matched
     where.createdAt = {
       gte: selected,
@@ -57,5 +56,22 @@ export class AdminPlatfromManagementService {
     users:users
  }
 
- }
+    }
+
+
+    //  get user details
+     async getUserDetils(userId:string){
+        if(!userId){
+            throw new NotFoundException("user id is requird")
+        }
+        const isUserExist=await this.prisma.user.findUnique({
+            where:{
+                id:userId
+            }
+        })
+        if(!isUserExist){
+            throw new NotFoundException(`User not found with id ${userId}`)
+        }
+      return isUserExist
+     }
 }
