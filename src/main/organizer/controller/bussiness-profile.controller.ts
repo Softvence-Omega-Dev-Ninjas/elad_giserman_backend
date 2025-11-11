@@ -8,6 +8,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -189,5 +191,22 @@ export class BusinessProfileController {
       () => this.offerService.deleteOffer(userId, offerId),
       'Offer deleted successfully',
     );
+  }
+
+
+
+  // get all bussinees profile
+  @Get('')
+  async getAllProfile(){
+    try{
+      const res=await this.businessProfileService.getAllProfiles()
+      return{
+        status:HttpStatus.OK,
+        message:"Profile fetched successful",
+        data:res
+      }
+    }catch(err){
+      throw new HttpException(err.message,err.status)
+    }
   }
 }

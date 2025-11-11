@@ -45,6 +45,7 @@ model User {
   userSubscription                                                    UserSubscription[]
   paymentTransactions                                                 PaymentTransaction[]
   reviews                                                             Review[]
+  reviewReply                                                         ReviewReply[]
   createdAt                                                           DateTime              @default(now())
   updatedAt                                                           DateTime              @default(now()) @updatedAt
   businessProfile                                                     BusinessProfile?

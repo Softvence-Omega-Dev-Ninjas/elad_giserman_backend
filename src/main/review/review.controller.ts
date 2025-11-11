@@ -14,6 +14,8 @@ import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { GetUser, ValidateAuth } from '@/common/jwt/jwt.decorator';
+import { ReviewReply } from '@prisma/client';
+import { ReviewReplyDTO } from './dto/create-reviewReply';
 
 @ApiTags('Reviews')
 @Controller('review')
@@ -29,7 +31,7 @@ export class ReviewController {
     @GetUser('sub') id: string,
   ) {
     try {
-      const res = this.reviewService.createReview(createReviewDto, id);
+      const res =await this.reviewService.createReview(createReviewDto, id);
       return {
         status: HttpStatus.CREATED,
         message: 'your review posted successful',
@@ -37,6 +39,17 @@ export class ReviewController {
       };
     } catch (err) {
       throw new HttpException(err.message, err.status);
+    }
+  }
+ @Post('reply')
+  @ValidateAuth()
+  @ApiBearerAuth()
+  async postReviewReplay(@Body() dto:ReviewReplyDTO,@GetUser('sub') id:string){
+    try{
+      const res=await this.reviewService.postReplyOfReview(dto,id)
+      return res
+    }catch(error){
+      throw new HttpException(error.message,error.status)
     }
   }
 
@@ -63,4 +76,7 @@ export class ReviewController {
       throw new HttpException(error.message, error.status);
     }
   }
+
+
+ 
 }
