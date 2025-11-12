@@ -222,4 +222,36 @@ export class BusinessProfileController {
       throw new HttpException(err.message, err.status);
     }
   }
+
+
+  // get all review
+  @Get('get-all-review')
+  async getAllReviews(@GetUser('sub') userId: string) {
+    try {
+      const res = await this.businessProfileService.getAllReviews(userId);
+      return {
+        status: HttpStatus.OK,
+        message: "Reviews fetched successful",
+        data: res
+      };
+    } catch (err) {
+      throw new HttpException(err.message, err.status);
+    }
+  }
+
+  // get single review
+
+  @Get('review/:id')
+  async getSingleReview(@Param('id') id: string) {
+    try {
+      const res = await this.businessProfileService.getSingleReview(id);
+      return {
+        status: HttpStatus.OK,
+        message: "Review fetched successful",
+        data: res
+      };
+    } catch (err) {
+      throw new HttpException(err.message, err.status);
+    }
+  }
 }

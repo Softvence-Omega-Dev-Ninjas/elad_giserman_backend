@@ -206,4 +206,39 @@ async getAllProfiles(filter: ProfileFilter) {
   return profilesWithStats;
 }
 
+
+// get all reviews
+async getAllReviews(userId: string) {
+
+  const findOrganizationProfile=await this.prisma.businessProfile.findFirst({
+    where:{
+      ownerId:userId
+    }
+  })
+  if(!findOrganizationProfile){
+    throw new NotFoundException("No business profile found for this user.");
+  }
+  const reviews = await this.prisma.review.findMany({
+    where: {
+      businessProfileId: findOrganizationProfile.id
+}
+  });
+  return reviews;
+}
+
+// get single review
+async getSingleReview(id: string) {
+  if(!id){
+    throw new BadRequestException("Review ID must be provided.");
+  }
+  const review = await this.prisma.review.findUnique({
+    where: {
+      id: id
+    }
+  });
+  if (!review) {
+    throw new NotFoundException("Review not found.");
+  }
+  return review;
+}
 }

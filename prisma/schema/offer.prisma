@@ -9,10 +9,24 @@ model Offer {
   business     BusinessProfile  @relation(fields: [businessId], references: [id], onDelete: Cascade)
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @default(now()) @updatedAt
-
+  redeemableOffer ReedemaOffer[]
   @@map("offers")
 }
+model ReedemaOffer {
+  id           String   @id @default(uuid())
+  offerId      String
+  offer        Offer    @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  code         String   @unique
+  isRedeemed   Boolean  @default(false)
+  redeemedAt   DateTime?
+  userId       String   @unique
+  user         User     @relation("UserReedemaOffer", fields: [userId], references: [id])
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
 
+  @@map("redeemable_offers")
+}
 enum OfferStatus {
   PENDING
   APPROVED
