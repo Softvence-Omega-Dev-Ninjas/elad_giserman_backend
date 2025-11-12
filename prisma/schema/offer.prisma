@@ -19,6 +19,8 @@ model ReedemaOffer {
   code         String   @unique
   isRedeemed   Boolean  @default(false)
   redeemedAt   DateTime?
+  bussinessId String @unique
+  business    BusinessProfile @relation(fields: [bussinessId], references: [id], onDelete: Cascade)
   userId       String   @unique
   user         User     @relation("UserReedemaOffer", fields: [userId], references: [id])
   expiresAt    DateTime

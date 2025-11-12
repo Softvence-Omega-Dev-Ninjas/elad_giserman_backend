@@ -241,4 +241,40 @@ async getSingleReview(id: string) {
   }
   return review;
 }
+
+
+
+// get organizations stat
+async getOrganizationStats(userId:string) {
+  const findOrganizationProfile=await this.prisma.businessProfile.findFirst({
+    where:{
+      ownerId:userId
+    }
+  })
+     
+    const [totalOffter,totalReedmOffer,totalReview]=await Promise.all([
+    this.prisma.offer.count({
+      where:{
+        businessId:findOrganizationProfile?.id
+      }
+    }),
+    this.prisma.reedemaOffer.count({
+      where:{
+        bussinessId:findOrganizationProfile?.id,
+        isRedeemed:true
+      }
+    }),
+    this.prisma.review.count({
+      where:{
+        businessProfileId:findOrganizationProfile?.id
+      }
+    })
+    
+    ])
+    return{
+      totalOffter:totalOffter,
+      totalReedmOffer:totalReedmOffer,
+      totalReview:totalReview
+    }
+}
 }
