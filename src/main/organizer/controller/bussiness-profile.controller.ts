@@ -10,6 +10,7 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  InternalServerErrorException,
   Param,
   Patch,
   Post,
@@ -221,5 +222,57 @@ export class BusinessProfileController {
     } catch (err) {
       throw new HttpException(err.message, err.status);
     }
+  }
+
+
+  // get all review
+  @Get('get-all-review')
+  async getAllReviews(@GetUser('sub') userId: string) {
+    try {
+      const res = await this.businessProfileService.getAllReviews(userId);
+      return {
+        status: HttpStatus.OK,
+        message: "Reviews fetched successful",
+        data: res
+      };
+    } catch (err) {
+      throw new HttpException(err.message, err.status);
+    }
+  }
+
+  // get single review
+
+  @ValidateAuth()
+  @Get('review/:id')
+  async getSingleReview(@Param('id') id: string) {
+    try {
+      const res = await this.businessProfileService.getSingleReview(id);
+      return {
+        status: HttpStatus.OK,
+        message: "Review fetched successful",
+        data: res
+      };
+    } catch (err) {
+      throw new HttpException(err.message, err.status);
+    }
+  }
+
+
+  // organizations stat
+
+  @ValidateOrganizer()
+  @Get('stat')
+  async getOrganizationStats(@GetUser('sub') userId:string) {
+    try {
+      const res = await this.businessProfileService.getOrganizationStats(userId);
+      return {
+        status: HttpStatus.OK,
+        message: "Organization stats fetched successful",
+        data: res
+      };
+    } catch (err) {
+      throw new InternalServerErrorException(err.message, err.status);
+    }
+
   }
 }

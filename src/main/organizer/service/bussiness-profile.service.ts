@@ -206,4 +206,75 @@ async getAllProfiles(filter: ProfileFilter) {
   return profilesWithStats;
 }
 
+
+// get all reviews
+async getAllReviews(userId: string) {
+
+  const findOrganizationProfile=await this.prisma.businessProfile.findFirst({
+    where:{
+      ownerId:userId
+    }
+  })
+  if(!findOrganizationProfile){
+    throw new NotFoundException("No business profile found for this user.");
+  }
+  const reviews = await this.prisma.review.findMany({
+    where: {
+      businessProfileId: findOrganizationProfile.id
+}
+  });
+  return reviews;
+}
+
+// get single review
+async getSingleReview(id: string) {
+  if(!id){
+    throw new BadRequestException("Review ID must be provided.");
+  }
+  const review = await this.prisma.review.findUnique({
+    where: {
+      id: id
+    }
+  });
+  if (!review) {
+    throw new NotFoundException("Review not found.");
+  }
+  return review;
+}
+
+
+
+// get organizations stat
+async getOrganizationStats(userId:string) {
+  const findOrganizationProfile=await this.prisma.businessProfile.findFirst({
+    where:{
+      ownerId:userId
+    }
+  })
+     
+    const [totalOffter,totalReedmOffer,totalReview]=await Promise.all([
+    this.prisma.offer.count({
+      where:{
+        businessId:findOrganizationProfile?.id
+      }
+    }),
+    this.prisma.reedemaOffer.count({
+      where:{
+        bussinessId:findOrganizationProfile?.id,
+        isRedeemed:true
+      }
+    }),
+    this.prisma.review.count({
+      where:{
+        businessProfileId:findOrganizationProfile?.id
+      }
+    })
+    
+    ])
+    return{
+      totalOffter:totalOffter,
+      totalReedmOffer:totalReedmOffer,
+      totalReview:totalReview
+    }
+}
 }
