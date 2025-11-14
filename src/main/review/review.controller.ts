@@ -31,7 +31,7 @@ export class ReviewController {
     @GetUser('sub') id: string,
   ) {
     try {
-      const res =await this.reviewService.createReview(createReviewDto, id);
+      const res = await this.reviewService.createReview(createReviewDto, id);
       return {
         status: HttpStatus.CREATED,
         message: 'your review posted successful',
@@ -41,15 +41,18 @@ export class ReviewController {
       throw new HttpException(err.message, err.status);
     }
   }
- @Post('reply')
+  @Post('reply')
   @ValidateAuth()
   @ApiBearerAuth()
-  async postReviewReplay(@Body() dto:ReviewReplyDTO,@GetUser('sub') id:string){
-    try{
-      const res=await this.reviewService.postReplyOfReview(dto,id)
-      return res
-    }catch(error){
-      throw new HttpException(error.message,error.status)
+  async postReviewReplay(
+    @Body() dto: ReviewReplyDTO,
+    @GetUser('sub') id: string,
+  ) {
+    try {
+      const res = await this.reviewService.postReplyOfReview(dto, id);
+      return res;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
     }
   }
 
@@ -76,7 +79,4 @@ export class ReviewController {
       throw new HttpException(error.message, error.status);
     }
   }
-
-
- 
 }

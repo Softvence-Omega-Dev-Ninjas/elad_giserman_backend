@@ -1,10 +1,10 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsOptional, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional, IsString } from 'class-validator';
 
 export class UpdateUserInfoDto {
   @ApiProperty({
-    description: "Change your name",
-    example: "Milon Hossain",
+    description: 'Change your name',
+    example: 'Milon Hossain',
     required: false,
   })
   @IsOptional()
@@ -12,8 +12,8 @@ export class UpdateUserInfoDto {
   name?: string;
 
   @ApiProperty({
-    description: "Change your phone number",
-    example: "4958485984",
+    description: 'Change your phone number',
+    example: '4958485984',
     required: false,
   })
   @IsOptional()
@@ -21,9 +21,9 @@ export class UpdateUserInfoDto {
   phone?: string;
 
   @ApiProperty({
-    description: "Upload your profile photo",
-    type: "string",
-    format: "binary",
+    description: 'Upload your profile photo',
+    type: 'string',
+    format: 'binary',
     required: false,
   })
   @IsOptional()

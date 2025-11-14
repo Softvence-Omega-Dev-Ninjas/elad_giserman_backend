@@ -5,6 +5,6 @@ import { S3Service } from '@/lib/s3/s3.service';
 
 @Module({
   controllers: [UserInfoController],
-  providers: [UserInfoService,S3Service],
+  providers: [UserInfoService, S3Service],
 })
 export class UserInfoModule {}
