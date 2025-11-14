@@ -86,6 +86,7 @@ export class UserInfoService {
         userId: userId,
       },
     });
+    // TODO: Here should be just acces primieum user after the payment complete It will update to active --> primium
     if (!user || usersSubscription?.status == 'ACTIVE')
       throw new ForbiddenException('Only premium users can redeem');
 

@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { PlatformFilter } from '../dto/getPlatform.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
-
+import { subDays, format } from 'date-fns';
 @Injectable()
 export class AdminPlatfromManagementService {
   constructor(private readonly prisma: PrismaService) {}
@@ -182,5 +182,46 @@ export class AdminPlatfromManagementService {
       success: true,
       data: result,
     };
+  }
+
+
+async getRedemptionGrowth() {
+    const today = new Date();
+    const startDate = subDays(today, 14); // last 15 days including today
+
+    // Fetch redemption logs in the last 15 days
+    const logs = await this.prisma.reedemaOffer.findMany({
+      where: {
+        redeemedAt: {
+          gte: startDate,
+          lte: today,
+        },
+      },
+      select: {
+        redeemedAt: true,
+      },
+    });
+
+    // Initialize a map for last 15 days
+    const growthMap: Record<string, number> = {};
+    for (let i = 0; i < 15; i++) {
+      const day = format(subDays(today, i), 'yyyy-MM-dd');
+      growthMap[day] = 0;
+    }
+
+    // Count redemptions per day
+    logs.forEach((log) => {
+      const day = format(log.redeemedAt!, 'yyyy-MM-dd');
+      if (growthMap[day] !== undefined) {
+        growthMap[day] += 1;
+      }
+    });
+
+    // Return sorted by date ascending
+    const growth = Object.keys(growthMap)
+      .sort()
+      .map((date) => ({ date, count: growthMap[date] }));
+
+    return growth;
   }
 }
