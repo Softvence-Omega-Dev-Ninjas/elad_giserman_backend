@@ -29,5 +29,5 @@ export class PlatformFilter {
   })
   @IsDateString()
   @IsOptional()
-  date?: string; 
+  date?: string;
 }

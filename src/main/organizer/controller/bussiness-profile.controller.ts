@@ -207,8 +207,6 @@ export class BusinessProfileController {
     );
   }
 
-
-
   // get all bussinees profile
   @Get('')
   async getAllProfile(@Query() filter: ProfileFilter) {
@@ -216,14 +214,13 @@ export class BusinessProfileController {
       const res = await this.businessProfileService.getAllProfiles(filter);
       return {
         status: HttpStatus.OK,
-        message: "Profile fetched successful",
-        data: res
+        message: 'Profile fetched successful',
+        data: res,
       };
     } catch (err) {
       throw new HttpException(err.message, err.status);
     }
   }
-
 
   // get all review
   @Get('get-all-review')
@@ -232,8 +229,8 @@ export class BusinessProfileController {
       const res = await this.businessProfileService.getAllReviews(userId);
       return {
         status: HttpStatus.OK,
-        message: "Reviews fetched successful",
-        data: res
+        message: 'Reviews fetched successful',
+        data: res,
       };
     } catch (err) {
       throw new HttpException(err.message, err.status);
@@ -249,30 +246,28 @@ export class BusinessProfileController {
       const res = await this.businessProfileService.getSingleReview(id);
       return {
         status: HttpStatus.OK,
-        message: "Review fetched successful",
-        data: res
+        message: 'Review fetched successful',
+        data: res,
       };
     } catch (err) {
       throw new HttpException(err.message, err.status);
     }
   }
 
-
   // organizations stat
-
   @ValidateOrganizer()
   @Get('stat')
-  async getOrganizationStats(@GetUser('sub') userId:string) {
+  async getOrganizationStats(@GetUser('sub') userId: string) {
     try {
-      const res = await this.businessProfileService.getOrganizationStats(userId);
+      const res =
+        await this.businessProfileService.getOrganizationStats(userId);
       return {
         status: HttpStatus.OK,
-        message: "Organization stats fetched successful",
-        data: res
+        message: 'Organization stats fetched successful',
+        data: res,
       };
     } catch (err) {
       throw new InternalServerErrorException(err.message, err.status);
     }
-
   }
 }
