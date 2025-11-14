@@ -184,8 +184,7 @@ export class AdminPlatfromManagementService {
     };
   }
 
-
-async getRedemptionGrowth() {
+  async getRedemptionGrowth() {
     const today = new Date();
     const startDate = subDays(today, 14); // last 15 days including today
 

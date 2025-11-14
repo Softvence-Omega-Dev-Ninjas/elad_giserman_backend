@@ -87,18 +87,17 @@ export class AdminPlatformManagementController {
     }
   }
 
-
   @Get('redemetion-growth')
-  async getRedemetionGrowth(){
-    try{
-    const res=await this.platformManagementService.getRedemptionGrowth()
-    return{
-      status:HttpStatus.OK,
-      message:'Redemption growth fetched successfully',
-      data:res,
-    }
-    }catch(error){
-      throw new InternalServerErrorException(error.message,error.status)
+  async getRedemetionGrowth() {
+    try {
+      const res = await this.platformManagementService.getRedemptionGrowth();
+      return {
+        status: HttpStatus.OK,
+        message: 'Redemption growth fetched successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
     }
   }
 }
