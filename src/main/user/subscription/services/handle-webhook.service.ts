@@ -33,15 +33,16 @@ export class HandleWebhookService {
 
   private async handleEvent(event: Stripe.Event) {
     switch (event.type) {
-      case 'payment_intent.succeeded':
-        await this.handlePaymentIntentSucceeded(
-          event.data.object as Stripe.PaymentIntent,
+      case 'setup_intent.succeeded':
+        await this.handleSetupIntentSucceeded(
+          event.data.object as Stripe.SetupIntent,
         );
         break;
 
-      case 'payment_intent.payment_failed':
-        await this.handlePaymentIntentFailed(
-          event.data.object as Stripe.PaymentIntent,
+      case 'setup_intent.setup_failed':
+      case 'setup_intent.canceled':
+        await this.handleSetupIntentFailed(
+          event.data.object as Stripe.SetupIntent,
         );
         break;
 
@@ -50,18 +51,17 @@ export class HandleWebhookService {
     }
   }
 
-  private async handlePaymentIntentSucceeded(
-    paymentIntent: Stripe.PaymentIntent,
-  ) {
-    const transactionId = paymentIntent.id;
+  private async handleSetupIntentSucceeded(setupIntent: Stripe.SetupIntent) {
+    const setupIntentId = setupIntent.id;
+    this.logger.log(`Handling setup_intent.succeeded for id ${setupIntentId}`);
 
     const subscription = await this.prisma.userSubscription.findUnique({
-      where: { stripeTransactionId: transactionId },
+      where: { stripeTransactionId: setupIntentId },
     });
 
     if (!subscription) {
       this.logger.error(
-        `Subscription not found for paymentIntent ${transactionId}`,
+        `Subscription not found for setupIntent ${setupIntentId}. Consider storing stripeSetupIntentId on the subscription or adding subscriptionId into SetupIntent metadata.`,
       );
       return;
     }
@@ -71,6 +71,11 @@ export class HandleWebhookService {
       this.logger.log(`Subscription ${subscription.id} already active`);
       return;
     }
+
+    const paymentMethodId =
+      typeof setupIntent.payment_method === 'string'
+        ? setupIntent.payment_method
+        : ((setupIntent.payment_method as any)?.id ?? null);
 
     try {
       await this.prisma.$transaction([
@@ -87,30 +92,36 @@ export class HandleWebhookService {
                 id: subscription.planId,
               },
             },
+            stripeDefaultPaymentMethodId: paymentMethodId,
+            memberShip: 'VIP',
+            trialEndsAt: null,
           },
         }),
       ]);
 
-      this.logger.log(`Payment succeeded for subscription ${subscription.id}`);
+      this.logger.log(
+        `SetupIntent succeeded and subscription ${subscription.id} activated (setupIntent: ${setupIntentId})`,
+      );
     } catch (err) {
       this.logger.error(
-        `Failed to update subscription ${subscription.id}`,
+        `Failed to update subscription ${subscription.id} for setupIntent ${setupIntentId}`,
         err,
       );
       throw err;
     }
   }
 
-  private async handlePaymentIntentFailed(paymentIntent: Stripe.PaymentIntent) {
-    const transactionId = paymentIntent.id;
+  private async handleSetupIntentFailed(setupIntent: Stripe.SetupIntent) {
+    const setupIntentId = setupIntent.id;
+    this.logger.warn(`Handling failed/canceled setup_intent ${setupIntentId}`);
 
     const subscription = await this.prisma.userSubscription.findUnique({
-      where: { stripeTransactionId: transactionId },
+      where: { stripeTransactionId: setupIntentId },
     });
 
     if (!subscription) {
       this.logger.error(
-        `Subscription not found for failed paymentIntent ${transactionId}`,
+        `Subscription not found for failed setupIntent ${setupIntentId}`,
       );
       return;
     }
@@ -120,10 +131,12 @@ export class HandleWebhookService {
         where: { id: subscription.id },
         data: { status: 'FAILED', failedAt: new Date() },
       });
-      this.logger.warn(`Payment failed for subscription ${subscription.id}`);
+      this.logger.warn(
+        `SetupIntent failed for subscription ${subscription.id} (setupIntent: ${setupIntentId})`,
+      );
     } catch (err) {
       this.logger.error(
-        `Failed to update failed subscription ${subscription.id}`,
+        `Failed to update subscription ${subscription.id} for failed setupIntent ${setupIntentId}`,
         err,
       );
       throw err;

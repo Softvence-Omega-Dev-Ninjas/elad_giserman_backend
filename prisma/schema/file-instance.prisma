@@ -12,8 +12,9 @@ model FileInstance {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  @@map("file_instances")
   BusinessProfile BusinessProfile[]
+
+  @@map("file_instances")
 }
 
 enum FileType {

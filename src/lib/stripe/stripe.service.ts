@@ -43,7 +43,7 @@ export class StripeService {
       currency,
       recurring: {
         interval,
-        interval_count: intervalCount, // 6 for BIANNUAL
+        interval_count: intervalCount,
       },
     });
 
@@ -106,82 +106,55 @@ export class StripeService {
     return deletedProduct;
   }
 
-  // Payment Intent Management
-  async retrievePaymentIntent(paymentIntentId: string) {
-    const pi = await this.stripe.paymentIntents.retrieve(paymentIntentId);
-    this.logger.log(`Retrieved PaymentIntent ${paymentIntentId}`);
-    return pi;
+  // Setup Intent Management
+  async retrieveSetupIntent(setupIntentId: string) {
+    const setupIntent = await this.stripe.setupIntents.retrieve(setupIntentId);
+    this.logger.log(`Retrieved SetupIntent ${setupIntentId}`);
+    return setupIntent;
   }
 
-  async createPaymentIntent({
-    amount,
-    currency,
-    customerId,
-    metadata,
-  }: {
-    amount: number;
-    currency: string;
-    customerId: string;
-    metadata: StripePaymentMetadata;
-  }) {
-    const intent = await this.stripe.paymentIntents.create(
-      {
-        amount,
-        currency,
-        customer: customerId,
-        receipt_email: metadata.email,
-        automatic_payment_methods: {
-          enabled: true,
-        },
-        metadata,
-      },
-      {
-        idempotencyKey: `pi_${metadata.userId}_${metadata.planId}`,
-      },
-    );
+  async createSetupIntent(metadata: StripePaymentMetadata) {
+    try {
+      // 1) find or create customer
+      const customer = await this.getOrCreateCustomerId(
+        metadata.userId,
+        metadata.name,
+        metadata.email,
+      );
 
-    this.logger.log(`Created payment intent ${intent.id}`);
-    return intent;
-  }
+      const customerId = customer.id;
 
-  // Checkout session Management
-  async createCheckoutSession({
-    userId,
-    priceId,
-    successUrl,
-    cancelUrl,
-    metadata,
-  }: {
-    userId: string;
-    priceId: string;
-    successUrl: string;
-    cancelUrl: string;
-    metadata: StripePaymentMetadata;
-  }) {
-    const customer = await this.getOrCreateCustomerId(
-      userId,
-      metadata.email,
-      metadata.name,
-    );
+      this.logger.log(
+        `Created new Stripe customer ${customerId} for user ${metadata.userId}`,
+      );
 
-    const session = await this.stripe.checkout.sessions.create({
-      line_items: [
+      // 2) create SetupIntent (no charge — collects & attaches payment method for future use)
+      const setupIntent = await this.stripe.setupIntents.create(
         {
-          price: priceId,
-          quantity: 1,
+          customer: customerId,
+          payment_method_types: ['card'],
+          usage: 'off_session', // important for subscriptions / future off-session charges
+          metadata: {
+            ...metadata,
+            customerId,
+          },
         },
-      ],
-      customer: customer.id,
-      mode: 'subscription',
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-      metadata,
-    });
+        {
+          idempotencyKey: `si_${metadata.userId}_${metadata.planId ?? 'no-plan'}`,
+        },
+      );
 
-    this.logger.log(
-      `Created checkout session ${session.id} for user ${userId}`,
-    );
-    return session;
+      this.logger?.log(
+        `Created SetupIntent ${setupIntent.id} for customer ${customerId}`,
+      );
+      return setupIntent; // contains id and client_secret
+    } catch (err) {
+      this.logger?.error(
+        'createSetupIntent failed',
+        (err as any)?.message ?? err,
+      );
+      throw err; // bubble up to caller so your HandleError decorator / logger handles it
+    }
   }
 
   // Customer Management

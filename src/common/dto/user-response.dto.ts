@@ -42,6 +42,12 @@ export class UserResponseDto {
   @Expose()
   allowNotification: boolean;
 
+  @Expose()
+  memberShip: string;
+
+  @Expose()
+  trialEndsAt?: Date;
+
   // ===== Activity tracking =====
   @Expose()
   isLoggedIn: boolean;
