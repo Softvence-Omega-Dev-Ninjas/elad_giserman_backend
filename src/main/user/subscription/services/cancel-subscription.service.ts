@@ -4,6 +4,7 @@ import { successResponse, TResponse } from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { StripeService } from '@/lib/stripe/stripe.service';
 import { Injectable, Logger } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class CancelSubscriptionService {
@@ -18,7 +19,10 @@ export class CancelSubscriptionService {
   async cancelSubscriptionImmediately(userId: string): Promise<TResponse<any>> {
     const subscription = await this.prismaService.userSubscription.findFirst({
       where: { userId, status: 'ACTIVE' },
-      orderBy: { createdAt: 'desc' },
+      orderBy: [
+        { updatedAt: Prisma.SortOrder.desc },
+        { createdAt: Prisma.SortOrder.desc },
+      ],
     });
 
     if (!subscription || !subscription.stripeSubscriptionId) {

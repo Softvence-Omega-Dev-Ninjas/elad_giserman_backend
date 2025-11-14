@@ -53,12 +53,6 @@ export class HandleWebhookService {
         );
         break;
 
-      // case 'customer.subscription.deleted':
-      //   await this.handleCustomerSubscriptionDeleted(
-      //     event.data.object as Stripe.Subscription,
-      //   );
-      //   break;
-
       case 'invoice.paid':
       case 'invoice.payment_succeeded':
         await this.handleInvoicePaid(event.data.object as Stripe.Invoice);
@@ -206,34 +200,6 @@ export class HandleWebhookService {
       });
     }
   }
-
-  // private async handleCustomerSubscriptionDeleted(
-  //   subscription: Stripe.Subscription,
-  // ) {
-  //   const stripeSubId = subscription.id;
-  //   this.logger.log(`customer.subscription.deleted: ${stripeSubId}`);
-
-  //   const local = await this.prisma.userSubscription.findUnique({
-  //     where: { stripeSubscriptionId: stripeSubId },
-  //   });
-
-  //   if (!local) {
-  //     this.logger.warn(
-  //       `No local subscription found for deleted stripe subscription ${stripeSubId}`,
-  //     );
-  //     return;
-  //   }
-
-  //   await this.prisma.userSubscription.update({
-  //     where: { id: local.id },
-  //     data: {
-  //       status: 'CANCELED',
-  //       planEndedAt: subscription.ended_at
-  //         ? new Date(subscription.ended_at * 1000)
-  //         : local.planEndedAt,
-  //     },
-  //   });
-  // }
 
   private async handleInvoicePaid(invoice: Stripe.Invoice) {
     this.logger.log(`invoice.${invoice.status}: ${invoice.id}`);
