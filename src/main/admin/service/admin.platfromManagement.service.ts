@@ -74,7 +74,7 @@ export class AdminPlatfromManagementService {
       //  Recent business profiles
       this.prisma.businessProfile.findMany({
         orderBy: { createdAt: 'desc', updatedAt: 'desc' },
-        take: 1,
+        take: 5,
       }),
 
       // Recent reviews
