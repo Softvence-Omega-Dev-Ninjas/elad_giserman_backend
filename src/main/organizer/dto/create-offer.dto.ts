@@ -11,9 +11,12 @@ export class CreateOfferDto {
   @IsString()
   description?: string;
 
-  @ApiProperty({description:"here will go the code for offer ", example:"PZ20"})
+  @ApiProperty({
+    description: 'here will go the code for offer ',
+    example: 'PZ20',
+  })
   @IsString()
-  code :string
+  code: string;
 
   @ApiProperty({ example: true, required: false })
   @IsOptional()
@@ -22,5 +25,5 @@ export class CreateOfferDto {
 
   @ApiProperty({ example: '2024-12-31T23:59:59.999Z' })
   @IsDate()
-  expiresAt:Date
+  expiresAt: Date;
 }

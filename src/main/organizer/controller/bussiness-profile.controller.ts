@@ -270,7 +270,4 @@ export class BusinessProfileController {
       throw new InternalServerErrorException(err.message, err.status);
     }
   }
-
-
-  
 }

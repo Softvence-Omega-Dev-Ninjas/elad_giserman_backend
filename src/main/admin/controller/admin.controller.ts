@@ -1,4 +1,11 @@
-import { Controller, Get, Patch, Param, Body, InternalServerErrorException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Patch,
+  Param,
+  Body,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -47,6 +54,4 @@ export class AdminController {
       'All offers fetched successfully',
     );
   }
-
-
 }

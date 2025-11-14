@@ -1,4 +1,9 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 // import { CreateUserInfoDto } from './dto/create-user-info.dto';
 import { UpdateUserInfoDto } from './dto/update-user-info.dto';
 import { PrismaService } from '@/lib/prisma/prisma.service';
@@ -63,27 +68,25 @@ export class UserInfoService {
     return res;
   }
 
-
-
   // scan qr code for get offer-------
   // user will go to restaurate and scan the qr code and get the offer
-async scanOffer(code: string, userId: string) {
+  async scanOffer(code: string, userId: string) {
     const offer = await this.prisma.offer.findFirst({
       where: { code },
       include: { business: true },
     });
     if (!offer) throw new NotFoundException('Offer not found');
     if (!offer.isActive) throw new BadRequestException('Offer inactive');
-    if (offer.expiredsAt && offer.expiredsAt < new Date()) 
+    if (offer.expiredsAt && offer.expiredsAt < new Date())
       throw new BadRequestException('Offer expired');
 
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    const usersSubscription=await this.prisma.userSubscription.findFirst({
-      where:{
-        userId:userId,
-      }
-    })
-    if (!user || usersSubscription?.status=="ACTIVE")
+    const usersSubscription = await this.prisma.userSubscription.findFirst({
+      where: {
+        userId: userId,
+      },
+    });
+    if (!user || usersSubscription?.status == 'ACTIVE')
       throw new ForbiddenException('Only premium users can redeem');
 
     const redeemed = await this.prisma.reedemaOffer.findFirst({
@@ -125,10 +128,10 @@ async scanOffer(code: string, userId: string) {
         offerId: offer.id,
         userId,
         redeemedAt: new Date(),
-        expiresAt:new Date(),
-        code:offer.code,
-        bussinessId:offer.businessId,
-        isRedeemed:true
+        expiresAt: new Date(),
+        code: offer.code,
+        bussinessId: offer.businessId,
+        isRedeemed: true,
       },
     });
 
@@ -139,13 +142,11 @@ async scanOffer(code: string, userId: string) {
     };
   }
 
-
-
-async getUserRedeemedOffers(userId: string) {
-  return this.prisma.reedemaOffer.findMany({
-    where: { userId },
-    include: { offer: true, business: true },
-    orderBy: { createdAt: 'desc' },
-  });
-}
+  async getUserRedeemedOffers(userId: string) {
+    return this.prisma.reedemaOffer.findMany({
+      where: { userId },
+      include: { offer: true, business: true },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
 }

@@ -12,52 +12,54 @@ import { Readable } from 'stream';
 
 @Injectable()
 export class OfferService {
-  constructor(private prisma: PrismaService,private readonly s3Service: S3Service,) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly s3Service: S3Service,
+  ) {}
 
-async createOffer(userId: string, dto: CreateOfferDto) {
-  const business = await this.prisma.businessProfile.findUnique({
-    where: { ownerId: userId },
-  });
+  async createOffer(userId: string, dto: CreateOfferDto) {
+    const business = await this.prisma.businessProfile.findUnique({
+      where: { ownerId: userId },
+    });
 
-  if (!business) throw new NotFoundException("No business profile found");
+    if (!business) throw new NotFoundException('No business profile found');
 
-  const offer = await this.prisma.offer.create({
-    data: {
-      title: dto.title,
-      description: dto.description,
-      code: dto.code,
-      expiredsAt: dto.expiresAt,
-      businessId: business.id,
-      isActive: true,
-    },
-  });
+    const offer = await this.prisma.offer.create({
+      data: {
+        title: dto.title,
+        description: dto.description,
+        code: dto.code,
+        expiredsAt: dto.expiresAt,
+        businessId: business.id,
+        isActive: true,
+      },
+    });
 
-  const redeemUrl = `${process.env.SERVER_URL}/offers/scan/${offer.code}`;
-  const qrBuffer = await generateQRCodeBuffer(redeemUrl);
+    const redeemUrl = `${process.env.SERVER_URL}/offers/scan/${offer.code}`;
+    const qrBuffer = await generateQRCodeBuffer(redeemUrl);
 
-  const file: Express.Multer.File = {
-    fieldname: 'file',
-    originalname: `offer-${offer.id}.png`,
-    encoding: '7bit',
-    mimetype: 'image/png',
-    size: qrBuffer.length,
-    buffer: qrBuffer,
-    destination: '',
-    filename: `offer-${offer.id}.png`,
-    path: '',
-    stream: Readable.from(qrBuffer),
-  };
+    const file: Express.Multer.File = {
+      fieldname: 'file',
+      originalname: `offer-${offer.id}.png`,
+      encoding: '7bit',
+      mimetype: 'image/png',
+      size: qrBuffer.length,
+      buffer: qrBuffer,
+      destination: '',
+      filename: `offer-${offer.id}.png`,
+      path: '',
+      stream: Readable.from(qrBuffer),
+    };
 
-  const uploaded = await this.s3Service.uploadFile(file);
+    const uploaded = await this.s3Service.uploadFile(file);
 
-  const updatedOffer = await this.prisma.offer.update({
-    where: { id: offer.id },
-    data: { qrCodeUrl: uploaded?.url ?? null },
-  });
+    const updatedOffer = await this.prisma.offer.update({
+      where: { id: offer.id },
+      data: { qrCodeUrl: uploaded?.url ?? null },
+    });
 
-  return updatedOffer;
-}
-
+    return updatedOffer;
+  }
 
   // find arrpove offer only...
   async findApprovedOffers(userId: string) {

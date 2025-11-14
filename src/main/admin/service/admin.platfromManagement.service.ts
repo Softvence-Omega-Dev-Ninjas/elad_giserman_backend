@@ -131,63 +131,56 @@ export class AdminPlatfromManagementService {
     };
   }
 
-
-
-
-
-
   async getSubscriptionGrowth() {
-  // Get today's date
-  const now = new Date();
+    // Get today's date
+    const now = new Date();
 
-  // Get date 6 months ago
-  const sixMonthsAgo = new Date();
-  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5); // include current month
+    // Get date 6 months ago
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5); // include current month
 
-  // Fetch subscriptions within last 6 months
-  const subscriptions = await this.prisma.userSubscription.findMany({
-    where: {
-      planStartedAt: {
-        gte: sixMonthsAgo,
-        lte: now,
+    // Fetch subscriptions within last 6 months
+    const subscriptions = await this.prisma.userSubscription.findMany({
+      where: {
+        planStartedAt: {
+          gte: sixMonthsAgo,
+          lte: now,
+        },
       },
-    },
-    select: {
-      planStartedAt: true,
-    },
-  });
+      select: {
+        planStartedAt: true,
+      },
+    });
 
-  
-  // Prepare last 6 months map
-  const monthsMap: Record<string, number> = {};
+    // Prepare last 6 months map
+    const monthsMap: Record<string, number> = {};
 
-  for (let i = 0; i < 6; i++) {
-    const d = new Date();
-    d.setMonth(now.getMonth() - i);
+    for (let i = 0; i < 6; i++) {
+      const d = new Date();
+      d.setMonth(now.getMonth() - i);
 
-    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
 
-    monthsMap[key] = 0;
-  }
-
-  // Count subscriptions per month
-  subscriptions.forEach((sub) => {
-    const d = new Date(sub.planStartedAt);
-    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-    if (monthsMap[key] !== undefined) {
-      monthsMap[key] += 1;
+      monthsMap[key] = 0;
     }
-  });
 
-  // Convert to array sorted by oldest → newest
-  const result = Object.entries(monthsMap)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([month, count]) => ({ month, count }));
+    // Count subscriptions per month
+    subscriptions.forEach((sub) => {
+      const d = new Date(sub.planStartedAt);
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      if (monthsMap[key] !== undefined) {
+        monthsMap[key] += 1;
+      }
+    });
 
-  return {
-    success: true,
-    data: result,
-  };
-}
+    // Convert to array sorted by oldest → newest
+    const result = Object.entries(monthsMap)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([month, count]) => ({ month, count }));
 
+    return {
+      success: true,
+      data: result,
+    };
+  }
 }

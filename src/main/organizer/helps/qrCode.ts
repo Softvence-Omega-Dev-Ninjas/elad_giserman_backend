@@ -1,4 +1,4 @@
-import * as QRCode from "qrcode";
+import * as QRCode from 'qrcode';
 
 // generate QR buffer instead of Base64
 export async function generateQRCodeBuffer(data: string): Promise<Buffer> {
@@ -10,7 +10,7 @@ export async function generateQRCodeBuffer(data: string): Promise<Buffer> {
     });
     return buffer;
   } catch (error) {
-    console.error("QR Generation Error:", error);
+    console.error('QR Generation Error:', error);
     throw error;
   }
 }

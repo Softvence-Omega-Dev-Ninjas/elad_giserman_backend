@@ -77,14 +77,9 @@ export class UserInfoController {
     }
   }
 
-
-
-@ValidateAuth()
-@Get('scan/:code')
-  async scanOffer(
-    @Param('code') code: string,
-    @GetUser("sub") userId:string
-  ) {
+  @ValidateAuth()
+  @Get('scan/:code')
+  async scanOffer(@Param('code') code: string, @GetUser('sub') userId: string) {
     return this.userInfoService.scanOffer(code, userId);
   }
 
@@ -93,16 +88,14 @@ export class UserInfoController {
   @Post('redeem/:code')
   async redeemOffer(
     @Param('code') code: string,
-    @GetUser("sub") userId:string
+    @GetUser('sub') userId: string,
   ) {
-    
     return this.userInfoService.redeemOffer(code, userId);
   }
 
-
   //  User sees all redeemed offers
   @Get('redeemed')
-  async getRedeemedOffers(@GetUser('sub')  userId:string) {
+  async getRedeemedOffers(@GetUser('sub') userId: string) {
     return this.userInfoService.getUserRedeemedOffers(userId);
   }
 }

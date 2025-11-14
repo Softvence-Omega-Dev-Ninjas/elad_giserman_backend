@@ -73,18 +73,17 @@ export class AdminPlatformManagementController {
     }
   }
 
-
-   @Get('subscription-growth')
-  async getSubscriptionGrouth(){
-    try{
-      const res=await this.platformManagementService.getSubscriptionGrowth()
-      return{
-        status:HttpStatus.OK,
-        message:'Subscription growth fetched successfully',
-        data:res
-      }
-    }catch(error){
-      throw new InternalServerErrorException(error.message,error.status)
+  @Get('subscription-growth')
+  async getSubscriptionGrouth() {
+    try {
+      const res = await this.platformManagementService.getSubscriptionGrowth();
+      return {
+        status: HttpStatus.OK,
+        message: 'Subscription growth fetched successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
     }
   }
 }
