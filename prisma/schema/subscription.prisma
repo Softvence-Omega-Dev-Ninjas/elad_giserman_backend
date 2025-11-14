@@ -41,8 +41,8 @@ model UserSubscription {
   // Stripe subscription identifier (for recurring cancel/renew)
   stripeSubscriptionId String? @unique
 
-  // Stripe payment intent identifier
-  stripeTransactionId String @unique // payment_intent_id or checkout_session.payment_intent
+  // Stripe setup intent identifier
+  stripeTransactionId String @unique
 
   status SubscriptionStatus @default(PENDING)
 
@@ -52,8 +52,7 @@ model UserSubscription {
   paidAt   DateTime?
   failedAt DateTime?
 
-  invoices           Invoice[] // invoices for this subscription period(s)
-  paymentTransaction PaymentTransaction[]
+  invoices Invoice[] // invoices for this subscription period(s)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

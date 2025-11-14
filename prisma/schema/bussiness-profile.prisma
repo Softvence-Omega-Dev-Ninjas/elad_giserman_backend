@@ -18,9 +18,9 @@ model BusinessProfile {
   offers      Offer[]
   profileType ProfileType?
   // Owner / organizer
-  ownerId     String         @unique // unique makes one to one relation
-  owner       User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  
+  ownerId     String       @unique // unique makes one to one relation
+  owner       User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
   reviews     Review[]
   reedemOffer ReedemaOffer[]
 
