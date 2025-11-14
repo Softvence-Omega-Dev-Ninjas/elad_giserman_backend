@@ -14,11 +14,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { UpdateUserInfoDto } from './dto/update-user-info.dto';
 import { UserInfoService } from './user-info.service';
 
+@ApiTags('USER Info')
 @Controller('user-info')
+@ValidateAuth()
 @ApiBearerAuth()
 export class UserInfoController {
   constructor(private readonly userInfoService: UserInfoService) {}
@@ -37,7 +39,6 @@ export class UserInfoController {
   }
 
   @Patch()
-  @ValidateAuth()
   @ApiBody({ type: UpdateUserInfoDto })
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
@@ -75,14 +76,12 @@ export class UserInfoController {
     }
   }
 
-  @ValidateAuth()
   @Get('scan/:code')
   async scanOffer(@Param('code') code: string, @GetUser('sub') userId: string) {
     return this.userInfoService.scanOffer(code, userId);
   }
 
   // Redeem after user confirms
-  @ValidateAuth()
   @Post('redeem/:code')
   async redeemOffer(
     @Param('code') code: string,
