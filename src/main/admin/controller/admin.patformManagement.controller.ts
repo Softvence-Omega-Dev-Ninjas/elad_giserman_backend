@@ -1,3 +1,4 @@
+import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import {
   Body,
   Controller,
@@ -11,10 +12,9 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { AdminPlatfromManagementService } from '../service/admin.platfromManagement.service';
-import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import { PlatformFilter } from '../dto/getPlatform.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
+import { AdminPlatfromManagementService } from '../service/admin.platfromManagement.service';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -45,6 +45,7 @@ export class AdminPlatformManagementController {
   @Get('user/:id')
   async getUserDetails(@Param('id') id: string) {
     try {
+      console.log(id);
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
@@ -68,6 +69,7 @@ export class AdminPlatformManagementController {
     @Param('id') id: string,
   ) {
     try {
+      console.log(dto, id);
     } catch (err) {
       throw new HttpException(err.message, err.status);
     }

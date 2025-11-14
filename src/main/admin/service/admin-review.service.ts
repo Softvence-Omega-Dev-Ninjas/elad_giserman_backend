@@ -33,7 +33,7 @@ export class AdminReviewService {
     if (!isExistReivew) {
       throw new HttpException('Review not found', HttpStatus.NOT_FOUND);
     }
-    const res = await this.prisma.review.delete({
+    await this.prisma.review.delete({
       where: { id },
     });
     return {

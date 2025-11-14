@@ -1,3 +1,4 @@
+import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import {
   Controller,
   Delete,
@@ -5,11 +6,9 @@ import {
   HttpException,
   HttpStatus,
   Param,
-  Patch,
 } from '@nestjs/common';
-import { AdminReviewService } from '../service/admin-review.service';
-import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { AdminReviewService } from '../service/admin-review.service';
 
 @Controller('admin-reviews')
 @ApiBearerAuth()
@@ -35,6 +34,7 @@ export class AdminReviewController {
   @ValidateAdmin()
   async deleteReview(@Param('id') id: string) {
     try {
+      console.log(id);
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }

@@ -1,13 +1,12 @@
+import { PrismaService } from '@/lib/prisma/prisma.service';
+import { S3Service } from '@/lib/s3/s3.service';
 import {
   BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-// import { CreateUserInfoDto } from './dto/create-user-info.dto';
 import { UpdateUserInfoDto } from './dto/update-user-info.dto';
-import { PrismaService } from '@/lib/prisma/prisma.service';
-import { S3Service } from '@/lib/s3/s3.service';
 
 @Injectable()
 export class UserInfoService {
@@ -26,6 +25,7 @@ export class UserInfoService {
     if (!result) {
       return null;
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...safeUser } = result;
     return safeUser;
   }
@@ -139,7 +139,7 @@ export class UserInfoService {
     return {
       success: true,
       message: 'Offer redeemed successfully!',
-      offer: { id: offer.id, title: offer.title },
+      offer: { id: offer.id, title: offer.title, logId: log.id },
     };
   }
 

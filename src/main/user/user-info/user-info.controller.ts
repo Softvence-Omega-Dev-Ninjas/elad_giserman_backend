@@ -1,24 +1,22 @@
+import { GetUser, ValidateAuth } from '@/common/jwt/jwt.decorator';
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  UseInterceptors,
-  UploadedFile,
-  HttpStatus,
+  Get,
   HttpException,
+  HttpStatus,
   InternalServerErrorException,
-  Query,
+  Param,
+  Patch,
+  Post,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
-import { UserInfoService } from './user-info.service';
-import { CreateUserInfoDto } from './dto/create-user-info.dto';
-import { UpdateUserInfoDto } from './dto/update-user-info.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
-import { GetUser, ValidateAuth } from '@/common/jwt/jwt.decorator';
+import { UpdateUserInfoDto } from './dto/update-user-info.dto';
+import { UserInfoService } from './user-info.service';
 
 @Controller('user-info')
 @ApiBearerAuth()
@@ -67,7 +65,7 @@ export class UserInfoController {
   @Delete('delete-my-account')
   async deleteMyAccount(@GetUser('sub') id: string) {
     try {
-      const res = await this.userInfoService.deleteMyAccount(id);
+      await this.userInfoService.deleteMyAccount(id);
       return {
         status: HttpStatus.OK,
         message: 'Your account deleted successful',
