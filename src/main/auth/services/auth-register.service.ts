@@ -5,8 +5,8 @@ import { AuthMailService } from '@/lib/mail/services/auth-mail.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { UtilsService } from '@/lib/utils/utils.service';
 import { Injectable } from '@nestjs/common';
-import { RegisterDto } from '../dto/register.dto';
 import { OtpType, UserRole } from '@prisma/client';
+import { RegisterDto } from '../dto/register.dto';
 
 @Injectable()
 export class AuthRegisterService {
@@ -40,12 +40,19 @@ export class AuthRegisterService {
     const { otp, expiryTime } = this.utils.generateOtpAndExpiry();
     const hashedOtp = await this.utils.hash(otp.toString());
 
+    // Trial ends in 3 months
+    const trialEndsAt: Date = new Date();
+    trialEndsAt.setDate(trialEndsAt.getDate() - 1);
+    trialEndsAt.setMonth(trialEndsAt.getMonth() + 3);
+
     // Create new user
     const newUser = await this.prisma.user.create({
       data: {
         email,
         username,
         password: await this.utils.hash(password),
+        trialEndsAt,
+        memberShip: 'FREE',
         otp: hashedOtp,
         otpType: 'REGISTER',
         otpExpiresAt: expiryTime,
@@ -106,6 +113,18 @@ export class AuthRegisterService {
         otp: hashedOtp,
         otpType: OtpType.REGISTER,
         otpExpiresAt: expiryTime,
+        businessProfile: {
+          create: {
+            title: 'Default Business Profile',
+            description: 'Default description',
+            location: 'Default location',
+            openingTime: 'Default opening time',
+            closingTime: 'Default closing time',
+          },
+        },
+      },
+      include: {
+        businessProfile: true,
       },
     });
 
@@ -128,6 +147,7 @@ export class AuthRegisterService {
         userId: newUser.id,
         email: newUser.email,
         role: newUser.role,
+        businessProfile: newUser.businessProfile,
       },
     };
   }
