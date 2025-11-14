@@ -99,7 +99,7 @@ export class HandleWebhookService {
       await this.prisma.user.update({
         where: { id: subscription.userId },
         data: {
-          subscriptionStatus: 'ACTIVE',
+          subscriptionStatus: 'PENDING',
           currentPlan: {
             connect: {
               id: subscription.planId,
@@ -252,6 +252,7 @@ export class HandleWebhookService {
         data: {
           status: 'ACTIVE',
           paidAt: now,
+          stripeSubscriptionId: subscriptionId,
         },
       }),
 
@@ -260,6 +261,7 @@ export class HandleWebhookService {
         data: {
           memberShip: 'VIP',
           trialEndsAt: null,
+          subscriptionStatus: 'ACTIVE',
         },
       }),
 
