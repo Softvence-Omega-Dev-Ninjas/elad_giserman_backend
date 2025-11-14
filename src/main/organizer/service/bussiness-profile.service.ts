@@ -160,6 +160,4 @@ export class BusinessProfileService {
 
     return updatedProfile;
   }
-
-  
 }
