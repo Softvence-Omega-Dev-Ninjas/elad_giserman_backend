@@ -32,24 +32,23 @@ model User {
   otpType      OtpType?
 
   // Subscription-related
-  stripeCustomerId String? @unique // Stripe customer id
+  stripeCustomerId             String? @unique // Stripe customer id
   stripeDefaultPaymentMethodId String? @unique // Stripe default payment method
 
-  subscriptionStatus SubscriptionStatus? // last known overall status
-  trialEndsAt        DateTime? // 3-month free trial expiry timestamp
+  memberShip  MemberShip @default(FREE)
+  trialEndsAt DateTime? // 3-month free trial expiry timestamp after sign up
 
   // current plan quick link
-  currentPlanId String?
-  currentPlan   SubscriptionPlan? @relation(fields: [currentPlanId], references: [id], onDelete: SetNull)
-  memberShip    MemberShip        @default(FREE)
+  subscriptionStatus SubscriptionStatus? // last known overall status
+  currentPlanId      String?
+  currentPlan        SubscriptionPlan?   @relation(fields: [currentPlanId], references: [id], onDelete: SetNull)
 
-  notifications       UserNotification[]
-  userSubscription    UserSubscription[]
-  paymentTransactions PaymentTransaction[]
-  reviews             Review[]
-  reviewReply         ReviewReply[]
-  reedemaOffer        ReedemaOffer[]       @relation("UserReedemaOffer")
-  businessProfile     BusinessProfile?
+  notifications    UserNotification[]
+  userSubscription UserSubscription[]
+  reviews          Review[]
+  reviewReply      ReviewReply[]
+  reedemaOffer     ReedemaOffer[]     @relation("UserReedemaOffer")
+  businessProfile  BusinessProfile?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
