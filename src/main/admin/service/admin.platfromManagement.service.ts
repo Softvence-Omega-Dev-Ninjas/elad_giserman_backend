@@ -12,57 +12,111 @@ import { subDays, format } from 'date-fns';
 export class AdminPlatfromManagementService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getPlatfromStat(filter: PlatformFilter) {
-    const { search, date, userType } = filter;
-    const where: any = {};
-    if (search) {
-      where.OR = [
-        { name: { contains: search, mode: 'insensetive' } },
-        { email: { contains: search, mode: 'insensetive' } },
-        { mobile: { contains: search, mode: 'insensetive' } },
-      ];
-    }
-    if (userType) {
-      where.memberShip = userType;
-    }
-    if (date) {
-      const selected = new Date(date);
-      const nextDay = new Date(selected);
-      nextDay.setDate(selected.getDate() + 1);
-      //This ensures only records created on that calendar date are matched
-      where.createdAt = {
-        gte: selected,
-        lt: nextDay,
-      };
-    }
+async getPlatfromStat(filter: PlatformFilter) {
+  const { search, date, userType } = filter;
+  const where: any = {};
 
-    const [totalUser, totalFreeUser, totalOrganizer, users] = await Promise.all(
-      [
-        this.prisma.user.count(),
-        this.prisma.user.count({
-          where: {
-            memberShip: 'FREE',
-          },
-        }),
-        this.prisma.user.count({
-          where: {
-            role: 'ORGANIZER',
-          },
-        }),
-        this.prisma.user.findMany({
-          where,
-        }),
-      ],
-    );
-    const totalVipMember = totalUser - totalFreeUser;
-    return {
-      totalUser: totalUser,
-      totalFreeUser: totalFreeUser,
-      totalVipUser: totalVipMember,
-      totalOrganizer: totalOrganizer,
-      users: users,
+  if (search) {
+    where.OR = [
+      { name: { contains: search, mode: 'insensitive' } },
+      { email: { contains: search, mode: 'insensitive' } },
+      { mobile: { contains: search, mode: 'insensitive' } },
+    ];
+  }
+
+  if (userType) {
+    where.memberShip = userType;
+  }
+
+  if (date) {
+    const selected = new Date(date);
+    const nextDay = new Date(selected);
+    nextDay.setDate(selected.getDate() + 1);
+
+    where.createdAt = {
+      gte: selected,
+      lt: nextDay,
     };
   }
+
+  const [
+    totalUser,
+    totalFreeUser,
+    totalOrganizer,
+    users,
+    topBusiness,
+
+    // NEW: Recent activity
+    recentUsers,
+    recentBusinessProfile,
+    recentReviews,
+    recentOffers
+  ] = await Promise.all([
+    this.prisma.user.count(),
+    this.prisma.user.count({
+      where: { memberShip: "FREE" },
+    }),
+    this.prisma.user.count({
+      where: { role: "ORGANIZER" },
+    }),
+    this.prisma.user.findMany({ where }),
+
+    this.prisma.businessProfile.findMany({
+      orderBy: { reviews: { _count: "desc" } }
+    }),
+
+    //  Recent users
+    this.prisma.user.findMany({
+      orderBy: { createdAt: "desc",updatedAt:"desc" },
+      take: 1
+    }),
+
+    //  Recent business profiles
+    this.prisma.businessProfile.findMany({
+      orderBy: { createdAt: "desc",updatedAt:"desc" },
+      take: 1
+    }),
+
+    // Recent reviews
+    this.prisma.review.findMany({
+      orderBy: { createdAt: "desc",updatedAt:"desc" },
+      take: 1,
+      include: {
+        user: true,
+        businessProfile: true
+      }
+    }),
+    // 
+    this.prisma.offer.findMany({
+      orderBy:{createdAt:"desc",updatedAt:"desc"},
+      take:1,
+      include:{
+        business:{
+          select:{
+            title:true
+          }
+        }
+      }
+    })
+  ]);
+
+  return {
+    totalUser,
+    totalFreeUser,
+    totalVipUser: totalUser - totalFreeUser,
+    totalOrganizer,
+    users,
+
+    topBusinessProfile: topBusiness,
+
+    recentActivity: {
+      users: recentUsers,
+      businessProfiles: recentBusinessProfile,
+      reviews: recentReviews,
+      offers:recentOffers
+    }
+  };
+}
 
   //  get user details
   async getUserDetils(userId: string) {
