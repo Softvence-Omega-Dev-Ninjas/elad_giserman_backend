@@ -108,7 +108,7 @@ export class SubscriptionService {
         canSubscribe,
         plan: {
           title: userSubscription.plan.title,
-          price: userSubscription.plan.priceCents,
+          price: Math.round(userSubscription.plan.priceCents / 100),
           currency: userSubscription.plan.currency,
           billingPeriod: userSubscription.plan.billingPeriod,
         },

@@ -10,6 +10,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CancelSubscriptionService } from './services/cancel-subscription.service';
 import { CreateIntentService } from './services/create-intent.service';
 import { HandleWebhookService } from './services/handle-webhook.service';
 import { SubscriptionService } from './services/subscription.service';
@@ -23,6 +24,7 @@ export class SubscriptionController {
     private readonly subscriptionService: SubscriptionService,
     private readonly createIntentService: CreateIntentService,
     private readonly handleWebhookService: HandleWebhookService,
+    private readonly cancelSubscriptionService: CancelSubscriptionService,
   ) {}
 
   @ApiOperation({ summary: 'Get plans for user' })
@@ -60,5 +62,11 @@ export class SubscriptionController {
   @Get('me')
   async getCurrentSubscriptionStatus(@GetUser('sub') userId: string) {
     return this.subscriptionService.getCurrentSubscriptionStatus(userId);
+  }
+
+  @ApiOperation({ summary: 'Cancel subscription immediately' })
+  @Post('me/cancel')
+  async cancelSubscriptionImmediately(@GetUser('sub') userId: string) {
+    return this.cancelSubscriptionService.cancelSubscriptionImmediately(userId);
   }
 }

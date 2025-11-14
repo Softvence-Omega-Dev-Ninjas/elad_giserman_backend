@@ -113,13 +113,42 @@ export class CreateIntentService {
 
     // 6. Calculate plan period based on billingPeriod (start now, end in 1 month, 6 months or 1 year)
     const planStartedAt = new Date();
-    const planEndedAt = new Date(planStartedAt);
-    if (plan.billingPeriod === 'MONTHLY') {
-      planEndedAt.setMonth(planEndedAt.getMonth() + 1);
-    } else if (plan.billingPeriod === 'BIANNUAL') {
-      planEndedAt.setMonth(planEndedAt.getMonth() + 6);
-    } else if (plan.billingPeriod === 'YEARLY') {
-      planEndedAt.setFullYear(planEndedAt.getFullYear() + 1);
+    let planEndedAt: Date;
+
+    switch (plan.billingPeriod) {
+      case 'MONTHLY':
+        planEndedAt = new Date(planStartedAt);
+        planEndedAt.setMonth(planEndedAt.getMonth() + 1);
+
+        // If month overflowed (e.g., Jan 31 + 1 month => Mar 3), move to last day of next month
+        if (planEndedAt.getDate() !== planStartedAt.getDate()) {
+          planEndedAt = new Date(
+            planEndedAt.getFullYear(),
+            planEndedAt.getMonth() + 1,
+            0,
+          );
+        }
+        break;
+
+      case 'BIANNUAL':
+        planEndedAt = new Date(planStartedAt);
+        planEndedAt.setMonth(planEndedAt.getMonth() + 6);
+        if (planEndedAt.getDate() !== planStartedAt.getDate()) {
+          planEndedAt = new Date(
+            planEndedAt.getFullYear(),
+            planEndedAt.getMonth() + 1,
+            0,
+          );
+        }
+        break;
+
+      case 'YEARLY':
+        planEndedAt = new Date(planStartedAt);
+        planEndedAt.setFullYear(planEndedAt.getFullYear() + 1);
+        break;
+
+      default:
+        throw new AppError(400, 'Unknown billing period');
     }
 
     // 7. Record in DB with initial status = INCOMPLETE (waiting for webhook confirmation)
