@@ -1,40 +1,44 @@
 model Offer {
-  id           String           @id @default(uuid())
-  title        String
-  description  String?
-  isActive     Boolean          @default(true)
-  status       OfferStatus      @default(PENDING)
+  id          String          @id @default(uuid())
+  title       String
+  description String?
+  isActive    Boolean         @default(true)
+  status      OfferStatus     @default(PENDING)
   // relation to the business
-  businessId   String
-  business     BusinessProfile  @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  expiredsAt DateTime?
-  createdAt    DateTime         @default(now())
-  code String   
-  qrCodeUrl    String? 
-  updatedAt    DateTime         @default(now()) @updatedAt
+  businessId  String
+  business    BusinessProfile @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  expiredsAt  DateTime?
+  code        String
+  qrCodeUrl   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
   redeemableOffer ReedemaOffer[]
+
   @@map("offers")
 }
+
 model ReedemaOffer {
-  id           String   @id @default(uuid())
+  id String @id @default(uuid())
 
-  offerId      String
-  offer        Offer    @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  offerId String
+  offer   Offer  @relation(fields: [offerId], references: [id], onDelete: Cascade)
 
-  code         String   @unique
-  isRedeemed   Boolean  @default(false)
-  redeemedAt   DateTime?
+  code       String    @unique
+  isRedeemed Boolean   @default(false)
+  redeemedAt DateTime?
 
-  bussinessId  String
-  business     BusinessProfile @relation(fields: [bussinessId], references: [id], onDelete: Cascade)
+  bussinessId String
+  business    BusinessProfile @relation(fields: [bussinessId], references: [id], onDelete: Cascade)
 
-  userId       String
-  user         User     @relation("UserReedemaOffer", fields: [userId], references: [id])
+  userId String
+  user   User   @relation("UserReedemaOffer", fields: [userId], references: [id])
 
-  expiresAt    DateTime
+  expiresAt DateTime
 
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now()) @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@map("redeemable_offers")
 }

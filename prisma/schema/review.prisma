@@ -1,24 +1,30 @@
 model Review {
-  id                String           @id @default(uuid())
+  id                String          @id @default(uuid())
   comment           String
   rating            Int
   userId            String
   user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   businessProfileId String
   businessProfile   BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
-  reply ReviewReply[]
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @default(now())
+  reply             ReviewReply[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
   @@map("reviews")
 }
 
 model ReviewReply {
   id String @id @default(uuid())
-  comment String
+
+  comment  String
   reviewId String
-  review Review @relation(fields: [reviewId],references: [id],onDelete: Cascade)
-  userId String
-  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  review   Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("review_replies")
 }
