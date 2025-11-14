@@ -192,39 +192,28 @@ export class StripeService {
     return customer;
   }
 
-  // Subscription Management & Cancellation Utilities
+  // Subscription Management
   async createSubscription({
     customerId,
     priceId,
     metadata,
-    trialPeriodDays,
-    expand = ['latest_invoice.payment_intent'],
-    offSession = true,
-    paymentBehavior = 'default_incomplete',
+    paymentMethodId,
   }: {
     customerId: string;
     priceId: string;
-    metadata?: Record<string, string>;
-    trialPeriodDays?: number;
-    expand?: string[];
-    offSession?: boolean;
-    paymentBehavior?:
-      | 'allow_incomplete'
-      | 'default_incomplete'
-      | 'error_if_incomplete';
+    metadata: StripePaymentMetadata;
+    paymentMethodId: string;
   }) {
     const subscription = await this.stripe.subscriptions.create({
       customer: customerId,
       items: [{ price: priceId }],
+      default_payment_method: paymentMethodId,
       metadata,
-      trial_period_days: trialPeriodDays,
-      expand,
-      payment_behavior: paymentBehavior,
-      collection_method: offSession ? 'charge_automatically' : 'send_invoice',
+      expand: ['latest_invoice.payment_intent'],
     });
 
     this.logger.log(
-      `Created subscription ${subscription.id} for customer ${customerId}`,
+      `Created Stripe subscription ${subscription.id} for user ${metadata.userId}`,
     );
 
     return subscription;
@@ -277,29 +266,6 @@ export class StripeService {
     const deleted = await this.stripe.subscriptions.cancel(subscriptionId);
     this.logger.log(`Subscription ${subscriptionId} cancelled immediately`);
     return deleted;
-  }
-
-  async scheduleSubscriptionCancel(
-    subscriptionId: string,
-    cancelAtUnixSeconds: number,
-  ) {
-    const updated = await this.stripe.subscriptions.update(subscriptionId, {
-      cancel_at: cancelAtUnixSeconds,
-    });
-    this.logger.log(
-      `Subscription ${subscriptionId} scheduled to cancel at ${cancelAtUnixSeconds}`,
-    );
-    return updated;
-  }
-
-  async resumeSubscription(subscriptionId: string) {
-    const updated = await this.stripe.subscriptions.update(subscriptionId, {
-      cancel_at_period_end: false,
-      cancel_at: null,
-    } as any);
-
-    this.logger.log(`Subscription ${subscriptionId} resumed`);
-    return updated;
   }
 
   // Stripe Webhook Utilities
