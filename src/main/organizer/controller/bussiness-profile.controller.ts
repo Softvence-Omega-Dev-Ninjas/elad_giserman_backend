@@ -255,7 +255,6 @@ export class BusinessProfileController {
   }
 
   // organizations stat
-
   @ValidateOrganizer()
   @Get('stat')
   async getOrganizationStats(@GetUser('sub') userId: string) {
@@ -271,4 +270,7 @@ export class BusinessProfileController {
       throw new InternalServerErrorException(err.message, err.status);
     }
   }
+
+
+  
 }

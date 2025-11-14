@@ -33,4 +33,7 @@ export class AdminOfferService {
   async getAllOffers() {
     return this.prisma.offer.findMany({ include: { business: true } });
   }
+
+
+
 }

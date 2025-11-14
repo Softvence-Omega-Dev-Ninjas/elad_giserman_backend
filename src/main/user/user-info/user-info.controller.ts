@@ -11,6 +11,7 @@ import {
   HttpStatus,
   HttpException,
   InternalServerErrorException,
+  Query,
 } from '@nestjs/common';
 import { UserInfoService } from './user-info.service';
 import { CreateUserInfoDto } from './dto/create-user-info.dto';
@@ -74,5 +75,34 @@ export class UserInfoController {
     } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
     }
+  }
+
+
+
+@ValidateAuth()
+@Get('scan/:code')
+  async scanOffer(
+    @Param('code') code: string,
+    @GetUser("sub") userId:string
+  ) {
+    return this.userInfoService.scanOffer(code, userId);
+  }
+
+  // Redeem after user confirms
+  @ValidateAuth()
+  @Post('redeem/:code')
+  async redeemOffer(
+    @Param('code') code: string,
+    @GetUser("sub") userId:string
+  ) {
+    
+    return this.userInfoService.redeemOffer(code, userId);
+  }
+
+
+  //  User sees all redeemed offers
+  @Get('redeemed')
+  async getRedeemedOffers(@GetUser('sub')  userId:string) {
+    return this.userInfoService.getUserRedeemedOffers(userId);
   }
 }
