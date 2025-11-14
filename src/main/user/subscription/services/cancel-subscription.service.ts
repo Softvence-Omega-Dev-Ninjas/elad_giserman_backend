@@ -1,5 +1,6 @@
 import { AppError } from '@/common/error/handle-error.app';
 import { HandleError } from '@/common/error/handle-error.decorator';
+import { successResponse, TResponse } from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { StripeService } from '@/lib/stripe/stripe.service';
 import { Injectable, Logger } from '@nestjs/common';
@@ -14,7 +15,7 @@ export class CancelSubscriptionService {
   ) {}
 
   @HandleError('Failed to cancel subscription')
-  async cancelSubscriptionImmediately(userId: string) {
+  async cancelSubscriptionImmediately(userId: string): Promise<TResponse<any>> {
     const subscription = await this.prismaService.userSubscription.findFirst({
       where: { userId, status: 'ACTIVE' },
       orderBy: { createdAt: 'desc' },
@@ -27,7 +28,7 @@ export class CancelSubscriptionService {
     const stripeSubscriptionId = subscription.stripeSubscriptionId;
 
     // Cancel immediately on Stripe
-    const cancelled = await this.stripeService.cancelSubscription({
+    await this.stripeService.cancelSubscription({
       subscriptionId: stripeSubscriptionId,
       atPeriodEnd: false,
     });
@@ -55,6 +56,6 @@ export class CancelSubscriptionService {
       `Subscription ${stripeSubscriptionId} for user ${userId} cancelled immediately`,
     );
 
-    return cancelled;
+    return successResponse(null, 'Subscription cancelled successfully');
   }
 }

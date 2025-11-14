@@ -53,11 +53,11 @@ export class HandleWebhookService {
         );
         break;
 
-      case 'customer.subscription.deleted':
-        await this.handleCustomerSubscriptionDeleted(
-          event.data.object as Stripe.Subscription,
-        );
-        break;
+      // case 'customer.subscription.deleted':
+      //   await this.handleCustomerSubscriptionDeleted(
+      //     event.data.object as Stripe.Subscription,
+      //   );
+      //   break;
 
       case 'invoice.paid':
       case 'invoice.payment_succeeded':
@@ -207,33 +207,33 @@ export class HandleWebhookService {
     }
   }
 
-  private async handleCustomerSubscriptionDeleted(
-    subscription: Stripe.Subscription,
-  ) {
-    const stripeSubId = subscription.id;
-    this.logger.log(`customer.subscription.deleted: ${stripeSubId}`);
+  // private async handleCustomerSubscriptionDeleted(
+  //   subscription: Stripe.Subscription,
+  // ) {
+  //   const stripeSubId = subscription.id;
+  //   this.logger.log(`customer.subscription.deleted: ${stripeSubId}`);
 
-    const local = await this.prisma.userSubscription.findUnique({
-      where: { stripeSubscriptionId: stripeSubId },
-    });
+  //   const local = await this.prisma.userSubscription.findUnique({
+  //     where: { stripeSubscriptionId: stripeSubId },
+  //   });
 
-    if (!local) {
-      this.logger.warn(
-        `No local subscription found for deleted stripe subscription ${stripeSubId}`,
-      );
-      return;
-    }
+  //   if (!local) {
+  //     this.logger.warn(
+  //       `No local subscription found for deleted stripe subscription ${stripeSubId}`,
+  //     );
+  //     return;
+  //   }
 
-    await this.prisma.userSubscription.update({
-      where: { id: local.id },
-      data: {
-        status: 'CANCELED',
-        planEndedAt: subscription.ended_at
-          ? new Date(subscription.ended_at * 1000)
-          : local.planEndedAt,
-      },
-    });
-  }
+  //   await this.prisma.userSubscription.update({
+  //     where: { id: local.id },
+  //     data: {
+  //       status: 'CANCELED',
+  //       planEndedAt: subscription.ended_at
+  //         ? new Date(subscription.ended_at * 1000)
+  //         : local.planEndedAt,
+  //     },
+  //   });
+  // }
 
   private async handleInvoicePaid(invoice: Stripe.Invoice) {
     this.logger.log(`invoice.${invoice.status}: ${invoice.id}`);
@@ -279,23 +279,6 @@ export class HandleWebhookService {
       return;
     }
 
-    let monthsToAdd = 0;
-    let planEndedAt = localSubscription.planEndedAt;
-    if (localSubscription.plan.billingPeriod === 'MONTHLY') {
-      monthsToAdd = 1;
-    } else if (localSubscription.plan.billingPeriod === 'BIANNUAL') {
-      monthsToAdd = 6;
-    } else if (localSubscription.plan.billingPeriod === 'YEARLY') {
-      monthsToAdd = 12;
-    }
-
-    if (monthsToAdd) {
-      planEndedAt = new Date(
-        localSubscription.planEndedAt.getTime() +
-          monthsToAdd * 1000 * 60 * 60 * 24 * 30,
-      );
-    }
-
     // Run updates in transaction
     await this.prisma.$transaction([
       this.prisma.userSubscription.update({
@@ -303,9 +286,6 @@ export class HandleWebhookService {
         data: {
           status: 'ACTIVE',
           paidAt: now,
-          planStartedAt: now,
-          planEndedAt,
-          stripeSubscriptionId: subscriptionId,
         },
       }),
 
