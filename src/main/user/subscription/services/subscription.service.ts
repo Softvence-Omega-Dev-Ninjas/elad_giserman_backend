@@ -75,7 +75,7 @@ export class SubscriptionService {
         {
           status: 'NONE',
           message: 'No active or past subscription found.',
-          canRenew: true,
+          canSubscribe: true,
           period: {
             startedAt: null,
             endedAt: null,
@@ -99,12 +99,13 @@ export class SubscriptionService {
           ? 'EXPIRED'
           : userSubscription.status;
 
-    const canRenew = status === 'EXPIRED' || status === 'FAILED';
+    const canSubscribe =
+      status !== 'ACTIVE' && status !== 'EXPIRED' && !isExpired;
 
     return successResponse(
       {
         status,
-        canRenew,
+        canSubscribe,
         plan: {
           title: userSubscription.plan.title,
           price: userSubscription.plan.priceCents,

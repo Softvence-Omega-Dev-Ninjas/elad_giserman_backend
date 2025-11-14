@@ -116,11 +116,11 @@ export class StripeService {
   async createSetupIntent(metadata: StripePaymentMetadata) {
     try {
       // 1) find or create customer
-      const customer = await this.getOrCreateCustomerId(
-        metadata.userId,
-        metadata.name,
-        metadata.email,
-      );
+      const customer = await this.getOrCreateCustomerId({
+        userId: metadata.userId,
+        email: metadata.email,
+        name: metadata.name,
+      });
 
       const customerId = customer.id;
 
@@ -158,7 +158,15 @@ export class StripeService {
   }
 
   // Customer Management
-  async getOrCreateCustomerId(userId: string, email: string, name: string) {
+  async getOrCreateCustomerId({
+    userId,
+    name,
+    email,
+  }: {
+    userId: string;
+    name: string;
+    email: string;
+  }) {
     // Step 1: Check if the user already has a Stripe customer linked
     const existingCustomer = await this.stripe.customers.list({
       email,
