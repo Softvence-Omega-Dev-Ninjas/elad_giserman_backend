@@ -16,13 +16,20 @@ model BusinessProfile {
 
   // Offers
   offers      Offer[]
-
+  profileType ProfileType?
   // Owner / organizer
   ownerId String  @unique   // unique makes one to one relation
   owner   User    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   reviews   Review[]
+  reedemOffer ReedemaOffer?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
   @@map("business_profiles")
+}
+
+enum ProfileType {
+  CAFE
+  RESTURANTES
+  BAR
 }

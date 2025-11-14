@@ -22,7 +22,7 @@ model SubscriptionPlan {
 
   user              User[]
   userSubscriptions UserSubscription[]
-
+  priceId String?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
