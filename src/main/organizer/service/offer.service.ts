@@ -6,30 +6,59 @@ import {
 } from '@nestjs/common';
 import { CreateOfferDto } from '../dto/create-offer.dto';
 import { UpdateOfferDto } from '../dto/update-offer.dto';
+import { generateQRCodeBuffer } from '../helps/qrCode';
+import { S3Service } from '@/lib/s3/s3.service';
+import { Readable } from 'stream';
 
 @Injectable()
 export class OfferService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly s3Service: S3Service,
+  ) {}
 
   async createOffer(userId: string, dto: CreateOfferDto) {
-    // find the business profile of the logged-in user
     const business = await this.prisma.businessProfile.findUnique({
       where: { ownerId: userId },
     });
 
-    if (!business) {
-      throw new NotFoundException(
-        `You don't have a business profile yet, so you cannot create offers`,
-      );
-    }
+    if (!business) throw new NotFoundException('No business profile found');
 
-    // create the offer and link it to the user's business
-    return this.prisma.offer.create({
+    const offer = await this.prisma.offer.create({
       data: {
-        ...dto,
+        title: dto.title,
+        description: dto.description,
+        code: dto.code,
+        expiredsAt: dto.expiresAt,
         businessId: business.id,
+        isActive: true,
       },
     });
+
+    const redeemUrl = `${process.env.SERVER_URL}/offers/scan/${offer.code}`;
+    const qrBuffer = await generateQRCodeBuffer(redeemUrl);
+
+    const file: Express.Multer.File = {
+      fieldname: 'file',
+      originalname: `offer-${offer.id}.png`,
+      encoding: '7bit',
+      mimetype: 'image/png',
+      size: qrBuffer.length,
+      buffer: qrBuffer,
+      destination: '',
+      filename: `offer-${offer.id}.png`,
+      path: '',
+      stream: Readable.from(qrBuffer),
+    };
+
+    const uploaded = await this.s3Service.uploadFile(file);
+
+    const updatedOffer = await this.prisma.offer.update({
+      where: { id: offer.id },
+      data: { qrCodeUrl: uploaded?.url ?? null },
+    });
+
+    return updatedOffer;
   }
 
   // find arrpove offer only...

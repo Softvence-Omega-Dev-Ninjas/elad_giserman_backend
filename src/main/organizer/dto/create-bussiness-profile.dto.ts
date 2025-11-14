@@ -32,9 +32,9 @@ export class CreateBusinessProfileDto {
   closingTime: string;
 
   @ApiProperty({
-    description:"chose profile type"
+    description: 'chose profile type',
   })
   @IsString()
   @IsNotEmpty()
-  profileType:ProfileType
+  profileType: ProfileType;
 }

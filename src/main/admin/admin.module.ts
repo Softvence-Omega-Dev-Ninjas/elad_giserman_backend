@@ -10,7 +10,15 @@ import { AdminPlatformManagementController } from './controller/admin.patformMan
 
 @Module({
   imports: [SubscriptionModule],
-  providers: [AdminOfferService,AdminReviewService,AdminPlatfromManagementService],
-  controllers: [AdminController,AdminReviewController,AdminPlatformManagementController],
+  providers: [
+    AdminOfferService,
+    AdminReviewService,
+    AdminPlatfromManagementService,
+  ],
+  controllers: [
+    AdminController,
+    AdminReviewController,
+    AdminPlatformManagementController,
+  ],
 })
 export class AdminModule {}
