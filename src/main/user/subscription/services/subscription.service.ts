@@ -18,28 +18,37 @@ export class SubscriptionService {
       { createdAt: Prisma.SortOrder.desc },
     ];
 
-    const [monthlyPlan, yearlyPlan] = await this.prismaService.$transaction([
-      this.prismaService.subscriptionPlan.findFirst({
-        where: {
-          billingPeriod: 'MONTHLY',
-          isActive: true,
-        },
-        orderBy,
-      }),
-      this.prismaService.subscriptionPlan.findFirst({
-        where: {
-          billingPeriod: 'YEARLY',
-          isActive: true,
-        },
-        orderBy,
-      }),
-    ]);
+    const [monthlyPlan, biannualPlan, yearlyPlan] =
+      await this.prismaService.$transaction([
+        this.prismaService.subscriptionPlan.findFirst({
+          where: {
+            billingPeriod: 'MONTHLY',
+            isActive: true,
+          },
+          orderBy,
+        }),
+        this.prismaService.subscriptionPlan.findFirst({
+          where: {
+            billingPeriod: 'BIANNUAL',
+            isActive: true,
+          },
+          orderBy,
+        }),
+        this.prismaService.subscriptionPlan.findFirst({
+          where: {
+            billingPeriod: 'YEARLY',
+            isActive: true,
+          },
+          orderBy,
+        }),
+      ]);
 
     this.logger.log('Plans fetched successfully');
 
     return successResponse(
       {
         monthlyPlan,
+        biannualPlan,
         yearlyPlan,
       },
       'Plans fetched successfully',
