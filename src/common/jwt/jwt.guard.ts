@@ -42,7 +42,6 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     if (!user) {
       throw new UnauthorizedException('Unauthorized');
     }
-    this.logger.debug(`Auth user: ${JSON.stringify(user)}`);
     return user;
   }
 }
