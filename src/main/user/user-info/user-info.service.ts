@@ -159,7 +159,7 @@ export class UserInfoService {
 
   const yesterdayStart = new Date(todayStart);
   yesterdayStart.setDate(todayStart.getDate() - 1);
-  
+
 //* Yesterday end (23:59:59)
   const yesterdayEnd = new Date(todayStart);
 
@@ -191,7 +191,6 @@ export class UserInfoService {
     },
     orderBy: { createdAt: "desc" },
   });
-
   return {
     today,
     yesterday,

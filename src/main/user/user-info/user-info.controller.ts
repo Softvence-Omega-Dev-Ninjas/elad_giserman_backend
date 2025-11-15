@@ -18,6 +18,7 @@ import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { UpdateUserInfoDto } from './dto/update-user-info.dto';
 import { UserInfoService } from './user-info.service';
 
+
 @ApiTags('USER Info')
 @Controller('user-info')
 @ValidateAuth()
@@ -88,7 +89,6 @@ export class UserInfoController {
     @GetUser('sub') userId: string,
   ) {
     return this.userInfoService.redeemOffer(code, userId);
-   
   }
 
   //  User sees all redeemed offers
