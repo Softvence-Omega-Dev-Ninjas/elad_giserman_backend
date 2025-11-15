@@ -88,11 +88,33 @@ export class UserInfoController {
     @GetUser('sub') userId: string,
   ) {
     return this.userInfoService.redeemOffer(code, userId);
+   
   }
 
   //  User sees all redeemed offers
   @Get('redeemed')
   async getRedeemedOffers(@GetUser('sub') userId: string) {
-    return this.userInfoService.getUserRedeemedOffers(userId);
+    const res=await this.userInfoService.getUserRedeemedOffers(userId);
+    return{
+      status:HttpStatus.OK,
+      message:"Your total redemtions retrive succesful",
+      data:res
+    }
+  }
+
+  //* user notifications
+  @ValidateAuth()
+  @Get("notifications")
+  async getAllNotificationsOfUser(@GetUser('sub') id:string){
+    try{
+      const res=await this.userInfoService.getUserNotifications(id)
+      return{
+        status:HttpStatus.OK,
+        message:"Users notificatiosn retirve success",
+        data:res
+      }
+    }catch(error){
+      throw new InternalServerErrorException(error.message,error.status)
+    }
   }
 }
