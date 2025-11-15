@@ -1,13 +1,13 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import {
-  BadRequestException,
-  HttpStatus,
+  BadRequestException, HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { PlatformFilter } from '../dto/getPlatform.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { subDays, format } from 'date-fns';
+import { CreateTermsAndConditionsDto, UpdateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 @Injectable()
 export class AdminPlatfromManagementService {
   constructor(private readonly prisma: PrismaService) {}
@@ -276,5 +276,56 @@ export class AdminPlatfromManagementService {
       .map((date) => ({ date, count: growthMap[date] }));
 
     return growth;
+  }
+
+
+  // ** CREATE TERMS AND CONDITIONS FOR PLATFORM
+  async postTermAndConditions(dto:CreateTermsAndConditionsDto){
+    const res=await this.prisma.termsAndConditions.create({
+      data:{
+        ...dto
+      }
+    })
+    return res
+  }
+
+  // ** UPATED TERM AND CONDITIONS 
+  async updateTermsAndCondition(id:string,dto:UpdateTermsAndConditionsDto){
+    if(!id){
+      throw new BadRequestException('terms id is required')
+    }
+    const isExistTerms=await this.prisma.termsAndConditions.findFirst({
+      where:{
+        id:id
+      }
+    })
+    if(!isExistTerms){
+      throw new NotFoundException("Your given temrm not found")
+    }
+
+    const res=await this.prisma.termsAndConditions.update({
+      where:{
+        id:id
+      },
+      data:{
+        account:dto.account,
+        reservations:dto.reservations,
+        subscription:dto.subscription,
+        offerAndRedemtions:dto.offerAndRedemtions,
+        businesses:dto.businesses,
+        adminRight:dto.adminRight,
+        dataAndPolicy:dto.dataAndPolicy,
+        liability:dto.liability,
+        governingLaw:dto.governingLaw,
+      }
+    })
+    return res
+  }
+  
+
+  // **   GET TERMS AND CONDITIONS
+  async getTermsAndCondition(){
+    const res=await this.prisma.termsAndConditions.findFirst()
+    return res
   }
 }

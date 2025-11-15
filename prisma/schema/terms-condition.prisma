@@ -1,0 +1,15 @@
+model TermsAndConditions {
+    id String @id @default(uuid())
+    account String
+    subscription String[]
+    offerAndRedemtions String[]
+    reservations String[]
+    businesses String[]
+    adminRight String[]
+    dataAndPolicy String
+    liability String
+    governingLaw String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    
+ }
