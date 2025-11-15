@@ -14,10 +14,12 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { PlatformFilter } from '../dto/getPlatform.dto';
+import {
+  CreateTermsAndConditionsDto,
+  UpdateTermsAndConditionsDto,
+} from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { AdminPlatfromManagementService } from '../service/admin.platfromManagement.service';
-import { CreateTermsAndConditionsDto, UpdateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
-import { dot } from 'node:test/reporters';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -111,47 +113,53 @@ export class AdminPlatformManagementController {
   @ValidateAdmin()
   @Post('create-termAndCondition')
   @ApiConsumes('multipart/form-data')
-  @ApiBody({type:CreateTermsAndConditionsDto})
-  async postTermsAndConditions(@Body() dto:CreateTermsAndConditionsDto){
-    try{
-      const res=await this.platformManagementService.postTermAndConditions(dto)
-      return{
-        status:HttpStatus.CREATED,
-        message:"your platform terms and condition post succesfull",
-        data:res
-      }
-    }catch(error){
-      throw new InternalServerErrorException(error.message,error.status)
+  @ApiBody({ type: CreateTermsAndConditionsDto })
+  async postTermsAndConditions(@Body() dto: CreateTermsAndConditionsDto) {
+    try {
+      const res =
+        await this.platformManagementService.postTermAndConditions(dto);
+      return {
+        status: HttpStatus.CREATED,
+        message: 'your platform terms and condition post succesfull',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
     }
   }
 
   @ValidateAdmin()
   @Patch('update-term/:id')
-  async updatedTermsAndConditions(@Param('id') id:string,@Body() dto:UpdateTermsAndConditionsDto){
-    try{
-    const res=await this.platformManagementService.updateTermsAndCondition(id,dto)
-    return{
-      status:HttpStatus.OK,
-      message:"Your term and condition updated successful",
-      data:res
-    }
-    }catch(error){
-      throw new InternalServerErrorException(error.message,error.status)
+  async updatedTermsAndConditions(
+    @Param('id') id: string,
+    @Body() dto: UpdateTermsAndConditionsDto,
+  ) {
+    try {
+      const res = await this.platformManagementService.updateTermsAndCondition(
+        id,
+        dto,
+      );
+      return {
+        status: HttpStatus.OK,
+        message: 'Your term and condition updated successful',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
     }
   }
 
-
   @Get('get-term')
-  async getTermsAndConditions(){
-    try{
-      const res=await this.platformManagementService.getTermsAndCondition()
-      return{
-        status:HttpStatus.OK,
-        message:"Platform Term and condition fetch succeful",
-        data:res
-      }
-    }catch(error){
-      throw new InternalServerErrorException(error.message,error.status)
+  async getTermsAndConditions() {
+    try {
+      const res = await this.platformManagementService.getTermsAndCondition();
+      return {
+        status: HttpStatus.OK,
+        message: 'Platform Term and condition fetch succeful',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
     }
   }
 }

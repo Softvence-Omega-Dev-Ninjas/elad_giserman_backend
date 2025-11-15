@@ -1,4 +1,4 @@
-import { IsString, IsArray, IsOptional, ArrayNotEmpty, IsDateString } from 'class-validator';
+import { IsString, IsArray, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTermsAndConditionsDto {
@@ -6,11 +6,17 @@ export class CreateTermsAndConditionsDto {
   @IsString()
   account: string;
 
-  @ApiProperty({ example: ['basic', 'premium'], description: 'Subscription types' })
+  @ApiProperty({
+    example: ['basic', 'premium'],
+    description: 'Subscription types',
+  })
   @IsArray()
   subscription: string[];
 
-  @ApiProperty({ example: ['offer1', 'offer2'], description: 'Offers and redemptions' })
+  @ApiProperty({
+    example: ['offer1', 'offer2'],
+    description: 'Offers and redemptions',
+  })
   @IsArray()
   offerAndRedemtions: string[];
 
@@ -18,7 +24,10 @@ export class CreateTermsAndConditionsDto {
   @IsArray()
   reservations: string[];
 
-  @ApiProperty({ example: ['business1', 'business2'], description: 'Businesses' })
+  @ApiProperty({
+    example: ['business1', 'business2'],
+    description: 'Businesses',
+  })
   @IsArray()
   businesses: string[];
 
@@ -26,11 +35,17 @@ export class CreateTermsAndConditionsDto {
   @IsArray()
   adminRight: string[];
 
-  @ApiProperty({ example: 'Your data and privacy policy text', description: 'Data and policy information' })
+  @ApiProperty({
+    example: 'Your data and privacy policy text',
+    description: 'Data and policy information',
+  })
   @IsString()
   dataAndPolicy: string;
 
-  @ApiProperty({ example: 'Liability text', description: 'Liability information' })
+  @ApiProperty({
+    example: 'Liability text',
+    description: 'Liability information',
+  })
   @IsString()
   liability: string;
 
@@ -40,47 +55,83 @@ export class CreateTermsAndConditionsDto {
 }
 
 export class UpdateTermsAndConditionsDto {
-  @ApiProperty({ example: 'account_123', description: 'Account identifier', required: false })
+  @ApiProperty({
+    example: 'account_123',
+    description: 'Account identifier',
+    required: false,
+  })
   @IsOptional()
   @IsString()
   account?: string;
 
-  @ApiProperty({ example: ['basic', 'premium'], description: 'Subscription types', required: false })
+  @ApiProperty({
+    example: ['basic', 'premium'],
+    description: 'Subscription types',
+    required: false,
+  })
   @IsOptional()
   @IsArray()
   subscription?: string[];
 
-  @ApiProperty({ example: ['offer1', 'offer2'], description: 'Offers and redemptions', required: false })
+  @ApiProperty({
+    example: ['offer1', 'offer2'],
+    description: 'Offers and redemptions',
+    required: false,
+  })
   @IsOptional()
   @IsArray()
   offerAndRedemtions?: string[];
 
-  @ApiProperty({ example: ['reservation1'], description: 'Reservations', required: false })
+  @ApiProperty({
+    example: ['reservation1'],
+    description: 'Reservations',
+    required: false,
+  })
   @IsOptional()
   @IsArray()
   reservations?: string[];
 
-  @ApiProperty({ example: ['business1', 'business2'], description: 'Businesses', required: false })
+  @ApiProperty({
+    example: ['business1', 'business2'],
+    description: 'Businesses',
+    required: false,
+  })
   @IsOptional()
   @IsArray()
   businesses?: string[];
 
-  @ApiProperty({ example: ['ADMIN'], description: 'Admin rights', required: false })
+  @ApiProperty({
+    example: ['ADMIN'],
+    description: 'Admin rights',
+    required: false,
+  })
   @IsOptional()
   @IsArray()
   adminRight?: string[];
 
-  @ApiProperty({ example: 'Your data and privacy policy text', description: 'Data and policy information', required: false })
+  @ApiProperty({
+    example: 'Your data and privacy policy text',
+    description: 'Data and policy information',
+    required: false,
+  })
   @IsOptional()
   @IsString()
   dataAndPolicy?: string;
 
-  @ApiProperty({ example: 'Liability text', description: 'Liability information', required: false })
+  @ApiProperty({
+    example: 'Liability text',
+    description: 'Liability information',
+    required: false,
+  })
   @IsOptional()
   @IsString()
   liability?: string;
 
-  @ApiProperty({ example: 'Governing law text', description: 'Governing law', required: false })
+  @ApiProperty({
+    example: 'Governing law text',
+    description: 'Governing law',
+    required: false,
+  })
   @IsOptional()
   @IsString()
   governingLaw?: string;

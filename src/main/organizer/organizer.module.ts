@@ -7,7 +7,7 @@ import { FirebaseService } from '@/lib/firebase/firebase.service';
 @Module({
   imports: [],
   controllers: [BusinessProfileController],
-  providers: [BusinessProfileService, OfferService,FirebaseService],
+  providers: [BusinessProfileService, OfferService, FirebaseService],
   exports: [],
 })
 export class OrganizerModule {}
