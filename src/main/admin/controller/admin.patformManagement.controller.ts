@@ -17,10 +17,7 @@ import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { AdminPlatfromManagementService } from '../service/admin.platfromManagement.service';
 import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import { PlatformFilter } from '../dto/getPlatform.dto';
-import {
-  CreateTermsAndConditionsDto,
-  UpdateTermsAndConditionsDto,
-} from '../dto/termAndCondition.dto';
+
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { CreateCustomAppDto } from '../dto/customApp.dto';
