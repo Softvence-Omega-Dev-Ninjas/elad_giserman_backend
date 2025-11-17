@@ -74,19 +74,19 @@ export class AdminPlatfromManagementService {
 
       //  Recent users
       this.prisma.user.findMany({
-        orderBy: { createdAt: 'desc', updatedAt: 'desc' },
+        orderBy: { updatedAt: 'desc' },
         take: 1,
       }),
 
       //  Recent business profiles
       this.prisma.businessProfile.findMany({
-        orderBy: { createdAt: 'desc', updatedAt: 'desc' },
+        orderBy: { updatedAt: 'desc'},
         take: 5,
       }),
 
       // Recent reviews
       this.prisma.review.findMany({
-        orderBy: { createdAt: 'desc', updatedAt: 'desc' },
+        orderBy: { updatedAt: 'desc'},
         take: 1,
         include: {
           user: true,
@@ -95,7 +95,7 @@ export class AdminPlatfromManagementService {
       }),
       //
       this.prisma.offer.findMany({
-        orderBy: { createdAt: 'desc', updatedAt: 'desc' },
+        orderBy: { updatedAt: 'desc', },
         take: 1,
         include: {
           business: {
@@ -124,6 +124,7 @@ export class AdminPlatfromManagementService {
       },
     };
   }
+
 
   //*  get user details
   async getUserDetils(userId: string) {
