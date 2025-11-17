@@ -8,13 +8,16 @@ import {
 import { PlatformFilter } from '../dto/getPlatform.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { subDays, format } from 'date-fns';
-import {
-  CreateTermsAndConditionsDto,
-  UpdateTermsAndConditionsDto,
-} from '../dto/termAndCondition.dto';
+import { CreateCustomAppDto } from '../dto/customApp.dto';
+import { S3Service } from '@/lib/s3/s3.service';
+import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
+// import { log } from 'console';
 @Injectable()
 export class AdminPlatfromManagementService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly s3Service: S3Service,
+  ) {}
 
   async getPlatfromStat(filter: PlatformFilter) {
     const { search, date, userType } = filter;
@@ -50,7 +53,7 @@ export class AdminPlatfromManagementService {
       users,
       topBusiness,
 
-      // NEW: Recent activity
+      //* NEW: Recent activity
       recentUsers,
       recentBusinessProfile,
       recentReviews,
@@ -122,7 +125,7 @@ export class AdminPlatfromManagementService {
     };
   }
 
-  //  get user details
+  //*  get user details
   async getUserDetils(userId: string) {
     if (!userId) {
       throw new NotFoundException('user id is requird');
@@ -138,7 +141,7 @@ export class AdminPlatfromManagementService {
     return isUserExist;
   }
 
-  //  delete user
+  //*  delete user
   async deleteuser(userId: string) {
     if (!userId) {
       throw new BadRequestException('User Id is requrid');
@@ -282,52 +285,93 @@ export class AdminPlatfromManagementService {
     return growth;
   }
 
-  // ** CREATE TERMS AND CONDITIONS FOR PLATFORM
-  async postTermAndConditions(dto: CreateTermsAndConditionsDto) {
-    const res = await this.prisma.termsAndConditions.create({
+  //* Customize app
+  async customizeApp(dto: CreateCustomAppDto, files: any) {
+    // Upload each file to S3 (if provided)
+    let logoUrl = null;
+    let bannerCardUrl = null;
+    let bannerPhotoUrl = null;
+
+    if (files.logo?.[0]) {
+      logoUrl = await this.s3Service.uploadFile(files.logo[0]);
+    }
+
+    if (files.bannerCard?.[0]) {
+      bannerCardUrl = await this.s3Service.uploadFile(files.bannerCard[0]);
+    }
+
+    if (files.bannerPhoto?.[0]) {
+      bannerPhotoUrl = await this.s3Service.uploadFile(files.bannerPhoto[0]);
+    }
+    // Check if record exists
+    const existing = await this.prisma.customApp.findFirst();
+
+    // CREATE if no record exists
+    if (!existing) {
+      return await this.prisma.customApp.create({
+        data: {
+          ...dto,
+          bannerCard: bannerCardUrl?.url,
+          bannerPhoto: bannerPhotoUrl?.url,
+          logo: logoUrl?.url,
+        },
+      });
+    }
+
+    // UPDATE existing record
+    return await this.prisma.customApp.update({
+      where: { id: existing.id },
       data: {
         ...dto,
+        bannerCard: bannerCardUrl?.url,
+        bannerPhoto: bannerPhotoUrl?.url,
+        logo: logoUrl?.url,
       },
     });
-    return res;
   }
 
-  // ** UPATED TERM AND CONDITIONS
-  async updateTermsAndCondition(id: string, dto: UpdateTermsAndConditionsDto) {
-    if (!id) {
-      throw new BadRequestException('terms id is required');
+
+
+  //*  CREATE SPIN TABLE
+  async createSpinTable(dto:CreateSpinDto){
+    const isSpinExist= await this.prisma.spin.findFirst();
+    if(isSpinExist){
+      throw new BadRequestException('Spin data already exist, you can update it')
     }
-    const isExistTerms = await this.prisma.termsAndConditions.findFirst({
-      where: {
-        id: id,
-      },
-    });
-    if (!isExistTerms) {
-      throw new NotFoundException('Your given temrm not found');
+    const res=await this.prisma.spin.create({
+      data:{
+        ...dto
+      }
+    })
+    return res;
+  }
+
+  //* UPDATE SPIN
+  async updateSpinData(dto:UpdateSpinDto){
+    const isSpinExist= await this.prisma.spin.findFirst();
+    if(!isSpinExist){
+      throw new NotFoundException('Spin data not found to update')
     }
-
-    const res = await this.prisma.termsAndConditions.update({
-      where: {
-        id: id,
+    const res= await this.prisma.spin.update({
+      where:{
+        id:isSpinExist.id
       },
-      data: {
-        account: dto.account,
-        reservations: dto.reservations,
-        subscription: dto.subscription,
-        offerAndRedemtions: dto.offerAndRedemtions,
-        businesses: dto.businesses,
-        adminRight: dto.adminRight,
-        dataAndPolicy: dto.dataAndPolicy,
-        liability: dto.liability,
-        governingLaw: dto.governingLaw,
-      },
-    });
+      data:{
+        ...dto
+      }
+    })
     return res;
   }
 
-  // **   GET TERMS AND CONDITIONS
-  async getTermsAndCondition() {
-    const res = await this.prisma.termsAndConditions.findFirst();
-    return res;
+
+  //* get spin table
+  async getSpinTableData(){
+    const isSpinExist= await this.prisma.spin.findFirst();
+    if(!isSpinExist){
+      throw new NotFoundException('Spin data not found');
+    }
+    return isSpinExist
   }
+
+  //*reset
 }

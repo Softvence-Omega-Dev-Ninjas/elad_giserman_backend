@@ -1,0 +1,15 @@
+model Spin {
+    id String @id @default(uuid())
+    spinValue1 Int?
+    spinValue2 Int?
+    spinValue3 Int?
+    spinValue4 Int?
+    spinValue5 Int?
+    spinValue6 Int?
+    spinValue7 Int?
+    spinValue8 Int?
+    spinValue9 Int?
+    spinValue10 Int?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
