@@ -330,48 +330,75 @@ export class AdminPlatfromManagementService {
     });
   }
 
-
-
   //*  CREATE SPIN TABLE
-  async createSpinTable(dto:CreateSpinDto){
-    const isSpinExist= await this.prisma.spin.findFirst();
-    if(isSpinExist){
-      throw new BadRequestException('Spin data already exist, you can update it')
+  async createSpinTable(dto: CreateSpinDto) {
+    const isSpinExist = await this.prisma.spin.findFirst();
+    if (isSpinExist) {
+      throw new BadRequestException(
+        'Spin data already exist, you can update it',
+      );
     }
-    const res=await this.prisma.spin.create({
-      data:{
-        ...dto
-      }
-    })
+    const res = await this.prisma.spin.create({
+      data: {
+        ...dto,
+      },
+    });
     return res;
   }
 
   //* UPDATE SPIN
-  async updateSpinData(dto:UpdateSpinDto){
-    const isSpinExist= await this.prisma.spin.findFirst();
-    if(!isSpinExist){
-      throw new NotFoundException('Spin data not found to update')
+  async updateSpinData(dto: UpdateSpinDto) {
+    const isSpinExist = await this.prisma.spin.findFirst();
+    if (!isSpinExist) {
+      throw new NotFoundException('Spin data not found to update');
     }
-    const res= await this.prisma.spin.update({
-      where:{
-        id:isSpinExist.id
+    const res = await this.prisma.spin.update({
+      where: {
+        id: isSpinExist.id,
       },
-      data:{
-        ...dto
-      }
-    })
+      data: {
+        ...dto,
+      },
+    });
     return res;
   }
 
-
   //* get spin table
-  async getSpinTableData(){
-    const isSpinExist= await this.prisma.spin.findFirst();
-    if(!isSpinExist){
+  async getSpinTableData() {
+    const isSpinExist = await this.prisma.spin.findFirst();
+    if (!isSpinExist) {
       throw new NotFoundException('Spin data not found');
     }
-    return isSpinExist
+    return isSpinExist;
   }
 
-  //*reset
+  
+  //*reset spin
+  async resetSpintable(){
+    const isExist=await this.prisma.spin.findFirst()
+    if(!isExist){
+      throw new  NotFoundException('Spin data not found')
+    }
+    await this.prisma.spin.update({
+      where:{
+        id:isExist.id
+      },
+      data:{
+        spinValue1:0,
+        spinValue2:0,
+        spinValue3:0,
+        spinValue4:0,
+        spinValue5:0,
+        spinValue6:0,
+        spinValue7:0,
+        spinValue8:0,
+        spinValue9:0,
+        spinValue10:0,
+      }
+    })
+    return {
+      status:HttpStatus.OK,
+      message:'Spin data reset successfully'
+    }
+  }
 }

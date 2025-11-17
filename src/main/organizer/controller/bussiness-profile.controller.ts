@@ -45,8 +45,7 @@ export class BusinessProfileController {
     private readonly offerService: OfferService,
   ) {}
 
-
-    // get all review
+  // get all review
   @Get('get-all-review')
   async getAllReviews(@GetUser('sub') userId: string) {
     try {
@@ -61,7 +60,6 @@ export class BusinessProfileController {
     }
   }
 
-  
   @ValidateOrganizer()
   @ApiOperation({
     summary: 'Create New Bussiness Profile (only for organizer)',
@@ -141,15 +139,12 @@ export class BusinessProfileController {
       },
     },
   })
-
-
-
   async update(
     @GetUser('sub') id: string,
     @Body() dto: UpdateBusinessProfileDto,
     @UploadedFiles() gallery: Express.Multer.File[],
   ) {
-    console.log(gallery)
+    console.log(gallery);
     return this.businessProfileService.update(id, dto, gallery);
   }
 
@@ -242,8 +237,6 @@ export class BusinessProfileController {
       throw new HttpException(err.message, err.status);
     }
   }
-
-
 
   // get single review
 
