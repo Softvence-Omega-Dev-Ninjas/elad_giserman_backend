@@ -1,13 +1,12 @@
+import { PrismaService } from '@/lib/prisma/prisma.service';
+import { S3Service } from '@/lib/s3/s3.service';
 import {
   BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-// import { CreateUserInfoDto } from './dto/create-user-info.dto';
 import { UpdateUserInfoDto } from './dto/update-user-info.dto';
-import { PrismaService } from '@/lib/prisma/prisma.service';
-import { S3Service } from '@/lib/s3/s3.service';
 
 @Injectable()
 export class UserInfoService {
@@ -26,6 +25,7 @@ export class UserInfoService {
     if (!result) {
       return null;
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...safeUser } = result;
     return safeUser;
   }
@@ -139,7 +139,7 @@ export class UserInfoService {
     return {
       success: true,
       message: 'Offer redeemed successfully!',
-      offer: { id: offer.id, title: offer.title },
+      offer: { id: offer.id, title: offer.title, logId: log.id },
     };
   }
 
@@ -149,5 +149,50 @@ export class UserInfoService {
       include: { offer: true, business: true },
       orderBy: { createdAt: 'desc' },
     });
+  }
+
+  async getUserNotifications(userId: string) {
+    // Get today start (00:00)
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const yesterdayStart = new Date(todayStart);
+    yesterdayStart.setDate(todayStart.getDate() - 1);
+
+    //* Yesterday end (23:59:59)
+    const yesterdayEnd = new Date(todayStart);
+
+    // * Today notifications
+    const today = await this.prisma.userNotification.findMany({
+      where: {
+        userId,
+        createdAt: {
+          gte: todayStart,
+        },
+      },
+      include: {
+        notification: true,
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    //* Yesterday notifications
+    const yesterday = await this.prisma.userNotification.findMany({
+      where: {
+        userId,
+        createdAt: {
+          gte: yesterdayStart,
+          lt: yesterdayEnd,
+        },
+      },
+      include: {
+        notification: true,
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+    return {
+      today,
+      yesterday,
+    };
   }
 }

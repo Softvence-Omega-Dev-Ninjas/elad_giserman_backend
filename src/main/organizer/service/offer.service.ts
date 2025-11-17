@@ -9,14 +9,16 @@ import { UpdateOfferDto } from '../dto/update-offer.dto';
 import { generateQRCodeBuffer } from '../helps/qrCode';
 import { S3Service } from '@/lib/s3/s3.service';
 import { Readable } from 'stream';
+import { FirebaseService } from '@/lib/firebase/firebase.service';
 
 @Injectable()
 export class OfferService {
   constructor(
     private prisma: PrismaService,
     private readonly s3Service: S3Service,
+    private readonly firebase: FirebaseService,
   ) {}
-
+  // ** Create offer by organizer
   async createOffer(userId: string, dto: CreateOfferDto) {
     const business = await this.prisma.businessProfile.findUnique({
       where: { ownerId: userId },
@@ -58,10 +60,47 @@ export class OfferService {
       data: { qrCodeUrl: uploaded?.url ?? null },
     });
 
+    //* get all users who is primum  and get thire fcm token for firebase notifiction
+    const allPremiumUser = await this.prisma.user.findMany({
+      where: {
+        subscriptionStatus: 'ACTIVE',
+      },
+      select: {
+        fcmToken: true,
+        id: true,
+      },
+    });
+    const fcmArray: string[] = [];
+    //* this loop will push all fcm token to an array and then it will passs for notifications
+    for (const user of allPremiumUser) {
+      fcmArray.push(user.fcmToken as string);
+    }
+    await this.firebase.sendPushNotification(fcmArray, dto.title, dto.code);
+
+    const notification = await this.prisma.notification.create({
+      data: {
+        type: 'OFFER',
+        title: dto.title,
+        message: dto.description ?? dto.code,
+        meta: {
+          offerId: offer.id,
+          businessId: business.id,
+        },
+      },
+    });
+
+    // * Create UserNotification entries
+    await this.prisma.userNotification.createMany({
+      data: allPremiumUser.map((u) => ({
+        userId: u.id,
+        notificationId: notification.id,
+      })),
+      skipDuplicates: true,
+    });
     return updatedOffer;
   }
 
-  // find arrpove offer only...
+  //** find arrpove offer only...
   async findApprovedOffers(userId: string) {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user || user.role !== 'USER') {
@@ -91,7 +130,8 @@ export class OfferService {
       include: { business: true },
     });
   }
-  // find one offer
+
+  //** find one offer
   async findOne(userId: string, id: string) {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user || user.role !== 'USER') {
@@ -128,7 +168,7 @@ export class OfferService {
       data: dto,
     });
   }
-  // delete offer
+  //* delete offer
   async deleteOffer(userId: string, offerId: string) {
     const business = await this.prisma.businessProfile.findUnique({
       where: { ownerId: userId },
@@ -149,7 +189,7 @@ export class OfferService {
       throw new NotFoundException('Offer not found or not yours');
     }
 
-    // delete the offer
+    //* delete the offer
     await this.prisma.offer.delete({
       where: { id: offerId },
     });

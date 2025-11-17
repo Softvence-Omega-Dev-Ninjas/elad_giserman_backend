@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { CreateIntentService } from './services/create-intent.service';
-import { SubscriptionController } from './subscription.controller';
-import { SubscriptionService } from './services/subscription.service';
 import { HandleWebhookService } from './services/handle-webhook.service';
-import { CreateSessionService } from './services/create-session.service';
+import { SubscriptionService } from './services/subscription.service';
+import { SubscriptionController } from './subscription.controller';
+import { CancelSubscriptionService } from './services/cancel-subscription.service';
 
 @Module({
   controllers: [SubscriptionController],
@@ -11,7 +11,7 @@ import { CreateSessionService } from './services/create-session.service';
     CreateIntentService,
     SubscriptionService,
     HandleWebhookService,
-    CreateSessionService,
+    CancelSubscriptionService,
   ],
 })
 export class SubscriptionModule {}

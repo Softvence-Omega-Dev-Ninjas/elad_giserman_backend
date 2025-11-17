@@ -1,21 +1,18 @@
+import { GetUser, ValidateAuth } from '@/common/jwt/jwt.decorator';
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
-  Delete,
+  Controller,
   HttpException,
   HttpStatus,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { ReviewService } from './review.service';
-import { CreateReviewDto } from './dto/create-review.dto';
-import { UpdateReviewDto } from './dto/update-review.dto';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
-import { GetUser, ValidateAuth } from '@/common/jwt/jwt.decorator';
-import { ReviewReply } from '@prisma/client';
+import { CreateReviewDto } from './dto/create-review.dto';
 import { ReviewReplyDTO } from './dto/create-reviewReply';
+import { UpdateReviewDto } from './dto/update-review.dto';
+import { ReviewService } from './review.service';
 
 @ApiTags('Reviews')
 @Controller('review')

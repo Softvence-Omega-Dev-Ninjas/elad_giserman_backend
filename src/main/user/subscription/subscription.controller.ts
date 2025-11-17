@@ -10,8 +10,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CancelSubscriptionService } from './services/cancel-subscription.service';
 import { CreateIntentService } from './services/create-intent.service';
-import { CreateSessionService } from './services/create-session.service';
 import { HandleWebhookService } from './services/handle-webhook.service';
 import { SubscriptionService } from './services/subscription.service';
 
@@ -23,8 +23,8 @@ export class SubscriptionController {
   constructor(
     private readonly subscriptionService: SubscriptionService,
     private readonly createIntentService: CreateIntentService,
-    private readonly createSessionService: CreateSessionService,
     private readonly handleWebhookService: HandleWebhookService,
+    private readonly cancelSubscriptionService: CancelSubscriptionService,
   ) {}
 
   @ApiOperation({ summary: 'Get plans for user' })
@@ -33,34 +33,13 @@ export class SubscriptionController {
     return this.subscriptionService.getPlansForUser();
   }
 
-  @ApiOperation({ summary: 'Create payment intent' })
+  @ApiOperation({ summary: 'Create setup intent' })
   @Post(':planId/intent')
-  async createPaymentIntent(
+  async createSetupIntent(
     @GetUser('sub') userId: string,
     @Param('planId') planId: string,
   ) {
-    return this.createIntentService.createPaymentIntent(userId, planId);
-  }
-
-  @ApiOperation({ summary: 'Create renew payment intent' })
-  @Post('me/renew/intent')
-  async createRenewPaymentIntent(@GetUser('sub') userId: string) {
-    return this.createIntentService.createRenewPaymentIntent(userId);
-  }
-
-  @ApiOperation({ summary: 'Create checkout session' })
-  @Post(':planId/checkout')
-  async createCheckOutSession(
-    @GetUser('sub') userId: string,
-    @Param('planId') planId: string,
-  ) {
-    return this.createSessionService.createCheckOutSession(userId, planId);
-  }
-
-  @ApiOperation({ summary: 'Cancel subscription' })
-  @Post('me/cancel/subscription')
-  async cancelSubscription(@GetUser('sub') userId: string) {
-    return this.createSessionService.cancelSubscription(userId);
+    return this.createIntentService.createSetupIntent(userId, planId);
   }
 
   @ApiOperation({ summary: 'Handle Stripe webhook events (Public Endpoint)' })
@@ -83,5 +62,11 @@ export class SubscriptionController {
   @Get('me')
   async getCurrentSubscriptionStatus(@GetUser('sub') userId: string) {
     return this.subscriptionService.getCurrentSubscriptionStatus(userId);
+  }
+
+  @ApiOperation({ summary: 'Cancel subscription immediately' })
+  @Post('me/cancel')
+  async cancelSubscriptionImmediately(@GetUser('sub') userId: string) {
+    return this.cancelSubscriptionService.cancelSubscriptionImmediately(userId);
   }
 }

@@ -43,7 +43,7 @@ export class StripeService {
       currency,
       recurring: {
         interval,
-        interval_count: intervalCount, // 6 for BIANNUAL
+        interval_count: intervalCount,
       },
     });
 
@@ -106,86 +106,67 @@ export class StripeService {
     return deletedProduct;
   }
 
-  // Payment Intent Management
-  async retrievePaymentIntent(paymentIntentId: string) {
-    const pi = await this.stripe.paymentIntents.retrieve(paymentIntentId);
-    this.logger.log(`Retrieved PaymentIntent ${paymentIntentId}`);
-    return pi;
+  // Setup Intent Management
+  async retrieveSetupIntent(setupIntentId: string) {
+    const setupIntent = await this.stripe.setupIntents.retrieve(setupIntentId);
+    this.logger.log(`Retrieved SetupIntent ${setupIntentId}`);
+    return setupIntent;
   }
 
-  async createPaymentIntent({
-    amount,
-    currency,
-    customerId,
-    metadata,
-  }: {
-    amount: number;
-    currency: string;
-    customerId: string;
-    metadata: StripePaymentMetadata;
-  }) {
-    const intent = await this.stripe.paymentIntents.create(
-      {
-        amount,
-        currency,
-        customer: customerId,
-        receipt_email: metadata.email,
-        automatic_payment_methods: {
-          enabled: true,
-        },
-        metadata,
-      },
-      {
-        idempotencyKey: `pi_${metadata.userId}_${metadata.planId}`,
-      },
-    );
+  async createSetupIntent(metadata: StripePaymentMetadata) {
+    try {
+      // 1) find or create customer
+      const customer = await this.getOrCreateCustomerId({
+        userId: metadata.userId,
+        email: metadata.email,
+        name: metadata.name,
+      });
 
-    this.logger.log(`Created payment intent ${intent.id}`);
-    return intent;
-  }
+      const customerId = customer.id;
 
-  // Checkout session Management
-  async createCheckoutSession({
-    userId,
-    priceId,
-    successUrl,
-    cancelUrl,
-    metadata,
-  }: {
-    userId: string;
-    priceId: string;
-    successUrl: string;
-    cancelUrl: string;
-    metadata: StripePaymentMetadata;
-  }) {
-    const customer = await this.getOrCreateCustomerId(
-      userId,
-      metadata.email,
-      metadata.name,
-    );
+      this.logger.log(
+        `Created new Stripe customer ${customerId} for user ${metadata.userId}`,
+      );
 
-    const session = await this.stripe.checkout.sessions.create({
-      line_items: [
+      // 2) create SetupIntent (no charge — collects & attaches payment method for future use)
+      const setupIntent = await this.stripe.setupIntents.create(
         {
-          price: priceId,
-          quantity: 1,
+          customer: customerId,
+          payment_method_types: ['card'],
+          usage: 'off_session', // important for subscriptions / future off-session charges
+          metadata: {
+            ...metadata,
+            customerId,
+          },
         },
-      ],
-      customer: customer.id,
-      mode: 'subscription',
-      success_url: successUrl,
-      cancel_url: cancelUrl,
-      metadata,
-    });
+        {
+          idempotencyKey: `si_${metadata.userId}_${metadata.planId ?? 'no-plan'}`,
+        },
+      );
 
-    this.logger.log(
-      `Created checkout session ${session.id} for user ${userId}`,
-    );
-    return session;
+      this.logger?.log(
+        `Created SetupIntent ${setupIntent.id} for customer ${customerId}`,
+      );
+      return setupIntent; // contains id and client_secret
+    } catch (err) {
+      this.logger?.error(
+        'createSetupIntent failed',
+        (err as any)?.message ?? err,
+      );
+      throw err; // bubble up to caller so your HandleError decorator / logger handles it
+    }
   }
 
   // Customer Management
-  async getOrCreateCustomerId(userId: string, email: string, name: string) {
+  async getOrCreateCustomerId({
+    userId,
+    name,
+    email,
+  }: {
+    userId: string;
+    name: string;
+    email: string;
+  }) {
     // Step 1: Check if the user already has a Stripe customer linked
     const existingCustomer = await this.stripe.customers.list({
       email,
@@ -219,39 +200,28 @@ export class StripeService {
     return customer;
   }
 
-  // Subscription Management & Cancellation Utilities
+  // Subscription Management
   async createSubscription({
     customerId,
     priceId,
     metadata,
-    trialPeriodDays,
-    expand = ['latest_invoice.payment_intent'],
-    offSession = true,
-    paymentBehavior = 'default_incomplete',
+    paymentMethodId,
   }: {
     customerId: string;
     priceId: string;
-    metadata?: Record<string, string>;
-    trialPeriodDays?: number;
-    expand?: string[];
-    offSession?: boolean;
-    paymentBehavior?:
-      | 'allow_incomplete'
-      | 'default_incomplete'
-      | 'error_if_incomplete';
+    metadata: StripePaymentMetadata;
+    paymentMethodId: string;
   }) {
     const subscription = await this.stripe.subscriptions.create({
       customer: customerId,
       items: [{ price: priceId }],
+      default_payment_method: paymentMethodId,
       metadata,
-      trial_period_days: trialPeriodDays,
-      expand,
-      payment_behavior: paymentBehavior,
-      collection_method: offSession ? 'charge_automatically' : 'send_invoice',
+      expand: ['latest_invoice.payment_intent'],
     });
 
     this.logger.log(
-      `Created subscription ${subscription.id} for customer ${customerId}`,
+      `Created Stripe subscription ${subscription.id} for user ${metadata.userId}`,
     );
 
     return subscription;
@@ -304,29 +274,6 @@ export class StripeService {
     const deleted = await this.stripe.subscriptions.cancel(subscriptionId);
     this.logger.log(`Subscription ${subscriptionId} cancelled immediately`);
     return deleted;
-  }
-
-  async scheduleSubscriptionCancel(
-    subscriptionId: string,
-    cancelAtUnixSeconds: number,
-  ) {
-    const updated = await this.stripe.subscriptions.update(subscriptionId, {
-      cancel_at: cancelAtUnixSeconds,
-    });
-    this.logger.log(
-      `Subscription ${subscriptionId} scheduled to cancel at ${cancelAtUnixSeconds}`,
-    );
-    return updated;
-  }
-
-  async resumeSubscription(subscriptionId: string) {
-    const updated = await this.stripe.subscriptions.update(subscriptionId, {
-      cancel_at_period_end: false,
-      cancel_at: null,
-    } as any);
-
-    this.logger.log(`Subscription ${subscriptionId} resumed`);
-    return updated;
   }
 
   // Stripe Webhook Utilities

@@ -4,8 +4,7 @@ import { successResponse, TResponse } from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { StripeService } from '@/lib/stripe/stripe.service';
 import { StripePaymentMetadata } from '@/lib/stripe/stripe.types';
-import { HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class CreateIntentService {
@@ -16,12 +15,8 @@ export class CreateIntentService {
     private readonly stripeService: StripeService,
   ) {}
 
-  /**
-   * Create a one-time payment intent for a given user and plan.
-   * No redirect or checkout session — returns clientSecret for direct app payment.
-   */
-  @HandleError('Failed to create payment intent', 'Subscription')
-  async createPaymentIntent(
+  @HandleError('Failed to create setup intent', 'Subscription')
+  async createSetupIntent(
     userId: string,
     planId: string,
   ): Promise<TResponse<any>> {
@@ -76,7 +71,7 @@ export class CreateIntentService {
 
       // Try to fetch the PaymentIntent to return client_secret (optional)
       try {
-        const existingIntent = await this.stripeService.retrievePaymentIntent(
+        const existingIntent = await this.stripeService.retrieveSetupIntent(
           existingPending.stripeTransactionId,
         );
 
@@ -84,8 +79,8 @@ export class CreateIntentService {
         if (existingIntent?.client_secret) {
           return successResponse(
             {
-              paymentIntentId: existingIntent.id,
-              clientSecret: existingIntent.client_secret,
+              setupIntentId: existingIntent.id,
+              setupIntentSecret: existingIntent.client_secret,
               amount: plan.priceCents,
               currency: plan.currency,
               planTitle: plan.title,
@@ -103,24 +98,7 @@ export class CreateIntentService {
       }
     }
 
-    // 5. Ensure Stripe Customer exists
-    let customerId = user.stripeCustomerId;
-    if (!customerId) {
-      const customer = await this.stripeService.getOrCreateCustomerId(
-        user.id,
-        user.email,
-        user.name || user.username,
-      );
-
-      await this.prismaService.user.update({
-        where: { id: user.id },
-        data: { stripeCustomerId: customer.id },
-      });
-
-      customerId = customer.id;
-    }
-
-    // 6. Create metadata and payment intent
+    // 5. Create metadata and payment intent
     const metadata: StripePaymentMetadata = {
       userId: user.id,
       email: user.email,
@@ -131,84 +109,74 @@ export class CreateIntentService {
       stripePriceId: plan.stripePriceId,
     };
 
-    const paymentIntent = await this.stripeService.createPaymentIntent({
-      amount: plan.priceCents,
-      currency: plan.currency,
-      customerId,
-      metadata,
-    });
+    const setupIntent = await this.stripeService.createSetupIntent(metadata);
 
-    // 7. Calculate plan period based on billingPeriod (start now, end in 1 month or 1 year)
+    // 6. Calculate plan period based on billingPeriod (start now, end in 1 month, 6 months or 1 year)
     const planStartedAt = new Date();
-    const planEndedAt = new Date(planStartedAt);
-    if (plan.billingPeriod === 'MONTHLY') {
-      planEndedAt.setMonth(planEndedAt.getMonth() + 1);
-    } else if (plan.billingPeriod === 'YEARLY') {
-      planEndedAt.setFullYear(planEndedAt.getFullYear() + 1);
+    let planEndedAt: Date;
+
+    switch (plan.billingPeriod) {
+      case 'MONTHLY':
+        planEndedAt = new Date(planStartedAt);
+        planEndedAt.setMonth(planEndedAt.getMonth() + 1);
+
+        // If month overflowed (e.g., Jan 31 + 1 month => Mar 3), move to last day of next month
+        if (planEndedAt.getDate() !== planStartedAt.getDate()) {
+          planEndedAt = new Date(
+            planEndedAt.getFullYear(),
+            planEndedAt.getMonth() + 1,
+            0,
+          );
+        }
+        break;
+
+      case 'BIANNUAL':
+        planEndedAt = new Date(planStartedAt);
+        planEndedAt.setMonth(planEndedAt.getMonth() + 6);
+        if (planEndedAt.getDate() !== planStartedAt.getDate()) {
+          planEndedAt = new Date(
+            planEndedAt.getFullYear(),
+            planEndedAt.getMonth() + 1,
+            0,
+          );
+        }
+        break;
+
+      case 'YEARLY':
+        planEndedAt = new Date(planStartedAt);
+        planEndedAt.setFullYear(planEndedAt.getFullYear() + 1);
+        break;
+
+      default:
+        throw new AppError(400, 'Unknown billing period');
     }
 
-    // 8. Record in DB with initial status = INCOMPLETE (waiting for webhook confirmation)
+    // 7. Record in DB with initial status = INCOMPLETE (waiting for webhook confirmation)
     await this.prismaService.userSubscription.create({
       data: {
         user: { connect: { id: user.id } },
         plan: { connect: { id: plan.id } },
         planStartedAt,
         planEndedAt,
-        stripeTransactionId: paymentIntent.id,
+        stripeTransactionId: setupIntent.id,
         status: 'PENDING',
       },
     });
 
     this.logger.log(
-      `Created one-time payment intent ${paymentIntent.id} for user ${user.email}`,
+      `Created setup intent ${setupIntent.id} for user ${user.email}`,
     );
 
-    // 9. Return client_secret to complete payment in app
+    // 8. Return client_secret to caller
     return successResponse(
       {
-        paymentIntentId: paymentIntent.id,
-        clientSecret: paymentIntent.client_secret,
+        setupIntentId: setupIntent.id,
+        setupIntentSecret: setupIntent.client_secret,
         amount: plan.priceCents,
         currency: plan.currency,
         planTitle: plan.title,
       },
-      'Created one-time payment intent',
+      'Created setup intent to connect payment method',
     );
-  }
-
-  /**
-   * @param userId
-   * @returns PaymentIntent
-   */
-  @HandleError('Failed to create renew payment intent', 'Subscription')
-  async createRenewPaymentIntent(userId: string) {
-    const userSubscription =
-      await this.prismaService.userSubscription.findFirst({
-        where: { userId, status: 'ACTIVE' },
-        include: {
-          plan: true,
-        },
-        orderBy: [
-          { updatedAt: Prisma.SortOrder.desc },
-          { createdAt: Prisma.SortOrder.desc },
-        ],
-      });
-
-    if (!userSubscription) {
-      throw new AppError(
-        HttpStatus.BAD_REQUEST,
-        'No completed subscription found.',
-      );
-    }
-
-    // check if plan is still active
-    if (!userSubscription.plan.isActive) {
-      throw new AppError(
-        HttpStatus.BAD_REQUEST,
-        'This plan is no longer active.',
-      );
-    }
-
-    return this.createPaymentIntent(userId, userSubscription.plan.id);
   }
 }

@@ -1,5 +1,4 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { CreateReviewDto } from './create-review.dto';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class UpdateReviewDto {

@@ -1,26 +1,26 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseInterceptors,
-  UploadedFile,
-  HttpStatus,
-  HttpException,
-  InternalServerErrorException,
-  Query,
-} from '@nestjs/common';
-import { UserInfoService } from './user-info.service';
-import { CreateUserInfoDto } from './dto/create-user-info.dto';
-import { UpdateUserInfoDto } from './dto/update-user-info.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
 import { GetUser, ValidateAuth } from '@/common/jwt/jwt.decorator';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  InternalServerErrorException,
+  Param,
+  Patch,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { UpdateUserInfoDto } from './dto/update-user-info.dto';
+import { UserInfoService } from './user-info.service';
 
+@ApiTags('USER Info')
 @Controller('user-info')
+@ValidateAuth()
 @ApiBearerAuth()
 export class UserInfoController {
   constructor(private readonly userInfoService: UserInfoService) {}
@@ -39,7 +39,6 @@ export class UserInfoController {
   }
 
   @Patch()
-  @ValidateAuth()
   @ApiBody({ type: UpdateUserInfoDto })
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
@@ -67,7 +66,7 @@ export class UserInfoController {
   @Delete('delete-my-account')
   async deleteMyAccount(@GetUser('sub') id: string) {
     try {
-      const res = await this.userInfoService.deleteMyAccount(id);
+      await this.userInfoService.deleteMyAccount(id);
       return {
         status: HttpStatus.OK,
         message: 'Your account deleted successful',
@@ -77,14 +76,12 @@ export class UserInfoController {
     }
   }
 
-  @ValidateAuth()
   @Get('scan/:code')
   async scanOffer(@Param('code') code: string, @GetUser('sub') userId: string) {
     return this.userInfoService.scanOffer(code, userId);
   }
 
   // Redeem after user confirms
-  @ValidateAuth()
   @Post('redeem/:code')
   async redeemOffer(
     @Param('code') code: string,
@@ -96,6 +93,27 @@ export class UserInfoController {
   //  User sees all redeemed offers
   @Get('redeemed')
   async getRedeemedOffers(@GetUser('sub') userId: string) {
-    return this.userInfoService.getUserRedeemedOffers(userId);
+    const res = await this.userInfoService.getUserRedeemedOffers(userId);
+    return {
+      status: HttpStatus.OK,
+      message: 'Your total redemtions retrive succesful',
+      data: res,
+    };
+  }
+
+  //* user notifications
+  @ValidateAuth()
+  @Get('notifications')
+  async getAllNotificationsOfUser(@GetUser('sub') id: string) {
+    try {
+      const res = await this.userInfoService.getUserNotifications(id);
+      return {
+        status: HttpStatus.OK,
+        message: 'Users notificatiosn retirve success',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
   }
 }

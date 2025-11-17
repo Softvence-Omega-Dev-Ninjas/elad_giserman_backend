@@ -18,28 +18,37 @@ export class SubscriptionService {
       { createdAt: Prisma.SortOrder.desc },
     ];
 
-    const [monthlyPlan, yearlyPlan] = await this.prismaService.$transaction([
-      this.prismaService.subscriptionPlan.findFirst({
-        where: {
-          billingPeriod: 'MONTHLY',
-          isActive: true,
-        },
-        orderBy,
-      }),
-      this.prismaService.subscriptionPlan.findFirst({
-        where: {
-          billingPeriod: 'YEARLY',
-          isActive: true,
-        },
-        orderBy,
-      }),
-    ]);
+    const [monthlyPlan, biannualPlan, yearlyPlan] =
+      await this.prismaService.$transaction([
+        this.prismaService.subscriptionPlan.findFirst({
+          where: {
+            billingPeriod: 'MONTHLY',
+            isActive: true,
+          },
+          orderBy,
+        }),
+        this.prismaService.subscriptionPlan.findFirst({
+          where: {
+            billingPeriod: 'BIANNUAL',
+            isActive: true,
+          },
+          orderBy,
+        }),
+        this.prismaService.subscriptionPlan.findFirst({
+          where: {
+            billingPeriod: 'YEARLY',
+            isActive: true,
+          },
+          orderBy,
+        }),
+      ]);
 
     this.logger.log('Plans fetched successfully');
 
     return successResponse(
       {
         monthlyPlan,
+        biannualPlan,
         yearlyPlan,
       },
       'Plans fetched successfully',
@@ -66,7 +75,7 @@ export class SubscriptionService {
         {
           status: 'NONE',
           message: 'No active or past subscription found.',
-          canRenew: true,
+          canSubscribe: true,
           period: {
             startedAt: null,
             endedAt: null,
@@ -90,15 +99,16 @@ export class SubscriptionService {
           ? 'EXPIRED'
           : userSubscription.status;
 
-    const canRenew = status === 'EXPIRED' || status === 'FAILED';
+    const canSubscribe =
+      status !== 'ACTIVE' && status !== 'EXPIRED' && !isExpired;
 
     return successResponse(
       {
         status,
-        canRenew,
+        canSubscribe,
         plan: {
           title: userSubscription.plan.title,
-          price: userSubscription.plan.priceCents,
+          price: Math.round(userSubscription.plan.priceCents / 100),
           currency: userSubscription.plan.currency,
           billingPeriod: userSubscription.plan.billingPeriod,
         },
