@@ -8,13 +8,18 @@ import {
   InternalServerErrorException,
   Param,
   Patch,
+  Post,
   Query,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { AdminPlatfromManagementService } from '../service/admin.platfromManagement.service';
 import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import { PlatformFilter } from '../dto/getPlatform.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { CreateCustomAppDto } from '../dto/customApp.dto';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -100,4 +105,56 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }
+
+@Post('custom-app')
+@ApiConsumes('multipart/form-data')
+// @ValidateAdmin()
+@ApiBody({
+  schema:{
+    type: 'object',
+    properties: {
+      title: { type: 'string' },
+      description: { type: 'string' },
+      logo: {
+        type: 'string',
+        format: 'binary',
+      },
+      bannerCard: {
+        type: 'string',
+        format: 'binary',
+      },
+      bannerPhoto:{
+        type:'string',
+        format:'binary',
+      }
+    }
+  }
+})
+@UseInterceptors(
+  FileFieldsInterceptor([
+    { name: 'logo', maxCount: 1 },
+    { name: 'bannerCard', maxCount: 1 },
+    { name: 'bannerPhoto', maxCount: 1 },
+  ]),
+)
+async customYourApp(
+  @Body() dto: CreateCustomAppDto,
+  @UploadedFiles() files: {
+    logo?: Express.Multer.File;
+    bannerCard?: Express.Multer.File;
+    bannerPhoto?: Express.Multer.File;
+  },
+) {
+  try {
+    const res= await this.platformManagementService.customizeApp(dto, files);
+    return{
+      status:HttpStatus.OK,
+      message:'Custom app data saved successfully',
+      data:res,
+    }
+  } catch (error) {
+    throw new InternalServerErrorException(error.message);
+  }
+}
+
 }
