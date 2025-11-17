@@ -167,59 +167,57 @@ export class AdminPlatformManagementController {
     }
   }
 
-
- @Post('create-spin-table')
-@ApiBody({ type: CreateSpinDto })
-async createSpin(@Body() dto: CreateSpinDto) {
-  try {
-    const res= await this.platformManagementService.createSpinTable(dto);
-    return{
-      status: HttpStatus.OK,
-      message: 'Spin data set successfully',
-      data: res,
+  @Post('create-spin-table')
+  @ApiBody({ type: CreateSpinDto })
+  async createSpin(@Body() dto: CreateSpinDto) {
+    try {
+      const res = await this.platformManagementService.createSpinTable(dto);
+      return {
+        status: HttpStatus.OK,
+        message: 'Spin data set successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
     }
-  } catch (error) {
-    throw new InternalServerErrorException(error.message);
   }
-}
 
-
-@Patch('update-spin')
-@ApiBody({ type: UpdateSpinDto })
-async updateSpin(@Body() dto: UpdateSpinDto) {
-  try {
-    console.log(dto);
-    const res = await this.platformManagementService.updateSpinData(dto);
-    return {
-      status: HttpStatus.OK,
-      message: 'Spin data updated successfully',
-      data: res,
-    };
-  } catch (error) {
-    throw new InternalServerErrorException(error.message, error.status);
-  }
-}
-
-@Get('spin-table')
-async getSpinTable(){
-  try{
-    const res= await this.platformManagementService.getSpinTableData();
-    return{
-      status: HttpStatus.OK,
-      message: 'Spin data fetched successfully',
-      data: res,
+  @Patch('update-spin')
+  @ApiBody({ type: UpdateSpinDto })
+  async updateSpin(@Body() dto: UpdateSpinDto) {
+    try {
+      console.log(dto);
+      const res = await this.platformManagementService.updateSpinData(dto);
+      return {
+        status: HttpStatus.OK,
+        message: 'Spin data updated successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
     }
-  }catch(error){
-    throw new InternalServerErrorException(error.message,error.status)
   }
-}
 
-@Patch('reset-spin-data')
-async resetSpinData(){
-  try{
-    
-  }catch(error){
-    throw new  InternalServerErrorException(error.message,error.status)
+  @Get('spin-table')
+  async getSpinTable() {
+    try {
+      const res = await this.platformManagementService.getSpinTableData();
+      return {
+        status: HttpStatus.OK,
+        message: 'Spin data fetched successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
   }
-}
+
+  @Patch('reset-spin-data')
+  async resetSpinData() {
+    try {
+      return this.platformManagementService.resetSpintable();
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
 }
