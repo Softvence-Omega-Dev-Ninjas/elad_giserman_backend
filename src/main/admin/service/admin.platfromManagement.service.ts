@@ -13,8 +13,9 @@ import { S3Service } from '@/lib/s3/s3.service';
 import { log } from 'console';
 @Injectable()
 export class AdminPlatfromManagementService {
-  constructor(private readonly prisma: PrismaService,
-    private readonly s3Service:S3Service
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly s3Service: S3Service,
   ) {}
 
   async getPlatfromStat(filter: PlatformFilter) {
@@ -283,51 +284,48 @@ export class AdminPlatfromManagementService {
     return growth;
   }
 
-//* Customize app 
-async customizeApp(dto: CreateCustomAppDto, files: any) {
-  // Upload each file to S3 (if provided)
-  let logoUrl = null;
-  let bannerCardUrl = null;
-  let bannerPhotoUrl = null;
+  //* Customize app
+  async customizeApp(dto: CreateCustomAppDto, files: any) {
+    // Upload each file to S3 (if provided)
+    let logoUrl = null;
+    let bannerCardUrl = null;
+    let bannerPhotoUrl = null;
 
-  if (files.logo?.[0]) {
-    logoUrl = await this.s3Service.uploadFile(files.logo[0]);
-  }
+    if (files.logo?.[0]) {
+      logoUrl = await this.s3Service.uploadFile(files.logo[0]);
+    }
 
-  if (files.bannerCard?.[0]) {
-    bannerCardUrl = await this.s3Service.uploadFile(files.bannerCard[0]);
-  }
+    if (files.bannerCard?.[0]) {
+      bannerCardUrl = await this.s3Service.uploadFile(files.bannerCard[0]);
+    }
 
-  if (files.bannerPhoto?.[0]) {
-    bannerPhotoUrl = await this.s3Service.uploadFile(files.bannerPhoto[0]);
-  }
-  // Check if record exists
-  const existing = await this.prisma.customApp.findFirst();
+    if (files.bannerPhoto?.[0]) {
+      bannerPhotoUrl = await this.s3Service.uploadFile(files.bannerPhoto[0]);
+    }
+    // Check if record exists
+    const existing = await this.prisma.customApp.findFirst();
 
-  // CREATE if no record exists
-  if (!existing) {
-    return await this.prisma.customApp.create({
+    // CREATE if no record exists
+    if (!existing) {
+      return await this.prisma.customApp.create({
+        data: {
+          ...dto,
+          bannerCard: bannerCardUrl?.url,
+          bannerPhoto: bannerPhotoUrl?.url,
+          logo: logoUrl?.url,
+        },
+      });
+    }
+
+    // UPDATE existing record
+    return await this.prisma.customApp.update({
+      where: { id: existing.id },
       data: {
         ...dto,
-        bannerCard:bannerCardUrl?.url,
-        bannerPhoto:bannerPhotoUrl?.url,
-        logo:logoUrl?.url,
+        bannerCard: bannerCardUrl?.url,
+        bannerPhoto: bannerPhotoUrl?.url,
+        logo: logoUrl?.url,
       },
     });
   }
-
-  // UPDATE existing record
-  return await this.prisma.customApp.update({
-    where: { id: existing.id },
-    data: {
-      ...dto,
-      bannerCard: bannerCardUrl?.url,
-      bannerPhoto: bannerPhotoUrl?.url,
-      logo: logoUrl?.url,
-    },
-  });
 }
-
-}
-
-

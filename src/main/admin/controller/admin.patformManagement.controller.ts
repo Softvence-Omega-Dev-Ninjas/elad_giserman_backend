@@ -106,55 +106,55 @@ export class AdminPlatformManagementController {
     }
   }
 
-@Post('custom-app')
-@ApiConsumes('multipart/form-data')
-// @ValidateAdmin()
-@ApiBody({
-  schema:{
-    type: 'object',
-    properties: {
-      title: { type: 'string' },
-      description: { type: 'string' },
-      logo: {
-        type: 'string',
-        format: 'binary',
+  @Post('custom-app')
+  @ApiConsumes('multipart/form-data')
+  // @ValidateAdmin()
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        title: { type: 'string' },
+        description: { type: 'string' },
+        logo: {
+          type: 'string',
+          format: 'binary',
+        },
+        bannerCard: {
+          type: 'string',
+          format: 'binary',
+        },
+        bannerPhoto: {
+          type: 'string',
+          format: 'binary',
+        },
       },
-      bannerCard: {
-        type: 'string',
-        format: 'binary',
-      },
-      bannerPhoto:{
-        type:'string',
-        format:'binary',
-      }
+    },
+  })
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'logo', maxCount: 1 },
+      { name: 'bannerCard', maxCount: 1 },
+      { name: 'bannerPhoto', maxCount: 1 },
+    ]),
+  )
+  async customYourApp(
+    @Body() dto: CreateCustomAppDto,
+    @UploadedFiles()
+    files: {
+      logo?: Express.Multer.File;
+      bannerCard?: Express.Multer.File;
+      bannerPhoto?: Express.Multer.File;
+    },
+  ) {
+    try {
+      const res = await this.platformManagementService.customizeApp(dto, files);
+      return {
+        status: HttpStatus.OK,
+        message: 'Custom app data saved successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
     }
   }
-})
-@UseInterceptors(
-  FileFieldsInterceptor([
-    { name: 'logo', maxCount: 1 },
-    { name: 'bannerCard', maxCount: 1 },
-    { name: 'bannerPhoto', maxCount: 1 },
-  ]),
-)
-async customYourApp(
-  @Body() dto: CreateCustomAppDto,
-  @UploadedFiles() files: {
-    logo?: Express.Multer.File;
-    bannerCard?: Express.Multer.File;
-    bannerPhoto?: Express.Multer.File;
-  },
-) {
-  try {
-    const res= await this.platformManagementService.customizeApp(dto, files);
-    return{
-      status:HttpStatus.OK,
-      message:'Custom app data saved successfully',
-      data:res,
-    }
-  } catch (error) {
-    throw new InternalServerErrorException(error.message);
-  }
-}
-
 }

@@ -10,8 +10,6 @@ export class UpdateCustomAppDto {
   description?: string;
 }
 
-
-
 export class CreateCustomAppDto {
   @IsOptional()
   @IsString()

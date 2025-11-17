@@ -41,6 +41,4 @@ export class AdminReviewService {
       messge: 'reivew delete successfull',
     };
   }
-
-
 }
