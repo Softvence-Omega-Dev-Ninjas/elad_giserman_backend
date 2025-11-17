@@ -8,16 +8,9 @@ import {
 import { PlatformFilter } from '../dto/getPlatform.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { subDays, format } from 'date-fns';
-<<<<<<< HEAD
 import { CreateCustomAppDto } from '../dto/customApp.dto';
 import { S3Service } from '@/lib/s3/s3.service';
 import { log } from 'console';
-=======
-import {
-  CreateTermsAndConditionsDto,
-  UpdateTermsAndConditionsDto,
-} from '../dto/termAndCondition.dto';
->>>>>>> 726c924b1de439421250b7f7fbb42b72b91b1e82
 @Injectable()
 export class AdminPlatfromManagementService {
   constructor(
