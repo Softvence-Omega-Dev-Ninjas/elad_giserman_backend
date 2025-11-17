@@ -215,8 +215,7 @@ export class AdminPlatformManagementController {
   @Patch('reset-spin-data')
   async resetSpinData() {
     try {
-       return this.platformManagementService.resetSpintable();
-
+      return this.platformManagementService.resetSpintable();
     } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
     }

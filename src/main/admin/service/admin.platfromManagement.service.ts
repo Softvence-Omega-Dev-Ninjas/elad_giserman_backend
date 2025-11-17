@@ -372,33 +372,32 @@ export class AdminPlatfromManagementService {
     return isSpinExist;
   }
 
-  
   //*reset spin
-  async resetSpintable(){
-    const isExist=await this.prisma.spin.findFirst()
-    if(!isExist){
-      throw new  NotFoundException('Spin data not found')
+  async resetSpintable() {
+    const isExist = await this.prisma.spin.findFirst();
+    if (!isExist) {
+      throw new NotFoundException('Spin data not found');
     }
     await this.prisma.spin.update({
-      where:{
-        id:isExist.id
+      where: {
+        id: isExist.id,
       },
-      data:{
-        spinValue1:0,
-        spinValue2:0,
-        spinValue3:0,
-        spinValue4:0,
-        spinValue5:0,
-        spinValue6:0,
-        spinValue7:0,
-        spinValue8:0,
-        spinValue9:0,
-        spinValue10:0,
-      }
-    })
+      data: {
+        spinValue1: 0,
+        spinValue2: 0,
+        spinValue3: 0,
+        spinValue4: 0,
+        spinValue5: 0,
+        spinValue6: 0,
+        spinValue7: 0,
+        spinValue8: 0,
+        spinValue9: 0,
+        spinValue10: 0,
+      },
+    });
     return {
-      status:HttpStatus.OK,
-      message:'Spin data reset successfully'
-    }
+      status: HttpStatus.OK,
+      message: 'Spin data reset successfully',
+    };
   }
 }
