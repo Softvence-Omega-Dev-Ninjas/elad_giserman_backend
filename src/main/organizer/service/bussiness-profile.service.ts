@@ -98,7 +98,7 @@ export class BusinessProfileService {
         gallery: true,
         offers: true,
         reviews: true,
-        reedemOffer:true
+        reedemOffer: true,
       },
     });
 

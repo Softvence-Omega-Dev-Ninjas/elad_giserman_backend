@@ -80,13 +80,13 @@ export class AdminPlatfromManagementService {
 
       //  Recent business profiles
       this.prisma.businessProfile.findMany({
-        orderBy: { updatedAt: 'desc'},
+        orderBy: { updatedAt: 'desc' },
         take: 5,
       }),
 
       // Recent reviews
       this.prisma.review.findMany({
-        orderBy: { updatedAt: 'desc'},
+        orderBy: { updatedAt: 'desc' },
         take: 1,
         include: {
           user: true,
@@ -95,7 +95,7 @@ export class AdminPlatfromManagementService {
       }),
       //
       this.prisma.offer.findMany({
-        orderBy: { updatedAt: 'desc', },
+        orderBy: { updatedAt: 'desc' },
         take: 1,
         include: {
           business: {
@@ -124,7 +124,6 @@ export class AdminPlatfromManagementService {
       },
     };
   }
-
 
   //*  get user details
   async getUserDetils(userId: string) {
