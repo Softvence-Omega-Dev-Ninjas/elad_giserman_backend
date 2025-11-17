@@ -1,4 +1,3 @@
-import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import {
   Body,
   Controller,
@@ -11,15 +10,21 @@ import {
   Patch,
   Post,
   Query,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { AdminPlatfromManagementService } from '../service/admin.platfromManagement.service';
+import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import { PlatformFilter } from '../dto/getPlatform.dto';
 import {
   CreateTermsAndConditionsDto,
   UpdateTermsAndConditionsDto,
 } from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
-import { AdminPlatfromManagementService } from '../service/admin.platfromManagement.service';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { CreateCustomAppDto } from '../dto/customApp.dto';
+import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -110,56 +115,111 @@ export class AdminPlatformManagementController {
     }
   }
 
-  @ValidateAdmin()
-  @Post('create-termAndCondition')
+  @Post('custom-app')
   @ApiConsumes('multipart/form-data')
-  @ApiBody({ type: CreateTermsAndConditionsDto })
-  async postTermsAndConditions(@Body() dto: CreateTermsAndConditionsDto) {
-    try {
-      const res =
-        await this.platformManagementService.postTermAndConditions(dto);
-      return {
-        status: HttpStatus.CREATED,
-        message: 'your platform terms and condition post succesfull',
-        data: res,
-      };
-    } catch (error) {
-      throw new InternalServerErrorException(error.message, error.status);
-    }
-  }
-
   @ValidateAdmin()
-  @Patch('update-term/:id')
-  async updatedTermsAndConditions(
-    @Param('id') id: string,
-    @Body() dto: UpdateTermsAndConditionsDto,
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        title: { type: 'string' },
+        description: { type: 'string' },
+        logo: {
+          type: 'string',
+          format: 'binary',
+        },
+        bannerCard: {
+          type: 'string',
+          format: 'binary',
+        },
+        bannerPhoto: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'logo', maxCount: 1 },
+      { name: 'bannerCard', maxCount: 1 },
+      { name: 'bannerPhoto', maxCount: 1 },
+    ]),
+  )
+  async customYourApp(
+    @Body() dto: CreateCustomAppDto,
+    @UploadedFiles()
+    files: {
+      logo?: Express.Multer.File;
+      bannerCard?: Express.Multer.File;
+      bannerPhoto?: Express.Multer.File;
+    },
   ) {
     try {
-      const res = await this.platformManagementService.updateTermsAndCondition(
-        id,
-        dto,
-      );
+      const res = await this.platformManagementService.customizeApp(dto, files);
       return {
         status: HttpStatus.OK,
-        message: 'Your term and condition updated successful',
+        message: 'Custom app data saved successfully',
         data: res,
       };
     } catch (error) {
-      throw new InternalServerErrorException(error.message, error.status);
+      throw new InternalServerErrorException(error.message);
     }
   }
 
-  @Get('get-term')
-  async getTermsAndConditions() {
-    try {
-      const res = await this.platformManagementService.getTermsAndCondition();
-      return {
-        status: HttpStatus.OK,
-        message: 'Platform Term and condition fetch succeful',
-        data: res,
-      };
-    } catch (error) {
-      throw new InternalServerErrorException(error.message, error.status);
+
+ @Post('create-spin-table')
+@ApiBody({ type: CreateSpinDto })
+async createSpin(@Body() dto: CreateSpinDto) {
+  try {
+    const res= await this.platformManagementService.createSpinTable(dto);
+    return{
+      status: HttpStatus.OK,
+      message: 'Spin data set successfully',
+      data: res,
     }
+  } catch (error) {
+    throw new InternalServerErrorException(error.message);
   }
+}
+
+
+@Patch('update-spin')
+@ApiBody({ type: UpdateSpinDto })
+async updateSpin(@Body() dto: UpdateSpinDto) {
+  try {
+    console.log(dto);
+    const res = await this.platformManagementService.updateSpinData(dto);
+    return {
+      status: HttpStatus.OK,
+      message: 'Spin data updated successfully',
+      data: res,
+    };
+  } catch (error) {
+    throw new InternalServerErrorException(error.message, error.status);
+  }
+}
+
+@Get('spin-table')
+async getSpinTable(){
+  try{
+    const res= await this.platformManagementService.getSpinTableData();
+    return{
+      status: HttpStatus.OK,
+      message: 'Spin data fetched successfully',
+      data: res,
+    }
+  }catch(error){
+    throw new InternalServerErrorException(error.message,error.status)
+  }
+}
+
+@Patch('reset-spin-data')
+async resetSpinData(){
+  try{
+    
+  }catch(error){
+    throw new  InternalServerErrorException(error.message,error.status)
+  }
+}
 }

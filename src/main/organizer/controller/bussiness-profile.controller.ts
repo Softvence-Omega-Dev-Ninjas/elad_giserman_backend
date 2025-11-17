@@ -45,6 +45,23 @@ export class BusinessProfileController {
     private readonly offerService: OfferService,
   ) {}
 
+
+    // get all review
+  @Get('get-all-review')
+  async getAllReviews(@GetUser('sub') userId: string) {
+    try {
+      const res = await this.businessProfileService.getAllReviews(userId);
+      return {
+        status: HttpStatus.OK,
+        message: 'Reviews fetched successful',
+        data: res,
+      };
+    } catch (err) {
+      throw new HttpException(err.message, err.status);
+    }
+  }
+
+  
   @ValidateOrganizer()
   @ApiOperation({
     summary: 'Create New Bussiness Profile (only for organizer)',
@@ -124,11 +141,15 @@ export class BusinessProfileController {
       },
     },
   })
+
+
+
   async update(
     @GetUser('sub') id: string,
     @Body() dto: UpdateBusinessProfileDto,
     @UploadedFiles() gallery: Express.Multer.File[],
   ) {
+    console.log(gallery)
     return this.businessProfileService.update(id, dto, gallery);
   }
 
@@ -222,20 +243,7 @@ export class BusinessProfileController {
     }
   }
 
-  // get all review
-  @Get('get-all-review')
-  async getAllReviews(@GetUser('sub') userId: string) {
-    try {
-      const res = await this.businessProfileService.getAllReviews(userId);
-      return {
-        status: HttpStatus.OK,
-        message: 'Reviews fetched successful',
-        data: res,
-      };
-    } catch (err) {
-      throw new HttpException(err.message, err.status);
-    }
-  }
+
 
   // get single review
 
