@@ -24,6 +24,7 @@ import {
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { CreateCustomAppDto } from '../dto/customApp.dto';
+import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -116,7 +117,7 @@ export class AdminPlatformManagementController {
 
   @Post('custom-app')
   @ApiConsumes('multipart/form-data')
-  // @ValidateAdmin()
+  @ValidateAdmin()
   @ApiBody({
     schema: {
       type: 'object',
@@ -165,4 +166,60 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(error.message);
     }
   }
+
+
+ @Post('create-spin-table')
+@ApiBody({ type: CreateSpinDto })
+async createSpin(@Body() dto: CreateSpinDto) {
+  try {
+    const res= await this.platformManagementService.createSpinTable(dto);
+    return{
+      status: HttpStatus.OK,
+      message: 'Spin data set successfully',
+      data: res,
+    }
+  } catch (error) {
+    throw new InternalServerErrorException(error.message);
+  }
+}
+
+
+@Patch('update-spin')
+@ApiBody({ type: UpdateSpinDto })
+async updateSpin(@Body() dto: UpdateSpinDto) {
+  try {
+    console.log(dto);
+    const res = await this.platformManagementService.updateSpinData(dto);
+    return {
+      status: HttpStatus.OK,
+      message: 'Spin data updated successfully',
+      data: res,
+    };
+  } catch (error) {
+    throw new InternalServerErrorException(error.message, error.status);
+  }
+}
+
+@Get('spin-table')
+async getSpinTable(){
+  try{
+    const res= await this.platformManagementService.getSpinTableData();
+    return{
+      status: HttpStatus.OK,
+      message: 'Spin data fetched successfully',
+      data: res,
+    }
+  }catch(error){
+    throw new InternalServerErrorException(error.message,error.status)
+  }
+}
+
+@Patch('reset-spin-data')
+async resetSpinData(){
+  try{
+    
+  }catch(error){
+    throw new  InternalServerErrorException(error.message,error.status)
+  }
+}
 }

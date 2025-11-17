@@ -10,7 +10,8 @@ import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { subDays, format } from 'date-fns';
 import { CreateCustomAppDto } from '../dto/customApp.dto';
 import { S3Service } from '@/lib/s3/s3.service';
-import { log } from 'console';
+import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
+// import { log } from 'console';
 @Injectable()
 export class AdminPlatfromManagementService {
   constructor(
@@ -52,7 +53,7 @@ export class AdminPlatfromManagementService {
       users,
       topBusiness,
 
-      // NEW: Recent activity
+      //* NEW: Recent activity
       recentUsers,
       recentBusinessProfile,
       recentReviews,
@@ -124,7 +125,7 @@ export class AdminPlatfromManagementService {
     };
   }
 
-  //  get user details
+  //*  get user details
   async getUserDetils(userId: string) {
     if (!userId) {
       throw new NotFoundException('user id is requird');
@@ -140,7 +141,7 @@ export class AdminPlatfromManagementService {
     return isUserExist;
   }
 
-  //  delete user
+  //*  delete user
   async deleteuser(userId: string) {
     if (!userId) {
       throw new BadRequestException('User Id is requrid');
@@ -328,4 +329,49 @@ export class AdminPlatfromManagementService {
       },
     });
   }
+
+
+
+  //*  CREATE SPIN TABLE
+  async createSpinTable(dto:CreateSpinDto){
+    const isSpinExist= await this.prisma.spin.findFirst();
+    if(isSpinExist){
+      throw new BadRequestException('Spin data already exist, you can update it')
+    }
+    const res=await this.prisma.spin.create({
+      data:{
+        ...dto
+      }
+    })
+    return res;
+  }
+
+  //* UPDATE SPIN
+  async updateSpinData(dto:UpdateSpinDto){
+    const isSpinExist= await this.prisma.spin.findFirst();
+    if(!isSpinExist){
+      throw new NotFoundException('Spin data not found to update')
+    }
+    const res= await this.prisma.spin.update({
+      where:{
+        id:isSpinExist.id
+      },
+      data:{
+        ...dto
+      }
+    })
+    return res;
+  }
+
+
+  //* get spin table
+  async getSpinTableData(){
+    const isSpinExist= await this.prisma.spin.findFirst();
+    if(!isSpinExist){
+      throw new NotFoundException('Spin data not found');
+    }
+    return isSpinExist
+  }
+
+  //*reset
 }
