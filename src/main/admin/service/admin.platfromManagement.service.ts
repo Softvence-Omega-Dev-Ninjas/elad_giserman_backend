@@ -480,27 +480,25 @@ export class AdminPlatfromManagementService {
     const data = await this.prisma.reedemaOffer.findMany({
       skip,
       take: limit,
-      include:{
-        user:{
-          select:{
-            name:true
-          }
+      include: {
+        user: {
+          select: {
+            name: true,
+          },
         },
-        offer:{
-          select:{
-            title:true
-          }
+        offer: {
+          select: {
+            title: true,
+          },
         },
-        business:{
-          select:{
-            title:true
-          }
-        }
-      }
+        business: {
+          select: {
+            title: true,
+          },
+        },
+      },
     });
 
     return { data };
   }
-
-  
 }
