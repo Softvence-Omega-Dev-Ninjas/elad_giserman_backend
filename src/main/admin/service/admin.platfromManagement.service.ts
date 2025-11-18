@@ -477,11 +477,11 @@ export class AdminPlatfromManagementService {
   //* get all redemtion offer
   async getAlRedemtions({ page, limit }: { page: number; limit: number }) {
     const skip = (page - 1) * limit;
-   const data=await this.prisma.user.findMany({
+    const data = await this.prisma.user.findMany({
       skip,
       take: limit,
-   })
+    });
 
-    return { data};
+    return { data };
   }
 }
