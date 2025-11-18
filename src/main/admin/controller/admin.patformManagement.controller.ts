@@ -23,6 +23,7 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { CreateCustomAppDto } from '../dto/customApp.dto';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
+import { GetUserDto } from '../dto/getuser.dto';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -265,5 +266,28 @@ export class AdminPlatformManagementController {
     } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
     }
+  }
+
+  @Get('get-alluser')
+  async getAllUser(@Query() query: GetUserDto) {
+    // Convert query params with defaults
+    const page = query.page ? Number(query.page) : 1;
+    const limit = query.limit ? Number(query.limit) : 10;
+    const search = query.search || '';
+
+    // Call service to get users
+    const users = await this.platformManagementService.getAllUsers({
+      page,
+      limit,
+      search,
+    });
+
+    return {
+      status: 'success',
+      page,
+      limit,
+      total: users.total,
+      data: users.data,
+    };
   }
 }
