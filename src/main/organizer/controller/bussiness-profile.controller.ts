@@ -288,5 +288,4 @@ export class BusinessProfileController {
   }
 
   // organizations stat
-  
 }
