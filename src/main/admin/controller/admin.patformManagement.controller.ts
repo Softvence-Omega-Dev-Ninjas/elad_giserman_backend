@@ -292,7 +292,6 @@ export class AdminPlatformManagementController {
     };
   }
 
-
   @Get('offer/redemtions')
   async getAllRedemtions(@Query() query: GetRedemtionsDto) {
     // Convert query params with defaults
@@ -302,7 +301,7 @@ export class AdminPlatformManagementController {
     // Call service to get users
     const users = await this.platformManagementService.getAlRedemtions({
       page,
-      limit
+      limit,
     });
 
     return {

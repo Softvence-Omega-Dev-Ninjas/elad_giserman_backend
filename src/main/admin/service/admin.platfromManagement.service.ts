@@ -474,19 +474,11 @@ export class AdminPlatfromManagementService {
     return { data, total };
   }
 
-
   //* get all redemtion offer
-  async getAlRedemtions({
-    page,
-    limit,
-  }: {
-    page: number;
-    limit: number;
-  }) {
+  async getAlRedemtions({ page, limit }: { page: number; limit: number }) {
     const skip = (page - 1) * limit;
     const [data, total] = await Promise.all([
       this.prisma.reedemaOffer.findMany({
-       
         skip,
         take: limit,
         orderBy: { createdAt: 'desc' },
