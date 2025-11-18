@@ -222,48 +222,48 @@ export class AdminPlatformManagementController {
   @ValidateAdmin()
   @Post('create-termsCondition')
   @ApiBody({ type: CreateTermsAndConditionsDto })
-  async createPlatformTerm(@Body() dto:CreateTermsAndConditionsDto) {
+  async createPlatformTerm(@Body() dto: CreateTermsAndConditionsDto) {
     try {
-      const res =await this.platformManagementService.createAdminTermsAdnConditions(dto)
+      const res =
+        await this.platformManagementService.createAdminTermsAdnConditions(dto);
       return {
         status: HttpStatus.OK,
         message: 'Terms and Conditions created successfully',
         data: res,
-      }
+      };
     } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }
 
-
   @ValidateAdmin()
   @Patch('update-termsCondition')
   @ApiBody({ type: CreateTermsAndConditionsDto })
-  async updatePlatformTerm(@Body() dto:CreateTermsAndConditionsDto) {
-  try{
-    const res=await this.platformManagementService.updateAdminTermsAndConditions(dto)
-    return {
-      status: HttpStatus.OK,
-      message: 'Terms and Conditions updated successfully',
-      data: res,
+  async updatePlatformTerm(@Body() dto: CreateTermsAndConditionsDto) {
+    try {
+      const res =
+        await this.platformManagementService.updateAdminTermsAndConditions(dto);
+      return {
+        status: HttpStatus.OK,
+        message: 'Terms and Conditions updated successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
     }
-  }catch(error){
-    throw new InternalServerErrorException(error.message,error.status)
   }
-  }
-
 
   @Get('terms-conditions')
-  async  getTermsAndConditions(){
-    try{
-      const res=await this.platformManagementService.getTemsAndConditions()
-      return{
-        status:HttpStatus.OK,
-        message:'Terms and Conditions fetched successfully',
-        data:res,
-      }
-    }catch(error){
-      throw new InternalServerErrorException(error.message,error.status)
+  async getTermsAndConditions() {
+    try {
+      const res = await this.platformManagementService.getTemsAndConditions();
+      return {
+        status: HttpStatus.OK,
+        message: 'Terms and Conditions fetched successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
     }
   }
 }

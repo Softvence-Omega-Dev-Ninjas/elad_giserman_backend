@@ -325,45 +325,43 @@ export class BusinessProfileService {
     };
   }
 
-
-
-
-    //*CRETE TERMS AND CONDITIONS
-    async createAdminTermsAdnConditions(dto:CreateTermsAndConditionsDto){
-      const isExistTerm=await this.prisma.userTermsAndConditions.findFirst()
-      if(isExistTerm){
-        throw new BadRequestException('Terms and Conditions already exist you can just update your terms and conditions')
-      }
-      return this.prisma.termsAndConditions.create({
-        data:{
-          ...dto
-        }
-      })
+  //*CRETE TERMS AND CONDITIONS
+  async createAdminTermsAdnConditions(dto: CreateTermsAndConditionsDto) {
+    const isExistTerm = await this.prisma.userTermsAndConditions.findFirst();
+    if (isExistTerm) {
+      throw new BadRequestException(
+        'Terms and Conditions already exist you can just update your terms and conditions',
+      );
     }
-  
-  
-    //*UPDATE TERMS AND CONDITIONS
-    async updateAdminTermsAndConditions(dto:CreateTermsAndConditionsDto){
-      const isExistTerm=await this.prisma.termsAndConditions.findFirst()
-      if(!isExistTerm){
-        throw new NotFoundException('Terms and Conditions not found to update')
-      }
-      return this.prisma.userTermsAndConditions.update({
-        where:{
-          id:isExistTerm.id
-        },
-        data:{
-          ...dto
-        }
-      })
+    return this.prisma.termsAndConditions.create({
+      data: {
+        ...dto,
+      },
+    });
+  }
+
+  //*UPDATE TERMS AND CONDITIONS
+  async updateAdminTermsAndConditions(dto: CreateTermsAndConditionsDto) {
+    const isExistTerm = await this.prisma.termsAndConditions.findFirst();
+    if (!isExistTerm) {
+      throw new NotFoundException('Terms and Conditions not found to update');
     }
-  
-    //*GET TERMS AND CONDITIONS
-      async getTemsAndConditions(){
-      const isExistTerm=await this.prisma.userTermsAndConditions.findFirst()
-      if(!isExistTerm){
-        throw new NotFoundException('Terms and Conditions not found')
-      }
-      return isExistTerm
-      }
+    return this.prisma.userTermsAndConditions.update({
+      where: {
+        id: isExistTerm.id,
+      },
+      data: {
+        ...dto,
+      },
+    });
+  }
+
+  //*GET TERMS AND CONDITIONS
+  async getTemsAndConditions() {
+    const isExistTerm = await this.prisma.userTermsAndConditions.findFirst();
+    if (!isExistTerm) {
+      throw new NotFoundException('Terms and Conditions not found');
+    }
+    return isExistTerm;
+  }
 }
