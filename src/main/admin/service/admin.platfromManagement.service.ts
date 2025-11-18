@@ -443,4 +443,34 @@ export class AdminPlatfromManagementService {
     }
     return isExistTerm;
   }
+
+  //*get all users
+
+  async getAllUsers({
+    page,
+    limit,
+    search,
+  }: {
+    page: number;
+    limit: number;
+    search: string;
+  }) {
+    const skip = (page - 1) * limit;
+
+    const where: any = search
+      ? { name: { contains: search, mode: 'insensitive' } }
+      : {};
+
+    const [data, total] = await Promise.all([
+      this.prisma.user.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.user.count({ where }),
+    ]);
+
+    return { data, total };
+  }
 }
