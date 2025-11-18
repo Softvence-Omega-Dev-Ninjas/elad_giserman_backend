@@ -446,11 +446,19 @@ export class AdminPlatfromManagementService {
 
   //*get all users
 
- async getAllUsers({ page, limit, search }: { page: number; limit: number; search: string }) {
+  async getAllUsers({
+    page,
+    limit,
+    search,
+  }: {
+    page: number;
+    limit: number;
+    search: string;
+  }) {
     const skip = (page - 1) * limit;
 
-    const where:any = search
-      ? { name: { contains: search, mode: 'insensitive' } } 
+    const where: any = search
+      ? { name: { contains: search, mode: 'insensitive' } }
       : {};
 
     const [data, total] = await Promise.all([

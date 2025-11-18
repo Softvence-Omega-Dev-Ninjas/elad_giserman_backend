@@ -268,8 +268,7 @@ export class AdminPlatformManagementController {
     }
   }
 
-
-@Get('get-alluser')
+  @Get('get-alluser')
   async getAllUser(@Query() query: GetUserDto) {
     // Convert query params with defaults
     const page = query.page ? Number(query.page) : 1;
@@ -277,7 +276,11 @@ export class AdminPlatformManagementController {
     const search = query.search || '';
 
     // Call service to get users
-    const users = await this.platformManagementService.getAllUsers({ page, limit, search });
+    const users = await this.platformManagementService.getAllUsers({
+      page,
+      limit,
+      search,
+    });
 
     return {
       status: 'success',

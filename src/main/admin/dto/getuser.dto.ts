@@ -3,7 +3,10 @@ import { Type } from 'class-transformer';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class GetUserDto {
-  @ApiPropertyOptional({ description: 'Search term for user name', type: String })
+  @ApiPropertyOptional({
+    description: 'Search term for user name',
+    type: String,
+  })
   @IsOptional()
   @IsString()
   search?: string;
@@ -14,7 +17,11 @@ export class GetUserDto {
   @IsInt()
   page?: number;
 
-  @ApiPropertyOptional({ description: 'Number of users per page', type: Number, default: 10 })
+  @ApiPropertyOptional({
+    description: 'Number of users per page',
+    type: Number,
+    default: 10,
+  })
   @IsOptional()
   @Type(() => Number)
   @IsInt()
