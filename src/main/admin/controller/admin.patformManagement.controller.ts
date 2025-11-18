@@ -317,7 +317,6 @@ export class AdminPlatformManagementController {
       status: 'success',
       page,
       limit,
-      total: users.total,
       data: users.data,
     };
   }
