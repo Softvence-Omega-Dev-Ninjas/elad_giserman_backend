@@ -7,7 +7,7 @@ import { AdminUpdateOfferDto } from '../dto/admin-update-offer.dto';
 export class AdminOfferService {
   constructor(private prisma: PrismaService) {}
 
-  //get all pending offers
+  //* get all pending offers
   async getPendingOffers() {
     return this.prisma.offer.findMany({
       where: { status: 'PENDING' },
