@@ -219,15 +219,12 @@ export class AdminPlatformManagementController {
     }
   }
 
-
-
   @Post('create-termsCondition')
-  @ApiBody({type:CreateTermsAndConditionsDto})
-  async createPlatformTerm(){
-    try{
-
-    }catch(error){
-      throw new InternalServerErrorException(error.message,error.status)
+  @ApiBody({ type: CreateTermsAndConditionsDto })
+  async createPlatformTerm() {
+    try {
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
     }
   }
 }
