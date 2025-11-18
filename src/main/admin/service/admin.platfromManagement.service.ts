@@ -165,7 +165,7 @@ export class AdminPlatfromManagementService {
     };
   }
 
-  // update user status
+  //* update user status
   async UpdateUserStatus(dto: UpdateStatusDto, userId: string) {
     if (!userId) {
       throw new BadRequestException('user id is required');
@@ -400,4 +400,6 @@ export class AdminPlatfromManagementService {
       message: 'Spin data reset successfully',
     };
   }
+
+  //*
 }

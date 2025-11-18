@@ -22,6 +22,7 @@ import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { CreateCustomAppDto } from '../dto/customApp.dto';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
+import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -215,6 +216,18 @@ export class AdminPlatformManagementController {
       return this.platformManagementService.resetSpintable();
     } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
+
+
+  @Post('create-termsCondition')
+  @ApiBody({type:CreateTermsAndConditionsDto})
+  async createPlatformTerm(){
+    try{
+
+    }catch(error){
+      throw new InternalServerErrorException(error.message,error.status)
     }
   }
 }
