@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
+
 export class UpdateBusinessProfileDto {
   @ApiProperty({ example: 'The Coffee Spot (Updated)', required: false })
   @IsOptional()
@@ -35,4 +36,25 @@ export class UpdateBusinessProfileDto {
   @IsOptional()
   @IsString()
   closingTime?: string;
+
+  @ApiProperty({
+    description: 'Existing gallery images coming from client',
+    required: false,
+    type: 'string',
+    example: JSON.stringify([
+      {
+        id: '94abf1c3-6a40-4dcf-bf9e-3a366c124769',
+        filename: 'b0192c68-5d4e-4aa6-a0a5-77d8babbd6f2.png',
+        originalFilename: 'Screenshot.png',
+        path: 'images/b0192c68.png',
+        url: 'https://eladserver.s3/.../b0192c68.png',
+        fileType: 'image',
+        mimeType: 'image/png',
+        size: 98623,
+      },
+    ]),
+  })
+  @IsOptional()
+  @IsString()
+  existingImages?: string;
 }
