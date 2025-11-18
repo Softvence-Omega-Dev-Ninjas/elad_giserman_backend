@@ -35,6 +35,7 @@ import { OfferService } from '../service/offer.service';
 import { UpdateOfferDto } from '../dto/update-offer.dto';
 import { ProfileType } from '@prisma/client';
 import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
+import { CreateTermsAndConditionsDto } from '@/main/admin/dto/termAndCondition.dto';
 
 @ApiTags('Business Profiles')
 @ApiBearerAuth()
@@ -287,5 +288,51 @@ export class BusinessProfileController {
     }
   }
 
-  // organizations stat
+  @ValidateOrganizer()
+  @Post('create-termsCondition')
+  @ApiBody({ type: CreateTermsAndConditionsDto })
+  async createPlatformTerm(@Body() dto: CreateTermsAndConditionsDto) {
+    try {
+      const res =
+        await this.businessProfileService.createAdminTermsAdnConditions(dto);
+      return {
+        status: HttpStatus.OK,
+        message: 'Terms and Conditions created successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
+  @ValidateOrganizer()
+  @Patch('update-termsCondition')
+  @ApiBody({ type: CreateTermsAndConditionsDto })
+  async updatePlatformTerm(@Body() dto: CreateTermsAndConditionsDto) {
+    try {
+      const res =
+        await this.businessProfileService.updateAdminTermsAndConditions(dto);
+      return {
+        status: HttpStatus.OK,
+        message: 'Terms and Conditions updated successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
+  @Get('terms-conditions')
+  async getTermsAndConditions() {
+    try {
+      const res = await this.businessProfileService.getTemsAndConditions();
+      return {
+        status: HttpStatus.OK,
+        message: 'Terms and Conditions fetched successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
 }

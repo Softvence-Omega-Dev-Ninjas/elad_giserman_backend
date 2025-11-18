@@ -22,6 +22,7 @@ import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { CreateCustomAppDto } from '../dto/customApp.dto';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
+import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -213,6 +214,54 @@ export class AdminPlatformManagementController {
   async resetSpinData() {
     try {
       return this.platformManagementService.resetSpintable();
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
+  @ValidateAdmin()
+  @Post('create-termsCondition')
+  @ApiBody({ type: CreateTermsAndConditionsDto })
+  async createPlatformTerm(@Body() dto: CreateTermsAndConditionsDto) {
+    try {
+      const res =
+        await this.platformManagementService.createAdminTermsAdnConditions(dto);
+      return {
+        status: HttpStatus.OK,
+        message: 'Terms and Conditions created successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
+  @ValidateAdmin()
+  @Patch('update-termsCondition')
+  @ApiBody({ type: CreateTermsAndConditionsDto })
+  async updatePlatformTerm(@Body() dto: CreateTermsAndConditionsDto) {
+    try {
+      const res =
+        await this.platformManagementService.updateAdminTermsAndConditions(dto);
+      return {
+        status: HttpStatus.OK,
+        message: 'Terms and Conditions updated successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
+  @Get('terms-conditions')
+  async getTermsAndConditions() {
+    try {
+      const res = await this.platformManagementService.getTemsAndConditions();
+      return {
+        status: HttpStatus.OK,
+        message: 'Terms and Conditions fetched successfully',
+        data: res,
+      };
     } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
     }

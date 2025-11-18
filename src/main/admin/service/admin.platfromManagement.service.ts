@@ -11,6 +11,7 @@ import { subDays, format } from 'date-fns';
 import { CreateCustomAppDto } from '../dto/customApp.dto';
 import { S3Service } from '@/lib/s3/s3.service';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
+import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 // import { log } from 'console';
 @Injectable()
 export class AdminPlatfromManagementService {
@@ -165,7 +166,7 @@ export class AdminPlatfromManagementService {
     };
   }
 
-  // update user status
+  //* update user status
   async UpdateUserStatus(dto: UpdateStatusDto, userId: string) {
     if (!userId) {
       throw new BadRequestException('user id is required');
@@ -192,6 +193,7 @@ export class AdminPlatfromManagementService {
     };
   }
 
+  //* get subscription growth
   async getSubscriptionGrowth() {
     // Get today's date
     const now = new Date();
@@ -245,6 +247,7 @@ export class AdminPlatfromManagementService {
     };
   }
 
+  // *get redeemtion growth
   async getRedemptionGrowth() {
     const today = new Date();
     const startDate = subDays(today, 14); // last 15 days including today
@@ -399,5 +402,45 @@ export class AdminPlatfromManagementService {
       status: HttpStatus.OK,
       message: 'Spin data reset successfully',
     };
+  }
+
+  //*CRETE TERMS AND CONDITIONS
+  async createAdminTermsAdnConditions(dto: CreateTermsAndConditionsDto) {
+    const isExistTerm = await this.prisma.termsAndConditions.findFirst();
+    if (isExistTerm) {
+      throw new BadRequestException(
+        'Terms and Conditions already exist you can just update your terms and conditions',
+      );
+    }
+    return this.prisma.termsAndConditions.create({
+      data: {
+        ...dto,
+      },
+    });
+  }
+
+  //*UPDATE TERMS AND CONDITIONS
+  async updateAdminTermsAndConditions(dto: CreateTermsAndConditionsDto) {
+    const isExistTerm = await this.prisma.termsAndConditions.findFirst();
+    if (!isExistTerm) {
+      throw new NotFoundException('Terms and Conditions not found to update');
+    }
+    return this.prisma.termsAndConditions.update({
+      where: {
+        id: isExistTerm.id,
+      },
+      data: {
+        ...dto,
+      },
+    });
+  }
+
+  //*GET TERMS AND CONDITIONS
+  async getTemsAndConditions() {
+    const isExistTerm = await this.prisma.termsAndConditions.findFirst();
+    if (!isExistTerm) {
+      throw new NotFoundException('Terms and Conditions not found');
+    }
+    return isExistTerm;
   }
 }
