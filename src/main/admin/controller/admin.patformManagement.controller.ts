@@ -79,12 +79,15 @@ export class AdminPlatformManagementController {
     @Param('id') id: string,
   ) {
     try {
-      const res =await this.platformManagementService.UpdateUserStatus(dto,id)
-      return{
+      const res = await this.platformManagementService.UpdateUserStatus(
+        dto,
+        id,
+      );
+      return {
         status: HttpStatus.OK,
         message: 'User status updated successfully',
         data: res,
-      }
+      };
       console.log(dto, id);
     } catch (err) {
       throw new HttpException(err.message, err.status);
