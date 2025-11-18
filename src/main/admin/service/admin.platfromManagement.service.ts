@@ -477,11 +477,30 @@ export class AdminPlatfromManagementService {
   //* get all redemtion offer
   async getAlRedemtions({ page, limit }: { page: number; limit: number }) {
     const skip = (page - 1) * limit;
-    const data = await this.prisma.user.findMany({
+    const data = await this.prisma.reedemaOffer.findMany({
       skip,
       take: limit,
+      include:{
+        user:{
+          select:{
+            name:true
+          }
+        },
+        offer:{
+          select:{
+            title:true
+          }
+        },
+        business:{
+          select:{
+            title:true
+          }
+        }
+      }
     });
 
     return { data };
   }
+
+  
 }
