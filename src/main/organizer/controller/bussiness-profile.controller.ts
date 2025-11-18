@@ -63,6 +63,21 @@ export class BusinessProfileController {
   }
 
   @ValidateOrganizer()
+  @Get('stat')
+  async getOrganizationStats(@GetUser('sub') userId: string) {
+    try {
+      const res =
+        await this.businessProfileService.getOrganizationStats(userId);
+      return {
+        status: HttpStatus.OK,
+        message: 'Organization stats fetched successful',
+        data: res,
+      };
+    } catch (err) {
+      throw new InternalServerErrorException(err.message, err.status);
+    }
+  }
+  @ValidateOrganizer()
   @ApiOperation({
     summary: 'Create New Bussiness Profile (only for organizer)',
   })
@@ -273,19 +288,5 @@ export class BusinessProfileController {
   }
 
   // organizations stat
-  @ValidateOrganizer()
-  @Get('stat')
-  async getOrganizationStats(@GetUser('sub') userId: string) {
-    try {
-      const res =
-        await this.businessProfileService.getOrganizationStats(userId);
-      return {
-        status: HttpStatus.OK,
-        message: 'Organization stats fetched successful',
-        data: res,
-      };
-    } catch (err) {
-      throw new InternalServerErrorException(err.message, err.status);
-    }
-  }
+  
 }
