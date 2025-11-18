@@ -360,7 +360,8 @@ export class BusinessProfileService {
 
   //*UPDATE TERMS AND CONDITIONS
   async updateAdminTermsAndConditions(dto: CreateTermsAndConditionsDto) {
-    const isExistTerm = await this.prisma.termsAndConditions.findFirst();
+    const isExistTerm = await this.prisma.userTermsAndConditions.findFirst();
+
     if (!isExistTerm) {
       throw new NotFoundException('Terms and Conditions not found to update');
     }
