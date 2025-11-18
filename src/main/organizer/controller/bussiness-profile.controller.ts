@@ -49,7 +49,7 @@ export class BusinessProfileController {
   @ValidateAuth()
   @Get('get-all-review')
   async getAllReviews(@GetUser('sub') userId: string) {
-    console.log({userId})
+    console.log({ userId });
     try {
       const res = await this.businessProfileService.getAllReviews(userId);
       return {
