@@ -115,8 +115,8 @@ export class BusinessProfileService {
     dto: UpdateBusinessProfileDto,
     galleryFiles: Express.Multer.File[] = [],
   ) {
-    //  find existing profile
-    const existingProfile = await this.prisma.businessProfile.findUnique({
+    // 1. Load existing profile
+    const existingProfile = await this.prisma.businessProfile.findFirst({
       where: { ownerId: userId },
       include: { gallery: true },
     });
@@ -125,7 +125,24 @@ export class BusinessProfileService {
       throw new NotFoundException('No business profile found for this user.');
     }
 
-    // upload new gallery images if provided
+    // 2. Parse existingImages JSON string
+    let clientExistingImages: any[] = [];
+    if (dto.existingImages) {
+      try {
+        clientExistingImages =
+          typeof dto.existingImages === 'string'
+            ? JSON.parse(dto.existingImages)
+            : dto.existingImages;
+
+        if (!Array.isArray(clientExistingImages)) {
+          throw new BadRequestException('existingImages must be an array');
+        }
+      } catch (e) {
+        throw new BadRequestException(e.message);
+      }
+    }
+
+    // 3. Upload new gallery files
     let uploadedFiles: any[] = [];
     if (galleryFiles.length > 0) {
       uploadedFiles = await Promise.all(
@@ -133,25 +150,55 @@ export class BusinessProfileService {
       );
     }
 
-    //  create data payload for update
-    const updateData: any = { ...dto };
+    // 4. Build combined gallery array
+    const newGallery: any[] = [];
 
-    // append gallery creation if new files were uploaded
-    if (uploadedFiles.length > 0) {
-      updateData.gallery = {
-        create: uploadedFiles.map((f) => ({
-          filename: f.filename,
-          originalFilename: f.originalFilename,
-          path: f.path,
-          url: f.url,
-          fileType: f.fileType as FileType,
-          mimeType: f.mimeType,
-          size: f.size,
-        })),
-      };
+    // Existing images
+    newGallery.push(
+      ...clientExistingImages.map((img) => ({
+        filename: img.filename,
+        originalFilename: img.originalFilename,
+        path: img.path,
+        url: img.url,
+        fileType: img.fileType,
+        mimeType: img.mimeType,
+        size: img.size,
+      })),
+    );
+
+    // Newly uploaded images
+    newGallery.push(
+      ...uploadedFiles.map((f) => ({
+        filename: f.filename,
+        originalFilename: f.originalFilename,
+        path: f.path,
+        url: f.url,
+        fileType: f.fileType,
+        mimeType: f.mimeType,
+        size: f.size,
+      })),
+    );
+
+    // 5. Prepare updateData
+    const { existingImages, ...restDto } = dto;
+    console.log(existingImages);
+    const updateData: any = { ...restDto };
+
+    // Convert isActive to boolean
+    if (updateData.isActive !== undefined) {
+      updateData.isActive =
+        updateData.isActive === 'true' || updateData.isActive === true;
     }
 
-    //  update the profile
+    // Remove old gallery
+    updateData.gallery = { set: [] };
+
+    // Add new gallery array
+    if (newGallery.length > 0) {
+      updateData.gallery.create = newGallery;
+    }
+
+    // 6. Update profile in DB
     const updatedProfile = await this.prisma.businessProfile.update({
       where: { id: existingProfile.id },
       data: updateData,

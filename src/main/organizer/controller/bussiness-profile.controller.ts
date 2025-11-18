@@ -126,6 +126,22 @@ export class BusinessProfileController {
         openingTime: { type: 'string', example: '09:00 AM' },
         closingTime: { type: 'string', example: '11:00 PM' },
         isActive: { type: 'boolean', example: true },
+        existingImages: {
+          type: 'string',
+          description: 'JSON array of existing images client wants to keep',
+          example: JSON.stringify([
+            {
+              id: '94abf1c3-6a40-4dcf-bf9e-3a366c124769',
+              filename: 'b0192c68-5d4e-4aa6-a0a5-77d8babbd6f2.png',
+              originalFilename: 'Screenshot.png',
+              path: 'images/b0192c68.png',
+              url: 'https://eladserver.s3/.../b0192c68.png',
+              fileType: 'image',
+              mimeType: 'image/png',
+              size: 98623,
+            },
+          ]),
+        },
         profileType: {
           type: 'string',
           enum: Object.values(ProfileType),
@@ -144,7 +160,6 @@ export class BusinessProfileController {
     @Body() dto: UpdateBusinessProfileDto,
     @UploadedFiles() gallery: Express.Multer.File[],
   ) {
-    console.log(gallery);
     return this.businessProfileService.update(id, dto, gallery);
   }
 
