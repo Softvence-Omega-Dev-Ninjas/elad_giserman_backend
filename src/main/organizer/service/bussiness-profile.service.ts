@@ -270,6 +270,15 @@ export class BusinessProfileService {
       where: {
         businessProfileId: findOrganizationProfile.id,
       },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+            avatarUrl: true,
+          },
+        },
+      },
     });
     return reviews;
   }
@@ -282,6 +291,15 @@ export class BusinessProfileService {
     const review = await this.prisma.review.findUnique({
       where: {
         id: id,
+      },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+            avatarUrl: true,
+          },
+        },
       },
     });
     if (!review) {
