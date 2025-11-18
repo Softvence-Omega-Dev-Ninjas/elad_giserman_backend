@@ -261,6 +261,7 @@ export class BusinessProfileService {
         },
       },
     );
+    console.log(findOrganizationProfile,"odfjdjfdojfdfjdjfdjf")
     if (!findOrganizationProfile) {
       throw new NotFoundException('No business profile found for this user.');
     }
