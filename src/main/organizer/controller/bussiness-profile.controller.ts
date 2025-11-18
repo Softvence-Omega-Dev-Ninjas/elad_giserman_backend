@@ -210,7 +210,7 @@ export class BusinessProfileController {
 
   // get my created offer
   @ValidateOrganizer()
-  @Get('my')
+  @Get('offer/my')
   @ApiOperation({ summary: 'Organizer sees all their offers' })
   findMyOffers(@GetUser('sub') userId: string) {
     return handleRequest(
@@ -221,7 +221,7 @@ export class BusinessProfileController {
 
   //find one offer...
   @ValidateAuth()
-  @Get(':id')
+  @Get('offer/:id')
   @ApiOperation({ summary: 'Get single offer by ID (User View)' })
   findOne(@GetUser('sub') userId: string, @Param('id') id: string) {
     return handleRequest(
@@ -232,7 +232,7 @@ export class BusinessProfileController {
 
   // update offer
   @ValidateOrganizer()
-  @Patch(':id')
+  @Patch('offer/:id')
   @ApiOperation({ summary: 'Organizer updates offer' })
   updateOffer(
     @GetUser('sub') userId: string,
@@ -247,7 +247,7 @@ export class BusinessProfileController {
 
   // delete offer
   @ValidateOrganizer()
-  @Delete(':id')
+  @Delete('offer/:id')
   @ApiOperation({ summary: 'Organizer deletes offer' })
   deleteOffer(@GetUser('sub') userId: string, @Param('id') offerId: string) {
     return handleRequest(
@@ -257,7 +257,7 @@ export class BusinessProfileController {
   }
 
   // get all bussinees profile
-  @Get('')
+  @Get('/profile')
   async getAllProfile(@Query() filter: ProfileFilter) {
     try {
       const res = await this.businessProfileService.getAllProfiles(filter);
@@ -322,7 +322,7 @@ export class BusinessProfileController {
     }
   }
 
-  @Get('terms-conditions')
+  @Get('organizer/terms-conditions')
   async getTermsAndConditions() {
     try {
       const res = await this.businessProfileService.getTemsAndConditions();
