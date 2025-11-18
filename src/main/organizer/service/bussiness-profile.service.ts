@@ -351,7 +351,7 @@ export class BusinessProfileService {
         'Terms and Conditions already exist you can just update your terms and conditions',
       );
     }
-    return this.prisma.termsAndConditions.create({
+    return this.prisma.userTermsAndConditions.create({
       data: {
         ...dto,
       },
