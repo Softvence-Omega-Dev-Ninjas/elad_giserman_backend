@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Query } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -10,6 +10,7 @@ import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import { handleRequest } from '@/common/utils/handle.request';
 import { AdminUpdateOfferDto } from '../dto/admin-update-offer.dto';
 import { AdminOfferService } from '../service/admin-offer.service';
+import { GetOffersDto } from '../dto/getOffer.dto';
 
 @ApiBearerAuth()
 @ValidateAdmin()
@@ -41,9 +42,11 @@ export class AdminController {
   @Get('offers')
   @ApiOperation({ summary: 'Get all offers (Only for admin)' })
   @ApiResponse({ status: 200, description: 'All offers fetched' })
-  getAllOffers() {
+  getAllOffers(@Query() Query:GetOffersDto) {
+     const page = Query.page ? Number(Query.page) : 1;
+    const limit = Query.limit ? Number(Query.limit) : 10;
     return handleRequest(
-      () => this.adminOfferService.getAllOffers(),
+      () => this.adminOfferService.getAllOffers(page,limit),
       'All offers fetched successfully',
     );
   }
