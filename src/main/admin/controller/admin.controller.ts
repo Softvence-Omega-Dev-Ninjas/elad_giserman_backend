@@ -42,11 +42,11 @@ export class AdminController {
   @Get('offers')
   @ApiOperation({ summary: 'Get all offers (Only for admin)' })
   @ApiResponse({ status: 200, description: 'All offers fetched' })
-  getAllOffers(@Query() Query:GetOffersDto) {
-     const page = Query.page ? Number(Query.page) : 1;
+  getAllOffers(@Query() Query: GetOffersDto) {
+    const page = Query.page ? Number(Query.page) : 1;
     const limit = Query.limit ? Number(Query.limit) : 10;
     return handleRequest(
-      () => this.adminOfferService.getAllOffers(page,limit),
+      () => this.adminOfferService.getAllOffers(page, limit),
       'All offers fetched successfully',
     );
   }
