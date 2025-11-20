@@ -36,6 +36,7 @@ import { UpdateOfferDto } from '../dto/update-offer.dto';
 import { ProfileType } from '@prisma/client';
 import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
 import { CreateTermsAndConditionsDto } from '@/main/admin/dto/termAndCondition.dto';
+import { GetOffersDto2 } from '@/main/admin/dto/getOffer.dto';
 
 @ApiTags('Business Profiles')
 @ApiBearerAuth()
@@ -212,9 +213,9 @@ export class BusinessProfileController {
   @ValidateOrganizer()
   @Get('offer/my')
   @ApiOperation({ summary: 'Organizer sees all their offers' })
-  findMyOffers(@GetUser('sub') userId: string) {
+  findMyOffers(@GetUser('sub') userId: string, @Query() filter:GetOffersDto2) {
     return handleRequest(
-      () => this.offerService.findMyOffers(userId),
+      () => this.offerService.findMyOffers(userId,filter),
       'My offers fetched successfully',
     );
   }
@@ -230,6 +231,15 @@ export class BusinessProfileController {
     );
   }
 
+  @ValidateOrganizer()
+  @Get('review/myReview')
+  @ApiOperation({ summary: 'Organizer sees all their offers' })
+  findMyRevies(@GetUser('sub') userId: string, @Query() filter:GetOffersDto2) {
+    return handleRequest(
+      () => this.offerService.findReviews(userId,filter),
+      'My offers fetched successfully',
+    );
+  }
   // update offer
   @ValidateOrganizer()
   @Patch('offer/:id')

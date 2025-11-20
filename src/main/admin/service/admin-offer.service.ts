@@ -30,11 +30,17 @@ export class AdminOfferService {
   }
 
   // get all offers regardless of status
-  async getAllOffers(page: number, limit: number) {
+  async getAllOffers(page: number, limit: number,status:string) {
     const skip = (page - 1) * limit;
+    const where:any={}
+    if(status){
+      where.status=status
+    
+    }
     return this.prisma.offer.findMany({
       skip: skip,
       take: limit,
+      where,
       include: {
         business: true,
       },

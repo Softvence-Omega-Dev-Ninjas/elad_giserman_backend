@@ -10,7 +10,7 @@ import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import { handleRequest } from '@/common/utils/handle.request';
 import { AdminUpdateOfferDto } from '../dto/admin-update-offer.dto';
 import { AdminOfferService } from '../service/admin-offer.service';
-import { GetOffersDto } from '../dto/getOffer.dto';
+import { GetOffersDto, GetOffersDto2 } from '../dto/getOffer.dto';
 
 @ApiBearerAuth()
 @ValidateAdmin()
@@ -42,11 +42,12 @@ export class AdminController {
   @Get('offers')
   @ApiOperation({ summary: 'Get all offers (Only for admin)' })
   @ApiResponse({ status: 200, description: 'All offers fetched' })
-  getAllOffers(@Query() Query: GetOffersDto) {
+  getAllOffers(@Query() Query: GetOffersDto2) {
     const page = Query.page ? Number(Query.page) : 1;
     const limit = Query.limit ? Number(Query.limit) : 10;
+    const status=Query.status
     return handleRequest(
-      () => this.adminOfferService.getAllOffers(page, limit),
+      () => this.adminOfferService.getAllOffers(page, limit,status),
       'All offers fetched successfully',
     );
   }

@@ -25,6 +25,7 @@ import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 import { GetUserDto } from '../dto/getuser.dto';
 import { GetRedemtionsDto } from '../dto/getRedemtion.dto';
+import { GetOffersDto } from '../dto/getOffer.dto';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -319,5 +320,35 @@ export class AdminPlatformManagementController {
       limit,
       data: users.data,
     };
+  }
+
+
+  @Get('subscription/payment-log')
+  async getPaymentLog(@Query() filter:GetOffersDto) {
+    try {
+      const res = await this.platformManagementService.getPaymentLog(filter);
+      return {
+        status: HttpStatus.OK,
+        message: 'Payment log fetched successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
+
+  @Get('spin/spin-history')
+  async getSpinHistory(@Query() dto:GetOffersDto){
+    try{
+      const res=await this.platformManagementService.getSpinHistory(dto)
+      return{
+        status:HttpStatus.OK,
+        message:'Spin history fetched successfully',
+        data:res
+      }
+    }catch(error){
+      throw new InternalServerErrorException(error.message,error.status)
+    }
   }
 }

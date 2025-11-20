@@ -210,48 +210,64 @@ export class BusinessProfileService {
   }
 
   // get all profile
-  async getAllProfiles(filter: ProfileFilter) {
-    const { search, profileType } = filter;
-    const where: any = {};
+async getAllProfiles(filter: ProfileFilter) {
+  const { search, profileType, page = 1, limit = 10 } = filter;
+  const skip = (page - 1) * limit;
 
-    if (search) {
-      where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
-      ];
-    }
-
-    if (profileType) {
-      where.profileType = profileType;
-    }
-
-    const profiles = await this.prisma.businessProfile.findMany({
-      where,
-      include: {
-        gallery: true,
-      },
-    });
-
-    //  Randomize order after fetching
-    const shuffledProfiles = shuffleArray(profiles);
-
-    const reviewStats = await this.prisma.review.groupBy({
-      by: ['businessProfileId'],
-      _count: { rating: true },
-      _avg: { rating: true },
-    });
-
-    const profilesWithStats = shuffledProfiles.map((profile) => {
-      const stats = reviewStats.find((r) => r.businessProfileId === profile.id);
-      return {
-        ...profile,
-        reviewCount: stats?._count.rating || 0,
-        avgRating: stats?._avg.rating || null,
-      };
-    });
-
-    return profilesWithStats;
+  // Build where condition
+  const where: any = {};
+  if (search) {
+    where.OR = [
+      { title: { contains: search, mode: 'insensitive' } },
+      { description: { contains: search, mode: 'insensitive' } },
+    ];
   }
+  if (profileType) {
+    where.profileType = profileType;
+  }
+
+  // Fetch profiles with gallery, owner, and counts for offers & redemptions
+  const profiles = await this.prisma.businessProfile.findMany({
+    skip,
+    take: limit,
+    where,
+    include: { 
+      gallery: true,
+      owner: { select: { name: true } },
+      _count: {
+        select: {
+          offers: true,
+          reedemOffer: true,
+        },
+      },
+    },
+  });
+
+  // Shuffle profiles randomly
+  const shuffledProfiles = shuffleArray(profiles);
+
+  // Fetch review stats for all profiles
+  const reviewStats = await this.prisma.review.groupBy({
+    by: ['businessProfileId'],
+    _count: { rating: true },
+    _avg: { rating: true },
+  });
+
+  // Merge profiles with stats and counts
+  const profilesWithStats = shuffledProfiles.map((profile) => {
+    const stats = reviewStats.find((r) => r.businessProfileId === profile.id);
+    return {
+      ...profile,
+      totalOffers: profile._count.offers,
+      totalRedemptions: profile._count.reedemOffer,
+      reviewCount: stats?._count.rating || 0,
+      avgRating: stats?._avg.rating || null,
+    };
+  });
+
+  return profilesWithStats;
+}
+
 
   // get all reviews
   async getAllReviews(userId: string) {

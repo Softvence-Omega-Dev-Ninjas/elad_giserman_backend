@@ -13,3 +13,13 @@ model Spin {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
+
+model SpinHistory {
+    id String @id @default(uuid())
+    userId String
+    result Int
+    isUsed Boolean @default(false)
+    createdAt DateTime @default(now())
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    updatedAt DateTime @updatedAt
+}
