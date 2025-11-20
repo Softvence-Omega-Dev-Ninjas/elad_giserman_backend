@@ -10,7 +10,7 @@ import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import { handleRequest } from '@/common/utils/handle.request';
 import { AdminUpdateOfferDto } from '../dto/admin-update-offer.dto';
 import { AdminOfferService } from '../service/admin-offer.service';
-import { GetOffersDto, GetOffersDto2 } from '../dto/getOffer.dto';
+import { GetOffersDto2 } from '../dto/getOffer.dto';
 
 @ApiBearerAuth()
 @ValidateAdmin()
