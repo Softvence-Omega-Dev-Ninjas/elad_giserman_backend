@@ -322,9 +322,8 @@ export class AdminPlatformManagementController {
     };
   }
 
-
   @Get('subscription/payment-log')
-  async getPaymentLog(@Query() filter:GetOffersDto) {
+  async getPaymentLog(@Query() filter: GetOffersDto) {
     try {
       const res = await this.platformManagementService.getPaymentLog(filter);
       return {
@@ -337,18 +336,17 @@ export class AdminPlatformManagementController {
     }
   }
 
-
   @Get('spin/spin-history')
-  async getSpinHistory(@Query() dto:GetOffersDto){
-    try{
-      const res=await this.platformManagementService.getSpinHistory(dto)
-      return{
-        status:HttpStatus.OK,
-        message:'Spin history fetched successfully',
-        data:res
-      }
-    }catch(error){
-      throw new InternalServerErrorException(error.message,error.status)
+  async getSpinHistory(@Query() dto: GetOffersDto) {
+    try {
+      const res = await this.platformManagementService.getSpinHistory(dto);
+      return {
+        status: HttpStatus.OK,
+        message: 'Spin history fetched successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
     }
   }
 }

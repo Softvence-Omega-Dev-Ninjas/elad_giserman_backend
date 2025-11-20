@@ -110,7 +110,7 @@ export class AdminPlatfromManagementService {
       totalUser,
       totalFreeUser,
       totalVipUser: totalUser - totalFreeUser,
-      totalRest:totalOrganizer,
+      totalRest: totalOrganizer,
 
       topBusinessProfile: topBusiness,
 
@@ -499,56 +499,53 @@ export class AdminPlatfromManagementService {
     return { data };
   }
 
-
-
- async getPaymentLog(filter:GetOffersDto) {
-  const {page = 1, limit = 10} = filter
-  const skip = (page - 1) * limit;
-  const res = await this.prisma.invoice.findMany({
-    skip,
-    take: limit,
-    orderBy: { createdAt: 'desc' },
-    select: { 
-      id: true,
-      paidCents: true,
-      createdAt: true,
-      userSubscription: {
-        select: {
-          status: true,
-          user: {
-            select: {
-              name: true,
+  async getPaymentLog(filter: GetOffersDto) {
+    const { page = 1, limit = 10 } = filter;
+    const skip = (page - 1) * limit;
+    const res = await this.prisma.invoice.findMany({
+      skip,
+      take: limit,
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        paidCents: true,
+        createdAt: true,
+        userSubscription: {
+          select: {
+            status: true,
+            user: {
+              select: {
+                name: true,
+              },
             },
-          },
-          plan: {
-            select: {
-              title: true,
+            plan: {
+              select: {
+                title: true,
+              },
             },
           },
         },
       },
-    },
-  });
+    });
 
-  return res;
-}
+    return res;
+  }
 
-
-//* spin history
-async getSpinHistory(filter:GetOffersDto){
-  const {page=1,limit=10}=filter
-  const skip=(page-1)*10
-  const res=await this.prisma.spinHistory.findMany({
-    skip,
-    take:limit,
-    include:{
-      user:{
-        select:{
-          name:true
-        }
-      }
-    }
-  })
-  return res
-}
+  //* spin history
+  async getSpinHistory(filter: GetOffersDto) {
+    const { page = 1, limit = 10 } = filter;
+    const skip = (page - 1) * 10;
+    const res = await this.prisma.spinHistory.findMany({
+      skip,
+      take: limit,
+      include: {
+        user: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+    return res;
+  }
 }

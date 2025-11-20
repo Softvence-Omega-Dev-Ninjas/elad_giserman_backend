@@ -118,20 +118,20 @@ export class UserInfoController {
     }
   }
 
-
-
-
   @Post('spin-history')
   @ApiBody({ type: SpinHistoryDto })
-  async createSpinHistory(@GetUser('sub') userId: string,@Body() dto:SpinHistoryDto) {
-    try{
-      const res=await this.userInfoService.createSpinHistory(userId,dto)
-      return{
-       status:HttpStatus.CREATED,
-       message:'Your spin restult stored successful',
-       data:res
-      }
-    }catch(error){
+  async createSpinHistory(
+    @GetUser('sub') userId: string,
+    @Body() dto: SpinHistoryDto,
+  ) {
+    try {
+      const res = await this.userInfoService.createSpinHistory(userId, dto);
+      return {
+        status: HttpStatus.CREATED,
+        message: 'Your spin restult stored successful',
+        data: res,
+      };
+    } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }

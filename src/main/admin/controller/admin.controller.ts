@@ -45,9 +45,9 @@ export class AdminController {
   getAllOffers(@Query() Query: GetOffersDto2) {
     const page = Query.page ? Number(Query.page) : 1;
     const limit = Query.limit ? Number(Query.limit) : 10;
-    const status=Query.status
+    const status = Query.status;
     return handleRequest(
-      () => this.adminOfferService.getAllOffers(page, limit,status),
+      () => this.adminOfferService.getAllOffers(page, limit, status),
       'All offers fetched successfully',
     );
   }

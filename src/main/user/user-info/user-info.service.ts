@@ -197,37 +197,43 @@ export class UserInfoService {
     };
   }
 
-
   //* store spin history for user
-async createSpinHistory(userId: string, dto: SpinHistoryDto) {
-  const now = new Date();
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+  async createSpinHistory(userId: string, dto: SpinHistoryDto) {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(
+      now.getFullYear(),
+      now.getMonth() + 1,
+      0,
+      23,
+      59,
+      59,
+      999,
+    );
 
-  // Check if user already spin this month
-  const existingSpin = await this.prisma.spinHistory.findFirst({
-    where: {
-      userId,
-      createdAt: {
-        gte: startOfMonth,
-        lte: endOfMonth,
+    // Check if user already spin this month
+    const existingSpin = await this.prisma.spinHistory.findFirst({
+      where: {
+        userId,
+        createdAt: {
+          gte: startOfMonth,
+          lte: endOfMonth,
+        },
       },
-    },
-  });
+    });
 
-  if (existingSpin) {
-    throw new Error("User has already spined this month.");
+    if (existingSpin) {
+      throw new Error('User has already spined this month.');
+    }
+
+    // Create new spin history
+    const res = await this.prisma.spinHistory.create({
+      data: {
+        result: dto.result,
+        userId,
+      },
+    });
+
+    return res;
   }
-
-  // Create new spin history
-  const res = await this.prisma.spinHistory.create({
-    data: {
-      result: dto.result,
-      userId,
-    },
-  });
-
-  return res;
-}
-
 }

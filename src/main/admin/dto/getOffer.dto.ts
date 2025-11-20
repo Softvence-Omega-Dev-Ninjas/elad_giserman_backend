@@ -20,13 +20,11 @@ export class GetOffersDto {
   limit?: number;
 }
 
-
 export class GetOffersDto2 {
-
   @ApiPropertyOptional({ description: 'Status of the offer', type: String })
   @IsOptional()
   @IsString()
-  status:string
+  status: string;
   @ApiPropertyOptional({ description: 'Page number', type: Number, default: 1 })
   @IsOptional()
   @Type(() => Number)

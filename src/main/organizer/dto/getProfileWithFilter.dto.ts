@@ -3,7 +3,6 @@ import { ProfileType } from '@prisma/client';
 import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class ProfileFilter {
-
   @ApiProperty({
     description: 'Page number for pagination',
     required: false,
@@ -20,7 +19,7 @@ export class ProfileFilter {
   })
   @IsOptional()
   @IsNumber()
-  limit:number
+  limit: number;
   @ApiProperty({
     description: 'Search by profile title or name',
     required: false,
