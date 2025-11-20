@@ -17,6 +17,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { UpdateUserInfoDto } from './dto/update-user-info.dto';
 import { UserInfoService } from './user-info.service';
+import { SpinHistoryDto } from './dto/createSpinHistory.dto';
 
 @ApiTags('USER Info')
 @Controller('user-info')
@@ -110,6 +111,24 @@ export class UserInfoController {
       return {
         status: HttpStatus.OK,
         message: 'Users notificatiosn retirve success',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
+  @Post('spin-history')
+  @ApiBody({ type: SpinHistoryDto })
+  async createSpinHistory(
+    @GetUser('sub') userId: string,
+    @Body() dto: SpinHistoryDto,
+  ) {
+    try {
+      const res = await this.userInfoService.createSpinHistory(userId, dto);
+      return {
+        status: HttpStatus.CREATED,
+        message: 'Your spin restult stored successful',
         data: res,
       };
     } catch (error) {

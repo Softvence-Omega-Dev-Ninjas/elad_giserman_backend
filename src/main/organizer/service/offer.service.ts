@@ -10,6 +10,7 @@ import { generateQRCodeBuffer } from '../helps/qrCode';
 import { S3Service } from '@/lib/s3/s3.service';
 import { Readable } from 'stream';
 import { FirebaseService } from '@/lib/firebase/firebase.service';
+import { GetOffersDto2 } from '@/main/admin/dto/getOffer.dto';
 
 @Injectable()
 export class OfferService {
@@ -113,8 +114,11 @@ export class OfferService {
     });
   }
   // find oranizer offer
-  async findMyOffers(userId: string) {
-    // find the business profile of the logged-in user
+  async findMyOffers(userId: string, filter: GetOffersDto2) {
+    const { status, page = 1, limit = 10 } = filter;
+    const skip = (page - 1) * limit;
+
+    // Find the user's business profile
     const business = await this.prisma.businessProfile.findUnique({
       where: { ownerId: userId },
     });
@@ -125,12 +129,64 @@ export class OfferService {
       );
     }
 
+    // Build the where filter
+    const where: any = {
+      businessId: business.id,
+    };
+
+    if (status) {
+      where.status = status;
+    }
+
+    // Fetch offers with pagination
     return this.prisma.offer.findMany({
-      where: { business: { id: business.id } },
+      skip,
+      take: limit,
+      where,
       include: { business: true },
     });
   }
 
+  async findReviews(userId: string, filter: GetOffersDto2) {
+    const { status, page = 1, limit = 10 } = filter;
+    const skip = (page - 1) * limit;
+
+    // Find the user's business profile
+    const business = await this.prisma.businessProfile.findUnique({
+      where: { ownerId: userId },
+    });
+
+    if (!business) {
+      throw new NotFoundException(
+        `You don't have a business profile yet, so you cannot create offers`,
+      );
+    }
+
+    // Build the where filter
+    const where: any = {
+      businessId: business.id,
+    };
+
+    if (status) {
+      where.status = status;
+    }
+
+    // Fetch offers with pagination
+    return this.prisma.review.findMany({
+      skip,
+      take: limit,
+      where,
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+            avatarUrl: true,
+          },
+        },
+      },
+    });
+  }
   //** find one offer
   async findOne(userId: string, id: string) {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
