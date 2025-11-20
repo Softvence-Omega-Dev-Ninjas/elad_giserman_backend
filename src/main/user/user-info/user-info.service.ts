@@ -7,6 +7,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { UpdateUserInfoDto } from './dto/update-user-info.dto';
+import { SpinHistoryDto } from './dto/createSpinHistory.dto';
 
 @Injectable()
 export class UserInfoService {
@@ -194,5 +195,45 @@ export class UserInfoService {
       today,
       yesterday,
     };
+  }
+
+  //* store spin history for user
+  async createSpinHistory(userId: string, dto: SpinHistoryDto) {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(
+      now.getFullYear(),
+      now.getMonth() + 1,
+      0,
+      23,
+      59,
+      59,
+      999,
+    );
+
+    // Check if user already spin this month
+    const existingSpin = await this.prisma.spinHistory.findFirst({
+      where: {
+        userId,
+        createdAt: {
+          gte: startOfMonth,
+          lte: endOfMonth,
+        },
+      },
+    });
+
+    if (existingSpin) {
+      throw new Error('User has already spined this month.');
+    }
+
+    // Create new spin history
+    const res = await this.prisma.spinHistory.create({
+      data: {
+        result: dto.result,
+        userId,
+      },
+    });
+
+    return res;
   }
 }

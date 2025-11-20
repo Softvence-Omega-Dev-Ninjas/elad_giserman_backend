@@ -1,8 +1,25 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ProfileType } from '@prisma/client';
-import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class ProfileFilter {
+  @ApiProperty({
+    description: 'Page number for pagination',
+    required: false,
+    example: 1,
+  })
+  @IsOptional()
+  @IsNumber()
+  page: number;
+
+  @ApiProperty({
+    description: 'Number of items per page',
+    required: false,
+    example: 10,
+  })
+  @IsOptional()
+  @IsNumber()
+  limit: number;
   @ApiProperty({
     description: 'Search by profile title or name',
     required: false,

@@ -12,6 +12,7 @@ import { CreateCustomAppDto } from '../dto/customApp.dto';
 import { S3Service } from '@/lib/s3/s3.service';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
+import { GetOffersDto } from '../dto/getOffer.dto';
 // import { log } from 'console';
 @Injectable()
 export class AdminPlatfromManagementService {
@@ -51,7 +52,6 @@ export class AdminPlatfromManagementService {
       totalUser,
       totalFreeUser,
       totalOrganizer,
-      users,
       topBusiness,
 
       //* NEW: Recent activity
@@ -64,9 +64,7 @@ export class AdminPlatfromManagementService {
       this.prisma.user.count({
         where: { memberShip: 'FREE' },
       }),
-      this.prisma.user.count({
-        where: { role: 'ORGANIZER' },
-      }),
+      this.prisma.businessProfile.count(),
       this.prisma.user.findMany({ where }),
 
       this.prisma.businessProfile.findMany({
@@ -112,8 +110,7 @@ export class AdminPlatfromManagementService {
       totalUser,
       totalFreeUser,
       totalVipUser: totalUser - totalFreeUser,
-      totalOrganizer,
-      users,
+      totalRest: totalOrganizer,
 
       topBusinessProfile: topBusiness,
 
@@ -500,5 +497,55 @@ export class AdminPlatfromManagementService {
     });
 
     return { data };
+  }
+
+  async getPaymentLog(filter: GetOffersDto) {
+    const { page = 1, limit = 10 } = filter;
+    const skip = (page - 1) * limit;
+    const res = await this.prisma.invoice.findMany({
+      skip,
+      take: limit,
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        paidCents: true,
+        createdAt: true,
+        userSubscription: {
+          select: {
+            status: true,
+            user: {
+              select: {
+                name: true,
+              },
+            },
+            plan: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return res;
+  }
+
+  //* spin history
+  async getSpinHistory(filter: GetOffersDto) {
+    const { page = 1, limit = 10 } = filter;
+    const skip = (page - 1) * 10;
+    const res = await this.prisma.spinHistory.findMany({
+      skip,
+      take: limit,
+      include: {
+        user: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+    return res;
   }
 }

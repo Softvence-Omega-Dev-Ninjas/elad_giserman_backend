@@ -49,6 +49,7 @@ model User {
   reviewReply      ReviewReply[]
   reedemaOffer     ReedemaOffer[]     @relation("UserReedemaOffer")
   businessProfile  BusinessProfile?
+  spinHistory  SpinHistory[]
   fcmToken String?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
