@@ -285,13 +285,13 @@ export class AdminPlatformManagementController {
     const page = query.page ? Number(query.page) : 1;
     const limit = query.limit ? Number(query.limit) : 10;
     const search = query.search || '';
-    const status = query.status || ""
+    const status = query.status || '';
     // Call service to get users
     const users = await this.platformManagementService.getAllUsers({
       page,
       limit,
       search,
-      status
+      status,
     });
 
     return {

@@ -19,7 +19,7 @@ export class AdminReviewController {
 
   @Get('reviews')
   @ValidateAdmin()
-  async getReviews(@Query() filter:GetReviewDto) {
+  async getReviews(@Query() filter: GetReviewDto) {
     try {
       const result = await this.adminReviewService.getReviews(filter);
       return {

@@ -71,6 +71,4 @@ export class SubscriptionController {
   async cancelSubscriptionImmediately(@GetUser('sub') userId: string) {
     return this.cancelSubscriptionService.cancelSubscriptionImmediately(userId);
   }
-
-
 }

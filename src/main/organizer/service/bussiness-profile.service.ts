@@ -400,40 +400,38 @@ export class BusinessProfileService {
     return isExistTerm;
   }
 
+  async getAllRedemtions(filter: GetReviewDto, userId: string) {
+    const { page = 1, limit = 10, search } = filter;
+    const skip = (page - 1) * limit;
 
-async getAllRedemtions(filter: GetReviewDto, userId: string) {
-  const { page = 1, limit = 10, search } = filter;
-  const skip = (page - 1) * limit;
+    // 1. Find business profile
+    const businessProfile = await this.prisma.businessProfile.findFirst({
+      where: { ownerId: userId },
+    });
 
-  // 1. Find business profile
-  const businessProfile = await this.prisma.businessProfile.findFirst({
-    where: { ownerId: userId },
-  });
+    if (!businessProfile) {
+      return [];
+    }
 
-  if (!businessProfile) {
-    return [];
+    const where: any = {
+      bussinessId: businessProfile.id,
+    };
+
+    if (search) {
+      where.OR = [
+        { title: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
+      ];
+    }
+    return this.prisma.reedemaOffer.findMany({
+      skip,
+      take: limit,
+      where,
+      include: {
+        offer: true,
+        user: true,
+        business: true,
+      },
+    });
   }
-
-  const where: any = {
-    bussinessId: businessProfile.id,
-  };
-
-  if (search) {
-    where.OR = [
-      { title: { contains: search, mode: 'insensitive' } },
-      { description: { contains: search, mode: 'insensitive' } },
-    ];
-  }
-  return this.prisma.reedemaOffer.findMany({
-    skip,
-    take: limit,
-    where,
-    include: {
-      offer: true,
-      user: true,
-      business: true,
-    },
-  });
-}
-
 }

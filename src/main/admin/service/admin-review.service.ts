@@ -12,33 +12,33 @@ export class AdminReviewService {
   constructor(private readonly prisma: PrismaService) {}
 
   // Get all reviews
-  async getReviews(filter:GetReviewDto) {
-    const {page=1,limit=10,search}=filter
-    const skip=(page-1)*limit
-    const where:any={}
-    if(search){
-      where.OR=[
-        {user:{name:{contains:search}}},
-        {businessProfile:{title:{contains:search}}}
-      ]
+  async getReviews(filter: GetReviewDto) {
+    const { page = 1, limit = 10, search } = filter;
+    const skip = (page - 1) * limit;
+    const where: any = {};
+    if (search) {
+      where.OR = [
+        { user: { name: { contains: search } } },
+        { businessProfile: { title: { contains: search } } },
+      ];
     }
     try {
       const result = await this.prisma.review.findMany({
         where,
         skip,
-        take:limit,
-        include:{
-          user:{
-            select:{
-              name:true
-            }
+        take: limit,
+        include: {
+          user: {
+            select: {
+              name: true,
+            },
           },
-          businessProfile:{
-            select:{
-              title:true
-            }
-          }
-        }
+          businessProfile: {
+            select: {
+              title: true,
+            },
+          },
+        },
       });
       return result;
     } catch (error) {

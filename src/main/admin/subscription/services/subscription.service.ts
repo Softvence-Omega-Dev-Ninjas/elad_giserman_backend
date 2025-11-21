@@ -199,25 +199,24 @@ export class SubscriptionService {
     return successResponse(null, 'Plan deleted successfully');
   }
 
-
   //*update plan
-  async upatePlan(id:string){
-    const existingPlan=await this.prismaService.subscriptionPlan.findFirst({
-      where:{
-        id:id
-      }
-    })
-    if(!existingPlan){
-      throw new AppError(404,'Plan not found')
-    }
-   const res= await this.prismaService.subscriptionPlan.update({
-      where:{
-        id:id
+  async upatePlan(id: string) {
+    const existingPlan = await this.prismaService.subscriptionPlan.findFirst({
+      where: {
+        id: id,
       },
-      data:{
-        isActive:!existingPlan.isActive
-      }
-    })
-    return res
+    });
+    if (!existingPlan) {
+      throw new AppError(404, 'Plan not found');
+    }
+    const res = await this.prismaService.subscriptionPlan.update({
+      where: {
+        id: id,
+      },
+      data: {
+        isActive: !existingPlan.isActive,
+      },
+    });
+    return res;
   }
 }

@@ -35,17 +35,17 @@ export class SubscriptionController {
   async createNewPlan(@Body() dto: CreateSubscriptionPlanDto) {
     return this.subscriptionService.createNewPlan(dto);
   }
-    @Patch('subscription/:id')
-  async updateSubscriptionPlan(@Param('id') id:string){
-    try{
-      const res= await this.subscriptionService.upatePlan(id)
-      return{
-        status:HttpStatus.OK,
-        message:"Subscription plan updated successfully",
-        data:res
-      }
-    }catch(error){
-      throw new InternalServerErrorException(error.message,error.status)
+  @Patch('subscription/:id')
+  async updateSubscriptionPlan(@Param('id') id: string) {
+    try {
+      const res = await this.subscriptionService.upatePlan(id);
+      return {
+        status: HttpStatus.OK,
+        message: 'Subscription plan updated successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
     }
   }
   @ApiOperation({ summary: 'Get all plans' })

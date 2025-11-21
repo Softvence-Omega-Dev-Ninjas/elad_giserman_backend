@@ -4,14 +4,13 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { UserStatus } from '@prisma/client';
 
 export class GetUserDto {
-
   @ApiProperty({
-    description:"filter by status",
-    required:false,
-    enum:UserStatus
+    description: 'filter by status',
+    required: false,
+    enum: UserStatus,
   })
   @IsEnum(UserStatus)
-  status?:UserStatus;
+  status?: UserStatus;
   @ApiPropertyOptional({
     description: 'Search term for user name',
     type: String,

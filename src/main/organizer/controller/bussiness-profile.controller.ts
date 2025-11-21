@@ -347,18 +347,23 @@ export class BusinessProfileController {
     }
   }
 
-
   @ValidateOrganizer()
   @Get('all-redemtions')
-  async getAllRedemtions(@Query() filter:GetReviewDto,@GetUser('sub') userId:string){
-    try{
-      const res=await this.businessProfileService.getAllRedemtions(filter,userId)
-      return{
+  async getAllRedemtions(
+    @Query() filter: GetReviewDto,
+    @GetUser('sub') userId: string,
+  ) {
+    try {
+      const res = await this.businessProfileService.getAllRedemtions(
+        filter,
+        userId,
+      );
+      return {
         status: HttpStatus.OK,
         message: 'Redemtions fetched successfully',
         data: res,
-      }
-    }catch(error){
+      };
+    } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }

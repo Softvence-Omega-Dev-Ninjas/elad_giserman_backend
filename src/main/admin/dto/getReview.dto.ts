@@ -4,7 +4,6 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { UserStatus } from '@prisma/client';
 
 export class GetReviewDto {
-
   @ApiPropertyOptional({
     description: 'Search term for user name',
     type: String,

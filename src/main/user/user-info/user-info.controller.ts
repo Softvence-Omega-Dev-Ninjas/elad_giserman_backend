@@ -135,5 +135,4 @@ export class UserInfoController {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }
-  
 }
