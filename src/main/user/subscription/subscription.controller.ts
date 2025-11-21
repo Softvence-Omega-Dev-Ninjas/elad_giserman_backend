@@ -6,9 +6,7 @@ import {
   Headers,
   HttpCode,
   HttpStatus,
-  InternalServerErrorException,
   Param,
-  Patch,
   Post,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
