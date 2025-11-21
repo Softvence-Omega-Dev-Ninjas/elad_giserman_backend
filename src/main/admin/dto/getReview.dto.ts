@@ -2,7 +2,6 @@ import { IsOptional, IsString, IsInt, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
-
 export class GetReviewDto {
   @ApiPropertyOptional({
     description: 'Search term for user name',
