@@ -59,6 +59,9 @@ export class AdminPlatfromManagementService {
       recentBusinessProfile,
       recentReviews,
       recentOffers,
+
+      //* Recent joint
+      recentJoinedBussines,
     ] = await Promise.all([
       this.prisma.user.count(),
       this.prisma.user.count({
@@ -68,6 +71,7 @@ export class AdminPlatfromManagementService {
       this.prisma.user.findMany({ where }),
 
       this.prisma.businessProfile.findMany({
+        take: 5,
         orderBy: { reviews: { _count: 'desc' } },
       }),
 
@@ -104,6 +108,10 @@ export class AdminPlatfromManagementService {
           },
         },
       }),
+      this.prisma.businessProfile.findMany({
+        orderBy: { updatedAt: 'desc' },
+        take: 5,
+      }),
     ]);
 
     return {
@@ -112,8 +120,8 @@ export class AdminPlatfromManagementService {
       totalVipUser: totalUser - totalFreeUser,
       totalRest: totalOrganizer,
 
-      topBusinessProfile: topBusiness,
-
+      topRestaurent: topBusiness,
+      recentJoinedBussines,
       recentActivity: {
         users: recentUsers,
         businessProfiles: recentBusinessProfile,
@@ -447,17 +455,21 @@ export class AdminPlatfromManagementService {
     page,
     limit,
     search,
+    status,
   }: {
     page: number;
     limit: number;
     search: string;
+    status: string;
   }) {
     const skip = (page - 1) * limit;
 
     const where: any = search
       ? { name: { contains: search, mode: 'insensitive' } }
       : {};
-
+    if (status) {
+      where.status = status;
+    }
     const [data, total] = await Promise.all([
       this.prisma.user.findMany({
         where,
@@ -539,11 +551,7 @@ export class AdminPlatfromManagementService {
       skip,
       take: limit,
       include: {
-        user: {
-          select: {
-            name: true,
-          },
-        },
+        user: true,
       },
     });
     return res;
