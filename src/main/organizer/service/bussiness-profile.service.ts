@@ -12,6 +12,7 @@ import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
 import { UpdateBusinessProfileDto } from '../dto/update-bussiness-profile.dto';
 import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
 import { CreateTermsAndConditionsDto } from '@/main/admin/dto/termAndCondition.dto';
+import { GetReviewDto } from '@/main/admin/dto/getReview.dto';
 
 function shuffleArray<T>(array: T[]): T[] {
   return array.sort(() => Math.random() - 0.5);
@@ -398,4 +399,41 @@ export class BusinessProfileService {
     }
     return isExistTerm;
   }
+
+
+async getAllRedemtions(filter: GetReviewDto, userId: string) {
+  const { page = 1, limit = 10, search } = filter;
+  const skip = (page - 1) * limit;
+
+  // 1. Find business profile
+  const businessProfile = await this.prisma.businessProfile.findFirst({
+    where: { ownerId: userId },
+  });
+
+  if (!businessProfile) {
+    return [];
+  }
+
+  const where: any = {
+    bussinessId: businessProfile.id,
+  };
+
+  if (search) {
+    where.OR = [
+      { title: { contains: search, mode: 'insensitive' } },
+      { description: { contains: search, mode: 'insensitive' } },
+    ];
+  }
+  return this.prisma.reedemaOffer.findMany({
+    skip,
+    take: limit,
+    where,
+    include: {
+      offer: true,
+      user: true,
+      business: true,
+    },
+  });
+}
+
 }

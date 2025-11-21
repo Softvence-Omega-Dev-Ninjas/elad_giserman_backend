@@ -6,7 +6,9 @@ import {
   Headers,
   HttpCode,
   HttpStatus,
+  InternalServerErrorException,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -69,4 +71,6 @@ export class SubscriptionController {
   async cancelSubscriptionImmediately(@GetUser('sub') userId: string) {
     return this.cancelSubscriptionService.cancelSubscriptionImmediately(userId);
   }
+
+
 }

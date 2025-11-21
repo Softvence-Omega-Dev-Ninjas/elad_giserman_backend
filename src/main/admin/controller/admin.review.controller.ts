@@ -6,9 +6,11 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { AdminReviewService } from '../service/admin-review.service';
+import { GetReviewDto } from '../dto/getReview.dto';
 
 @Controller('admin-reviews')
 @ApiBearerAuth()
@@ -17,9 +19,9 @@ export class AdminReviewController {
 
   @Get('reviews')
   @ValidateAdmin()
-  async getReviews() {
+  async getReviews(@Query() filter:GetReviewDto) {
     try {
-      const result = await this.adminReviewService.getReviews();
+      const result = await this.adminReviewService.getReviews(filter);
       return {
         status: HttpStatus.OK,
         message: 'Reviews fetched successfully',

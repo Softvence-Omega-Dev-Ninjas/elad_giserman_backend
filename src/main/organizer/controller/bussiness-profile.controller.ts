@@ -37,6 +37,7 @@ import { ProfileType } from '@prisma/client';
 import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
 import { CreateTermsAndConditionsDto } from '@/main/admin/dto/termAndCondition.dto';
 import { GetOffersDto2 } from '@/main/admin/dto/getOffer.dto';
+import { GetReviewDto } from '@/main/admin/dto/getReview.dto';
 
 @ApiTags('Business Profiles')
 @ApiBearerAuth()
@@ -342,6 +343,22 @@ export class BusinessProfileController {
         data: res,
       };
     } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
+
+  @ValidateOrganizer()
+  @Get('all-redemtions')
+  async getAllRedemtions(@Query() filter:GetReviewDto,@GetUser('sub') userId:string){
+    try{
+      const res=await this.businessProfileService.getAllRedemtions(filter,userId)
+      return{
+        status: HttpStatus.OK,
+        message: 'Redemtions fetched successfully',
+        data: res,
+      }
+    }catch(error){
       throw new InternalServerErrorException(error.message, error.status);
     }
   }
