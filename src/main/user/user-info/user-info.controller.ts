@@ -77,10 +77,10 @@ export class UserInfoController {
     }
   }
 
-  @Get('scan/:code')
-  async scanOffer(@Param('code') code: string, @GetUser('sub') userId: string) {
-    return this.userInfoService.scanOffer(code, userId);
-  }
+  // @Get('scan/:code')
+  // async scanOffer(@Param('code') code: string, @GetUser('sub') userId: string) {
+  //   return this.userInfoService.scanOffer(code, userId);
+  // }
 
   // Redeem after user confirms
   @Post('redeem/:code')

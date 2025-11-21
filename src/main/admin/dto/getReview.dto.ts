@@ -1,16 +1,8 @@
 import { IsOptional, IsString, IsInt, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { UserStatus } from '@prisma/client';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
-export class GetUserDto {
-  @ApiProperty({
-    description: 'filter by status',
-    required: false,
-    enum: UserStatus,
-  })
-  @IsEnum(UserStatus)
-  status?: UserStatus;
+export class GetReviewDto {
   @ApiPropertyOptional({
     description: 'Search term for user name',
     type: String,
