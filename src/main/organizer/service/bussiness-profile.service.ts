@@ -8,11 +8,11 @@ import {
 
 import { FileType } from '@prisma/client';
 
-import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
-import { UpdateBusinessProfileDto } from '../dto/update-bussiness-profile.dto';
-import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
-import { CreateTermsAndConditionsDto } from '@/main/admin/dto/termAndCondition.dto';
 import { GetReviewDto } from '@/main/admin/dto/getReview.dto';
+import { CreateTermsAndConditionsDto } from '@/main/admin/dto/termAndCondition.dto';
+import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
+import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
+import { UpdateBusinessProfileDto } from '../dto/update-bussiness-profile.dto';
 
 function shuffleArray<T>(array: T[]): T[] {
   return array.sort(() => Math.random() - 0.5);
@@ -278,7 +278,7 @@ export class BusinessProfileService {
         },
       },
     );
-    console.log(findOrganizationProfile, 'odfjdjfdojfdfjdjfdjf');
+    console.info(findOrganizationProfile, 'odfjdjfdojfdfjdjfdjf');
     if (!findOrganizationProfile) {
       throw new NotFoundException('No business profile found for this user.');
     }
