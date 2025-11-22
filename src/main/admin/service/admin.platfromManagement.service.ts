@@ -557,8 +557,6 @@ export class AdminPlatfromManagementService {
     return res;
   }
 
-
-
   //*get custom app details
 
   async getCustomAppDetails() {

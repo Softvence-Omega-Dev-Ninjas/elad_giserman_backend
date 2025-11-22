@@ -336,7 +336,7 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }
-  
+
   @Get('spin/spin-history')
   async getSpinHistory(@Query() dto: GetOffersDto) {
     try {
