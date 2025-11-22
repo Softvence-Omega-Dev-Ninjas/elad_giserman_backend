@@ -556,4 +556,11 @@ export class AdminPlatfromManagementService {
     });
     return res;
   }
+
+  //*get custom app details
+
+  async getCustomAppDetails() {
+    const res = await this.prisma.customApp.findFirst();
+    return res;
+  }
 }
