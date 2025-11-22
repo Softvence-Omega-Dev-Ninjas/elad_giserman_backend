@@ -31,7 +31,7 @@ async function bootstrap() {
       'http://54.79.222.232:3000',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    // credentials: true,
+    credentials: true,
   });
 
   // * add global pipes
