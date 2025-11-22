@@ -10,6 +10,7 @@ export class GetUserDto {
     enum: UserStatus,
   })
   @IsEnum(UserStatus)
+  @IsOptional()
   status?: UserStatus;
   @ApiPropertyOptional({
     description: 'Search term for user name',
