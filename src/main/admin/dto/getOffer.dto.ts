@@ -21,12 +21,11 @@ export class GetOffersDto {
 }
 
 export class GetOffersDto2 {
-
   @ApiPropertyOptional({ description: 'search offer', type: String })
   @IsOptional()
   @IsString()
-  search:string
-  
+  search: string;
+
   @ApiPropertyOptional({ description: 'Status of the offer', type: String })
   @IsOptional()
   @IsString()

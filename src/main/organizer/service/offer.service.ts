@@ -115,7 +115,7 @@ export class OfferService {
   }
   // find oranizer offer
   async findMyOffers(userId: string, filter: GetOffersDto2) {
-    const { status, page = 1, limit = 10,search } = filter;
+    const { status, page = 1, limit = 10, search } = filter;
     const skip = (page - 1) * limit;
 
     // Find the user's business profile
@@ -137,12 +137,11 @@ export class OfferService {
     if (status) {
       where.status = status;
     }
-    if(search){
+    if (search) {
       where.OR = [
         { title: { contains: search } },
         { description: { contains: search } },
       ];
-
     }
     // Fetch offers with pagination
     return this.prisma.offer.findMany({
