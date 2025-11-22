@@ -350,4 +350,19 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }
+
+  @ValidateAdmin()
+  @Get('customAppDetails')
+  async getCustomAppDetails() {
+    try {
+      const res = await this.platformManagementService.getCustomAppDetails();
+      return {
+        status: HttpStatus.OK,
+        message: 'Custom app details fetched successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
 }
