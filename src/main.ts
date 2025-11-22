@@ -27,9 +27,11 @@ async function bootstrap() {
       'http://localhost:5178',
       'http://localhost:5179',
       'http://localhost:5180',
+      'https://yamiz.org',
+      'http://54.79.222.232:3000',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
+    // credentials: true,
   });
 
   // * add global pipes
