@@ -1,5 +1,5 @@
 api.yamiz.org {
-  tls internal
+  # tls internal
 
   reverse_proxy /socket.io* server:5050
 
