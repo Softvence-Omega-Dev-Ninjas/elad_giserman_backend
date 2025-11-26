@@ -22,8 +22,6 @@ export class CategoryService {
     return categories;
   }
 
-
-  
   async updateCategory(id: string, dto: updateCategoryDto) {
     const isExistcategory = await this.prisma.client.category.findUnique({
       where: {
@@ -43,7 +41,6 @@ export class CategoryService {
     });
     return category;
   }
-
 
   //*dELETE CATEGORY
   async deleteCategory(id: string) {
