@@ -8,14 +8,6 @@
  * 🟢 You can import this file directly.
  */
 
-export const ProfileType = {
-  CAFE: 'CAFE',
-  RESTURANTES: 'RESTURANTES',
-  BAR: 'BAR',
-} as const;
-
-export type ProfileType = (typeof ProfileType)[keyof typeof ProfileType];
-
 export const FileType = {
   image: 'image',
   docs: 'docs',

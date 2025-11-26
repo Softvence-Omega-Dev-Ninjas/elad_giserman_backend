@@ -33,7 +33,7 @@ import { CreateOfferDto } from '../dto/create-offer.dto';
 import { handleRequest } from '@/common/utils/handle.request';
 import { OfferService } from '../service/offer.service';
 import { UpdateOfferDto } from '../dto/update-offer.dto';
-import { ProfileType } from '@prisma';
+
 import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
 import { CreateTermsAndConditionsDto } from '@/main/admin/dto/termAndCondition.dto';
 import { GetOffersDto2 } from '@/main/admin/dto/getOffer.dto';
@@ -97,11 +97,11 @@ export class BusinessProfileController {
         location: { type: 'string', example: 'Banani, Dhaka' },
         openingTime: { type: 'string', example: '08:00 AM' },
         closingTime: { type: 'string', example: '10:00 PM' },
-        profileType: {
+        profileTypeName: {
           type: 'string',
-          enum: Object.values(ProfileType),
-          example: ProfileType.BAR,
+          example: 'here will go category name',
         },
+        categoryId: { type: 'string', example: 'here will go category Id' },
         gallery: {
           type: 'array',
           items: { type: 'string', format: 'binary' },
@@ -162,10 +162,9 @@ export class BusinessProfileController {
             },
           ]),
         },
-        profileType: {
+        profileTypeName: {
           type: 'string',
-          enum: Object.values(ProfileType),
-          example: ProfileType.BAR,
+          example: 'BAR',
         },
         gallery: {
           type: 'array',

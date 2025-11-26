@@ -1983,6 +1983,7 @@ export const BusinessProfileScalarFieldEnum = {
   openingTime: 'openingTime',
   closingTime: 'closingTime',
   categoryId: 'categoryId',
+  profileTypeName: 'profileTypeName',
   ownerId: 'ownerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',

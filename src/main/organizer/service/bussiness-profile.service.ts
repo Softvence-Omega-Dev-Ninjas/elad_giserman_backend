@@ -59,12 +59,14 @@ export class BusinessProfileService {
     }
 
     // create business profile in Prisma
-    const { profileType, categoryId, ...restDto } = dto;
+    const { categoryId, ...restDto } = dto;
+    console.log(dto);
     return this.prisma.client.businessProfile.create({
       data: {
         ...restDto,
         ownerId: id,
         categoryId: dto.categoryId,
+        profileTypeName: dto.profileTypeName,
         gallery:
           uploadedFiles.length > 0
             ? {

@@ -232,7 +232,7 @@ export type CategoryCreateInput = {
   name: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  profile?: Prisma.BusinessProfileCreateNestedManyWithoutProfileTypeInput;
+  profile?: Prisma.BusinessProfileCreateNestedManyWithoutCategoryInput;
 };
 
 export type CategoryUncheckedCreateInput = {
@@ -240,7 +240,7 @@ export type CategoryUncheckedCreateInput = {
   name: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  profile?: Prisma.BusinessProfileUncheckedCreateNestedManyWithoutProfileTypeInput;
+  profile?: Prisma.BusinessProfileUncheckedCreateNestedManyWithoutCategoryInput;
 };
 
 export type CategoryUpdateInput = {
@@ -248,7 +248,7 @@ export type CategoryUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  profile?: Prisma.BusinessProfileUpdateManyWithoutProfileTypeNestedInput;
+  profile?: Prisma.BusinessProfileUpdateManyWithoutCategoryNestedInput;
 };
 
 export type CategoryUncheckedUpdateInput = {
@@ -256,7 +256,7 @@ export type CategoryUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  profile?: Prisma.BusinessProfileUncheckedUpdateManyWithoutProfileTypeNestedInput;
+  profile?: Prisma.BusinessProfileUncheckedUpdateManyWithoutCategoryNestedInput;
 };
 
 export type CategoryCreateManyInput = {

@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ProfileType } from '@prisma';
 
 export class CreateBusinessProfileDto {
   @ApiProperty({ example: 'The Coffee Spot' })
@@ -31,14 +30,17 @@ export class CreateBusinessProfileDto {
   @IsString()
   closingTime: string;
 
-  @ApiProperty({
-    description: 'chose profile type',
-  })
-  @IsString()
-  @IsNotEmpty()
-  profileType: ProfileType;
   @ApiProperty({ example: 'categoryId123' })
   @IsString()
   @IsNotEmpty()
   categoryId: string;
+
+  @ApiProperty({
+    type: 'string',
+    example: 'here will go profile type name',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  profileTypeName?: string;
 }
