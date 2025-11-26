@@ -55,6 +55,7 @@
     "dotenv": "^17.2.3",
     "firebase-admin": "^13.6.0",
     "he": "^1.2.0",
+    "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",
     "luxon": "^3.7.2",
     "mime-types": "^3.0.2",
