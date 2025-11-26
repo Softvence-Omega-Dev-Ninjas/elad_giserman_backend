@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
 
-
 export class CreateBusinessProfileDto {
   @ApiProperty({ example: 'The Coffee Spot' })
   @IsString()
@@ -36,8 +35,12 @@ export class CreateBusinessProfileDto {
   @IsNotEmpty()
   categoryId: string;
 
-  @ApiProperty({type:'string',example:'here will go profile type name',required:false})
+  @ApiProperty({
+    type: 'string',
+    example: 'here will go profile type name',
+    required: false,
+  })
   @IsOptional()
   @IsString()
-  profileTypeName?:string
+  profileTypeName?: string;
 }

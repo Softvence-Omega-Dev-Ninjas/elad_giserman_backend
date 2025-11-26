@@ -97,8 +97,11 @@ export class BusinessProfileController {
         location: { type: 'string', example: 'Banani, Dhaka' },
         openingTime: { type: 'string', example: '08:00 AM' },
         closingTime: { type: 'string', example: '10:00 PM' },
-        profileTypeName: {type: 'string', example:"here will go category name"},
-        categoryId:{type:'string',example:"here will go category Id"},
+        profileTypeName: {
+          type: 'string',
+          example: 'here will go category name',
+        },
+        categoryId: { type: 'string', example: 'here will go category Id' },
         gallery: {
           type: 'array',
           items: { type: 'string', format: 'binary' },
@@ -160,7 +163,9 @@ export class BusinessProfileController {
           ]),
         },
         profileTypeName: {
-          type: 'string',example:"BAR"},
+          type: 'string',
+          example: 'BAR',
+        },
         gallery: {
           type: 'array',
           items: { type: 'string', format: 'binary' },

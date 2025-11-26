@@ -60,7 +60,7 @@ export class BusinessProfileService {
 
     // create business profile in Prisma
     const { categoryId, ...restDto } = dto;
-    console.log(dto)
+    console.log(dto);
     return this.prisma.client.businessProfile.create({
       data: {
         ...restDto,
