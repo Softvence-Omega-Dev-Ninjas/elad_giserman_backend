@@ -17,7 +17,8 @@ model BusinessProfile {
   // Offers
   offers      Offer[]
   categoryId  String?
-  profileType Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  profileType String?
   // Owner / organizer
   ownerId     String       @unique // unique makes one to one relation
   owner       User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
