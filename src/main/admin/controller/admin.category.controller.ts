@@ -12,8 +12,10 @@ import {
 } from '@nestjs/common';
 import { CategoryService } from '../service/admin.category.service';
 import { CategoryDto, updateCategoryDto } from '../dto/createCategory.dto';
-import { dot } from 'node:test/reporters';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Admin-category')
+@ApiBearerAuth()
 @Controller('category')
 export class CategoryContoller {
   constructor(private readonly categoryService: CategoryService) {}
@@ -47,6 +49,7 @@ export class CategoryContoller {
     }
   }
 
+  @ValidateAdmin()
   @Patch('update/:id')
   async updateCategory(
     @Param('id') id: string,
@@ -64,6 +67,7 @@ export class CategoryContoller {
     }
   }
 
+  @ValidateAdmin()
   @Delete('delete/:id')
   async deleteCategory(@Param('id') id: string) {
     try {
