@@ -19,7 +19,7 @@ export class AuthOtpService {
   @HandleError('Failed to resend OTP')
   async resendOtp(email: string): Promise<TResponse<any>> {
     // 1. Find user by email
-    const user = await this.prisma.user.findFirst({
+    const user = await this.prisma.client.user.findFirst({
       where: { email },
     });
 
@@ -40,7 +40,7 @@ export class AuthOtpService {
     const hashedOtp = await this.utils.hash(otp.toString());
 
     // 4. Save hashed OTP
-    await this.prisma.user.update({
+    await this.prisma.client.user.update({
       where: { id: user.id },
       data: { otp: hashedOtp, otpExpiresAt: expiryTime },
     });
@@ -57,7 +57,7 @@ export class AuthOtpService {
       );
     } catch (error) {
       console.error(error);
-      await this.prisma.user.update({
+      await this.prisma.client.user.update({
         where: { id: user.id },
         data: { otp: null, otpExpiresAt: null, otpType: null },
       });
@@ -75,7 +75,7 @@ export class AuthOtpService {
     const { email, otp } = dto;
 
     // 1. Find user by email
-    const user = await this.prisma.user.findFirst({
+    const user = await this.prisma.client.user.findFirst({
       where: { email },
     });
 
@@ -94,7 +94,7 @@ export class AuthOtpService {
     if (!isCorrectOtp) throw new AppError(400, 'Invalid OTP');
 
     // 3. Mark user verified (if not already)
-    const updatedUser = await this.prisma.user.update({
+    const updatedUser = await this.prisma.client.user.update({
       where: { id: user.id },
       data: {
         isVerified: true,

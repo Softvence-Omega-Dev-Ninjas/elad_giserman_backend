@@ -1,9 +1,9 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
+    HttpException,
+    HttpStatus,
+    Injectable,
+    NotFoundException,
 } from '@nestjs/common';
 import { GetReviewDto } from '../dto/getReview.dto';
 
@@ -23,7 +23,7 @@ export class AdminReviewService {
       ];
     }
     try {
-      const result = await this.prisma.review.findMany({
+      const result = await this.prisma.client.review.findMany({
         where,
         skip,
         take: limit,
@@ -51,7 +51,7 @@ export class AdminReviewService {
     if (!id) {
       throw new NotFoundException('user id is required');
     }
-    const isExistReivew = await this.prisma.review.findUnique({
+    const isExistReivew = await this.prisma.client.review.findUnique({
       where: {
         id: id,
       },
@@ -59,7 +59,7 @@ export class AdminReviewService {
     if (!isExistReivew) {
       throw new HttpException('Review not found', HttpStatus.NOT_FOUND);
     }
-    await this.prisma.review.delete({
+    await this.prisma.client.review.delete({
       where: { id },
     });
     return {

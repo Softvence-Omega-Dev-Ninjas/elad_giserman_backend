@@ -5,7 +5,7 @@ import { AuthMailService } from '@/lib/mail/services/auth-mail.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { UtilsService } from '@/lib/utils/utils.service';
 import { Injectable } from '@nestjs/common';
-import { OtpType, UserRole } from '@prisma/client';
+import { OtpType, UserRole } from '@prisma';
 import { RegisterDto } from '../dto/register.dto';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class AuthRegisterService {
     const { email, password, username } = dto;
 
     // Check if user email already exists
-    const existingUser = await this.prisma.user.findUnique({
+    const existingUser = await this.prisma.client.user.findUnique({
       where: { email },
     });
     if (existingUser) {
@@ -29,7 +29,7 @@ export class AuthRegisterService {
     }
 
     // Check if username already exists
-    const existingUsernameUser = await this.prisma.user.findUnique({
+    const existingUsernameUser = await this.prisma.client.user.findUnique({
       where: { username },
     });
     if (existingUsernameUser) {
@@ -46,7 +46,7 @@ export class AuthRegisterService {
     trialEndsAt.setMonth(trialEndsAt.getMonth() + 3);
 
     // Create new user
-    const newUser = await this.prisma.user.create({
+    const newUser = await this.prisma.client.user.create({
       data: {
         email,
         username,
@@ -84,7 +84,7 @@ export class AuthRegisterService {
     const { email, password, username } = dto;
 
     // check if user email already exists
-    const existingUser = await this.prisma.user.findUnique({
+    const existingUser = await this.prisma.client.user.findUnique({
       where: { email },
     });
     if (existingUser) {
@@ -92,7 +92,7 @@ export class AuthRegisterService {
     }
 
     // check if username already exists
-    const existingUsernameUser = await this.prisma.user.findUnique({
+    const existingUsernameUser = await this.prisma.client.user.findUnique({
       where: { username },
     });
     if (existingUsernameUser) {
@@ -104,7 +104,7 @@ export class AuthRegisterService {
     const hashedOtp = await this.utils.hash(otp.toString());
 
     // create new user with ORGANIZER role
-    const newUser = await this.prisma.user.create({
+    const newUser = await this.prisma.client.user.create({
       data: {
         email,
         username,

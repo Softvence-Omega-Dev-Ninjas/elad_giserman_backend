@@ -1,5 +1,5 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { BillingPeriod } from '@prisma/client';
+import { BillingPeriod } from '@prisma';
 import { Transform, Type } from 'class-transformer';
 import {
   IsArray,

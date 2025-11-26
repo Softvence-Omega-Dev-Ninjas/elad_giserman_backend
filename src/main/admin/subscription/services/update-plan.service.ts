@@ -4,7 +4,7 @@ import { successResponse, TResponse } from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { StripeService } from '@/lib/stripe/stripe.service';
 import { Injectable, Logger } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@prisma';
 import { UpdateSubscriptionPlanDto } from '../dto/create-plan.dto';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class UpdatePlanService {
   ): Promise<TResponse<any>> {
     // Step 1: Fetch existing plan
     const existingPlan =
-      await this.prismaService.subscriptionPlan.findUniqueOrThrow({
+      await this.prismaService.client.subscriptionPlan.findUniqueOrThrow({
         where: { id: planId },
       });
 
@@ -51,7 +51,7 @@ export class UpdatePlanService {
     if (isBillingPeriodChanged) {
       // * if billing period changed and there is already active plan with that period throw error
       const existingActivePlan =
-        await this.prismaService.subscriptionPlan.findFirst({
+        await this.prismaService.client.subscriptionPlan.findFirst({
           where: {
             billingPeriod: dto.billingPeriod,
             isActive: true,
@@ -113,7 +113,7 @@ export class UpdatePlanService {
     }
 
     // Step 5: Update DB
-    const updatedPlan = await this.prismaService.subscriptionPlan.update({
+    const updatedPlan = await this.prismaService.client.subscriptionPlan.update({
       where: { id: planId },
       data: updatedData,
     });

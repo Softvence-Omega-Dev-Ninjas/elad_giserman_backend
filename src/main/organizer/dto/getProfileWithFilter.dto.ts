@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ProfileType } from '@prisma/client';
+import { ProfileType } from '@prisma';
 import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class ProfileFilter {

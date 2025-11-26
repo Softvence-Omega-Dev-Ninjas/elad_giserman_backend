@@ -1,16 +1,16 @@
+import { FirebaseService } from '@/lib/firebase/firebase.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
+import { S3Service } from '@/lib/s3/s3.service';
+import { GetOffersDto2 } from '@/main/admin/dto/getOffer.dto';
 import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
+    BadRequestException,
+    Injectable,
+    NotFoundException,
 } from '@nestjs/common';
+import { Readable } from 'stream';
 import { CreateOfferDto } from '../dto/create-offer.dto';
 import { UpdateOfferDto } from '../dto/update-offer.dto';
 import { generateQRCodeBuffer } from '../helps/qrCode';
-import { S3Service } from '@/lib/s3/s3.service';
-import { Readable } from 'stream';
-import { FirebaseService } from '@/lib/firebase/firebase.service';
-import { GetOffersDto2 } from '@/main/admin/dto/getOffer.dto';
 
 @Injectable()
 export class OfferService {
@@ -21,13 +21,13 @@ export class OfferService {
   ) {}
   // ** Create offer by organizer
   async createOffer(userId: string, dto: CreateOfferDto) {
-    const business = await this.prisma.businessProfile.findUnique({
+    const business = await this.prisma.client.businessProfile.findUnique({
       where: { ownerId: userId },
     });
 
     if (!business) throw new NotFoundException('No business profile found');
 
-    const offer = await this.prisma.offer.create({
+    const offer = await this.prisma.client.offer.create({
       data: {
         title: dto.title,
         description: dto.description,
@@ -56,13 +56,13 @@ export class OfferService {
 
     const uploaded = await this.s3Service.uploadFile(file);
 
-    const updatedOffer = await this.prisma.offer.update({
+    const updatedOffer = await this.prisma.client.offer.update({
       where: { id: offer.id },
       data: { qrCodeUrl: uploaded?.url ?? null },
     });
 
     //* get all users who is primum  and get thire fcm token for firebase notifiction
-    const allPremiumUser = await this.prisma.user.findMany({
+    const allPremiumUser = await this.prisma.client.user.findMany({
       where: {
         subscriptionStatus: 'ACTIVE',
       },
@@ -78,7 +78,7 @@ export class OfferService {
     }
     await this.firebase.sendPushNotification(fcmArray, dto.title, dto.code);
 
-    const notification = await this.prisma.notification.create({
+    const notification = await this.prisma.client.notification.create({
       data: {
         type: 'OFFER',
         title: dto.title,
@@ -91,7 +91,7 @@ export class OfferService {
     });
 
     // * Create UserNotification entries
-    await this.prisma.userNotification.createMany({
+    await this.prisma.client.userNotification.createMany({
       data: allPremiumUser.map((u) => ({
         userId: u.id,
         notificationId: notification.id,
@@ -103,12 +103,12 @@ export class OfferService {
 
   //** find arrpove offer only...
   async findApprovedOffers(userId: string) {
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    const user = await this.prisma.client.user.findUnique({ where: { id: userId } });
     if (!user || user.role !== 'USER') {
       throw new BadRequestException('Only regular users can get offers');
     }
 
-    return this.prisma.offer.findMany({
+    return this.prisma.client.offer.findMany({
       where: { status: 'APPROVED' },
       include: { business: true },
     });
@@ -119,7 +119,7 @@ export class OfferService {
     const skip = (page - 1) * limit;
 
     // Find the user's business profile
-    const business = await this.prisma.businessProfile.findUnique({
+    const business = await this.prisma.client.businessProfile.findUnique({
       where: { ownerId: userId },
     });
 
@@ -139,7 +139,7 @@ export class OfferService {
     }
 
     // Fetch offers with pagination
-    return this.prisma.offer.findMany({
+    return this.prisma.client.offer.findMany({
       skip,
       take: limit,
       where,
@@ -152,7 +152,7 @@ export class OfferService {
     const skip = (page - 1) * limit;
 
     // Find the user's business profile
-    const business = await this.prisma.businessProfile.findUnique({
+    const business = await this.prisma.client.businessProfile.findUnique({
       where: { ownerId: userId },
     });
 
@@ -172,7 +172,7 @@ export class OfferService {
     }
 
     // Fetch offers with pagination
-    return this.prisma.review.findMany({
+    return this.prisma.client.review.findMany({
       skip,
       take: limit,
       where,
@@ -189,11 +189,11 @@ export class OfferService {
   }
   //** find one offer
   async findOne(userId: string, id: string) {
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    const user = await this.prisma.client.user.findUnique({ where: { id: userId } });
     if (!user || user.role !== 'USER') {
       throw new BadRequestException('Only regular users can get offers');
     }
-    const offer = await this.prisma.offer.findUnique({
+    const offer = await this.prisma.client.offer.findUnique({
       where: { id },
       include: { business: true },
     });
@@ -203,7 +203,7 @@ export class OfferService {
   // update offer....
   async updateOffer(userId: string, offerId: string, dto: UpdateOfferDto) {
     // find the business profile of the logged-in user
-    const business = await this.prisma.businessProfile.findUnique({
+    const business = await this.prisma.client.businessProfile.findUnique({
       where: { ownerId: userId },
     });
     if (!business) {
@@ -211,7 +211,7 @@ export class OfferService {
         `You don't have a business profile yet, so you cannot update offers`,
       );
     }
-    const offer = await this.prisma.offer.findFirst({
+    const offer = await this.prisma.client.offer.findFirst({
       where: {
         id: offerId,
         businessId: business.id,
@@ -219,14 +219,14 @@ export class OfferService {
     });
     if (!offer) throw new NotFoundException('Offer not found or not yours');
 
-    return this.prisma.offer.update({
+    return this.prisma.client.offer.update({
       where: { id: offerId },
       data: dto,
     });
   }
   //* delete offer
   async deleteOffer(userId: string, offerId: string) {
-    const business = await this.prisma.businessProfile.findUnique({
+    const business = await this.prisma.client.businessProfile.findUnique({
       where: { ownerId: userId },
     });
     if (!business) {
@@ -234,7 +234,7 @@ export class OfferService {
         `You don't have a business profile yet, so you cannot delete offers`,
       );
     }
-    const offer = await this.prisma.offer.findFirst({
+    const offer = await this.prisma.client.offer.findFirst({
       where: {
         id: offerId,
         businessId: business.id,
@@ -246,7 +246,7 @@ export class OfferService {
     }
 
     //* delete the offer
-    await this.prisma.offer.delete({
+    await this.prisma.client.offer.delete({
       where: { id: offerId },
     });
 

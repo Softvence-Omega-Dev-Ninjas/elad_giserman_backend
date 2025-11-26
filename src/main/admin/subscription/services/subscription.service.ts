@@ -1,15 +1,15 @@
 import { AppError } from '@/common/error/handle-error.app';
 import { HandleError } from '@/common/error/handle-error.decorator';
 import {
-  successPaginatedResponse,
-  successResponse,
-  TPaginatedResponse,
-  TResponse,
+    successPaginatedResponse,
+    successResponse,
+    TPaginatedResponse,
+    TResponse,
 } from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { StripeService } from '@/lib/stripe/stripe.service';
 import { Injectable, Logger } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@prisma';
 import { CreateSubscriptionPlanDto } from '../dto/create-plan.dto';
 import { GetAllPlansDto } from '../dto/plan.dto';
 
@@ -26,7 +26,7 @@ export class SubscriptionService {
   async createNewPlan(dto: CreateSubscriptionPlanDto): Promise<TResponse<any>> {
     // 1. Check if an active plan already exists for this billing period
     const existingActivePlan =
-      await this.prismaService.subscriptionPlan.findFirst({
+      await this.prismaService.client.subscriptionPlan.findFirst({
         where: {
           billingPeriod: dto.billingPeriod,
           isActive: true,
@@ -84,7 +84,7 @@ export class SubscriptionService {
       });
 
     // 4. Create Plan in Database
-    const plan = await this.prismaService.subscriptionPlan.create({
+    const plan = await this.prismaService.client.subscriptionPlan.create({
       data: {
         title: dto.title,
         description: dto.description,
@@ -125,8 +125,8 @@ export class SubscriptionService {
       };
     }
 
-    const [plans, total] = await this.prismaService.$transaction([
-      this.prismaService.subscriptionPlan.findMany({
+    const [plans, total] = await this.prismaService.client.$transaction([
+      this.prismaService.client.subscriptionPlan.findMany({
         where,
         skip,
         take: limit,
@@ -135,7 +135,7 @@ export class SubscriptionService {
           { createdAt: Prisma.SortOrder.desc },
         ],
       }),
-      this.prismaService.subscriptionPlan.count({
+      this.prismaService.client.subscriptionPlan.count({
         where,
       }),
     ]);
@@ -153,7 +153,7 @@ export class SubscriptionService {
 
   @HandleError('Failed to fetch plan', 'Plan')
   async getASinglePlan(planId: string): Promise<TResponse<any>> {
-    const plan = await this.prismaService.subscriptionPlan.findUniqueOrThrow({
+    const plan = await this.prismaService.client.subscriptionPlan.findUniqueOrThrow({
       where: { id: planId, isActive: true }, // Only if it is active
       include: {
         userSubscriptions: {
@@ -183,7 +183,7 @@ export class SubscriptionService {
   @HandleError('Failed to delete plan', 'Plan')
   async deletePlan(planId: string): Promise<TResponse<any>> {
     const existingPlan =
-      await this.prismaService.subscriptionPlan.findUniqueOrThrow({
+      await this.prismaService.client.subscriptionPlan.findUniqueOrThrow({
         where: { id: planId },
       });
 
@@ -191,7 +191,7 @@ export class SubscriptionService {
     await this.stripeService.deleteProduct(existingPlan.stripeProductId);
 
     // Mark plan as inactive in DB
-    await this.prismaService.subscriptionPlan.update({
+    await this.prismaService.client.subscriptionPlan.update({
       where: { id: planId },
       data: { isActive: false },
     });
@@ -201,7 +201,7 @@ export class SubscriptionService {
 
   //*update plan
   async upatePlan(id: string) {
-    const existingPlan = await this.prismaService.subscriptionPlan.findFirst({
+    const existingPlan = await this.prismaService.client.subscriptionPlan.findFirst({
       where: {
         id: id,
       },
@@ -209,7 +209,7 @@ export class SubscriptionService {
     if (!existingPlan) {
       throw new AppError(404, 'Plan not found');
     }
-    const res = await this.prismaService.subscriptionPlan.update({
+    const res = await this.prismaService.client.subscriptionPlan.update({
       where: {
         id: id,
       },

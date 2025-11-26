@@ -22,7 +22,7 @@ export class AuthPasswordService {
     userId: string,
     dto: ChangePasswordDto,
   ): Promise<TResponse<any>> {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prisma.client.user.findUnique({
       where: { id: userId },
       select: { password: true },
     });
@@ -34,7 +34,7 @@ export class AuthPasswordService {
     // If user registered via Social login and has no password set
     if (!user.password) {
       const hashedPassword = await this.utils.hash(dto.newPassword);
-      await this.prisma.user.update({
+      await this.prisma.client.user.update({
         where: { id: userId },
         data: { password: hashedPassword },
       });
@@ -55,7 +55,7 @@ export class AuthPasswordService {
     }
 
     const hashedPassword = await this.utils.hash(dto.newPassword);
-    await this.prisma.user.update({
+    await this.prisma.client.user.update({
       where: { id: userId },
       data: { password: hashedPassword },
     });
@@ -65,7 +65,7 @@ export class AuthPasswordService {
 
   @HandleError('Failed to send password reset email')
   async forgotPassword(email: string): Promise<TResponse<any>> {
-    const user = await this.prisma.user.findUnique({ where: { email } });
+    const user = await this.prisma.client.user.findUnique({ where: { email } });
     if (!user) {
       throw new AppError(404, 'User not found');
     }
@@ -74,7 +74,7 @@ export class AuthPasswordService {
 
     const hashedOtp = await this.utils.hash(otp.toString());
 
-    await this.prisma.user.update({
+    await this.prisma.client.user.update({
       where: { email },
       data: {
         otp: hashedOtp,
@@ -92,7 +92,7 @@ export class AuthPasswordService {
   async resetPassword(dto: ResetPasswordDto): Promise<TResponse<any>> {
     const { otp, email, newPassword } = dto;
 
-    const user = await this.prisma.user.findUnique({ where: { email } });
+    const user = await this.prisma.client.user.findUnique({ where: { email } });
     if (!user) {
       throw new AppError(404, 'User not found');
     }
@@ -120,7 +120,7 @@ export class AuthPasswordService {
     const hashedPassword = await this.utils.hash(newPassword);
 
     // update password and invalidate reset token
-    await this.prisma.user.update({
+    await this.prisma.client.user.update({
       where: { email },
       data: {
         password: hashedPassword,

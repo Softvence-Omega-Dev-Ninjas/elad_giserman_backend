@@ -9,7 +9,7 @@ export class AdminOfferService {
 
   //*get all pending offers
   async getPendingOffers() {
-    return this.prisma.offer.findMany({
+    return this.prisma.client.offer.findMany({
       where: { status: 'PENDING' },
       include: { business: true },
     });
@@ -17,13 +17,13 @@ export class AdminOfferService {
 
   // approve or reject an offer
   async updateOfferStatus(offerId: string, dto: AdminUpdateOfferDto) {
-    const offer = await this.prisma.offer.findUnique({
+    const offer = await this.prisma.client.offer.findUnique({
       where: { id: offerId },
     });
     if (!offer)
       throw new NotFoundException(`Offer with ID ${offerId} not found`);
 
-    return this.prisma.offer.update({
+    return this.prisma.client.offer.update({
       where: { id: offerId },
       data: { status: dto.status },
     });
@@ -36,7 +36,7 @@ export class AdminOfferService {
     if (status) {
       where.status = status;
     }
-    return this.prisma.offer.findMany({
+    return this.prisma.client.offer.findMany({
       skip: skip,
       take: limit,
       where,

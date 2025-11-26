@@ -6,7 +6,7 @@ import { AuthMailService } from '@/lib/mail/services/auth-mail.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { UtilsService } from '@/lib/utils/utils.service';
 import { Injectable } from '@nestjs/common';
-import { OtpType } from '@prisma/client';
+import { OtpType } from '@prisma';
 import { LoginDto } from '../dto/login.dto';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class AuthLoginService {
   async login(dto: LoginDto): Promise<TResponse<any>> {
     const { email, password } = dto;
 
-    const user = await this.prisma.user.findUnique({ where: { email } });
+    const user = await this.prisma.client.user.findUnique({ where: { email } });
     if (!user) throw new AppError(400, 'User not found');
     if (!user.password)
       throw new AppError(400, 'Please login using your social account');
@@ -39,7 +39,7 @@ export class AuthLoginService {
     }
 
     // 2. Regular login
-    const updatedUser = await this.prisma.user.update({
+    const updatedUser = await this.prisma.client.user.update({
       where: { email },
       data: {
         isLoggedIn: true,
@@ -72,7 +72,7 @@ export class AuthLoginService {
     const { otp, expiryTime } = this.utils.generateOtpAndExpiry();
     const hashedOtp = await this.utils.hash(otp.toString());
 
-    await this.prisma.user.update({
+    await this.prisma.client.user.update({
       where: { email },
       data: { otp: hashedOtp, otpExpiresAt: expiryTime, otpType: type },
     });
