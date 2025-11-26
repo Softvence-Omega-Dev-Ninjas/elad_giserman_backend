@@ -54,7 +54,7 @@ services:
     volumes:
       - files-data:/app/uploads
     healthcheck:
-      test: ['CMD', 'curl', '-f', 'http://api.yamiz.org/api/health']
+      test: ['CMD', 'curl', '-f', 'http://0.0.0.0:5050/api/health']
       interval: 30s
       timeout: 10s
       retries: 5
