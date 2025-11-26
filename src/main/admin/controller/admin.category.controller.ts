@@ -20,14 +20,14 @@ export class CategoryContoller {
 
   @ValidateAdmin()
   @Post('create')
-  async createCategory(@Body() dto:CategoryDto) {
+  async createCategory(@Body() dto: CategoryDto) {
     try {
       const category = await this.categoryService.createCategory(dto);
-      return{
-        status:HttpStatus.OK,
-        message:'Category created successfully',
-        data:category
-      }
+      return {
+        status: HttpStatus.OK,
+        message: 'Category created successfully',
+        data: category,
+      };
     } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
     }
@@ -48,9 +48,12 @@ export class CategoryContoller {
   }
 
   @Patch('update/:id')
-  async updateCategory(@Param('id') id:string,@Body() dto:updateCategoryDto) {
+  async updateCategory(
+    @Param('id') id: string,
+    @Body() dto: updateCategoryDto,
+  ) {
     try {
-      const category = await this.categoryService.updateCategory(id,dto);
+      const category = await this.categoryService.updateCategory(id, dto);
       return {
         status: HttpStatus.OK,
         message: 'Category updated successfully',
@@ -62,14 +65,14 @@ export class CategoryContoller {
   }
 
   @Delete('delete/:id')
-  async deleteCategory(@Param('id') id:string) {
+  async deleteCategory(@Param('id') id: string) {
     try {
       const category = await this.categoryService.deleteCategory(id);
-      return{
-        status:HttpStatus.OK,
-        message:'Category deleted successfully',
-        data:category
-      }
+      return {
+        status: HttpStatus.OK,
+        message: 'Category deleted successfully',
+        data: category,
+      };
     } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
     }

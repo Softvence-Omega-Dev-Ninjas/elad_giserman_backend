@@ -23,7 +23,7 @@ export class CategoryService {
   }
 
 
-  //*updated category
+  
   async updateCategory(id: string, dto: updateCategoryDto) {
     const isExistcategory = await this.prisma.client.category.findUnique({
       where: {
