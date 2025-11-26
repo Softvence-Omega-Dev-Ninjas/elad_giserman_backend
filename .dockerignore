@@ -13,4 +13,3 @@ logs
 .pnpm-store
 Dockerfile
 docker-compose.yaml
-generated

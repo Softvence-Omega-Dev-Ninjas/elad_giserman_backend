@@ -1,4 +1,6 @@
 api.yamiz.org {
+  # tls internal
+
   reverse_proxy /socket.io* server:5050
 
   reverse_proxy server:5050 {
@@ -6,14 +8,5 @@ api.yamiz.org {
     header_up X-Forwarded-For {remote}
     header_up X-Forwarded-Proto {scheme}
     header_up Host {host}
-  }
-}
-
-yamiz.org {
-  root * /var/www/dist
-  try_files {path} /index.html
-  file_server
-  header {
-    Cache-Control "public, max-age=31536000, immutable"
   }
 }

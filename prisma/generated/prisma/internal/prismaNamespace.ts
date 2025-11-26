@@ -93,12 +93,12 @@ export type PrismaVersion = {
 };
 
 /**
- * Prisma Client JS version: 7.0.0
- * Query Engine version: 0c19ccc313cf9911a90d99d2ac2eb0280c76c513
+ * Prisma Client JS version: 7.0.1
+ * Query Engine version: f09f2815f091dbba658cdcd2264306d88bb5bda6
  */
 export const prismaVersion: PrismaVersion = {
-  client: '7.0.0',
-  engine: '0c19ccc313cf9911a90d99d2ac2eb0280c76c513',
+  client: '7.0.1',
+  engine: 'f09f2815f091dbba658cdcd2264306d88bb5bda6',
 };
 
 /**
@@ -129,21 +129,21 @@ export const NullTypes = {
  *
  * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
  */
-export const DbNull: typeof runtime.DbNull = runtime.DbNull;
+export const DbNull = runtime.DbNull;
 
 /**
  * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
  *
  * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
  */
-export const JsonNull: typeof runtime.JsonNull = runtime.JsonNull;
+export const JsonNull = runtime.JsonNull;
 
 /**
  * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
  *
  * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
  */
-export const AnyNull: typeof runtime.AnyNull = runtime.AnyNull;
+export const AnyNull = runtime.AnyNull;
 
 type SelectAndInclude = {
   select: any;
@@ -2282,7 +2282,7 @@ export const SortOrder = {
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
 
-export const JsonNullValueInput: Record<string, typeof JsonNull> = {
+export const JsonNullValueInput = {
   JsonNull: JsonNull,
 } as const;
 
@@ -2303,11 +2303,7 @@ export const NullsOrder = {
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder];
 
-export const JsonNullValueFilter: {
-  DbNull: typeof DbNull;
-  JsonNull: typeof JsonNull;
-  AnyNull: typeof AnyNull;
-} = {
+export const JsonNullValueFilter = {
   DbNull: DbNull,
   JsonNull: JsonNull,
   AnyNull: AnyNull,
