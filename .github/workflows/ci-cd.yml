@@ -29,14 +29,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # - name: Format Check
-      #   run: pnpm format
+      - name: Format Check
+        run: pnpm format
 
       - name: Build Project
         run: pnpm build
-
-      - name: Generate Prisma Client
-        run: pnpm db:generate
 
   build-and-push:
     name: Build and Push Docker Image
