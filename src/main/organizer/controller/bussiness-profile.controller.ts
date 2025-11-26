@@ -33,7 +33,7 @@ import { CreateOfferDto } from '../dto/create-offer.dto';
 import { handleRequest } from '@/common/utils/handle.request';
 import { OfferService } from '../service/offer.service';
 import { UpdateOfferDto } from '../dto/update-offer.dto';
-import { ProfileType } from '@prisma/client';
+import { ProfileType } from '@prisma';
 import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
 import { CreateTermsAndConditionsDto } from '@/main/admin/dto/termAndCondition.dto';
 import { GetOffersDto2 } from '@/main/admin/dto/getOffer.dto';

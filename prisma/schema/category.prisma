@@ -1,0 +1,7 @@
+model Category {
+    id        String      @id @default(uuid())
+    name      String
+    createdAt DateTime @default(now())
+    profile BusinessProfile[]
+    updatedAt DateTime @updatedAt
+}

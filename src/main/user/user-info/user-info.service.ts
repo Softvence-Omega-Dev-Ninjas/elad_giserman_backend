@@ -6,8 +6,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { UpdateUserInfoDto } from './dto/update-user-info.dto';
 import { SpinHistoryDto } from './dto/createSpinHistory.dto';
+import { UpdateUserInfoDto } from './dto/update-user-info.dto';
 
 @Injectable()
 export class UserInfoService {
@@ -18,7 +18,7 @@ export class UserInfoService {
 
   // find my profile
   async finMyProfile(userId: string) {
-    const result = await this.prisma.user.findFirst({
+    const result = await this.prisma.client.user.findFirst({
       where: {
         id: userId,
       },
@@ -49,7 +49,7 @@ export class UserInfoService {
     if (profileImageUrl) {
       data.avatarUrl = profileImageUrl;
     }
-    const res = await this.prisma.user.update({
+    const res = await this.prisma.client.user.update({
       where: {
         id: id,
       },
@@ -61,7 +61,7 @@ export class UserInfoService {
 
   // delete my account
   async deleteMyAccount(id: string) {
-    const res = await this.prisma.user.delete({
+    const res = await this.prisma.client.user.delete({
       where: {
         id: id,
       },
@@ -72,7 +72,7 @@ export class UserInfoService {
   // scan qr code for get offer-------
   // user will go to restaurate and scan the qr code and get the offer
   async scanOffer(code: string, userId: string) {
-    const offer = await this.prisma.offer.findFirst({
+    const offer = await this.prisma.client.offer.findFirst({
       where: { code },
       include: { business: true },
     });
@@ -81,17 +81,20 @@ export class UserInfoService {
     if (offer.expiredsAt && offer.expiredsAt < new Date())
       throw new BadRequestException('Offer expired');
 
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    const usersSubscription = await this.prisma.userSubscription.findFirst({
-      where: {
-        userId: userId,
-      },
+    const user = await this.prisma.client.user.findUnique({
+      where: { id: userId },
     });
+    const usersSubscription =
+      await this.prisma.client.userSubscription.findFirst({
+        where: {
+          userId: userId,
+        },
+      });
     // TODO: Here should be just acces primieum user after the payment complete It will update to active --> primium
     if (!user || usersSubscription?.status == 'ACTIVE')
       throw new ForbiddenException('Only premium users can redeem');
 
-    const redeemed = await this.prisma.reedemaOffer.findFirst({
+    const redeemed = await this.prisma.client.reedemaOffer.findFirst({
       where: { offerId: offer.id, userId },
     });
 
@@ -115,17 +118,17 @@ export class UserInfoService {
 
   // confimation Redeem offer  and store the data to database
   async redeemOffer(code: string, userId: string) {
-    const offer = await this.prisma.offer.findFirst({
+    const offer = await this.prisma.client.offer.findFirst({
       where: { code },
     });
     if (!offer) throw new NotFoundException('Offer not found');
 
-    const redeemed = await this.prisma.reedemaOffer.findFirst({
+    const redeemed = await this.prisma.client.reedemaOffer.findFirst({
       where: { offerId: offer.id, userId },
     });
     if (redeemed) throw new BadRequestException('Already redeemed');
 
-    const log = await this.prisma.reedemaOffer.create({
+    const log = await this.prisma.client.reedemaOffer.create({
       data: {
         offerId: offer.id,
         userId,
@@ -145,7 +148,7 @@ export class UserInfoService {
   }
 
   async getUserRedeemedOffers(userId: string) {
-    return this.prisma.reedemaOffer.findMany({
+    return this.prisma.client.reedemaOffer.findMany({
       where: { userId },
       include: { offer: true, business: true },
       orderBy: { createdAt: 'desc' },
@@ -164,7 +167,7 @@ export class UserInfoService {
     const yesterdayEnd = new Date(todayStart);
 
     // * Today notifications
-    const today = await this.prisma.userNotification.findMany({
+    const today = await this.prisma.client.userNotification.findMany({
       where: {
         userId,
         createdAt: {
@@ -178,7 +181,7 @@ export class UserInfoService {
     });
 
     //* Yesterday notifications
-    const yesterday = await this.prisma.userNotification.findMany({
+    const yesterday = await this.prisma.client.userNotification.findMany({
       where: {
         userId,
         createdAt: {
@@ -212,7 +215,7 @@ export class UserInfoService {
     );
 
     // Check if user already spin this month
-    const existingSpin = await this.prisma.spinHistory.findFirst({
+    const existingSpin = await this.prisma.client.spinHistory.findFirst({
       where: {
         userId,
         createdAt: {
@@ -227,7 +230,7 @@ export class UserInfoService {
     }
 
     // Create new spin history
-    const res = await this.prisma.spinHistory.create({
+    const res = await this.prisma.client.spinHistory.create({
       data: {
         result: dto.result,
         userId,

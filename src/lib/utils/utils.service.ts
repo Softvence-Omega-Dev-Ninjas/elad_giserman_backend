@@ -91,13 +91,15 @@ export class UtilsService {
   }
 
   async getUserByEmail(email: string) {
-    const user = await this.prisma.user.findUnique({ where: { email } });
+    const user = await this.prisma.client.user.findUnique({ where: { email } });
 
     return this.sanitizedResponse(UserResponseDto, user);
   }
 
   async getUserEmailById(id: string) {
-    const user = await this.prisma.user.findUniqueOrThrow({ where: { id } });
+    const user = await this.prisma.client.user.findUniqueOrThrow({
+      where: { id },
+    });
 
     return user.email;
   }
@@ -106,7 +108,7 @@ export class UtilsService {
     const username = email.split('@')[0];
 
     // Check if username already exists
-    const existingUsernameUser = await this.prisma.user.findUnique({
+    const existingUsernameUser = await this.prisma.client.user.findUnique({
       where: { username },
     });
     if (existingUsernameUser) {
