@@ -22,7 +22,7 @@ export class UpdateProfileService {
     dto: UpdateProfileDto,
     file?: Express.Multer.File,
   ) {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prisma.client.user.findUnique({
       where: { id: userId },
     });
 
@@ -49,7 +49,7 @@ export class UpdateProfileService {
 
     // if phone is provide and already exists under different user, throw error
     if (mobile) {
-      const existingUser = await this.prisma.user.findFirst({
+      const existingUser = await this.prisma.client.user.findFirst({
         where: { mobile },
       });
 
@@ -58,7 +58,7 @@ export class UpdateProfileService {
       }
     }
 
-    const updatedUser = await this.prisma.user.update({
+    const updatedUser = await this.prisma.client.user.update({
       where: { id: userId },
       data: {
         name: dto.name?.trim() ? dto.name.trim() : user.name,

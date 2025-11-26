@@ -26,7 +26,7 @@ export class AuthGetProfileService {
     const where: any = {};
     where[key] = value;
 
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prisma.client.user.findUnique({
       where,
       include: {
         notifications: true,

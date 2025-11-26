@@ -1,18 +1,18 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
+import { S3Service } from '@/lib/s3/s3.service';
 import {
   BadRequestException,
   HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PlatformFilter } from '../dto/getPlatform.dto';
-import { UpdateStatusDto } from '../dto/updateStatus.dto';
-import { subDays, format } from 'date-fns';
+import { format, subDays } from 'date-fns';
 import { CreateCustomAppDto } from '../dto/customApp.dto';
-import { S3Service } from '@/lib/s3/s3.service';
+import { GetOffersDto } from '../dto/getOffer.dto';
+import { PlatformFilter } from '../dto/getPlatform.dto';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
-import { GetOffersDto } from '../dto/getOffer.dto';
+import { UpdateStatusDto } from '../dto/updateStatus.dto';
 // import { log } from 'console';
 @Injectable()
 export class AdminPlatfromManagementService {
@@ -63,32 +63,32 @@ export class AdminPlatfromManagementService {
       //* Recent joint
       recentJoinedBussines,
     ] = await Promise.all([
-      this.prisma.user.count(),
-      this.prisma.user.count({
+      this.prisma.client.user.count(),
+      this.prisma.client.user.count({
         where: { memberShip: 'FREE' },
       }),
-      this.prisma.businessProfile.count(),
-      this.prisma.user.findMany({ where }),
+      this.prisma.client.businessProfile.count(),
+      this.prisma.client.user.findMany({ where }),
 
-      this.prisma.businessProfile.findMany({
+      this.prisma.client.businessProfile.findMany({
         take: 5,
         orderBy: { reviews: { _count: 'desc' } },
       }),
 
       //  Recent users
-      this.prisma.user.findMany({
+      this.prisma.client.user.findMany({
         orderBy: { updatedAt: 'desc' },
         take: 1,
       }),
 
       //  Recent business profiles
-      this.prisma.businessProfile.findMany({
+      this.prisma.client.businessProfile.findMany({
         orderBy: { updatedAt: 'desc' },
         take: 5,
       }),
 
       // Recent reviews
-      this.prisma.review.findMany({
+      this.prisma.client.review.findMany({
         orderBy: { updatedAt: 'desc' },
         take: 1,
         include: {
@@ -97,7 +97,7 @@ export class AdminPlatfromManagementService {
         },
       }),
       //
-      this.prisma.offer.findMany({
+      this.prisma.client.offer.findMany({
         orderBy: { updatedAt: 'desc' },
         take: 1,
         include: {
@@ -108,7 +108,7 @@ export class AdminPlatfromManagementService {
           },
         },
       }),
-      this.prisma.businessProfile.findMany({
+      this.prisma.client.businessProfile.findMany({
         orderBy: { updatedAt: 'desc' },
         take: 5,
       }),
@@ -136,7 +136,7 @@ export class AdminPlatfromManagementService {
     if (!userId) {
       throw new NotFoundException('user id is requird');
     }
-    const isUserExist = await this.prisma.user.findUnique({
+    const isUserExist = await this.prisma.client.user.findUnique({
       where: {
         id: userId,
       },
@@ -152,7 +152,7 @@ export class AdminPlatfromManagementService {
     if (!userId) {
       throw new BadRequestException('User Id is requrid');
     }
-    const isUserExist = await this.prisma.user.findUnique({
+    const isUserExist = await this.prisma.client.user.findUnique({
       where: {
         id: userId,
       },
@@ -160,7 +160,7 @@ export class AdminPlatfromManagementService {
     if (!isUserExist) {
       throw new NotFoundException(`User not found with given id ${userId}`);
     }
-    await this.prisma.user.delete({
+    await this.prisma.client.user.delete({
       where: {
         id: userId,
       },
@@ -176,7 +176,7 @@ export class AdminPlatfromManagementService {
     if (!userId) {
       throw new BadRequestException('user id is required');
     }
-    const isUserExist = await this.prisma.user.findUnique({
+    const isUserExist = await this.prisma.client.user.findUnique({
       where: {
         id: userId,
       },
@@ -184,7 +184,7 @@ export class AdminPlatfromManagementService {
     if (!isUserExist) {
       throw new NotFoundException(`User not found with given id ${userId}`);
     }
-    await this.prisma.user.update({
+    await this.prisma.client.user.update({
       where: {
         id: userId,
       },
@@ -208,7 +208,7 @@ export class AdminPlatfromManagementService {
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5); // include current month
 
     // Fetch subscriptions within last 6 months
-    const subscriptions = await this.prisma.userSubscription.findMany({
+    const subscriptions = await this.prisma.client.userSubscription.findMany({
       where: {
         planStartedAt: {
           gte: sixMonthsAgo,
@@ -258,7 +258,7 @@ export class AdminPlatfromManagementService {
     const startDate = subDays(today, 14); // last 15 days including today
 
     // Fetch redemption logs in the last 15 days
-    const logs = await this.prisma.reedemaOffer.findMany({
+    const logs = await this.prisma.client.reedemaOffer.findMany({
       where: {
         redeemedAt: {
           gte: startDate,
@@ -312,11 +312,11 @@ export class AdminPlatfromManagementService {
       bannerPhotoUrl = await this.s3Service.uploadFile(files.bannerPhoto[0]);
     }
     // Check if record exists
-    const existing = await this.prisma.customApp.findFirst();
+    const existing = await this.prisma.client.customApp.findFirst();
 
     // CREATE if no record exists
     if (!existing) {
-      return await this.prisma.customApp.create({
+      return await this.prisma.client.customApp.create({
         data: {
           ...dto,
           bannerCard: bannerCardUrl?.url,
@@ -327,7 +327,7 @@ export class AdminPlatfromManagementService {
     }
 
     // UPDATE existing record
-    return await this.prisma.customApp.update({
+    return await this.prisma.client.customApp.update({
       where: { id: existing.id },
       data: {
         ...dto,
@@ -340,13 +340,13 @@ export class AdminPlatfromManagementService {
 
   //*  CREATE SPIN TABLE
   async createSpinTable(dto: CreateSpinDto) {
-    const isSpinExist = await this.prisma.spin.findFirst();
+    const isSpinExist = await this.prisma.client.spin.findFirst();
     if (isSpinExist) {
       throw new BadRequestException(
         'Spin data already exist, you can update it',
       );
     }
-    const res = await this.prisma.spin.create({
+    const res = await this.prisma.client.spin.create({
       data: {
         ...dto,
       },
@@ -356,11 +356,11 @@ export class AdminPlatfromManagementService {
 
   //* UPDATE SPIN
   async updateSpinData(dto: UpdateSpinDto) {
-    const isSpinExist = await this.prisma.spin.findFirst();
+    const isSpinExist = await this.prisma.client.spin.findFirst();
     if (!isSpinExist) {
       throw new NotFoundException('Spin data not found to update');
     }
-    const res = await this.prisma.spin.update({
+    const res = await this.prisma.client.spin.update({
       where: {
         id: isSpinExist.id,
       },
@@ -373,7 +373,7 @@ export class AdminPlatfromManagementService {
 
   //* get spin table
   async getSpinTableData() {
-    const isSpinExist = await this.prisma.spin.findFirst();
+    const isSpinExist = await this.prisma.client.spin.findFirst();
     if (!isSpinExist) {
       throw new NotFoundException('Spin data not found');
     }
@@ -382,11 +382,11 @@ export class AdminPlatfromManagementService {
 
   //*reset spin
   async resetSpintable() {
-    const isExist = await this.prisma.spin.findFirst();
+    const isExist = await this.prisma.client.spin.findFirst();
     if (!isExist) {
       throw new NotFoundException('Spin data not found');
     }
-    await this.prisma.spin.update({
+    await this.prisma.client.spin.update({
       where: {
         id: isExist.id,
       },
@@ -411,13 +411,13 @@ export class AdminPlatfromManagementService {
 
   //*CRETE TERMS AND CONDITIONS
   async createAdminTermsAdnConditions(dto: CreateTermsAndConditionsDto) {
-    const isExistTerm = await this.prisma.termsAndConditions.findFirst();
+    const isExistTerm = await this.prisma.client.termsAndConditions.findFirst();
     if (isExistTerm) {
       throw new BadRequestException(
         'Terms and Conditions already exist you can just update your terms and conditions',
       );
     }
-    return this.prisma.termsAndConditions.create({
+    return this.prisma.client.termsAndConditions.create({
       data: {
         ...dto,
       },
@@ -426,11 +426,11 @@ export class AdminPlatfromManagementService {
 
   //*UPDATE TERMS AND CONDITIONS
   async updateAdminTermsAndConditions(dto: CreateTermsAndConditionsDto) {
-    const isExistTerm = await this.prisma.termsAndConditions.findFirst();
+    const isExistTerm = await this.prisma.client.termsAndConditions.findFirst();
     if (!isExistTerm) {
       throw new NotFoundException('Terms and Conditions not found to update');
     }
-    return this.prisma.termsAndConditions.update({
+    return this.prisma.client.termsAndConditions.update({
       where: {
         id: isExistTerm.id,
       },
@@ -442,7 +442,7 @@ export class AdminPlatfromManagementService {
 
   //*GET TERMS AND CONDITIONS
   async getTemsAndConditions() {
-    const isExistTerm = await this.prisma.termsAndConditions.findFirst();
+    const isExistTerm = await this.prisma.client.termsAndConditions.findFirst();
     if (!isExistTerm) {
       throw new NotFoundException('Terms and Conditions not found');
     }
@@ -471,13 +471,13 @@ export class AdminPlatfromManagementService {
       where.status = status;
     }
     const [data, total] = await Promise.all([
-      this.prisma.user.findMany({
+      this.prisma.client.user.findMany({
         where,
         skip,
         take: limit,
         orderBy: { createdAt: 'desc' },
       }),
-      this.prisma.user.count({ where }),
+      this.prisma.client.user.count({ where }),
     ]);
 
     return { data, total };
@@ -486,7 +486,7 @@ export class AdminPlatfromManagementService {
   //* get all redemtion offer
   async getAlRedemtions({ page, limit }: { page: number; limit: number }) {
     const skip = (page - 1) * limit;
-    const data = await this.prisma.reedemaOffer.findMany({
+    const data = await this.prisma.client.reedemaOffer.findMany({
       skip,
       take: limit,
       include: {
@@ -514,7 +514,7 @@ export class AdminPlatfromManagementService {
   async getPaymentLog(filter: GetOffersDto) {
     const { page = 1, limit = 10 } = filter;
     const skip = (page - 1) * limit;
-    const res = await this.prisma.invoice.findMany({
+    const res = await this.prisma.client.invoice.findMany({
       skip,
       take: limit,
       orderBy: { createdAt: 'desc' },
@@ -547,7 +547,7 @@ export class AdminPlatfromManagementService {
   async getSpinHistory(filter: GetOffersDto) {
     const { page = 1, limit = 10 } = filter;
     const skip = (page - 1) * 10;
-    const res = await this.prisma.spinHistory.findMany({
+    const res = await this.prisma.client.spinHistory.findMany({
       skip,
       take: limit,
       include: {
@@ -560,7 +560,7 @@ export class AdminPlatfromManagementService {
   //*get custom app details
 
   async getCustomAppDetails() {
-    const res = await this.prisma.customApp.findFirst();
+    const res = await this.prisma.client.customApp.findFirst();
     return res;
   }
 }

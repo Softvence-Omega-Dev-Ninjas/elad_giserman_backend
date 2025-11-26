@@ -24,19 +24,20 @@ export class CreateIntentService {
     const now = new Date();
 
     // 1. Get user
-    const user = await this.prismaService.user.findUniqueOrThrow({
+    const user = await this.prismaService.client.user.findUniqueOrThrow({
       where: { id: userId },
     });
 
     // 2. Prevent creating intent if user already has an active subscription
     //    Active means status === 'ACTIVE' and ends in the future
-    const activeSub = await this.prismaService.userSubscription.findFirst({
-      where: {
-        userId: user.id,
-        status: 'ACTIVE',
-        planEndedAt: { gt: now },
-      },
-    });
+    const activeSub =
+      await this.prismaService.client.userSubscription.findFirst({
+        where: {
+          userId: user.id,
+          status: 'ACTIVE',
+          planEndedAt: { gt: now },
+        },
+      });
     if (activeSub) {
       // Optionally include plan info in error message
       throw new AppError(
@@ -46,23 +47,23 @@ export class CreateIntentService {
     }
 
     // 3. Get plan (must be active)
-    const plan = await this.prismaService.subscriptionPlan.findUniqueOrThrow({
-      where: { id: planId, isActive: true },
-    });
+    const plan =
+      await this.prismaService.client.subscriptionPlan.findUniqueOrThrow({
+        where: { id: planId, isActive: true },
+      });
 
     // 4. Prevent duplicate pending/incomplete intents
     //    If user already has a pending/incomplete payment intent for same plan,
     //    return that intent's client_secret if possible (so caller can reuse).
-    const existingPending = await this.prismaService.userSubscription.findFirst(
-      {
+    const existingPending =
+      await this.prismaService.client.userSubscription.findFirst({
         where: {
           userId: user.id,
           planId: plan.id,
           status: 'PENDING',
         },
         orderBy: { createdAt: 'desc' },
-      },
-    );
+      });
 
     if (existingPending) {
       this.logger.log(
@@ -152,7 +153,7 @@ export class CreateIntentService {
     }
 
     // 7. Record in DB with initial status = INCOMPLETE (waiting for webhook confirmation)
-    await this.prismaService.userSubscription.create({
+    await this.prismaService.client.userSubscription.create({
       data: {
         user: { connect: { id: user.id } },
         plan: { connect: { id: plan.id } },

@@ -2,7 +2,7 @@ import { HandleError } from '@/common/error/handle-error.decorator';
 import { successResponse, TResponse } from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { Injectable, Logger } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@prisma';
 import { DateTime } from 'luxon';
 
 @Injectable()
@@ -19,22 +19,22 @@ export class SubscriptionService {
     ];
 
     const [monthlyPlan, biannualPlan, yearlyPlan] =
-      await this.prismaService.$transaction([
-        this.prismaService.subscriptionPlan.findFirst({
+      await this.prismaService.client.$transaction([
+        this.prismaService.client.subscriptionPlan.findFirst({
           where: {
             billingPeriod: 'MONTHLY',
             isActive: true,
           },
           orderBy,
         }),
-        this.prismaService.subscriptionPlan.findFirst({
+        this.prismaService.client.subscriptionPlan.findFirst({
           where: {
             billingPeriod: 'BIANNUAL',
             isActive: true,
           },
           orderBy,
         }),
-        this.prismaService.subscriptionPlan.findFirst({
+        this.prismaService.client.subscriptionPlan.findFirst({
           where: {
             billingPeriod: 'YEARLY',
             isActive: true,
@@ -59,7 +59,7 @@ export class SubscriptionService {
   async getCurrentSubscriptionStatus(userId: string): Promise<TResponse<any>> {
     // Get latest active subscription
     const userSubscription =
-      await this.prismaService.userSubscription.findFirst({
+      await this.prismaService.client.userSubscription.findFirst({
         where: { userId, status: 'ACTIVE' },
         include: {
           plan: true,

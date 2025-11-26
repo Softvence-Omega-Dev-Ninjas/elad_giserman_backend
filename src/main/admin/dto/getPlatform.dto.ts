@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MemberShip } from '@prisma/client';
+import { MemberShip } from '@prisma';
 import { IsEnum, IsOptional, IsString, IsDateString } from 'class-validator';
 
 export class PlatformFilter {

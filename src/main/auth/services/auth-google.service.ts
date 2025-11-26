@@ -6,7 +6,7 @@ import { FirebaseService } from '@/lib/firebase/firebase.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { UtilsService } from '@/lib/utils/utils.service';
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { User } from '@prisma';
 import * as admin from 'firebase-admin';
 import { GoogleLoginDto } from '../dto/login.dto';
 
@@ -56,14 +56,14 @@ export class AuthGoogleService {
     decodedToken: admin.auth.DecodedIdToken,
     email: string,
   ): Promise<User> {
-    const user = await this.prisma.user.findUnique({ where: { email } });
+    const user = await this.prisma.client.user.findUnique({ where: { email } });
     const trialEndsAt: Date = new Date();
     trialEndsAt.setDate(trialEndsAt.getDate() - 1);
     trialEndsAt.setMonth(trialEndsAt.getMonth() + 3);
 
     // === CASE 1: No user exists → create new Firebase Google user ===
     if (!user) {
-      return this.prisma.user.create({
+      return this.prisma.client.user.create({
         data: {
           email,
           username: await this.utils.generateUsername(email),
@@ -83,7 +83,7 @@ export class AuthGoogleService {
 
     // === CASE 2: Existing user has no googleId → link Firebase UID ===
     if (!user.googleId) {
-      return this.prisma.user.update({
+      return this.prisma.client.user.update({
         where: { id: user.id },
         data: {
           googleId: decodedToken.uid,
@@ -105,7 +105,7 @@ export class AuthGoogleService {
     }
 
     // === CASE 4: Regular login → just update login info ===
-    return this.prisma.user.update({
+    return this.prisma.client.user.update({
       where: { id: user.id },
       data: {
         isLoggedIn: true,

@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { FileType } from '@prisma/client';
+import { FileType } from '@prisma';
 
 import { GetReviewDto } from '@/main/admin/dto/getReview.dto';
 import { CreateTermsAndConditionsDto } from '@/main/admin/dto/termAndCondition.dto';
@@ -47,9 +47,11 @@ export class BusinessProfileService {
       );
     }
 
-    const existingProfile = await this.prisma.businessProfile.findUnique({
-      where: { ownerId: id },
-    });
+    const existingProfile = await this.prisma.client.businessProfile.findUnique(
+      {
+        where: { ownerId: id },
+      },
+    );
     if (existingProfile) {
       throw new BadRequestException(
         'You already have a bussiness profile. Each organizer can only create one.',
@@ -57,10 +59,12 @@ export class BusinessProfileService {
     }
 
     // create business profile in Prisma
-    return this.prisma.businessProfile.create({
+    const { profileType, categoryId, ...restDto } = dto;
+    return this.prisma.client.businessProfile.create({
       data: {
-        ...dto,
+        ...restDto,
         ownerId: id,
+        categoryId: dto.categoryId,
         gallery:
           uploadedFiles.length > 0
             ? {
@@ -94,7 +98,7 @@ export class BusinessProfileService {
 
   // get my businessProfile
   async getBusinessProfile(id: string) {
-    const profile = await this.prisma.businessProfile.findUnique({
+    const profile = await this.prisma.client.businessProfile.findUnique({
       where: { ownerId: id },
       include: {
         gallery: true,
@@ -118,7 +122,7 @@ export class BusinessProfileService {
     galleryFiles: Express.Multer.File[] = [],
   ) {
     // 1. Load existing profile
-    const existingProfile = await this.prisma.businessProfile.findFirst({
+    const existingProfile = await this.prisma.client.businessProfile.findFirst({
       where: { ownerId: userId },
       include: { gallery: true },
     });
@@ -201,7 +205,7 @@ export class BusinessProfileService {
     }
 
     // 6. Update profile in DB
-    const updatedProfile = await this.prisma.businessProfile.update({
+    const updatedProfile = await this.prisma.client.businessProfile.update({
       where: { id: existingProfile.id },
       data: updateData,
       include: { gallery: true },
@@ -228,7 +232,7 @@ export class BusinessProfileService {
     }
 
     // Fetch profiles with gallery, owner, and counts for offers & redemptions
-    const profiles = await this.prisma.businessProfile.findMany({
+    const profiles = await this.prisma.client.businessProfile.findMany({
       skip,
       take: limit,
       where,
@@ -248,7 +252,7 @@ export class BusinessProfileService {
     const shuffledProfiles = shuffleArray(profiles);
 
     // Fetch review stats for all profiles
-    const reviewStats = await this.prisma.review.groupBy({
+    const reviewStats = await this.prisma.client.review.groupBy({
       by: ['businessProfileId'],
       _count: { rating: true },
       _avg: { rating: true },
@@ -271,18 +275,17 @@ export class BusinessProfileService {
 
   // get all reviews
   async getAllReviews(userId: string) {
-    const findOrganizationProfile = await this.prisma.businessProfile.findFirst(
-      {
+    const findOrganizationProfile =
+      await this.prisma.client.businessProfile.findFirst({
         where: {
           ownerId: userId,
         },
-      },
-    );
+      });
     console.info(findOrganizationProfile, 'odfjdjfdojfdfjdjfdjf');
     if (!findOrganizationProfile) {
       throw new NotFoundException('No business profile found for this user.');
     }
-    const reviews = await this.prisma.review.findMany({
+    const reviews = await this.prisma.client.review.findMany({
       where: {
         businessProfileId: findOrganizationProfile.id,
       },
@@ -304,7 +307,7 @@ export class BusinessProfileService {
     if (!id) {
       throw new BadRequestException('Review ID must be provided.');
     }
-    const review = await this.prisma.review.findUnique({
+    const review = await this.prisma.client.review.findUnique({
       where: {
         id: id,
       },
@@ -326,27 +329,26 @@ export class BusinessProfileService {
 
   // get organizations stat
   async getOrganizationStats(userId: string) {
-    const findOrganizationProfile = await this.prisma.businessProfile.findFirst(
-      {
+    const findOrganizationProfile =
+      await this.prisma.client.businessProfile.findFirst({
         where: {
           ownerId: userId,
         },
-      },
-    );
+      });
 
     const [totalOffter, totalReedmOffer, totalReview] = await Promise.all([
-      this.prisma.offer.count({
+      this.prisma.client.offer.count({
         where: {
           businessId: findOrganizationProfile?.id,
         },
       }),
-      this.prisma.reedemaOffer.count({
+      this.prisma.client.reedemaOffer.count({
         where: {
           bussinessId: findOrganizationProfile?.id,
           isRedeemed: true,
         },
       }),
-      this.prisma.review.count({
+      this.prisma.client.review.count({
         where: {
           businessProfileId: findOrganizationProfile?.id,
         },
@@ -361,13 +363,14 @@ export class BusinessProfileService {
 
   //*CRETE TERMS AND CONDITIONS
   async createAdminTermsAdnConditions(dto: CreateTermsAndConditionsDto) {
-    const isExistTerm = await this.prisma.userTermsAndConditions.findFirst();
+    const isExistTerm =
+      await this.prisma.client.userTermsAndConditions.findFirst();
     if (isExistTerm) {
       throw new BadRequestException(
         'Terms and Conditions already exist you can just update your terms and conditions',
       );
     }
-    return this.prisma.userTermsAndConditions.create({
+    return this.prisma.client.userTermsAndConditions.create({
       data: {
         ...dto,
       },
@@ -376,12 +379,13 @@ export class BusinessProfileService {
 
   //*UPDATE TERMS AND CONDITIONS
   async updateAdminTermsAndConditions(dto: CreateTermsAndConditionsDto) {
-    const isExistTerm = await this.prisma.userTermsAndConditions.findFirst();
+    const isExistTerm =
+      await this.prisma.client.userTermsAndConditions.findFirst();
 
     if (!isExistTerm) {
       throw new NotFoundException('Terms and Conditions not found to update');
     }
-    return this.prisma.userTermsAndConditions.update({
+    return this.prisma.client.userTermsAndConditions.update({
       where: {
         id: isExistTerm.id,
       },
@@ -393,7 +397,8 @@ export class BusinessProfileService {
 
   //*GET TERMS AND CONDITIONS
   async getTemsAndConditions() {
-    const isExistTerm = await this.prisma.userTermsAndConditions.findFirst();
+    const isExistTerm =
+      await this.prisma.client.userTermsAndConditions.findFirst();
     if (!isExistTerm) {
       throw new NotFoundException('Terms and Conditions not found');
     }
@@ -405,7 +410,7 @@ export class BusinessProfileService {
     const skip = (page - 1) * limit;
 
     // 1. Find business profile
-    const businessProfile = await this.prisma.businessProfile.findFirst({
+    const businessProfile = await this.prisma.client.businessProfile.findFirst({
       where: { ownerId: userId },
     });
 
@@ -423,7 +428,7 @@ export class BusinessProfileService {
         { description: { contains: search, mode: 'insensitive' } },
       ];
     }
-    return this.prisma.reedemaOffer.findMany({
+    return this.prisma.client.reedemaOffer.findMany({
       skip,
       take: limit,
       where,

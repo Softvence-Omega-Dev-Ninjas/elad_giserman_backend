@@ -1,7 +1,7 @@
 import { IsOptional, IsString, IsInt, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { UserStatus } from '@prisma/client';
+import { UserStatus } from '@prisma';
 
 export class GetUserDto {
   @ApiProperty({

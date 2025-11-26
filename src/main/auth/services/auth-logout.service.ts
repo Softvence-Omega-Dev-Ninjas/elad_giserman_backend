@@ -10,7 +10,7 @@ export class AuthLogoutService {
 
   @HandleError('Logout user failed')
   async logout(userId: string): Promise<TResponse<any>> {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prisma.client.user.findUnique({
       where: { id: userId },
     });
 
@@ -18,7 +18,7 @@ export class AuthLogoutService {
       throw new AppError(404, 'User not found');
     }
 
-    await this.prisma.user.update({
+    await this.prisma.client.user.update({
       where: { id: userId },
       data: { isLoggedIn: false, lastLogoutAt: new Date() },
     });

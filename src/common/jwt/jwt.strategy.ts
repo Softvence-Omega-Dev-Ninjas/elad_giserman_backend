@@ -1,3 +1,4 @@
+import { PrismaService } from '@/lib/prisma/prisma.service';
 import {
   ForbiddenException,
   Injectable,
@@ -5,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { PrismaService } from '@/lib/prisma/prisma.service';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ENVEnum } from '../enum/env.enum';
 import { JWTPayload } from './jwt.interface';
@@ -25,7 +25,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JWTPayload) {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prisma.client.user.findUnique({
       where: { id: payload.sub },
     });
 
@@ -39,7 +39,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     // Update lastActiveAt
-    await this.prisma.user.update({
+    await this.prisma.client.user.update({
       where: { id: payload.sub },
       data: { lastActiveAt: new Date() },
     });
