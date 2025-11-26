@@ -1,10 +1,10 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { S3Service } from '@/lib/s3/s3.service';
 import {
-    BadRequestException,
-    ForbiddenException,
-    Injectable,
-    NotFoundException,
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { SpinHistoryDto } from './dto/createSpinHistory.dto';
 import { UpdateUserInfoDto } from './dto/update-user-info.dto';
@@ -81,12 +81,15 @@ export class UserInfoService {
     if (offer.expiredsAt && offer.expiredsAt < new Date())
       throw new BadRequestException('Offer expired');
 
-    const user = await this.prisma.client.user.findUnique({ where: { id: userId } });
-    const usersSubscription = await this.prisma.client.userSubscription.findFirst({
-      where: {
-        userId: userId,
-      },
+    const user = await this.prisma.client.user.findUnique({
+      where: { id: userId },
     });
+    const usersSubscription =
+      await this.prisma.client.userSubscription.findFirst({
+        where: {
+          userId: userId,
+        },
+      });
     // TODO: Here should be just acces primieum user after the payment complete It will update to active --> primium
     if (!user || usersSubscription?.status == 'ACTIVE')
       throw new ForbiddenException('Only premium users can redeem');

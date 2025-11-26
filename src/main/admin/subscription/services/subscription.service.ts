@@ -1,10 +1,10 @@
 import { AppError } from '@/common/error/handle-error.app';
 import { HandleError } from '@/common/error/handle-error.decorator';
 import {
-    successPaginatedResponse,
-    successResponse,
-    TPaginatedResponse,
-    TResponse,
+  successPaginatedResponse,
+  successResponse,
+  TPaginatedResponse,
+  TResponse,
 } from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { StripeService } from '@/lib/stripe/stripe.service';
@@ -153,29 +153,30 @@ export class SubscriptionService {
 
   @HandleError('Failed to fetch plan', 'Plan')
   async getASinglePlan(planId: string): Promise<TResponse<any>> {
-    const plan = await this.prismaService.client.subscriptionPlan.findUniqueOrThrow({
-      where: { id: planId, isActive: true }, // Only if it is active
-      include: {
-        userSubscriptions: {
-          select: {
-            user: {
-              select: {
-                id: true,
-                name: true,
-                email: true,
+    const plan =
+      await this.prismaService.client.subscriptionPlan.findUniqueOrThrow({
+        where: { id: planId, isActive: true }, // Only if it is active
+        include: {
+          userSubscriptions: {
+            select: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                },
               },
             },
           },
-        },
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
           },
         },
-      },
-    });
+      });
 
     return successResponse(plan, 'Plan fetched successfully');
   }
@@ -201,11 +202,12 @@ export class SubscriptionService {
 
   //*update plan
   async upatePlan(id: string) {
-    const existingPlan = await this.prismaService.client.subscriptionPlan.findFirst({
-      where: {
-        id: id,
-      },
-    });
+    const existingPlan =
+      await this.prismaService.client.subscriptionPlan.findFirst({
+        where: {
+          id: id,
+        },
+      });
     if (!existingPlan) {
       throw new AppError(404, 'Plan not found');
     }

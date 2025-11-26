@@ -1,9 +1,9 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import {
-    HttpException,
-    HttpStatus,
-    Injectable,
-    NotFoundException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { ReviewReplyDTO } from './dto/create-reviewReply';
@@ -21,11 +21,12 @@ export class ReviewService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    const bussineesProfile = await this.prisma.client.businessProfile.findUnique({
-      where: {
-        id: createReviewDto.businessProfileId,
-      },
-    });
+    const bussineesProfile =
+      await this.prisma.client.businessProfile.findUnique({
+        where: {
+          id: createReviewDto.businessProfileId,
+        },
+      });
     if (bussineesProfile?.ownerId === userId) {
       throw new HttpException(
         'user can not give review on his own profile',

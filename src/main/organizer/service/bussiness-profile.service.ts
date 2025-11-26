@@ -1,9 +1,9 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { S3Service } from '@/lib/s3/s3.service';
 import {
-    BadRequestException,
-    Injectable,
-    NotFoundException,
+  BadRequestException,
+  Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 
 import { FileType } from '@prisma';
@@ -47,9 +47,11 @@ export class BusinessProfileService {
       );
     }
 
-    const existingProfile = await this.prisma.client.businessProfile.findUnique({
-      where: { ownerId: id },
-    });
+    const existingProfile = await this.prisma.client.businessProfile.findUnique(
+      {
+        where: { ownerId: id },
+      },
+    );
     if (existingProfile) {
       throw new BadRequestException(
         'You already have a bussiness profile. Each organizer can only create one.',
@@ -273,13 +275,12 @@ export class BusinessProfileService {
 
   // get all reviews
   async getAllReviews(userId: string) {
-    const findOrganizationProfile = await this.prisma.client.businessProfile.findFirst(
-      {
+    const findOrganizationProfile =
+      await this.prisma.client.businessProfile.findFirst({
         where: {
           ownerId: userId,
         },
-      },
-    );
+      });
     console.info(findOrganizationProfile, 'odfjdjfdojfdfjdjfdjf');
     if (!findOrganizationProfile) {
       throw new NotFoundException('No business profile found for this user.');
@@ -328,13 +329,12 @@ export class BusinessProfileService {
 
   // get organizations stat
   async getOrganizationStats(userId: string) {
-    const findOrganizationProfile = await this.prisma.client.businessProfile.findFirst(
-      {
+    const findOrganizationProfile =
+      await this.prisma.client.businessProfile.findFirst({
         where: {
           ownerId: userId,
         },
-      },
-    );
+      });
 
     const [totalOffter, totalReedmOffer, totalReview] = await Promise.all([
       this.prisma.client.offer.count({
@@ -363,7 +363,8 @@ export class BusinessProfileService {
 
   //*CRETE TERMS AND CONDITIONS
   async createAdminTermsAdnConditions(dto: CreateTermsAndConditionsDto) {
-    const isExistTerm = await this.prisma.client.userTermsAndConditions.findFirst();
+    const isExistTerm =
+      await this.prisma.client.userTermsAndConditions.findFirst();
     if (isExistTerm) {
       throw new BadRequestException(
         'Terms and Conditions already exist you can just update your terms and conditions',
@@ -378,7 +379,8 @@ export class BusinessProfileService {
 
   //*UPDATE TERMS AND CONDITIONS
   async updateAdminTermsAndConditions(dto: CreateTermsAndConditionsDto) {
-    const isExistTerm = await this.prisma.client.userTermsAndConditions.findFirst();
+    const isExistTerm =
+      await this.prisma.client.userTermsAndConditions.findFirst();
 
     if (!isExistTerm) {
       throw new NotFoundException('Terms and Conditions not found to update');
@@ -395,7 +397,8 @@ export class BusinessProfileService {
 
   //*GET TERMS AND CONDITIONS
   async getTemsAndConditions() {
-    const isExistTerm = await this.prisma.client.userTermsAndConditions.findFirst();
+    const isExistTerm =
+      await this.prisma.client.userTermsAndConditions.findFirst();
     if (!isExistTerm) {
       throw new NotFoundException('Terms and Conditions not found');
     }

@@ -219,15 +219,16 @@ export class HandleWebhookService {
     const { userId, planId } = metadata;
 
     // Fetch local subscription
-    const localSubscription = await this.prisma.client.userSubscription.findFirst({
-      where: {
-        OR: [
-          { stripeSubscriptionId: subscriptionId },
-          { userId: userId, planId: planId },
-        ],
-      },
-      include: { plan: true },
-    });
+    const localSubscription =
+      await this.prisma.client.userSubscription.findFirst({
+        where: {
+          OR: [
+            { stripeSubscriptionId: subscriptionId },
+            { userId: userId, planId: planId },
+          ],
+        },
+        include: { plan: true },
+      });
 
     if (!localSubscription) {
       this.logger.error(

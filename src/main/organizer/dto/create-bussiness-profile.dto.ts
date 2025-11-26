@@ -40,5 +40,5 @@ export class CreateBusinessProfileDto {
   @ApiProperty({ example: 'categoryId123' })
   @IsString()
   @IsNotEmpty()
-  categoryId:string
+  categoryId: string;
 }

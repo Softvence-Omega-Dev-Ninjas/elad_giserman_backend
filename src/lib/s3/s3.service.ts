@@ -3,16 +3,16 @@ import { ENVEnum } from '@/common/enum/env.enum';
 import { AppError } from '@/common/error/handle-error.app';
 import { HandleError } from '@/common/error/handle-error.decorator';
 import {
-    successPaginatedResponse,
-    successResponse,
-    TPaginatedResponse,
-    TResponse,
+  successPaginatedResponse,
+  successResponse,
+  TPaginatedResponse,
+  TResponse,
 } from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import {
-    DeleteObjectCommand,
-    PutObjectCommand,
-    S3Client,
+  DeleteObjectCommand,
+  PutObjectCommand,
+  S3Client,
 } from '@aws-sdk/client-s3';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';

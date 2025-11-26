@@ -1,9 +1,9 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import {
-    HttpException,
-    HttpStatus,
-    Injectable,
-    NotFoundException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { GetReviewDto } from '../dto/getReview.dto';
 

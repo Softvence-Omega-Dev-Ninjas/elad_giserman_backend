@@ -16,14 +16,13 @@ import { CategoryService } from './service/admin.category.service';
     AdminOfferService,
     AdminReviewService,
     AdminPlatfromManagementService,
-    CategoryService
-    
+    CategoryService,
   ],
   controllers: [
     AdminController,
     AdminReviewController,
     AdminPlatformManagementController,
-    CategoryContoller
+    CategoryContoller,
   ],
 })
 export class AdminModule {}

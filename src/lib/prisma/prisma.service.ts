@@ -10,7 +10,6 @@ import { PrismaClient } from '@prisma';
 import { PrismaPg } from '@prisma/adapter-pg';
 import 'dotenv/config';
 
-
 @Injectable()
 export class PrismaService implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(PrismaService.name);

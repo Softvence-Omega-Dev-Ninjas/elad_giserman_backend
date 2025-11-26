@@ -113,10 +113,12 @@ export class UpdatePlanService {
     }
 
     // Step 5: Update DB
-    const updatedPlan = await this.prismaService.client.subscriptionPlan.update({
-      where: { id: planId },
-      data: updatedData,
-    });
+    const updatedPlan = await this.prismaService.client.subscriptionPlan.update(
+      {
+        where: { id: planId },
+        data: updatedData,
+      },
+    );
 
     this.logger.log(`Subscription plan ${planId} updated successfully`);
     return successResponse(updatedPlan, 'Plan updated successfully');

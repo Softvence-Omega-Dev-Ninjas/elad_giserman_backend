@@ -1,10 +1,10 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { S3Service } from '@/lib/s3/s3.service';
 import {
-    BadRequestException,
-    HttpStatus,
-    Injectable,
-    NotFoundException,
+  BadRequestException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { format, subDays } from 'date-fns';
 import { CreateCustomAppDto } from '../dto/customApp.dto';

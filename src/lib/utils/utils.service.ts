@@ -97,7 +97,9 @@ export class UtilsService {
   }
 
   async getUserEmailById(id: string) {
-    const user = await this.prisma.client.user.findUniqueOrThrow({ where: { id } });
+    const user = await this.prisma.client.user.findUniqueOrThrow({
+      where: { id },
+    });
 
     return user.email;
   }

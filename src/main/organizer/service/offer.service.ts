@@ -3,9 +3,9 @@ import { PrismaService } from '@/lib/prisma/prisma.service';
 import { S3Service } from '@/lib/s3/s3.service';
 import { GetOffersDto2 } from '@/main/admin/dto/getOffer.dto';
 import {
-    BadRequestException,
-    Injectable,
-    NotFoundException,
+  BadRequestException,
+  Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { Readable } from 'stream';
 import { CreateOfferDto } from '../dto/create-offer.dto';
@@ -103,7 +103,9 @@ export class OfferService {
 
   //** find arrpove offer only...
   async findApprovedOffers(userId: string) {
-    const user = await this.prisma.client.user.findUnique({ where: { id: userId } });
+    const user = await this.prisma.client.user.findUnique({
+      where: { id: userId },
+    });
     if (!user || user.role !== 'USER') {
       throw new BadRequestException('Only regular users can get offers');
     }
@@ -189,7 +191,9 @@ export class OfferService {
   }
   //** find one offer
   async findOne(userId: string, id: string) {
-    const user = await this.prisma.client.user.findUnique({ where: { id: userId } });
+    const user = await this.prisma.client.user.findUnique({
+      where: { id: userId },
+    });
     if (!user || user.role !== 'USER') {
       throw new BadRequestException('Only regular users can get offers');
     }

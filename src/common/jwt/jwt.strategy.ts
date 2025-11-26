@@ -1,8 +1,8 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import {
-    ForbiddenException,
-    Injectable,
-    UnauthorizedException,
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
