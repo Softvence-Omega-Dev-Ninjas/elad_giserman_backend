@@ -21,6 +21,7 @@ export class AdminPlatfromManagementService {
     private readonly s3Service: S3Service,
   ) {}
 
+  //*Get platform statictis
   async getPlatfromStat(filter: PlatformFilter) {
     const { search, date, userType } = filter;
     const where: any = {};
@@ -341,10 +342,8 @@ export class AdminPlatfromManagementService {
   //*  CREATE SPIN TABLE
   async createSpinTable(dto: CreateSpinDto) {
     const isSpinExist = await this.prisma.client.spin.findFirst();
-    if (isSpinExist) {
-      throw new BadRequestException(
-        'Spin data already exist, you can update it',
-      );
+    if (isSpinExist?.spinValue1 === dto.spinValue1) {
+      throw new BadRequestException('Your provided value already exist');
     }
     const res = await this.prisma.client.spin.create({
       data: {
@@ -355,8 +354,12 @@ export class AdminPlatfromManagementService {
   }
 
   //* UPDATE SPIN
-  async updateSpinData(dto: UpdateSpinDto) {
-    const isSpinExist = await this.prisma.client.spin.findFirst();
+  async updateSpinData(dto: UpdateSpinDto, spinId: string) {
+    const isSpinExist = await this.prisma.client.spin.findFirst({
+      where: {
+        id: spinId,
+      },
+    });
     if (!isSpinExist) {
       throw new NotFoundException('Spin data not found to update');
     }
@@ -373,39 +376,27 @@ export class AdminPlatfromManagementService {
 
   //* get spin table
   async getSpinTableData() {
-    const isSpinExist = await this.prisma.client.spin.findFirst();
-    if (!isSpinExist) {
-      throw new NotFoundException('Spin data not found');
-    }
+    const isSpinExist = await this.prisma.client.spin.findMany();
     return isSpinExist;
   }
 
-  //*reset spin
-  async resetSpintable() {
-    const isExist = await this.prisma.client.spin.findFirst();
-    if (!isExist) {
-      throw new NotFoundException('Spin data not found');
-    }
-    await this.prisma.client.spin.update({
+  //* Delete Spin value
+  async deleteSpin(id: string) {
+    const isSpinExist = await this.prisma.client.spin.findUnique({
       where: {
-        id: isExist.id,
+        id: id,
       },
-      data: {
-        spinValue1: 0,
-        spinValue2: 0,
-        spinValue3: 0,
-        spinValue4: 0,
-        spinValue5: 0,
-        spinValue6: 0,
-        spinValue7: 0,
-        spinValue8: 0,
-        spinValue9: 0,
-        spinValue10: 0,
+    });
+    if (!isSpinExist) {
+      throw new NotFoundException('Spin data not found to delete');
+    }
+    await this.prisma.client.spin.delete({
+      where: {
+        id: id,
       },
     });
     return {
-      status: HttpStatus.OK,
-      message: 'Spin data reset successfully',
+      message: 'Spin data deleted successfully',
     };
   }
 
@@ -450,7 +441,6 @@ export class AdminPlatfromManagementService {
   }
 
   //*get all users
-
   async getAllUsers({
     page,
     limit,
@@ -558,7 +548,6 @@ export class AdminPlatfromManagementService {
   }
 
   //*get custom app details
-
   async getCustomAppDetails() {
     const res = await this.prisma.client.customApp.findFirst();
     return res;

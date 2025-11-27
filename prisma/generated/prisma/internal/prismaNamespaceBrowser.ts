@@ -251,15 +251,6 @@ export type ReviewReplyScalarFieldEnum =
 export const SpinScalarFieldEnum = {
   id: 'id',
   spinValue1: 'spinValue1',
-  spinValue2: 'spinValue2',
-  spinValue3: 'spinValue3',
-  spinValue4: 'spinValue4',
-  spinValue5: 'spinValue5',
-  spinValue6: 'spinValue6',
-  spinValue7: 'spinValue7',
-  spinValue8: 'spinValue8',
-  spinValue9: 'spinValue9',
-  spinValue10: 'spinValue10',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
 } as const;
