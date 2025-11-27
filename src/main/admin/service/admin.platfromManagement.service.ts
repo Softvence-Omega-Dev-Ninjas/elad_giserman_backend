@@ -21,6 +21,9 @@ export class AdminPlatfromManagementService {
     private readonly s3Service: S3Service,
   ) {}
 
+
+
+  //*Get platform statictis
   async getPlatfromStat(filter: PlatformFilter) {
     const { search, date, userType } = filter;
     const where: any = {};
@@ -131,6 +134,9 @@ export class AdminPlatfromManagementService {
     };
   }
 
+
+
+
   //*  get user details
   async getUserDetils(userId: string) {
     if (!userId) {
@@ -146,6 +152,8 @@ export class AdminPlatfromManagementService {
     }
     return isUserExist;
   }
+
+
 
   //*  delete user
   async deleteuser(userId: string) {
@@ -170,6 +178,9 @@ export class AdminPlatfromManagementService {
       message: 'User delete successful',
     };
   }
+
+
+
 
   //* update user status
   async UpdateUserStatus(dto: UpdateStatusDto, userId: string) {
@@ -197,6 +208,9 @@ export class AdminPlatfromManagementService {
       message: `User update to ${dto.status}`,
     };
   }
+
+
+
 
   //* get subscription growth
   async getSubscriptionGrowth() {
@@ -252,6 +266,9 @@ export class AdminPlatfromManagementService {
     };
   }
 
+
+
+
   // *get redeemtion growth
   async getRedemptionGrowth() {
     const today = new Date();
@@ -292,6 +309,8 @@ export class AdminPlatfromManagementService {
 
     return growth;
   }
+
+
 
   //* Customize app
   async customizeApp(dto: CreateCustomAppDto, files: any) {
@@ -338,12 +357,14 @@ export class AdminPlatfromManagementService {
     });
   }
 
+
+
   //*  CREATE SPIN TABLE
   async createSpinTable(dto: CreateSpinDto) {
     const isSpinExist = await this.prisma.client.spin.findFirst();
-    if (isSpinExist) {
+    if (isSpinExist?.spinValue1===dto.spinValue1) {
       throw new BadRequestException(
-        'Spin data already exist, you can update it',
+        'Your provided value already exist',
       );
     }
     const res = await this.prisma.client.spin.create({
@@ -354,9 +375,15 @@ export class AdminPlatfromManagementService {
     return res;
   }
 
+
+
   //* UPDATE SPIN
-  async updateSpinData(dto: UpdateSpinDto) {
-    const isSpinExist = await this.prisma.client.spin.findFirst();
+  async updateSpinData(dto: UpdateSpinDto,spinId:string) {
+    const isSpinExist = await this.prisma.client.spin.findFirst({
+      where:{
+        id:spinId
+      }
+    });
     if (!isSpinExist) {
       throw new NotFoundException('Spin data not found to update');
     }
@@ -371,43 +398,38 @@ export class AdminPlatfromManagementService {
     return res;
   }
 
+
+
+
   //* get spin table
   async getSpinTableData() {
-    const isSpinExist = await this.prisma.client.spin.findFirst();
-    if (!isSpinExist) {
-      throw new NotFoundException('Spin data not found');
-    }
+    const isSpinExist = await this.prisma.client.spin.findMany();
     return isSpinExist;
   }
 
-  //*reset spin
-  async resetSpintable() {
-    const isExist = await this.prisma.client.spin.findFirst();
-    if (!isExist) {
-      throw new NotFoundException('Spin data not found');
+
+
+  //* Delete Spin value
+  async deleteSpin(id:string){
+    const isSpinExist = await this.prisma.client.spin.findUnique({
+      where:{
+        id:id
+      }
+    })
+    if (!isSpinExist) {
+      throw new NotFoundException('Spin data not found to delete');
     }
-    await this.prisma.client.spin.update({
-      where: {
-        id: isExist.id,
-      },
-      data: {
-        spinValue1: 0,
-        spinValue2: 0,
-        spinValue3: 0,
-        spinValue4: 0,
-        spinValue5: 0,
-        spinValue6: 0,
-        spinValue7: 0,
-        spinValue8: 0,
-        spinValue9: 0,
-        spinValue10: 0,
-      },
-    });
+    await this.prisma.client.spin.delete({
+      where:{
+        id:id
+      }
+    })
     return {
-      status: HttpStatus.OK,
-      message: 'Spin data reset successfully',
-    };
+      message:'Spin data deleted successfully'
+    }
   }
+
+
 
   //*CRETE TERMS AND CONDITIONS
   async createAdminTermsAdnConditions(dto: CreateTermsAndConditionsDto) {
@@ -423,6 +445,8 @@ export class AdminPlatfromManagementService {
       },
     });
   }
+
+
 
   //*UPDATE TERMS AND CONDITIONS
   async updateAdminTermsAndConditions(dto: CreateTermsAndConditionsDto) {
@@ -440,6 +464,9 @@ export class AdminPlatfromManagementService {
     });
   }
 
+
+
+
   //*GET TERMS AND CONDITIONS
   async getTemsAndConditions() {
     const isExistTerm = await this.prisma.client.termsAndConditions.findFirst();
@@ -449,8 +476,9 @@ export class AdminPlatfromManagementService {
     return isExistTerm;
   }
 
-  //*get all users
 
+
+  //*get all users
   async getAllUsers({
     page,
     limit,
@@ -483,6 +511,8 @@ export class AdminPlatfromManagementService {
     return { data, total };
   }
 
+
+
   //* get all redemtion offer
   async getAlRedemtions({ page, limit }: { page: number; limit: number }) {
     const skip = (page - 1) * limit;
@@ -510,6 +540,8 @@ export class AdminPlatfromManagementService {
 
     return { data };
   }
+
+
 
   async getPaymentLog(filter: GetOffersDto) {
     const { page = 1, limit = 10 } = filter;
@@ -543,6 +575,8 @@ export class AdminPlatfromManagementService {
     return res;
   }
 
+
+
   //* spin history
   async getSpinHistory(filter: GetOffersDto) {
     const { page = 1, limit = 10 } = filter;
@@ -557,8 +591,9 @@ export class AdminPlatfromManagementService {
     return res;
   }
 
-  //*get custom app details
 
+
+  //*get custom app details
   async getCustomAppDetails() {
     const res = await this.prisma.client.customApp.findFirst();
     return res;
