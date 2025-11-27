@@ -38,7 +38,6 @@ import { UpdateStatusDto } from '../dto/updateStatus.dto';
 @ApiTags('Platform management')
 @ApiBearerAuth()
 export class AdminPlatformManagementController {
-
   private readonly logger = new Logger(AdminPlatformManagementController.name);
 
   constructor(
@@ -67,8 +66,8 @@ export class AdminPlatformManagementController {
     try {
       console.log(id);
     } catch (error) {
-       const message = extractLastLine(error.message);
-      this.logger.error(`Faild to delete user by ID=${id}`, error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to delete user by ID=${id}`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
@@ -80,11 +79,10 @@ export class AdminPlatformManagementController {
       return this.platformManagementService.deleteuser(id);
     } catch (error) {
       const message = extractLastLine(error.message);
-      this.logger.error(`Faild to delete user by ID=${id}`, error.stack)
+      this.logger.error(`Faild to delete user by ID=${id}`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
-
 
   @ValidateAdmin()
   @Patch('update-status/:id')
@@ -105,12 +103,10 @@ export class AdminPlatformManagementController {
       };
     } catch (error) {
       const message = extractLastLine(error.message);
-      this.logger.error(`Faild to Update by ID=${id}`, error.stack)
+      this.logger.error(`Faild to Update by ID=${id}`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
-
-
 
   @ValidateAdmin()
   @Get('subscription-growth')
@@ -123,13 +119,11 @@ export class AdminPlatformManagementController {
         data: res,
       };
     } catch (error) {
-       const message = extractLastLine(error.message);
-      this.logger.error(`Faild fetch growth`, error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild fetch growth`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
-
-
 
   @ValidateAdmin()
   @Get('redemetion-growth')
@@ -145,8 +139,6 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }
-
-
 
   @Post('custom-app')
   @ApiConsumes('multipart/form-data')
@@ -202,8 +194,6 @@ export class AdminPlatformManagementController {
     }
   }
 
-
-
   @Post('create-spin-table')
   @ApiBody({ type: CreateSpinDto })
   async createSpin(@Body() dto: CreateSpinDto) {
@@ -220,8 +210,6 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(message);
     }
   }
-
-
 
   @Patch('update-spin/:id')
   @ApiOperation({ summary: 'Updated spin value by ID' })
@@ -241,8 +229,6 @@ export class AdminPlatformManagementController {
     }
   }
 
-
-
   @Get('spin-table')
   @ApiOperation({ summary: 'Get all spin data' })
   async getSpinTable() {
@@ -260,8 +246,6 @@ export class AdminPlatformManagementController {
     }
   }
 
-
-
   @ValidateAdmin()
   @Delete('delete-spin/:id')
   @ApiOperation({ summary: 'Delete spin data by ID' })
@@ -275,8 +259,6 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(message);
     }
   }
-
-
 
   @ValidateAdmin()
   @Post('create-termsCondition')
@@ -297,9 +279,6 @@ export class AdminPlatformManagementController {
     }
   }
 
-
-
-
   @ValidateAdmin()
   @Patch('update-termsCondition')
   @ApiBody({ type: CreateTermsAndConditionsDto })
@@ -319,9 +298,6 @@ export class AdminPlatformManagementController {
     }
   }
 
-
-
-
   @Get('terms-conditions')
   async getTermsAndConditions() {
     try {
@@ -337,9 +313,6 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(message);
     }
   }
-
-
-
 
   @Get('get-alluser')
   async getAllUser(@Query() query: GetUserDto) {
@@ -365,8 +338,6 @@ export class AdminPlatformManagementController {
     };
   }
 
-
-
   @Get('offer/redemtions')
   async getAllRedemtions(@Query() query: GetRedemtionsDto) {
     // Convert query params with defaults
@@ -387,9 +358,6 @@ export class AdminPlatformManagementController {
     };
   }
 
-
-
-
   @Get('subscription/payment-log')
   async getPaymentLog(@Query() filter: GetOffersDto) {
     try {
@@ -406,9 +374,6 @@ export class AdminPlatformManagementController {
     }
   }
 
-
-
-
   @Get('spin/spin-history')
   async getSpinHistory(@Query() dto: GetOffersDto) {
     try {
@@ -424,9 +389,6 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(message);
     }
   }
-
-
-
 
   @ValidateAdmin()
   @Get('customAppDetails')
