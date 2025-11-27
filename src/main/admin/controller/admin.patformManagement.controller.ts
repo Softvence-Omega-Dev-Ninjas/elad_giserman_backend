@@ -15,7 +15,13 @@ import {
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PlatformFilter } from '../dto/getPlatform.dto';
 import { AdminPlatfromManagementService } from '../service/admin.platfromManagement.service';
 
@@ -33,7 +39,7 @@ import { UpdateStatusDto } from '../dto/updateStatus.dto';
 @ApiTags('Platform management')
 @ApiBearerAuth()
 export class AdminPlatformManagementController {
-  private readonly logger=new Logger(AdminPlatformManagementController.name);
+  private readonly logger = new Logger(AdminPlatformManagementController.name);
   constructor(
     private readonly platformManagementService: AdminPlatfromManagementService,
   ) {}
@@ -49,8 +55,8 @@ export class AdminPlatformManagementController {
         data: res,
       };
     } catch (error) {
-        const message=extractLastLine(error.message)
-      this.logger.error(`Faild to save spin data`, error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save spin data`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
@@ -96,8 +102,6 @@ export class AdminPlatformManagementController {
     }
   }
 
-
-  
   @ValidateAdmin()
   @Get('subscription-growth')
   async getSubscriptionGrouth() {
@@ -127,9 +131,6 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }
-
-
-
 
   @Post('custom-app')
   @ApiConsumes('multipart/form-data')
@@ -179,13 +180,11 @@ export class AdminPlatformManagementController {
         data: res,
       };
     } catch (error) {
-      const message=extractLastLine(error.message)
-      this.logger.error(`Faild to save custom app data`, error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save custom app data`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
-
-
 
   @Post('create-spin-table')
   @ApiBody({ type: CreateSpinDto })
@@ -198,38 +197,32 @@ export class AdminPlatformManagementController {
         data: res,
       };
     } catch (error) {
-      const message=extractLastLine(error.message)
-      this.logger.error(`Faild to save spin data`, error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save spin data`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
 
-
-
-
   @Patch('update-spin/:id')
-  @ApiOperation({summary:"Updated spin value by ID"})
+  @ApiOperation({ summary: 'Updated spin value by ID' })
   @ApiBody({ type: UpdateSpinDto })
-  async updateSpin(@Param('id')id:string,@Body() dto: UpdateSpinDto) {
+  async updateSpin(@Param('id') id: string, @Body() dto: UpdateSpinDto) {
     try {
-      const res = await this.platformManagementService.updateSpinData(dto,id);
+      const res = await this.platformManagementService.updateSpinData(dto, id);
       return {
         status: HttpStatus.OK,
         message: 'Spin value updated successfully',
         data: res,
       };
     } catch (error) {
-      const message=extractLastLine(error.message)
-      this.logger.error(`Faild to Updated spin value id=${id}`,error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to Updated spin value id=${id}`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
 
-
-
-
   @Get('spin-table')
-  @ApiOperation({summary:"Get all spin data"})
+  @ApiOperation({ summary: 'Get all spin data' })
   async getSpinTable() {
     try {
       const res = await this.platformManagementService.getSpinTableData();
@@ -239,30 +232,25 @@ export class AdminPlatformManagementController {
         data: res,
       };
     } catch (error) {
-        const message=extractLastLine(error.message)
-      this.logger.error(`Faild to save spin data`, error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save spin data`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
-
-
-
 
   @ValidateAdmin()
   @Delete('delete-spin/:id')
-  @ApiOperation({summary:"Delete spin data by ID"})
+  @ApiOperation({ summary: 'Delete spin data by ID' })
   async deleteSpin(@Param('id') id: string) {
-    try{
-      const res=await this.platformManagementService.deleteSpin(id)
-      return res
-    }catch(error){
-      const message=extractLastLine(error.message)
-      this.logger.error(`Faild to Delete spin data`, error.stack)
+    try {
+      const res = await this.platformManagementService.deleteSpin(id);
+      return res;
+    } catch (error) {
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to Delete spin data`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
-
-
 
   @ValidateAdmin()
   @Post('create-termsCondition')
@@ -277,14 +265,11 @@ export class AdminPlatformManagementController {
         data: res,
       };
     } catch (error) {
-       const message=extractLastLine(error.message)
-      this.logger.error(`Faild to save spin data`, error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save spin data`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
-
-
-
 
   @ValidateAdmin()
   @Patch('update-termsCondition')
@@ -299,16 +284,11 @@ export class AdminPlatformManagementController {
         data: res,
       };
     } catch (error) {
-        const message=extractLastLine(error.message)
-      this.logger.error(`Faild to save spin data`, error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save spin data`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
-
-
-
-
-
 
   @Get('terms-conditions')
   async getTermsAndConditions() {
@@ -320,14 +300,11 @@ export class AdminPlatformManagementController {
         data: res,
       };
     } catch (error) {
-        const message=extractLastLine(error.message)
-      this.logger.error(`Faild to save spin data`, error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save spin data`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
-
-
-
 
   @Get('get-alluser')
   async getAllUser(@Query() query: GetUserDto) {
@@ -353,8 +330,6 @@ export class AdminPlatformManagementController {
     };
   }
 
-
-
   @Get('offer/redemtions')
   async getAllRedemtions(@Query() query: GetRedemtionsDto) {
     // Convert query params with defaults
@@ -375,7 +350,6 @@ export class AdminPlatformManagementController {
     };
   }
 
-  
   @Get('subscription/payment-log')
   async getPaymentLog(@Query() filter: GetOffersDto) {
     try {
@@ -386,12 +360,11 @@ export class AdminPlatformManagementController {
         data: res,
       };
     } catch (error) {
-        const message=extractLastLine(error.message)
-      this.logger.error(`Faild to save spin data`, error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save spin data`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
-
 
   @Get('spin/spin-history')
   async getSpinHistory(@Query() dto: GetOffersDto) {
@@ -403,8 +376,8 @@ export class AdminPlatformManagementController {
         data: res,
       };
     } catch (error) {
-       const message=extractLastLine(error.message)
-      this.logger.error(`Faild to save spin data`, error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save spin data`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
@@ -420,8 +393,8 @@ export class AdminPlatformManagementController {
         data: res,
       };
     } catch (error) {
-        const message=extractLastLine(error.message)
-      this.logger.error(`Faild to save spin data`, error.stack)
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save spin data`, error.stack);
       throw new InternalServerErrorException(message);
     }
   }
