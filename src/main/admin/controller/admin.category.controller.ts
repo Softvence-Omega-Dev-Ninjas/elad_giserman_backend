@@ -20,7 +20,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class CategoryContoller {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @ValidateAdmin()
+  // @ValidateAdmin()
   @Post('create')
   async createCategory(@Body() dto: CategoryDto) {
     try {

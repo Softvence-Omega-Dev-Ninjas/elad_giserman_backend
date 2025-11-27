@@ -33,6 +33,7 @@ export type BusinessProfileMinAggregateOutputType = {
   openingTime: string | null;
   closingTime: string | null;
   categoryId: string | null;
+  profileTypeName: string | null;
   ownerId: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
@@ -47,6 +48,7 @@ export type BusinessProfileMaxAggregateOutputType = {
   openingTime: string | null;
   closingTime: string | null;
   categoryId: string | null;
+  profileTypeName: string | null;
   ownerId: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
@@ -61,6 +63,7 @@ export type BusinessProfileCountAggregateOutputType = {
   openingTime: number;
   closingTime: number;
   categoryId: number;
+  profileTypeName: number;
   ownerId: number;
   createdAt: number;
   updatedAt: number;
@@ -76,6 +79,7 @@ export type BusinessProfileMinAggregateInputType = {
   openingTime?: true;
   closingTime?: true;
   categoryId?: true;
+  profileTypeName?: true;
   ownerId?: true;
   createdAt?: true;
   updatedAt?: true;
@@ -90,6 +94,7 @@ export type BusinessProfileMaxAggregateInputType = {
   openingTime?: true;
   closingTime?: true;
   categoryId?: true;
+  profileTypeName?: true;
   ownerId?: true;
   createdAt?: true;
   updatedAt?: true;
@@ -104,6 +109,7 @@ export type BusinessProfileCountAggregateInputType = {
   openingTime?: true;
   closingTime?: true;
   categoryId?: true;
+  profileTypeName?: true;
   ownerId?: true;
   createdAt?: true;
   updatedAt?: true;
@@ -202,6 +208,7 @@ export type BusinessProfileGroupByOutputType = {
   openingTime: string;
   closingTime: string;
   categoryId: string | null;
+  profileTypeName: string | null;
   ownerId: string;
   createdAt: Date;
   updatedAt: Date;
@@ -236,12 +243,16 @@ export type BusinessProfileWhereInput = {
   openingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
   closingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
   categoryId?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+  profileTypeName?:
+    | Prisma.StringNullableFilter<'BusinessProfile'>
+    | string
+    | null;
   ownerId?: Prisma.StringFilter<'BusinessProfile'> | string;
   createdAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
   gallery?: Prisma.FileInstanceListRelationFilter;
   offers?: Prisma.OfferListRelationFilter;
-  profileType?: Prisma.XOR<
+  category?: Prisma.XOR<
     Prisma.CategoryNullableScalarRelationFilter,
     Prisma.CategoryWhereInput
   > | null;
@@ -259,12 +270,13 @@ export type BusinessProfileOrderByWithRelationInput = {
   openingTime?: Prisma.SortOrder;
   closingTime?: Prisma.SortOrder;
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder;
+  profileTypeName?: Prisma.SortOrderInput | Prisma.SortOrder;
   ownerId?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   gallery?: Prisma.FileInstanceOrderByRelationAggregateInput;
   offers?: Prisma.OfferOrderByRelationAggregateInput;
-  profileType?: Prisma.CategoryOrderByWithRelationInput;
+  category?: Prisma.CategoryOrderByWithRelationInput;
   owner?: Prisma.UserOrderByWithRelationInput;
   reviews?: Prisma.ReviewOrderByRelationAggregateInput;
   reedemOffer?: Prisma.ReedemaOfferOrderByRelationAggregateInput;
@@ -287,11 +299,15 @@ export type BusinessProfileWhereUniqueInput = Prisma.AtLeast<
     openingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
     closingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
     categoryId?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+    profileTypeName?:
+      | Prisma.StringNullableFilter<'BusinessProfile'>
+      | string
+      | null;
     createdAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
     gallery?: Prisma.FileInstanceListRelationFilter;
     offers?: Prisma.OfferListRelationFilter;
-    profileType?: Prisma.XOR<
+    category?: Prisma.XOR<
       Prisma.CategoryNullableScalarRelationFilter,
       Prisma.CategoryWhereInput
     > | null;
@@ -311,6 +327,7 @@ export type BusinessProfileOrderByWithAggregationInput = {
   openingTime?: Prisma.SortOrder;
   closingTime?: Prisma.SortOrder;
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder;
+  profileTypeName?: Prisma.SortOrderInput | Prisma.SortOrder;
   ownerId?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -341,6 +358,10 @@ export type BusinessProfileScalarWhereWithAggregatesInput = {
     | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
     | string
     | null;
+  profileTypeName?:
+    | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
+    | string
+    | null;
   ownerId?: Prisma.StringWithAggregatesFilter<'BusinessProfile'> | string;
   createdAt?:
     | Prisma.DateTimeWithAggregatesFilter<'BusinessProfile'>
@@ -360,11 +381,12 @@ export type BusinessProfileCreateInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  profileTypeName?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
   offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
-  profileType?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
+  category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
@@ -379,6 +401,7 @@ export type BusinessProfileUncheckedCreateInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
+  profileTypeName?: string | null;
   ownerId: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -396,11 +419,15 @@ export type BusinessProfileUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
   offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
-  profileType?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
+  category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
@@ -415,6 +442,10 @@ export type BusinessProfileUncheckedUpdateInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -433,6 +464,7 @@ export type BusinessProfileCreateManyInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
+  profileTypeName?: string | null;
   ownerId: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -446,6 +478,10 @@ export type BusinessProfileUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -459,6 +495,10 @@ export type BusinessProfileUncheckedUpdateManyInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -473,6 +513,7 @@ export type BusinessProfileCountOrderByAggregateInput = {
   openingTime?: Prisma.SortOrder;
   closingTime?: Prisma.SortOrder;
   categoryId?: Prisma.SortOrder;
+  profileTypeName?: Prisma.SortOrder;
   ownerId?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -487,6 +528,7 @@ export type BusinessProfileMaxOrderByAggregateInput = {
   openingTime?: Prisma.SortOrder;
   closingTime?: Prisma.SortOrder;
   categoryId?: Prisma.SortOrder;
+  profileTypeName?: Prisma.SortOrder;
   ownerId?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -501,6 +543,7 @@ export type BusinessProfileMinOrderByAggregateInput = {
   openingTime?: Prisma.SortOrder;
   closingTime?: Prisma.SortOrder;
   categoryId?: Prisma.SortOrder;
+  profileTypeName?: Prisma.SortOrder;
   ownerId?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -530,55 +573,55 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean;
 };
 
-export type BusinessProfileCreateNestedManyWithoutProfileTypeInput = {
+export type BusinessProfileCreateNestedManyWithoutCategoryInput = {
   create?:
     | Prisma.XOR<
-        Prisma.BusinessProfileCreateWithoutProfileTypeInput,
-        Prisma.BusinessProfileUncheckedCreateWithoutProfileTypeInput
+        Prisma.BusinessProfileCreateWithoutCategoryInput,
+        Prisma.BusinessProfileUncheckedCreateWithoutCategoryInput
       >
-    | Prisma.BusinessProfileCreateWithoutProfileTypeInput[]
-    | Prisma.BusinessProfileUncheckedCreateWithoutProfileTypeInput[];
+    | Prisma.BusinessProfileCreateWithoutCategoryInput[]
+    | Prisma.BusinessProfileUncheckedCreateWithoutCategoryInput[];
   connectOrCreate?:
-    | Prisma.BusinessProfileCreateOrConnectWithoutProfileTypeInput
-    | Prisma.BusinessProfileCreateOrConnectWithoutProfileTypeInput[];
-  createMany?: Prisma.BusinessProfileCreateManyProfileTypeInputEnvelope;
+    | Prisma.BusinessProfileCreateOrConnectWithoutCategoryInput
+    | Prisma.BusinessProfileCreateOrConnectWithoutCategoryInput[];
+  createMany?: Prisma.BusinessProfileCreateManyCategoryInputEnvelope;
   connect?:
     | Prisma.BusinessProfileWhereUniqueInput
     | Prisma.BusinessProfileWhereUniqueInput[];
 };
 
-export type BusinessProfileUncheckedCreateNestedManyWithoutProfileTypeInput = {
+export type BusinessProfileUncheckedCreateNestedManyWithoutCategoryInput = {
   create?:
     | Prisma.XOR<
-        Prisma.BusinessProfileCreateWithoutProfileTypeInput,
-        Prisma.BusinessProfileUncheckedCreateWithoutProfileTypeInput
+        Prisma.BusinessProfileCreateWithoutCategoryInput,
+        Prisma.BusinessProfileUncheckedCreateWithoutCategoryInput
       >
-    | Prisma.BusinessProfileCreateWithoutProfileTypeInput[]
-    | Prisma.BusinessProfileUncheckedCreateWithoutProfileTypeInput[];
+    | Prisma.BusinessProfileCreateWithoutCategoryInput[]
+    | Prisma.BusinessProfileUncheckedCreateWithoutCategoryInput[];
   connectOrCreate?:
-    | Prisma.BusinessProfileCreateOrConnectWithoutProfileTypeInput
-    | Prisma.BusinessProfileCreateOrConnectWithoutProfileTypeInput[];
-  createMany?: Prisma.BusinessProfileCreateManyProfileTypeInputEnvelope;
+    | Prisma.BusinessProfileCreateOrConnectWithoutCategoryInput
+    | Prisma.BusinessProfileCreateOrConnectWithoutCategoryInput[];
+  createMany?: Prisma.BusinessProfileCreateManyCategoryInputEnvelope;
   connect?:
     | Prisma.BusinessProfileWhereUniqueInput
     | Prisma.BusinessProfileWhereUniqueInput[];
 };
 
-export type BusinessProfileUpdateManyWithoutProfileTypeNestedInput = {
+export type BusinessProfileUpdateManyWithoutCategoryNestedInput = {
   create?:
     | Prisma.XOR<
-        Prisma.BusinessProfileCreateWithoutProfileTypeInput,
-        Prisma.BusinessProfileUncheckedCreateWithoutProfileTypeInput
+        Prisma.BusinessProfileCreateWithoutCategoryInput,
+        Prisma.BusinessProfileUncheckedCreateWithoutCategoryInput
       >
-    | Prisma.BusinessProfileCreateWithoutProfileTypeInput[]
-    | Prisma.BusinessProfileUncheckedCreateWithoutProfileTypeInput[];
+    | Prisma.BusinessProfileCreateWithoutCategoryInput[]
+    | Prisma.BusinessProfileUncheckedCreateWithoutCategoryInput[];
   connectOrCreate?:
-    | Prisma.BusinessProfileCreateOrConnectWithoutProfileTypeInput
-    | Prisma.BusinessProfileCreateOrConnectWithoutProfileTypeInput[];
+    | Prisma.BusinessProfileCreateOrConnectWithoutCategoryInput
+    | Prisma.BusinessProfileCreateOrConnectWithoutCategoryInput[];
   upsert?:
-    | Prisma.BusinessProfileUpsertWithWhereUniqueWithoutProfileTypeInput
-    | Prisma.BusinessProfileUpsertWithWhereUniqueWithoutProfileTypeInput[];
-  createMany?: Prisma.BusinessProfileCreateManyProfileTypeInputEnvelope;
+    | Prisma.BusinessProfileUpsertWithWhereUniqueWithoutCategoryInput
+    | Prisma.BusinessProfileUpsertWithWhereUniqueWithoutCategoryInput[];
+  createMany?: Prisma.BusinessProfileCreateManyCategoryInputEnvelope;
   set?:
     | Prisma.BusinessProfileWhereUniqueInput
     | Prisma.BusinessProfileWhereUniqueInput[];
@@ -592,31 +635,31 @@ export type BusinessProfileUpdateManyWithoutProfileTypeNestedInput = {
     | Prisma.BusinessProfileWhereUniqueInput
     | Prisma.BusinessProfileWhereUniqueInput[];
   update?:
-    | Prisma.BusinessProfileUpdateWithWhereUniqueWithoutProfileTypeInput
-    | Prisma.BusinessProfileUpdateWithWhereUniqueWithoutProfileTypeInput[];
+    | Prisma.BusinessProfileUpdateWithWhereUniqueWithoutCategoryInput
+    | Prisma.BusinessProfileUpdateWithWhereUniqueWithoutCategoryInput[];
   updateMany?:
-    | Prisma.BusinessProfileUpdateManyWithWhereWithoutProfileTypeInput
-    | Prisma.BusinessProfileUpdateManyWithWhereWithoutProfileTypeInput[];
+    | Prisma.BusinessProfileUpdateManyWithWhereWithoutCategoryInput
+    | Prisma.BusinessProfileUpdateManyWithWhereWithoutCategoryInput[];
   deleteMany?:
     | Prisma.BusinessProfileScalarWhereInput
     | Prisma.BusinessProfileScalarWhereInput[];
 };
 
-export type BusinessProfileUncheckedUpdateManyWithoutProfileTypeNestedInput = {
+export type BusinessProfileUncheckedUpdateManyWithoutCategoryNestedInput = {
   create?:
     | Prisma.XOR<
-        Prisma.BusinessProfileCreateWithoutProfileTypeInput,
-        Prisma.BusinessProfileUncheckedCreateWithoutProfileTypeInput
+        Prisma.BusinessProfileCreateWithoutCategoryInput,
+        Prisma.BusinessProfileUncheckedCreateWithoutCategoryInput
       >
-    | Prisma.BusinessProfileCreateWithoutProfileTypeInput[]
-    | Prisma.BusinessProfileUncheckedCreateWithoutProfileTypeInput[];
+    | Prisma.BusinessProfileCreateWithoutCategoryInput[]
+    | Prisma.BusinessProfileUncheckedCreateWithoutCategoryInput[];
   connectOrCreate?:
-    | Prisma.BusinessProfileCreateOrConnectWithoutProfileTypeInput
-    | Prisma.BusinessProfileCreateOrConnectWithoutProfileTypeInput[];
+    | Prisma.BusinessProfileCreateOrConnectWithoutCategoryInput
+    | Prisma.BusinessProfileCreateOrConnectWithoutCategoryInput[];
   upsert?:
-    | Prisma.BusinessProfileUpsertWithWhereUniqueWithoutProfileTypeInput
-    | Prisma.BusinessProfileUpsertWithWhereUniqueWithoutProfileTypeInput[];
-  createMany?: Prisma.BusinessProfileCreateManyProfileTypeInputEnvelope;
+    | Prisma.BusinessProfileUpsertWithWhereUniqueWithoutCategoryInput
+    | Prisma.BusinessProfileUpsertWithWhereUniqueWithoutCategoryInput[];
+  createMany?: Prisma.BusinessProfileCreateManyCategoryInputEnvelope;
   set?:
     | Prisma.BusinessProfileWhereUniqueInput
     | Prisma.BusinessProfileWhereUniqueInput[];
@@ -630,11 +673,11 @@ export type BusinessProfileUncheckedUpdateManyWithoutProfileTypeNestedInput = {
     | Prisma.BusinessProfileWhereUniqueInput
     | Prisma.BusinessProfileWhereUniqueInput[];
   update?:
-    | Prisma.BusinessProfileUpdateWithWhereUniqueWithoutProfileTypeInput
-    | Prisma.BusinessProfileUpdateWithWhereUniqueWithoutProfileTypeInput[];
+    | Prisma.BusinessProfileUpdateWithWhereUniqueWithoutCategoryInput
+    | Prisma.BusinessProfileUpdateWithWhereUniqueWithoutCategoryInput[];
   updateMany?:
-    | Prisma.BusinessProfileUpdateManyWithWhereWithoutProfileTypeInput
-    | Prisma.BusinessProfileUpdateManyWithWhereWithoutProfileTypeInput[];
+    | Prisma.BusinessProfileUpdateManyWithWhereWithoutCategoryInput
+    | Prisma.BusinessProfileUpdateManyWithWhereWithoutCategoryInput[];
   deleteMany?:
     | Prisma.BusinessProfileScalarWhereInput
     | Prisma.BusinessProfileScalarWhereInput[];
@@ -880,7 +923,7 @@ export type BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput = {
   >;
 };
 
-export type BusinessProfileCreateWithoutProfileTypeInput = {
+export type BusinessProfileCreateWithoutCategoryInput = {
   id?: string;
   title: string;
   description?: string | null;
@@ -888,6 +931,7 @@ export type BusinessProfileCreateWithoutProfileTypeInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  profileTypeName?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
@@ -897,7 +941,7 @@ export type BusinessProfileCreateWithoutProfileTypeInput = {
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
 };
 
-export type BusinessProfileUncheckedCreateWithoutProfileTypeInput = {
+export type BusinessProfileUncheckedCreateWithoutCategoryInput = {
   id?: string;
   title: string;
   description?: string | null;
@@ -905,6 +949,7 @@ export type BusinessProfileUncheckedCreateWithoutProfileTypeInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  profileTypeName?: string | null;
   ownerId: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -914,46 +959,46 @@ export type BusinessProfileUncheckedCreateWithoutProfileTypeInput = {
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
 };
 
-export type BusinessProfileCreateOrConnectWithoutProfileTypeInput = {
+export type BusinessProfileCreateOrConnectWithoutCategoryInput = {
   where: Prisma.BusinessProfileWhereUniqueInput;
   create: Prisma.XOR<
-    Prisma.BusinessProfileCreateWithoutProfileTypeInput,
-    Prisma.BusinessProfileUncheckedCreateWithoutProfileTypeInput
+    Prisma.BusinessProfileCreateWithoutCategoryInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutCategoryInput
   >;
 };
 
-export type BusinessProfileCreateManyProfileTypeInputEnvelope = {
+export type BusinessProfileCreateManyCategoryInputEnvelope = {
   data:
-    | Prisma.BusinessProfileCreateManyProfileTypeInput
-    | Prisma.BusinessProfileCreateManyProfileTypeInput[];
+    | Prisma.BusinessProfileCreateManyCategoryInput
+    | Prisma.BusinessProfileCreateManyCategoryInput[];
   skipDuplicates?: boolean;
 };
 
-export type BusinessProfileUpsertWithWhereUniqueWithoutProfileTypeInput = {
+export type BusinessProfileUpsertWithWhereUniqueWithoutCategoryInput = {
   where: Prisma.BusinessProfileWhereUniqueInput;
   update: Prisma.XOR<
-    Prisma.BusinessProfileUpdateWithoutProfileTypeInput,
-    Prisma.BusinessProfileUncheckedUpdateWithoutProfileTypeInput
+    Prisma.BusinessProfileUpdateWithoutCategoryInput,
+    Prisma.BusinessProfileUncheckedUpdateWithoutCategoryInput
   >;
   create: Prisma.XOR<
-    Prisma.BusinessProfileCreateWithoutProfileTypeInput,
-    Prisma.BusinessProfileUncheckedCreateWithoutProfileTypeInput
+    Prisma.BusinessProfileCreateWithoutCategoryInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutCategoryInput
   >;
 };
 
-export type BusinessProfileUpdateWithWhereUniqueWithoutProfileTypeInput = {
+export type BusinessProfileUpdateWithWhereUniqueWithoutCategoryInput = {
   where: Prisma.BusinessProfileWhereUniqueInput;
   data: Prisma.XOR<
-    Prisma.BusinessProfileUpdateWithoutProfileTypeInput,
-    Prisma.BusinessProfileUncheckedUpdateWithoutProfileTypeInput
+    Prisma.BusinessProfileUpdateWithoutCategoryInput,
+    Prisma.BusinessProfileUncheckedUpdateWithoutCategoryInput
   >;
 };
 
-export type BusinessProfileUpdateManyWithWhereWithoutProfileTypeInput = {
+export type BusinessProfileUpdateManyWithWhereWithoutCategoryInput = {
   where: Prisma.BusinessProfileScalarWhereInput;
   data: Prisma.XOR<
     Prisma.BusinessProfileUpdateManyMutationInput,
-    Prisma.BusinessProfileUncheckedUpdateManyWithoutProfileTypeInput
+    Prisma.BusinessProfileUncheckedUpdateManyWithoutCategoryInput
   >;
 };
 
@@ -973,6 +1018,10 @@ export type BusinessProfileScalarWhereInput = {
   openingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
   closingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
   categoryId?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+  profileTypeName?:
+    | Prisma.StringNullableFilter<'BusinessProfile'>
+    | string
+    | null;
   ownerId?: Prisma.StringFilter<'BusinessProfile'> | string;
   createdAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
@@ -986,10 +1035,11 @@ export type BusinessProfileCreateWithoutGalleryInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  profileTypeName?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
-  profileType?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
+  category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
@@ -1004,6 +1054,7 @@ export type BusinessProfileUncheckedCreateWithoutGalleryInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
+  profileTypeName?: string | null;
   ownerId: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -1056,10 +1107,11 @@ export type BusinessProfileCreateWithoutOffersInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  profileTypeName?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
-  profileType?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
+  category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
@@ -1074,6 +1126,7 @@ export type BusinessProfileUncheckedCreateWithoutOffersInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
+  profileTypeName?: string | null;
   ownerId: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -1118,10 +1171,14 @@ export type BusinessProfileUpdateWithoutOffersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
-  profileType?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
+  category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
@@ -1136,6 +1193,10 @@ export type BusinessProfileUncheckedUpdateWithoutOffersInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1152,11 +1213,12 @@ export type BusinessProfileCreateWithoutReedemOfferInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  profileTypeName?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
   offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
-  profileType?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
+  category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
 };
@@ -1170,6 +1232,7 @@ export type BusinessProfileUncheckedCreateWithoutReedemOfferInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
+  profileTypeName?: string | null;
   ownerId: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -1214,11 +1277,15 @@ export type BusinessProfileUpdateWithoutReedemOfferInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
   offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
-  profileType?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
+  category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
 };
@@ -1232,6 +1299,10 @@ export type BusinessProfileUncheckedUpdateWithoutReedemOfferInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1248,11 +1319,12 @@ export type BusinessProfileCreateWithoutReviewsInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  profileTypeName?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
   offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
-  profileType?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
+  category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
 };
@@ -1266,6 +1338,7 @@ export type BusinessProfileUncheckedCreateWithoutReviewsInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
+  profileTypeName?: string | null;
   ownerId: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -1310,11 +1383,15 @@ export type BusinessProfileUpdateWithoutReviewsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
   offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
-  profileType?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
+  category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
 };
@@ -1328,6 +1405,10 @@ export type BusinessProfileUncheckedUpdateWithoutReviewsInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1344,11 +1425,12 @@ export type BusinessProfileCreateWithoutOwnerInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  profileTypeName?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
   offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
-  profileType?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
+  category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
 };
@@ -1362,6 +1444,7 @@ export type BusinessProfileUncheckedCreateWithoutOwnerInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
+  profileTypeName?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
@@ -1406,11 +1489,15 @@ export type BusinessProfileUpdateWithoutOwnerInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
   offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
-  profileType?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
+  category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
 };
@@ -1424,6 +1511,10 @@ export type BusinessProfileUncheckedUpdateWithoutOwnerInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
@@ -1432,7 +1523,7 @@ export type BusinessProfileUncheckedUpdateWithoutOwnerInput = {
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
 };
 
-export type BusinessProfileCreateManyProfileTypeInput = {
+export type BusinessProfileCreateManyCategoryInput = {
   id?: string;
   title: string;
   description?: string | null;
@@ -1440,12 +1531,13 @@ export type BusinessProfileCreateManyProfileTypeInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  profileTypeName?: string | null;
   ownerId: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
 
-export type BusinessProfileUpdateWithoutProfileTypeInput = {
+export type BusinessProfileUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
@@ -1453,6 +1545,10 @@ export type BusinessProfileUpdateWithoutProfileTypeInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
@@ -1462,7 +1558,7 @@ export type BusinessProfileUpdateWithoutProfileTypeInput = {
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
 };
 
-export type BusinessProfileUncheckedUpdateWithoutProfileTypeInput = {
+export type BusinessProfileUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
@@ -1470,6 +1566,10 @@ export type BusinessProfileUncheckedUpdateWithoutProfileTypeInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1479,7 +1579,7 @@ export type BusinessProfileUncheckedUpdateWithoutProfileTypeInput = {
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
 };
 
-export type BusinessProfileUncheckedUpdateManyWithoutProfileTypeInput = {
+export type BusinessProfileUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
@@ -1487,6 +1587,10 @@ export type BusinessProfileUncheckedUpdateManyWithoutProfileTypeInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1500,10 +1604,14 @@ export type BusinessProfileUpdateWithoutGalleryInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
-  profileType?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
+  category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
@@ -1518,6 +1626,10 @@ export type BusinessProfileUncheckedUpdateWithoutGalleryInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1535,6 +1647,10 @@ export type BusinessProfileUncheckedUpdateManyWithoutGalleryInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1627,12 +1743,13 @@ export type BusinessProfileSelect<
     openingTime?: boolean;
     closingTime?: boolean;
     categoryId?: boolean;
+    profileTypeName?: boolean;
     ownerId?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     gallery?: boolean | Prisma.BusinessProfile$galleryArgs<ExtArgs>;
     offers?: boolean | Prisma.BusinessProfile$offersArgs<ExtArgs>;
-    profileType?: boolean | Prisma.BusinessProfile$profileTypeArgs<ExtArgs>;
+    category?: boolean | Prisma.BusinessProfile$categoryArgs<ExtArgs>;
     owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     reviews?: boolean | Prisma.BusinessProfile$reviewsArgs<ExtArgs>;
     reedemOffer?: boolean | Prisma.BusinessProfile$reedemOfferArgs<ExtArgs>;
@@ -1656,10 +1773,11 @@ export type BusinessProfileSelectCreateManyAndReturn<
     openingTime?: boolean;
     closingTime?: boolean;
     categoryId?: boolean;
+    profileTypeName?: boolean;
     ownerId?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    profileType?: boolean | Prisma.BusinessProfile$profileTypeArgs<ExtArgs>;
+    category?: boolean | Prisma.BusinessProfile$categoryArgs<ExtArgs>;
     owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['businessProfile']
@@ -1678,10 +1796,11 @@ export type BusinessProfileSelectUpdateManyAndReturn<
     openingTime?: boolean;
     closingTime?: boolean;
     categoryId?: boolean;
+    profileTypeName?: boolean;
     ownerId?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    profileType?: boolean | Prisma.BusinessProfile$profileTypeArgs<ExtArgs>;
+    category?: boolean | Prisma.BusinessProfile$categoryArgs<ExtArgs>;
     owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['businessProfile']
@@ -1696,6 +1815,7 @@ export type BusinessProfileSelectScalar = {
   openingTime?: boolean;
   closingTime?: boolean;
   categoryId?: boolean;
+  profileTypeName?: boolean;
   ownerId?: boolean;
   createdAt?: boolean;
   updatedAt?: boolean;
@@ -1713,6 +1833,7 @@ export type BusinessProfileOmit<
   | 'openingTime'
   | 'closingTime'
   | 'categoryId'
+  | 'profileTypeName'
   | 'ownerId'
   | 'createdAt'
   | 'updatedAt',
@@ -1724,7 +1845,7 @@ export type BusinessProfileInclude<
 > = {
   gallery?: boolean | Prisma.BusinessProfile$galleryArgs<ExtArgs>;
   offers?: boolean | Prisma.BusinessProfile$offersArgs<ExtArgs>;
-  profileType?: boolean | Prisma.BusinessProfile$profileTypeArgs<ExtArgs>;
+  category?: boolean | Prisma.BusinessProfile$categoryArgs<ExtArgs>;
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   reviews?: boolean | Prisma.BusinessProfile$reviewsArgs<ExtArgs>;
   reedemOffer?: boolean | Prisma.BusinessProfile$reedemOfferArgs<ExtArgs>;
@@ -1734,14 +1855,14 @@ export type BusinessProfileIncludeCreateManyAndReturn<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  profileType?: boolean | Prisma.BusinessProfile$profileTypeArgs<ExtArgs>;
+  category?: boolean | Prisma.BusinessProfile$categoryArgs<ExtArgs>;
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 export type BusinessProfileIncludeUpdateManyAndReturn<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  profileType?: boolean | Prisma.BusinessProfile$profileTypeArgs<ExtArgs>;
+  category?: boolean | Prisma.BusinessProfile$categoryArgs<ExtArgs>;
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 
@@ -1753,7 +1874,7 @@ export type $BusinessProfilePayload<
   objects: {
     gallery: Prisma.$FileInstancePayload<ExtArgs>[];
     offers: Prisma.$OfferPayload<ExtArgs>[];
-    profileType: Prisma.$CategoryPayload<ExtArgs> | null;
+    category: Prisma.$CategoryPayload<ExtArgs> | null;
     owner: Prisma.$UserPayload<ExtArgs>;
     reviews: Prisma.$ReviewPayload<ExtArgs>[];
     reedemOffer: Prisma.$ReedemaOfferPayload<ExtArgs>[];
@@ -1768,6 +1889,7 @@ export type $BusinessProfilePayload<
       openingTime: string;
       closingTime: string;
       categoryId: string | null;
+      profileTypeName: string | null;
       ownerId: string;
       createdAt: Date;
       updatedAt: Date;
@@ -2355,8 +2477,8 @@ export interface Prisma__BusinessProfileClient<
       >
     | Null
   >;
-  profileType<T extends Prisma.BusinessProfile$profileTypeArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.BusinessProfile$profileTypeArgs<ExtArgs>>,
+  category<T extends Prisma.BusinessProfile$categoryArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.BusinessProfile$categoryArgs<ExtArgs>>,
   ): Prisma.Prisma__CategoryClient<
     runtime.Types.Result.GetResult<
       Prisma.$CategoryPayload<ExtArgs>,
@@ -2454,6 +2576,7 @@ export interface BusinessProfileFieldRefs {
   readonly openingTime: Prisma.FieldRef<'BusinessProfile', 'String'>;
   readonly closingTime: Prisma.FieldRef<'BusinessProfile', 'String'>;
   readonly categoryId: Prisma.FieldRef<'BusinessProfile', 'String'>;
+  readonly profileTypeName: Prisma.FieldRef<'BusinessProfile', 'String'>;
   readonly ownerId: Prisma.FieldRef<'BusinessProfile', 'String'>;
   readonly createdAt: Prisma.FieldRef<'BusinessProfile', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'BusinessProfile', 'DateTime'>;
@@ -2988,9 +3111,9 @@ export type BusinessProfile$offersArgs<
 };
 
 /**
- * BusinessProfile.profileType
+ * BusinessProfile.category
  */
-export type BusinessProfile$profileTypeArgs<
+export type BusinessProfile$categoryArgs<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {

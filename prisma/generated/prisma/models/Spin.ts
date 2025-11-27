@@ -28,42 +28,15 @@ export type AggregateSpin = {
 
 export type SpinAvgAggregateOutputType = {
   spinValue1: number | null;
-  spinValue2: number | null;
-  spinValue3: number | null;
-  spinValue4: number | null;
-  spinValue5: number | null;
-  spinValue6: number | null;
-  spinValue7: number | null;
-  spinValue8: number | null;
-  spinValue9: number | null;
-  spinValue10: number | null;
 };
 
 export type SpinSumAggregateOutputType = {
   spinValue1: number | null;
-  spinValue2: number | null;
-  spinValue3: number | null;
-  spinValue4: number | null;
-  spinValue5: number | null;
-  spinValue6: number | null;
-  spinValue7: number | null;
-  spinValue8: number | null;
-  spinValue9: number | null;
-  spinValue10: number | null;
 };
 
 export type SpinMinAggregateOutputType = {
   id: string | null;
   spinValue1: number | null;
-  spinValue2: number | null;
-  spinValue3: number | null;
-  spinValue4: number | null;
-  spinValue5: number | null;
-  spinValue6: number | null;
-  spinValue7: number | null;
-  spinValue8: number | null;
-  spinValue9: number | null;
-  spinValue10: number | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
@@ -71,15 +44,6 @@ export type SpinMinAggregateOutputType = {
 export type SpinMaxAggregateOutputType = {
   id: string | null;
   spinValue1: number | null;
-  spinValue2: number | null;
-  spinValue3: number | null;
-  spinValue4: number | null;
-  spinValue5: number | null;
-  spinValue6: number | null;
-  spinValue7: number | null;
-  spinValue8: number | null;
-  spinValue9: number | null;
-  spinValue10: number | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
@@ -87,15 +51,6 @@ export type SpinMaxAggregateOutputType = {
 export type SpinCountAggregateOutputType = {
   id: number;
   spinValue1: number;
-  spinValue2: number;
-  spinValue3: number;
-  spinValue4: number;
-  spinValue5: number;
-  spinValue6: number;
-  spinValue7: number;
-  spinValue8: number;
-  spinValue9: number;
-  spinValue10: number;
   createdAt: number;
   updatedAt: number;
   _all: number;
@@ -103,42 +58,15 @@ export type SpinCountAggregateOutputType = {
 
 export type SpinAvgAggregateInputType = {
   spinValue1?: true;
-  spinValue2?: true;
-  spinValue3?: true;
-  spinValue4?: true;
-  spinValue5?: true;
-  spinValue6?: true;
-  spinValue7?: true;
-  spinValue8?: true;
-  spinValue9?: true;
-  spinValue10?: true;
 };
 
 export type SpinSumAggregateInputType = {
   spinValue1?: true;
-  spinValue2?: true;
-  spinValue3?: true;
-  spinValue4?: true;
-  spinValue5?: true;
-  spinValue6?: true;
-  spinValue7?: true;
-  spinValue8?: true;
-  spinValue9?: true;
-  spinValue10?: true;
 };
 
 export type SpinMinAggregateInputType = {
   id?: true;
   spinValue1?: true;
-  spinValue2?: true;
-  spinValue3?: true;
-  spinValue4?: true;
-  spinValue5?: true;
-  spinValue6?: true;
-  spinValue7?: true;
-  spinValue8?: true;
-  spinValue9?: true;
-  spinValue10?: true;
   createdAt?: true;
   updatedAt?: true;
 };
@@ -146,15 +74,6 @@ export type SpinMinAggregateInputType = {
 export type SpinMaxAggregateInputType = {
   id?: true;
   spinValue1?: true;
-  spinValue2?: true;
-  spinValue3?: true;
-  spinValue4?: true;
-  spinValue5?: true;
-  spinValue6?: true;
-  spinValue7?: true;
-  spinValue8?: true;
-  spinValue9?: true;
-  spinValue10?: true;
   createdAt?: true;
   updatedAt?: true;
 };
@@ -162,15 +81,6 @@ export type SpinMaxAggregateInputType = {
 export type SpinCountAggregateInputType = {
   id?: true;
   spinValue1?: true;
-  spinValue2?: true;
-  spinValue3?: true;
-  spinValue4?: true;
-  spinValue5?: true;
-  spinValue6?: true;
-  spinValue7?: true;
-  spinValue8?: true;
-  spinValue9?: true;
-  spinValue10?: true;
   createdAt?: true;
   updatedAt?: true;
   _all?: true;
@@ -272,15 +182,6 @@ export type SpinGroupByArgs<
 export type SpinGroupByOutputType = {
   id: string;
   spinValue1: number | null;
-  spinValue2: number | null;
-  spinValue3: number | null;
-  spinValue4: number | null;
-  spinValue5: number | null;
-  spinValue6: number | null;
-  spinValue7: number | null;
-  spinValue8: number | null;
-  spinValue9: number | null;
-  spinValue10: number | null;
   createdAt: Date;
   updatedAt: Date;
   _count: SpinCountAggregateOutputType | null;
@@ -308,15 +209,6 @@ export type SpinWhereInput = {
   NOT?: Prisma.SpinWhereInput | Prisma.SpinWhereInput[];
   id?: Prisma.StringFilter<'Spin'> | string;
   spinValue1?: Prisma.IntNullableFilter<'Spin'> | number | null;
-  spinValue2?: Prisma.IntNullableFilter<'Spin'> | number | null;
-  spinValue3?: Prisma.IntNullableFilter<'Spin'> | number | null;
-  spinValue4?: Prisma.IntNullableFilter<'Spin'> | number | null;
-  spinValue5?: Prisma.IntNullableFilter<'Spin'> | number | null;
-  spinValue6?: Prisma.IntNullableFilter<'Spin'> | number | null;
-  spinValue7?: Prisma.IntNullableFilter<'Spin'> | number | null;
-  spinValue8?: Prisma.IntNullableFilter<'Spin'> | number | null;
-  spinValue9?: Prisma.IntNullableFilter<'Spin'> | number | null;
-  spinValue10?: Prisma.IntNullableFilter<'Spin'> | number | null;
   createdAt?: Prisma.DateTimeFilter<'Spin'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Spin'> | Date | string;
 };
@@ -324,15 +216,6 @@ export type SpinWhereInput = {
 export type SpinOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
   spinValue1?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue2?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue3?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue4?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue5?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue6?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue7?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue8?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue9?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue10?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
@@ -344,15 +227,6 @@ export type SpinWhereUniqueInput = Prisma.AtLeast<
     OR?: Prisma.SpinWhereInput[];
     NOT?: Prisma.SpinWhereInput | Prisma.SpinWhereInput[];
     spinValue1?: Prisma.IntNullableFilter<'Spin'> | number | null;
-    spinValue2?: Prisma.IntNullableFilter<'Spin'> | number | null;
-    spinValue3?: Prisma.IntNullableFilter<'Spin'> | number | null;
-    spinValue4?: Prisma.IntNullableFilter<'Spin'> | number | null;
-    spinValue5?: Prisma.IntNullableFilter<'Spin'> | number | null;
-    spinValue6?: Prisma.IntNullableFilter<'Spin'> | number | null;
-    spinValue7?: Prisma.IntNullableFilter<'Spin'> | number | null;
-    spinValue8?: Prisma.IntNullableFilter<'Spin'> | number | null;
-    spinValue9?: Prisma.IntNullableFilter<'Spin'> | number | null;
-    spinValue10?: Prisma.IntNullableFilter<'Spin'> | number | null;
     createdAt?: Prisma.DateTimeFilter<'Spin'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'Spin'> | Date | string;
   },
@@ -362,15 +236,6 @@ export type SpinWhereUniqueInput = Prisma.AtLeast<
 export type SpinOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
   spinValue1?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue2?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue3?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue4?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue5?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue6?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue7?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue8?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue9?: Prisma.SortOrderInput | Prisma.SortOrder;
-  spinValue10?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   _count?: Prisma.SpinCountOrderByAggregateInput;
@@ -390,15 +255,6 @@ export type SpinScalarWhereWithAggregatesInput = {
     | Prisma.SpinScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'Spin'> | string;
   spinValue1?: Prisma.IntNullableWithAggregatesFilter<'Spin'> | number | null;
-  spinValue2?: Prisma.IntNullableWithAggregatesFilter<'Spin'> | number | null;
-  spinValue3?: Prisma.IntNullableWithAggregatesFilter<'Spin'> | number | null;
-  spinValue4?: Prisma.IntNullableWithAggregatesFilter<'Spin'> | number | null;
-  spinValue5?: Prisma.IntNullableWithAggregatesFilter<'Spin'> | number | null;
-  spinValue6?: Prisma.IntNullableWithAggregatesFilter<'Spin'> | number | null;
-  spinValue7?: Prisma.IntNullableWithAggregatesFilter<'Spin'> | number | null;
-  spinValue8?: Prisma.IntNullableWithAggregatesFilter<'Spin'> | number | null;
-  spinValue9?: Prisma.IntNullableWithAggregatesFilter<'Spin'> | number | null;
-  spinValue10?: Prisma.IntNullableWithAggregatesFilter<'Spin'> | number | null;
   createdAt?: Prisma.DateTimeWithAggregatesFilter<'Spin'> | Date | string;
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<'Spin'> | Date | string;
 };
@@ -406,15 +262,6 @@ export type SpinScalarWhereWithAggregatesInput = {
 export type SpinCreateInput = {
   id?: string;
   spinValue1?: number | null;
-  spinValue2?: number | null;
-  spinValue3?: number | null;
-  spinValue4?: number | null;
-  spinValue5?: number | null;
-  spinValue6?: number | null;
-  spinValue7?: number | null;
-  spinValue8?: number | null;
-  spinValue9?: number | null;
-  spinValue10?: number | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -422,15 +269,6 @@ export type SpinCreateInput = {
 export type SpinUncheckedCreateInput = {
   id?: string;
   spinValue1?: number | null;
-  spinValue2?: number | null;
-  spinValue3?: number | null;
-  spinValue4?: number | null;
-  spinValue5?: number | null;
-  spinValue6?: number | null;
-  spinValue7?: number | null;
-  spinValue8?: number | null;
-  spinValue9?: number | null;
-  spinValue10?: number | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -438,15 +276,6 @@ export type SpinUncheckedCreateInput = {
 export type SpinUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   spinValue1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue2?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue3?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue4?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue5?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue6?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue7?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue8?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue9?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue10?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -454,15 +283,6 @@ export type SpinUpdateInput = {
 export type SpinUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   spinValue1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue2?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue3?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue4?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue5?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue6?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue7?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue8?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue9?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue10?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -470,15 +290,6 @@ export type SpinUncheckedUpdateInput = {
 export type SpinCreateManyInput = {
   id?: string;
   spinValue1?: number | null;
-  spinValue2?: number | null;
-  spinValue3?: number | null;
-  spinValue4?: number | null;
-  spinValue5?: number | null;
-  spinValue6?: number | null;
-  spinValue7?: number | null;
-  spinValue8?: number | null;
-  spinValue9?: number | null;
-  spinValue10?: number | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -486,15 +297,6 @@ export type SpinCreateManyInput = {
 export type SpinUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   spinValue1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue2?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue3?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue4?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue5?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue6?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue7?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue8?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue9?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue10?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -502,15 +304,6 @@ export type SpinUpdateManyMutationInput = {
 export type SpinUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   spinValue1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue2?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue3?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue4?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue5?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue6?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue7?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue8?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue9?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-  spinValue10?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -518,44 +311,17 @@ export type SpinUncheckedUpdateManyInput = {
 export type SpinCountOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   spinValue1?: Prisma.SortOrder;
-  spinValue2?: Prisma.SortOrder;
-  spinValue3?: Prisma.SortOrder;
-  spinValue4?: Prisma.SortOrder;
-  spinValue5?: Prisma.SortOrder;
-  spinValue6?: Prisma.SortOrder;
-  spinValue7?: Prisma.SortOrder;
-  spinValue8?: Prisma.SortOrder;
-  spinValue9?: Prisma.SortOrder;
-  spinValue10?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
 
 export type SpinAvgOrderByAggregateInput = {
   spinValue1?: Prisma.SortOrder;
-  spinValue2?: Prisma.SortOrder;
-  spinValue3?: Prisma.SortOrder;
-  spinValue4?: Prisma.SortOrder;
-  spinValue5?: Prisma.SortOrder;
-  spinValue6?: Prisma.SortOrder;
-  spinValue7?: Prisma.SortOrder;
-  spinValue8?: Prisma.SortOrder;
-  spinValue9?: Prisma.SortOrder;
-  spinValue10?: Prisma.SortOrder;
 };
 
 export type SpinMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   spinValue1?: Prisma.SortOrder;
-  spinValue2?: Prisma.SortOrder;
-  spinValue3?: Prisma.SortOrder;
-  spinValue4?: Prisma.SortOrder;
-  spinValue5?: Prisma.SortOrder;
-  spinValue6?: Prisma.SortOrder;
-  spinValue7?: Prisma.SortOrder;
-  spinValue8?: Prisma.SortOrder;
-  spinValue9?: Prisma.SortOrder;
-  spinValue10?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
@@ -563,30 +329,12 @@ export type SpinMaxOrderByAggregateInput = {
 export type SpinMinOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   spinValue1?: Prisma.SortOrder;
-  spinValue2?: Prisma.SortOrder;
-  spinValue3?: Prisma.SortOrder;
-  spinValue4?: Prisma.SortOrder;
-  spinValue5?: Prisma.SortOrder;
-  spinValue6?: Prisma.SortOrder;
-  spinValue7?: Prisma.SortOrder;
-  spinValue8?: Prisma.SortOrder;
-  spinValue9?: Prisma.SortOrder;
-  spinValue10?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
 
 export type SpinSumOrderByAggregateInput = {
   spinValue1?: Prisma.SortOrder;
-  spinValue2?: Prisma.SortOrder;
-  spinValue3?: Prisma.SortOrder;
-  spinValue4?: Prisma.SortOrder;
-  spinValue5?: Prisma.SortOrder;
-  spinValue6?: Prisma.SortOrder;
-  spinValue7?: Prisma.SortOrder;
-  spinValue8?: Prisma.SortOrder;
-  spinValue9?: Prisma.SortOrder;
-  spinValue10?: Prisma.SortOrder;
 };
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -604,15 +352,6 @@ export type SpinSelect<
   {
     id?: boolean;
     spinValue1?: boolean;
-    spinValue2?: boolean;
-    spinValue3?: boolean;
-    spinValue4?: boolean;
-    spinValue5?: boolean;
-    spinValue6?: boolean;
-    spinValue7?: boolean;
-    spinValue8?: boolean;
-    spinValue9?: boolean;
-    spinValue10?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
   },
@@ -626,15 +365,6 @@ export type SpinSelectCreateManyAndReturn<
   {
     id?: boolean;
     spinValue1?: boolean;
-    spinValue2?: boolean;
-    spinValue3?: boolean;
-    spinValue4?: boolean;
-    spinValue5?: boolean;
-    spinValue6?: boolean;
-    spinValue7?: boolean;
-    spinValue8?: boolean;
-    spinValue9?: boolean;
-    spinValue10?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
   },
@@ -648,15 +378,6 @@ export type SpinSelectUpdateManyAndReturn<
   {
     id?: boolean;
     spinValue1?: boolean;
-    spinValue2?: boolean;
-    spinValue3?: boolean;
-    spinValue4?: boolean;
-    spinValue5?: boolean;
-    spinValue6?: boolean;
-    spinValue7?: boolean;
-    spinValue8?: boolean;
-    spinValue9?: boolean;
-    spinValue10?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
   },
@@ -666,15 +387,6 @@ export type SpinSelectUpdateManyAndReturn<
 export type SpinSelectScalar = {
   id?: boolean;
   spinValue1?: boolean;
-  spinValue2?: boolean;
-  spinValue3?: boolean;
-  spinValue4?: boolean;
-  spinValue5?: boolean;
-  spinValue6?: boolean;
-  spinValue7?: boolean;
-  spinValue8?: boolean;
-  spinValue9?: boolean;
-  spinValue10?: boolean;
   createdAt?: boolean;
   updatedAt?: boolean;
 };
@@ -683,19 +395,7 @@ export type SpinOmit<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-  | 'id'
-  | 'spinValue1'
-  | 'spinValue2'
-  | 'spinValue3'
-  | 'spinValue4'
-  | 'spinValue5'
-  | 'spinValue6'
-  | 'spinValue7'
-  | 'spinValue8'
-  | 'spinValue9'
-  | 'spinValue10'
-  | 'createdAt'
-  | 'updatedAt',
+  'id' | 'spinValue1' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['spin']
 >;
 
@@ -709,15 +409,6 @@ export type $SpinPayload<
     {
       id: string;
       spinValue1: number | null;
-      spinValue2: number | null;
-      spinValue3: number | null;
-      spinValue4: number | null;
-      spinValue5: number | null;
-      spinValue6: number | null;
-      spinValue7: number | null;
-      spinValue8: number | null;
-      spinValue9: number | null;
-      spinValue10: number | null;
       createdAt: Date;
       updatedAt: Date;
     },
@@ -1314,15 +1005,6 @@ export interface Prisma__SpinClient<
 export interface SpinFieldRefs {
   readonly id: Prisma.FieldRef<'Spin', 'String'>;
   readonly spinValue1: Prisma.FieldRef<'Spin', 'Int'>;
-  readonly spinValue2: Prisma.FieldRef<'Spin', 'Int'>;
-  readonly spinValue3: Prisma.FieldRef<'Spin', 'Int'>;
-  readonly spinValue4: Prisma.FieldRef<'Spin', 'Int'>;
-  readonly spinValue5: Prisma.FieldRef<'Spin', 'Int'>;
-  readonly spinValue6: Prisma.FieldRef<'Spin', 'Int'>;
-  readonly spinValue7: Prisma.FieldRef<'Spin', 'Int'>;
-  readonly spinValue8: Prisma.FieldRef<'Spin', 'Int'>;
-  readonly spinValue9: Prisma.FieldRef<'Spin', 'Int'>;
-  readonly spinValue10: Prisma.FieldRef<'Spin', 'Int'>;
   readonly createdAt: Prisma.FieldRef<'Spin', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'Spin', 'DateTime'>;
 }

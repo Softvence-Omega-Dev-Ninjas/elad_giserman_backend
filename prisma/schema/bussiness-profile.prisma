@@ -18,7 +18,7 @@ model BusinessProfile {
   offers      Offer[]
   categoryId  String?
   category Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  profileType String?
+  profileTypeName String?
   // Owner / organizer
   ownerId     String       @unique // unique makes one to one relation
   owner       User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
@@ -30,10 +30,4 @@ model BusinessProfile {
   updatedAt DateTime @default(now()) @updatedAt
 
   @@map("business_profiles")
-}
-
-enum ProfileType {
-  CAFE
-  RESTURANTES
-  BAR
 }
