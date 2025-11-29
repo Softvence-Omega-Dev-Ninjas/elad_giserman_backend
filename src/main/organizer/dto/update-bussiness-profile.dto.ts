@@ -41,18 +41,6 @@ export class UpdateBusinessProfileDto {
     description: 'Existing gallery images coming from client',
     required: false,
     type: 'string',
-    example: JSON.stringify([
-      {
-        id: '94abf1c3-6a40-4dcf-bf9e-3a366c124769',
-        filename: 'b0192c68-5d4e-4aa6-a0a5-77d8babbd6f2.png',
-        originalFilename: 'Screenshot.png',
-        path: 'images/b0192c68.png',
-        url: 'https://eladserver.s3/.../b0192c68.png',
-        fileType: 'image',
-        mimeType: 'image/png',
-        size: 98623,
-      },
-    ]),
   })
   @IsOptional()
   @IsString()
@@ -60,7 +48,7 @@ export class UpdateBusinessProfileDto {
 
   @ApiProperty({
     type: 'string',
-    example: 'here will go profile type name',
+    example: 'Restaurant',
     required: false,
   })
   @IsOptional()
@@ -82,4 +70,62 @@ export class UpdateBusinessProfileDto {
   @IsOptional()
   @IsString()
   categoryName?: string;
+
+  // ⭐ SOCIAL LINKS — fixed and added properly
+
+  @ApiProperty({
+    example: 'https://facebook.com/thecoffeeshop',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  facebook?: string;
+
+  @ApiProperty({
+    example: 'https://instagram.com/thecoffeeshop',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  instagram?: string;
+
+  @ApiProperty({
+    example: 'https://twitter.com/thecoffeeshop',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  twitter?: string;
+
+  @ApiProperty({
+    example: 'https://thecoffeeshop.com',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  website?: string;
+
+  @ApiProperty({
+    example: 'https://linkedin.com/company/thecoffeeshop',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  linkedin?: string;
+
+  @ApiProperty({
+    example: 'https://pinterest.com/thecoffeeshop',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  pinterest?: string;
+
+  @ApiProperty({
+    example: 'https://youtube.com/thecoffeeshop',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  youtube?: string;
 }
