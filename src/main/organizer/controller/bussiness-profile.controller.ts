@@ -146,10 +146,13 @@ export class BusinessProfileController {
         openingTime: { type: 'string', example: '09:00 AM' },
         closingTime: { type: 'string', example: '11:00 PM' },
         isActive: { type: 'boolean', example: true },
-        categoryId:{type:'string',example:"820cca54-1156-4641-b362-fb6c52e91bf2"},
-        categroyName:{type:'string',example:"Food & Beverages"},
+        categoryId: {
+          type: 'string',
+          example: '820cca54-1156-4641-b362-fb6c52e91bf2',
+        },
+        categroyName: { type: 'string', example: 'Food & Beverages' },
         existingImages: {
-        type: 'string',
+          type: 'string',
           description: 'JSON array of existing images client wants to keep',
           example: JSON.stringify([
             {
@@ -187,14 +190,14 @@ export class BusinessProfileController {
   @Get('/profile/:id')
   @ApiOperation({ summary: 'Get single profile by ID (User View)' })
   async getSingleProfile(@Param('id') id: string) {
-    try{
-      const res=await this.businessProfileService.getBusinessProfile(id);
-    return{
-      status: HttpStatus.OK,
-      message: 'Restaurent fetched successful',
-      data: res,
-    }
-    }catch(error){
+    try {
+      const res = await this.businessProfileService.getBusinessProfile(id);
+      return {
+        status: HttpStatus.OK,
+        message: 'Restaurent fetched successful',
+        data: res,
+      };
+    } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }

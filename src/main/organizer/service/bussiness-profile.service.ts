@@ -239,7 +239,7 @@ export class BusinessProfileService {
       take: limit,
       where,
       include: {
-        category:true,
+        category: true,
         gallery: true,
         owner: { select: { name: true } },
         _count: {

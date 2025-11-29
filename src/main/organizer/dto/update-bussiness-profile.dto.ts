@@ -81,5 +81,5 @@ export class UpdateBusinessProfileDto {
   })
   @IsOptional()
   @IsString()
-  categoryName?:string
+  categoryName?: string;
 }
