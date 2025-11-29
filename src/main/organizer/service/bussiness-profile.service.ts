@@ -286,7 +286,7 @@ export class BusinessProfileService {
       });
     console.info(findOrganizationProfile, 'odfjdjfdojfdfjdjfdjf');
     if (!findOrganizationProfile) {
-      throw new NotFoundException('No business profile found for this user.');
+      throw new NotFoundException('No business profile found for this user...');
     }
     const reviews = await this.prisma.client.review.findMany({
       where: {
