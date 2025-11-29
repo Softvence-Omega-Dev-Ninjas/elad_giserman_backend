@@ -151,6 +151,7 @@ export class BusinessProfileController {
           example: '820cca54-1156-4641-b362-fb6c52e91bf2',
         },
         categroyName: { type: 'string', example: 'Food & Beverages' },
+
         existingImages: {
           type: 'string',
           description: 'JSON array of existing images client wants to keep',
@@ -167,14 +168,46 @@ export class BusinessProfileController {
             },
           ]),
         },
+
         profileTypeName: {
           type: 'string',
           example: 'BAR',
         },
+
         gallery: {
           type: 'array',
           items: { type: 'string', format: 'binary' },
           description: 'Upload up to 10 new images for the gallery',
+        },
+
+        // ⭐ SOCIAL LINKS ADDED (ONLY ADDITION)
+        facebook: {
+          type: 'string',
+          example: 'https://facebook.com/business',
+        },
+        instagram: {
+          type: 'string',
+          example: 'https://instagram.com/business',
+        },
+        twitter: {
+          type: 'string',
+          example: 'https://twitter.com/business',
+        },
+        website: {
+          type: 'string',
+          example: 'https://business.com',
+        },
+        linkedin: {
+          type: 'string',
+          example: 'https://linkedin.com/company/business',
+        },
+        pinterest: {
+          type: 'string',
+          example: 'https://pinterest.com/business',
+        },
+        youtube: {
+          type: 'string',
+          example: 'https://youtube.com/business',
         },
       },
     },
