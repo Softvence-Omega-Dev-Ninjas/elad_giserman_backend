@@ -4,7 +4,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpException,
   HttpStatus,
   InternalServerErrorException,
   Logger,
@@ -40,6 +39,7 @@ import { UpdateStatusDto } from '../dto/updateStatus.dto';
 @ApiBearerAuth()
 export class AdminPlatformManagementController {
   private readonly logger = new Logger(AdminPlatformManagementController.name);
+
   constructor(
     private readonly platformManagementService: AdminPlatfromManagementService,
   ) {}
@@ -66,7 +66,9 @@ export class AdminPlatformManagementController {
     try {
       console.log(id);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to delete user by ID=${id}`, error.stack);
+      throw new InternalServerErrorException(message);
     }
   }
 
@@ -76,7 +78,9 @@ export class AdminPlatformManagementController {
     try {
       return this.platformManagementService.deleteuser(id);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to delete user by ID=${id}`, error.stack);
+      throw new InternalServerErrorException(message);
     }
   }
 
@@ -97,8 +101,10 @@ export class AdminPlatformManagementController {
         message: 'User status updated successfully',
         data: res,
       };
-    } catch (err) {
-      throw new HttpException(err.message, err.status);
+    } catch (error) {
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to Update by ID=${id}`, error.stack);
+      throw new InternalServerErrorException(message);
     }
   }
 
@@ -113,7 +119,9 @@ export class AdminPlatformManagementController {
         data: res,
       };
     } catch (error) {
-      throw new InternalServerErrorException(error.message, error.status);
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild fetch growth`, error.stack);
+      throw new InternalServerErrorException(message);
     }
   }
 

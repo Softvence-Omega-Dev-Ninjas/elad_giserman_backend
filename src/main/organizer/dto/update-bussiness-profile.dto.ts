@@ -66,4 +66,20 @@ export class UpdateBusinessProfileDto {
   @IsOptional()
   @IsString()
   profileTypeName?: string;
+
+  @ApiProperty({
+    example: 'categoryId123',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  categoryId?: string;
+
+  @ApiProperty({
+    example: 'BAR',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  categoryName?: string;
 }
