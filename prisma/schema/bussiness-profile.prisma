@@ -25,7 +25,13 @@ model BusinessProfile {
 
   reviews     Review[]
   reedemOffer ReedemaOffer[]
-
+  facebook String?
+  instagram String?
+  twitter String?
+  website String?
+  linkedin String?
+  pinterest String?
+  youtube String?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
