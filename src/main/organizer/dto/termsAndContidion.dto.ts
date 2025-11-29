@@ -65,8 +65,6 @@ export class CreateUserTermsAndConditionsDto {
   liability: string;
 }
 
-
-
 export class UpdateUserTermsAndConditionsDto {
   @ApiProperty({
     required: false,

@@ -38,7 +38,10 @@ import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
 import { CreateTermsAndConditionsDto } from '@/main/admin/dto/termAndCondition.dto';
 import { GetOffersDto2 } from '@/main/admin/dto/getOffer.dto';
 import { GetReviewDto } from '@/main/admin/dto/getReview.dto';
-import { CreateUserTermsAndConditionsDto, UpdateUserTermsAndConditionsDto } from '../dto/termsAndContidion.dto';
+import {
+  CreateUserTermsAndConditionsDto,
+  UpdateUserTermsAndConditionsDto,
+} from '../dto/termsAndContidion.dto';
 
 @ApiTags('Business Profiles')
 @ApiBearerAuth()
