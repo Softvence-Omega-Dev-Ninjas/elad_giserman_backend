@@ -136,83 +136,82 @@ export class BusinessProfileController {
   @UseInterceptors(FilesInterceptor('gallery', 10))
   @ApiConsumes('multipart/form-data')
   @ApiBody({
-  description: 'Update business profile with optional new gallery images',
-  schema: {
-    type: 'object',
-    properties: {
-      title: { type: 'string', example: 'Updated Coffee Spot' },
-      description: { type: 'string', example: 'Now with new pastries!' },
-      location: { type: 'string', example: 'Banani, Dhaka' },
-      openingTime: { type: 'string', example: '09:00 AM' },
-      closingTime: { type: 'string', example: '11:00 PM' },
-      isActive: { type: 'boolean', example: true },
-      categoryId: {
-        type: 'string',
-        example: '820cca54-1156-4641-b362-fb6c52e91bf2',
-      },
-      categroyName: { type: 'string', example: 'Food & Beverages' },
+    description: 'Update business profile with optional new gallery images',
+    schema: {
+      type: 'object',
+      properties: {
+        title: { type: 'string', example: 'Updated Coffee Spot' },
+        description: { type: 'string', example: 'Now with new pastries!' },
+        location: { type: 'string', example: 'Banani, Dhaka' },
+        openingTime: { type: 'string', example: '09:00 AM' },
+        closingTime: { type: 'string', example: '11:00 PM' },
+        isActive: { type: 'boolean', example: true },
+        categoryId: {
+          type: 'string',
+          example: '820cca54-1156-4641-b362-fb6c52e91bf2',
+        },
+        categroyName: { type: 'string', example: 'Food & Beverages' },
 
-      existingImages: {
-        type: 'string',
-        description: 'JSON array of existing images client wants to keep',
-        example: JSON.stringify([
-          {
-            id: '94abf1c3-6a40-4dcf-bf9e-3a366c124769',
-            filename: 'b0192c68-5d4e-4aa6-a0a5-77d8babbd6f2.png',
-            originalFilename: 'Screenshot.png',
-            path: 'images/b0192c68.png',
-            url: 'https://eladserver.s3/.../b0192c68.png',
-            fileType: 'image',
-            mimeType: 'image/png',
-            size: 98623,
-          },
-        ]),
-      },
+        existingImages: {
+          type: 'string',
+          description: 'JSON array of existing images client wants to keep',
+          example: JSON.stringify([
+            {
+              id: '94abf1c3-6a40-4dcf-bf9e-3a366c124769',
+              filename: 'b0192c68-5d4e-4aa6-a0a5-77d8babbd6f2.png',
+              originalFilename: 'Screenshot.png',
+              path: 'images/b0192c68.png',
+              url: 'https://eladserver.s3/.../b0192c68.png',
+              fileType: 'image',
+              mimeType: 'image/png',
+              size: 98623,
+            },
+          ]),
+        },
 
-      profileTypeName: {
-        type: 'string',
-        example: 'BAR',
-      },
+        profileTypeName: {
+          type: 'string',
+          example: 'BAR',
+        },
 
-      gallery: {
-        type: 'array',
-        items: { type: 'string', format: 'binary' },
-        description: 'Upload up to 10 new images for the gallery',
-      },
+        gallery: {
+          type: 'array',
+          items: { type: 'string', format: 'binary' },
+          description: 'Upload up to 10 new images for the gallery',
+        },
 
-      // ⭐ SOCIAL LINKS ADDED (ONLY ADDITION)
-      facebook: {
-        type: 'string',
-        example: 'https://facebook.com/business',
-      },
-      instagram: {
-        type: 'string',
-        example: 'https://instagram.com/business',
-      },
-      twitter: {
-        type: 'string',
-        example: 'https://twitter.com/business',
-      },
-      website: {
-        type: 'string',
-        example: 'https://business.com',
-      },
-      linkedin: {
-        type: 'string',
-        example: 'https://linkedin.com/company/business',
-      },
-      pinterest: {
-        type: 'string',
-        example: 'https://pinterest.com/business',
-      },
-      youtube: {
-        type: 'string',
-        example: 'https://youtube.com/business',
+        // ⭐ SOCIAL LINKS ADDED (ONLY ADDITION)
+        facebook: {
+          type: 'string',
+          example: 'https://facebook.com/business',
+        },
+        instagram: {
+          type: 'string',
+          example: 'https://instagram.com/business',
+        },
+        twitter: {
+          type: 'string',
+          example: 'https://twitter.com/business',
+        },
+        website: {
+          type: 'string',
+          example: 'https://business.com',
+        },
+        linkedin: {
+          type: 'string',
+          example: 'https://linkedin.com/company/business',
+        },
+        pinterest: {
+          type: 'string',
+          example: 'https://pinterest.com/business',
+        },
+        youtube: {
+          type: 'string',
+          example: 'https://youtube.com/business',
+        },
       },
     },
-  },
-})
-
+  })
   async update(
     @GetUser('sub') id: string,
     @Body() dto: UpdateBusinessProfileDto,
