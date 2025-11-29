@@ -114,9 +114,7 @@ export class SubscriptionService {
 
     const search = query.search?.trim() ?? '';
 
-    const where: Prisma.SubscriptionPlanWhereInput = {
-    
-    };
+    const where: Prisma.SubscriptionPlanWhereInput = {};
 
     if (search) {
       where.title = {
