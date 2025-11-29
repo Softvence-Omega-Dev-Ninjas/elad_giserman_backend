@@ -13,6 +13,10 @@ import { CreateTermsAndConditionsDto } from '@/main/admin/dto/termAndCondition.d
 import { CreateBusinessProfileDto } from '../dto/create-bussiness-profile.dto';
 import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
 import { UpdateBusinessProfileDto } from '../dto/update-bussiness-profile.dto';
+import {
+  CreateUserTermsAndConditionsDto,
+  UpdateUserTermsAndConditionsDto,
+} from '../dto/termsAndContidion.dto';
 
 function shuffleArray<T>(array: T[]): T[] {
   return array.sort(() => Math.random() - 0.5);
@@ -365,29 +369,39 @@ export class BusinessProfileService {
   }
 
   //*CRETE TERMS AND CONDITIONS
-  async createAdminTermsAdnConditions(dto: CreateTermsAndConditionsDto) {
+  async createAdminTermsAdnConditions(dto: CreateUserTermsAndConditionsDto) {
     const isExistTerm =
       await this.prisma.client.userTermsAndConditions.findFirst();
+
     if (isExistTerm) {
       throw new BadRequestException(
-        'Terms and Conditions already exist you can just update your terms and conditions',
+        'Terms and Conditions already exist. You can only update it.',
       );
     }
-    return this.prisma.client.userTermsAndConditions.create({
+
+    return await this.prisma.client.userTermsAndConditions.create({
       data: {
-        ...dto,
+        generalAgrement: dto.generalAgrement,
+        reservationConfirmation: dto.reservationConfirmation,
+        arrvalAndSeatingPolicy: dto.arrvalAndSeatingPolicy,
+        canceletionAndNoShows: dto.canceletionAndNoShows,
+        modifications: dto.modifications,
+        conductAndBehaviour: dto.conductAndBehaviour,
+        policyUpdate: dto.policyUpdate,
+        liability: dto.liability,
       },
     });
   }
 
   //*UPDATE TERMS AND CONDITIONS
-  async updateAdminTermsAndConditions(dto: CreateTermsAndConditionsDto) {
+  async updateAdminTermsAndConditions(dto: UpdateUserTermsAndConditionsDto) {
     const isExistTerm =
       await this.prisma.client.userTermsAndConditions.findFirst();
 
     if (!isExistTerm) {
       throw new NotFoundException('Terms and Conditions not found to update');
     }
+
     return this.prisma.client.userTermsAndConditions.update({
       where: {
         id: isExistTerm.id,
