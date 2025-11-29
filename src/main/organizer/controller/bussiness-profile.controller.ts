@@ -38,6 +38,7 @@ import { ProfileFilter } from '../dto/getProfileWithFilter.dto';
 import { CreateTermsAndConditionsDto } from '@/main/admin/dto/termAndCondition.dto';
 import { GetOffersDto2 } from '@/main/admin/dto/getOffer.dto';
 import { GetReviewDto } from '@/main/admin/dto/getReview.dto';
+import { CreateUserTermsAndConditionsDto, UpdateUserTermsAndConditionsDto } from '../dto/termsAndContidion.dto';
 
 @ApiTags('Business Profiles')
 @ApiBearerAuth()
@@ -354,7 +355,7 @@ export class BusinessProfileController {
   @ValidateOrganizer()
   @Post('create-termsCondition')
   @ApiBody({ type: CreateTermsAndConditionsDto })
-  async createPlatformTerm(@Body() dto: CreateTermsAndConditionsDto) {
+  async createPlatformTerm(@Body() dto: CreateUserTermsAndConditionsDto) {
     try {
       const res =
         await this.businessProfileService.createAdminTermsAdnConditions(dto);
@@ -371,7 +372,7 @@ export class BusinessProfileController {
   @ValidateOrganizer()
   @Patch('update-termsCondition')
   @ApiBody({ type: CreateTermsAndConditionsDto })
-  async updatePlatformTerm(@Body() dto: CreateTermsAndConditionsDto) {
+  async updatePlatformTerm(@Body() dto: UpdateUserTermsAndConditionsDto) {
     try {
       const res =
         await this.businessProfileService.updateAdminTermsAndConditions(dto);
