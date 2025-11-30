@@ -203,15 +203,19 @@ export class HandleWebhookService {
   private async handleInvoicePaid(invoice: Stripe.Invoice) {
     this.logger.log(`Processing invoice.paid: ${invoice.id}`);
 
-    const subscriptionId = invoice.parent?.subscription_details
-      ?.subscription as string;
-    const metadata = invoice.parent?.subscription_details?.metadata as
-      | StripePaymentMetadata
-      | undefined;
+    const lineItem = invoice.lines?.data?.[0];
+    if (!lineItem) {
+      this.logger.warn(`Invoice ${invoice.id} has no line items. Skipping.`);
+      return;
+    }
+
+    const subscriptionId =
+      lineItem.parent?.subscription_item_details?.subscription;
+    const metadata = lineItem.metadata as StripePaymentMetadata | undefined;
 
     if (!subscriptionId || !metadata) {
       this.logger.warn(
-        `Invoice ${invoice.id} missing subscription id or metadata. Skipping.`,
+        `Invoice ${invoice.id} missing subscription ID or metadata. Skipping.`,
       );
       return;
     }
@@ -244,7 +248,7 @@ export class HandleWebhookService {
     const now = new Date();
 
     await this.prisma.client.$transaction(async (prisma) => {
-      // **Clear any other subscription using this stripeSubscriptionId**
+      // Clear duplicates
       const duplicateSub = await prisma.userSubscription.findFirst({
         where: {
           stripeSubscriptionId: subscriptionId,
@@ -262,12 +266,17 @@ export class HandleWebhookService {
         });
       }
 
-      // Update local subscription
+      const planStartedAt = new Date(invoice.period_start * 1000);
+      const planEndedAt = new Date(lineItem.period.end * 1000);
+
+      // Update subscription
       await prisma.userSubscription.update({
         where: { id: localSubscription.id },
         data: {
           status: 'ACTIVE',
           paidAt: now,
+          planStartedAt,
+          planEndedAt,
           stripeSubscriptionId: subscriptionId,
         },
       });
@@ -279,11 +288,11 @@ export class HandleWebhookService {
           memberShip: 'VIP',
           trialEndsAt: null,
           subscriptionStatus: 'ACTIVE',
-          currentPlan: { connect: { id: planId } },
+          currentPlan: planId ? { connect: { id: planId } } : undefined,
         },
       });
 
-      // Create invoice if not exists
+      // Create invoice record
       if (!existingInvoice) {
         await prisma.invoice.create({
           data: {
@@ -293,7 +302,9 @@ export class HandleWebhookService {
             amount: invoice.amount_paid ?? invoice.total ?? 0,
             currency: invoice.currency ?? 'usd',
             status: 'PAID',
-            paidAt: new Date(invoice.status_transitions.paid_at! * 1000),
+            paidAt: invoice.status_transitions.paid_at
+              ? new Date(invoice.status_transitions.paid_at * 1000)
+              : now,
           },
         });
       }
