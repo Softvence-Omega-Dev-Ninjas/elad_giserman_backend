@@ -57,11 +57,10 @@ export class SubscriptionService {
 
   @HandleError('Error getting subscription status')
   async getCurrentSubscriptionStatus(userId: string): Promise<TResponse<any>> {
-    // Fetch the latest subscription (regardless of status)
     const userSubscription =
       await this.prismaService.client.userSubscription.findFirst({
         where: { userId, status: { in: ['ACTIVE', 'PENDING'] } },
-        orderBy: [{ createdAt: 'desc' }],
+        orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
         include: { plan: true },
       });
 
@@ -69,7 +68,7 @@ export class SubscriptionService {
       return successResponse(
         {
           status: 'NONE',
-          message: 'No active or past subscription found.',
+          message: 'No active subscription found.',
           canSubscribe: true,
           period: { startedAt: null, endedAt: null, remainingDays: null },
           plan: null,
