@@ -45,6 +45,7 @@ export class CancelSubscriptionService {
         data: {
           status: 'CANCELED',
           planEndedAt: new Date(),
+          stripeSubscriptionId: undefined,
         },
       }),
       this.prismaService.client.user.update({
