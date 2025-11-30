@@ -57,6 +57,7 @@ export class SubscriptionService {
 
   @HandleError('Error getting subscription status')
   async getCurrentSubscriptionStatus(userId: string): Promise<TResponse<any>> {
+    this.logger.log('Getting subscription status for user');
     const userSubscription =
       await this.prismaService.client.userSubscription.findFirst({
         where: { userId, status: { in: ['ACTIVE', 'PENDING'] } },
@@ -77,6 +78,11 @@ export class SubscriptionService {
       );
     }
 
+    this.logger.log(
+      'Subscription status fetched successfully',
+      userSubscription,
+    );
+
     const now = DateTime.now();
     const start = userSubscription.planStartedAt
       ? DateTime.fromJSDate(userSubscription.planStartedAt)
@@ -89,11 +95,13 @@ export class SubscriptionService {
     const status =
       userSubscription.status === 'ACTIVE' && !isExpired
         ? 'ACTIVE'
-        : isExpired
-          ? 'EXPIRED'
-          : userSubscription.status;
+        : userSubscription.status === 'PENDING'
+          ? 'PENDING'
+          : isExpired
+            ? 'EXPIRED'
+            : userSubscription.status;
 
-    const canSubscribe = status !== 'ACTIVE';
+    const canSubscribe = status !== 'ACTIVE' && status !== 'PENDING';
 
     return successResponse(
       {
