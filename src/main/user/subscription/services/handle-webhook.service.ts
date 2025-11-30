@@ -203,10 +203,8 @@ export class HandleWebhookService {
   private async handleInvoicePaid(invoice: Stripe.Invoice) {
     this.logger.log(`Processing invoice.paid: ${invoice.id}`);
 
-    // 1️⃣ Extract metadata safely
     const subscriptionId = invoice.parent?.subscription_details
       ?.subscription as string;
-
     const metadata = invoice.parent?.subscription_details?.metadata as
       | StripePaymentMetadata
       | undefined;
@@ -220,7 +218,7 @@ export class HandleWebhookService {
 
     const { userId, planId } = metadata;
 
-    // 2️⃣ Fetch local subscription
+    // Fetch local subscription
     const localSubscription =
       await this.prisma.client.userSubscription.findFirst({
         where: {
@@ -239,7 +237,6 @@ export class HandleWebhookService {
       return;
     }
 
-    // 3️⃣ Idempotent invoice check
     const existingInvoice = await this.prisma.client.invoice.findUnique({
       where: { stripeInvoiceId: invoice.id },
     });
@@ -247,7 +244,25 @@ export class HandleWebhookService {
     const now = new Date();
 
     await this.prisma.client.$transaction(async (prisma) => {
-      // a) Update subscription
+      // **Clear any other subscription using this stripeSubscriptionId**
+      const duplicateSub = await prisma.userSubscription.findFirst({
+        where: {
+          stripeSubscriptionId: subscriptionId,
+          NOT: { id: localSubscription.id },
+        },
+      });
+
+      if (duplicateSub) {
+        this.logger.warn(
+          `Duplicate stripeSubscriptionId found on subscription ${duplicateSub.id}. Clearing it.`,
+        );
+        await prisma.userSubscription.update({
+          where: { id: duplicateSub.id },
+          data: { stripeSubscriptionId: null, status: 'CANCELED' },
+        });
+      }
+
+      // Update local subscription
       await prisma.userSubscription.update({
         where: { id: localSubscription.id },
         data: {
@@ -257,7 +272,7 @@ export class HandleWebhookService {
         },
       });
 
-      // b) Update user
+      // Update user
       await prisma.user.update({
         where: { id: userId },
         data: {
@@ -268,7 +283,7 @@ export class HandleWebhookService {
         },
       });
 
-      // c) Create invoice if not exists
+      // Create invoice if not exists
       if (!existingInvoice) {
         await prisma.invoice.create({
           data: {
