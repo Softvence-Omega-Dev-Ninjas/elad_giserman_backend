@@ -204,21 +204,21 @@ export class HandleWebhookService {
   private async handleInvoicePaid(invoice: Stripe.Invoice) {
     this.logger.log(`invoice.${invoice.status}: ${invoice.id}`);
 
-    // Extract subscription info safely
+    // 1️⃣ Extract subscription metadata safely
     const subDetails = invoice.parent?.subscription_details;
     const subscriptionId = subDetails?.subscription as string | undefined;
     const metadata = subDetails?.metadata as StripePaymentMetadata | undefined;
 
     if (!subscriptionId || !metadata) {
       this.logger.warn(
-        `Invoice ${invoice.id} has no subscription details — skipping.`,
+        `Invoice ${invoice.id} missing subscription details, skipping.`,
       );
       return;
     }
 
     const { userId, planId } = metadata;
 
-    // Fetch local subscription
+    // 2️⃣ Fetch local subscription
     const localSubscription =
       await this.prisma.client.userSubscription.findFirst({
         where: {
@@ -229,50 +229,69 @@ export class HandleWebhookService {
 
     if (!localSubscription) {
       this.logger.error(
-        `No matching local subscription found for Stripe subscription ${subscriptionId}`,
+        `No local subscription found for Stripe subscription ${subscriptionId}`,
       );
       return;
     }
 
+    // 3️⃣ Check if invoice already exists (idempotency)
+    const existingInvoice = await this.prisma.client.invoice.findUnique({
+      where: { invoiceNumber: invoice.number as string },
+    });
+
+    if (existingInvoice) {
+      this.logger.log(
+        `Invoice ${invoice.number} already exists, skipping create.`,
+      );
+    }
+
     const now = new Date();
-    const periodStart = new Date(invoice.period_start * 1000);
-    const periodEnd = new Date(invoice.period_end * 1000);
 
-    // Update subscription and user atomically
-    await this.prisma.client.$transaction([
-      this.prisma.client.userSubscription.update({
-        where: { id: localSubscription.id },
-        data: {
-          status: 'ACTIVE',
-          paidAt: now,
-          planStartedAt: periodStart,
-          planEndedAt: periodEnd,
-          stripeSubscriptionId: subscriptionId,
-        },
-      }),
+    // 4️⃣ Update subscription status if not ACTIVE
+    const updates: any = {};
+    if (localSubscription.status !== 'ACTIVE') {
+      updates.status = 'ACTIVE';
+      updates.paidAt = now;
+      updates.stripeSubscriptionId = subscriptionId;
+    }
 
-      this.prisma.client.user.update({
+    // 5️⃣ Update user subscription and invoice in transaction
+    await this.prisma.client.$transaction(async (prisma) => {
+      // a) Update subscription
+      if (Object.keys(updates).length) {
+        await prisma.userSubscription.update({
+          where: { id: localSubscription.id },
+          data: updates,
+        });
+      }
+
+      // b) Update user
+      await prisma.user.update({
         where: { id: userId },
         data: {
           memberShip: 'VIP',
           trialEndsAt: null,
           subscriptionStatus: 'ACTIVE',
+          currentPlan: { connect: { id: planId } },
         },
-      }),
+      });
 
-      this.prisma.client.invoice.create({
-        data: {
-          stripeInvoiceId: invoice.id,
-          invoiceNumber: invoice.number as string,
-          userSubscriptionId: localSubscription.id,
-          amountCents: invoice.total as number,
-          paidCents: invoice.total as number,
-          status: 'PAID',
-          periodStart,
-          periodEnd,
-        },
-      }),
-    ]);
+      // c) Create invoice if not exists
+      if (!existingInvoice) {
+        await prisma.invoice.create({
+          data: {
+            stripeInvoiceId: invoice.id,
+            invoiceNumber: invoice.number as string,
+            userSubscriptionId: localSubscription.id,
+            amountCents: invoice.total as number,
+            paidCents: invoice.total as number,
+            status: 'PAID',
+            periodStart: new Date(invoice.period_start * 1000),
+            periodEnd: new Date(invoice.period_end * 1000),
+          },
+        });
+      }
+    });
 
     this.logger.log(
       `Subscription ${localSubscription.id} activated via invoice ${invoice.id} (Stripe subscription ${subscriptionId})`,
