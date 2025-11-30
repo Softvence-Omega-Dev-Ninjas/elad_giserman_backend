@@ -57,17 +57,12 @@ export class SubscriptionService {
 
   @HandleError('Error getting subscription status')
   async getCurrentSubscriptionStatus(userId: string): Promise<TResponse<any>> {
-    // Get latest active subscription
+    // Fetch the latest subscription (regardless of status)
     const userSubscription =
       await this.prismaService.client.userSubscription.findFirst({
-        where: { userId, status: 'ACTIVE' },
-        include: {
-          plan: true,
-        },
-        orderBy: [
-          { updatedAt: Prisma.SortOrder.desc },
-          { createdAt: Prisma.SortOrder.desc },
-        ],
+        where: { userId },
+        orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
+        include: { plan: true },
       });
 
     if (!userSubscription) {
@@ -76,11 +71,7 @@ export class SubscriptionService {
           status: 'NONE',
           message: 'No active or past subscription found.',
           canSubscribe: true,
-          period: {
-            startedAt: null,
-            endedAt: null,
-            remainingDays: null,
-          },
+          period: { startedAt: null, endedAt: null, remainingDays: null },
           plan: null,
         },
         'No subscription found',
@@ -88,10 +79,14 @@ export class SubscriptionService {
     }
 
     const now = DateTime.now();
-    const end = DateTime.fromJSDate(userSubscription.planEndedAt);
-    const isExpired = end < now;
+    const start = userSubscription.planStartedAt
+      ? DateTime.fromJSDate(userSubscription.planStartedAt)
+      : null;
+    const end = userSubscription.planEndedAt
+      ? DateTime.fromJSDate(userSubscription.planEndedAt)
+      : null;
+    const isExpired = end ? end < now : false;
 
-    // Compute formatted output
     const status =
       userSubscription.status === 'ACTIVE' && !isExpired
         ? 'ACTIVE'
@@ -99,31 +94,32 @@ export class SubscriptionService {
           ? 'EXPIRED'
           : userSubscription.status;
 
-    const canSubscribe =
-      status !== 'ACTIVE' && status !== 'EXPIRED' && !isExpired;
+    const canSubscribe = status !== 'ACTIVE';
 
     return successResponse(
       {
         status,
         canSubscribe,
-        plan: {
-          title: userSubscription.plan.title,
-          price: Math.round(userSubscription.plan.priceCents / 100),
-          currency: userSubscription.plan.currency,
-          billingPeriod: userSubscription.plan.billingPeriod,
-        },
+        plan: userSubscription.plan
+          ? {
+              title: userSubscription.plan.title,
+              price: Math.round(userSubscription.plan.priceCents / 100),
+              currency: userSubscription.plan.currency,
+              billingPeriod: userSubscription.plan.billingPeriod,
+            }
+          : null,
         period: {
-          startedAt: DateTime.fromJSDate(
-            userSubscription.planStartedAt,
-          ).toISODate(),
-          endedAt: end.toISODate(),
-          remainingDays: Math.max(end.diff(now, 'days').days, 0).toFixed(0),
+          startedAt: start?.toISODate() || null,
+          endedAt: end?.toISODate() || null,
+          remainingDays: end
+            ? Math.max(end.diff(now, 'days').days, 0).toFixed(0)
+            : null,
         },
         message:
           status === 'ACTIVE'
-            ? `Your ${userSubscription.plan.title} plan is active until ${end.toFormat('DDD')}.`
+            ? `Your ${userSubscription.plan.title} plan is active until ${end?.toFormat('DDD')}.`
             : status === 'EXPIRED'
-              ? `Your subscription expired on ${end.toFormat('DDD')}.`
+              ? `Your subscription expired on ${end?.toFormat('DDD')}.`
               : 'No active subscription found.',
       },
       'Subscription status fetched successfully',

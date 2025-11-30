@@ -222,10 +222,7 @@ export class HandleWebhookService {
     const localSubscription =
       await this.prisma.client.userSubscription.findFirst({
         where: {
-          OR: [
-            { stripeSubscriptionId: subscriptionId },
-            { userId: userId, planId: planId },
-          ],
+          OR: [{ stripeSubscriptionId: subscriptionId }, { userId, planId }],
         },
         include: { plan: true },
       });
@@ -238,21 +235,18 @@ export class HandleWebhookService {
     }
 
     const now = new Date();
+    const periodStart = new Date(invoice.period_start * 1000);
+    const periodEnd = new Date(invoice.period_end * 1000);
 
-    if (localSubscription.status === 'ACTIVE') {
-      this.logger.warn(
-        `Subscription ${localSubscription.id} already active (Stripe subscription ${subscriptionId})`,
-      );
-      return;
-    }
-
-    // Run updates in transaction
+    // Update subscription and user atomically
     await this.prisma.client.$transaction([
       this.prisma.client.userSubscription.update({
         where: { id: localSubscription.id },
         data: {
           status: 'ACTIVE',
           paidAt: now,
+          planStartedAt: periodStart,
+          planEndedAt: periodEnd,
           stripeSubscriptionId: subscriptionId,
         },
       }),
@@ -274,8 +268,8 @@ export class HandleWebhookService {
           amountCents: invoice.total as number,
           paidCents: invoice.total as number,
           status: 'PAID',
-          periodStart: new Date(invoice.period_start * 1000),
-          periodEnd: new Date(invoice.period_end * 1000),
+          periodStart,
+          periodEnd,
         },
       }),
     ]);
