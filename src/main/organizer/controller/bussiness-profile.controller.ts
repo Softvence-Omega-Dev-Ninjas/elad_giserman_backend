@@ -356,8 +356,8 @@ export class BusinessProfileController {
   }
 
   @ValidateOrganizer()
-  @Post('create-termsCondition')
-  @ApiBody({ type: CreateTermsAndConditionsDto })
+  @Post('create-user-termsAndCondition')
+  @ApiBody({ type: CreateUserTermsAndConditionsDto })
   async createPlatformTerm(@Body() dto: CreateUserTermsAndConditionsDto) {
     try {
       const res =
@@ -374,7 +374,7 @@ export class BusinessProfileController {
 
   @ValidateOrganizer()
   @Patch('update-termsCondition')
-  @ApiBody({ type: CreateTermsAndConditionsDto })
+  @ApiBody({ type: UpdateUserTermsAndConditionsDto })
   async updatePlatformTerm(@Body() dto: UpdateUserTermsAndConditionsDto) {
     try {
       const res =
