@@ -510,21 +510,16 @@ export class AdminPlatfromManagementService {
       orderBy: { createdAt: 'desc' },
       select: {
         id: true,
-        paidCents: true,
+        amount: true,
         createdAt: true,
-        userSubscription: {
+        status: true,
+        user: {
           select: {
-            status: true,
-            user: {
-              select: {
-                name: true,
-              },
-            },
-            plan: {
-              select: {
-                title: true,
-              },
-            },
+            name: true,
+            email: true,
+            memberShip: true,
+            currentPlan: true,
+            currentPlanId: true,
           },
         },
       },

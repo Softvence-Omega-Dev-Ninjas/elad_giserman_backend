@@ -75,8 +75,6 @@ export class CreateIntentService {
       case 'MONTHLY':
         planEndedAt = new Date(planStartedAt);
         planEndedAt.setMonth(planEndedAt.getMonth() + 1);
-
-        // If month overflowed (e.g., Jan 31 + 1 month => Mar 3), move to last day of next month
         if (planEndedAt.getDate() !== planStartedAt.getDate()) {
           planEndedAt = new Date(
             planEndedAt.getFullYear(),
@@ -114,8 +112,8 @@ export class CreateIntentService {
         plan: { connect: { id: plan.id } },
         planStartedAt,
         planEndedAt,
-        stripeTransactionId: setupIntent.id,
-        status: 'PENDING', // waiting for webhook confirmation
+        stripeTransactionId: setupIntent.id, // SetupIntent -> local subscription link
+        status: 'PENDING', // waiting for invoice.paid
       },
     });
 
