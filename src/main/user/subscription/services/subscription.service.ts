@@ -60,8 +60,8 @@ export class SubscriptionService {
     // Fetch the latest subscription (regardless of status)
     const userSubscription =
       await this.prismaService.client.userSubscription.findFirst({
-        where: { userId },
-        orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
+        where: { userId, status: { in: ['ACTIVE', 'PENDING'] } },
+        orderBy: [{ createdAt: 'desc' }],
         include: { plan: true },
       });
 
