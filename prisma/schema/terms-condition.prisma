@@ -22,9 +22,12 @@ model TermsAndConditions {
     canceletionAndNoShows String[]
     modifications String[]
     conductAndBehaviour String[]
+    businessProfileId String?
+    businessProfile User? @relation(fields: [businessProfileId],references: [id])
     policyUpdate String?
     liability String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
     
  }

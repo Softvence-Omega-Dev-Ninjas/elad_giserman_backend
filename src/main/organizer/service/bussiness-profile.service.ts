@@ -369,9 +369,13 @@ export class BusinessProfileService {
   }
 
   //*CRETE TERMS AND CONDITIONS
-  async createAdminTermsAdnConditions(dto: CreateUserTermsAndConditionsDto) {
+  async createAdminTermsAdnConditions(dto: CreateUserTermsAndConditionsDto,userId:string) {
     const isExistTerm =
-      await this.prisma.client.userTermsAndConditions.findFirst();
+      await this.prisma.client.userTermsAndConditions.findFirst({
+        where:{
+          businessProfileId:userId
+        }
+      });
 
     if (isExistTerm) {
       throw new BadRequestException(
@@ -389,14 +393,19 @@ export class BusinessProfileService {
         conductAndBehaviour: dto.conductAndBehaviour,
         policyUpdate: dto.policyUpdate,
         liability: dto.liability,
+        businessProfileId:userId
       },
     });
   }
 
   //*UPDATE TERMS AND CONDITIONS
-  async updateAdminTermsAndConditions(dto: UpdateUserTermsAndConditionsDto) {
+  async updateAdminTermsAndConditions(dto: UpdateUserTermsAndConditionsDto,userId:string) {
     const isExistTerm =
-      await this.prisma.client.userTermsAndConditions.findFirst();
+      await this.prisma.client.userTermsAndConditions.findFirst({
+        where:{
+          businessProfileId:userId
+        }
+      });
 
     if (!isExistTerm) {
       throw new NotFoundException('Terms and Conditions not found to update');
@@ -413,9 +422,13 @@ export class BusinessProfileService {
   }
 
   //*GET TERMS AND CONDITIONS
-  async getTemsAndConditions() {
+  async getTemsAndConditions(userId:string) {
     const isExistTerm =
-      await this.prisma.client.userTermsAndConditions.findFirst();
+      await this.prisma.client.userTermsAndConditions.findFirst({
+        where:{
+          businessProfileId:userId
+        }
+      });
     if (!isExistTerm) {
       throw new NotFoundException('Terms and Conditions not found');
     }

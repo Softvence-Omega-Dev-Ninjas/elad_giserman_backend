@@ -358,10 +358,11 @@ export class BusinessProfileController {
   @ValidateOrganizer()
   @Post('create-user-termsAndCondition')
   @ApiBody({ type: CreateUserTermsAndConditionsDto })
-  async createPlatformTerm(@Body() dto: CreateUserTermsAndConditionsDto) {
+  async createPlatformTerm(@Body() dto: CreateUserTermsAndConditionsDto,@GetUser('sub') userId:string) {
     try {
+    console.log(userId)
       const res =
-        await this.businessProfileService.createAdminTermsAdnConditions(dto);
+        await this.businessProfileService.createAdminTermsAdnConditions(dto,userId);
       return {
         status: HttpStatus.OK,
         message: 'Terms and Conditions created successfully',
@@ -375,10 +376,10 @@ export class BusinessProfileController {
   @ValidateOrganizer()
   @Patch('update-termsCondition')
   @ApiBody({ type: UpdateUserTermsAndConditionsDto })
-  async updatePlatformTerm(@Body() dto: UpdateUserTermsAndConditionsDto) {
+  async updatePlatformTerm(@Body() dto: UpdateUserTermsAndConditionsDto,@GetUser('sub') userId:string) {
     try {
       const res =
-        await this.businessProfileService.updateAdminTermsAndConditions(dto);
+        await this.businessProfileService.updateAdminTermsAndConditions(dto,userId);
       return {
         status: HttpStatus.OK,
         message: 'Terms and Conditions updated successfully',
@@ -389,10 +390,11 @@ export class BusinessProfileController {
     }
   }
 
+  @ValidateOrganizer()
   @Get('organizer/terms-conditions')
-  async getTermsAndConditions() {
+  async getTermsAndConditions(@GetUser('sub')  userId:string) {
     try {
-      const res = await this.businessProfileService.getTemsAndConditions();
+      const res = await this.businessProfileService.getTemsAndConditions(userId);
       return {
         status: HttpStatus.OK,
         message: 'Terms and Conditions fetched successfully',
