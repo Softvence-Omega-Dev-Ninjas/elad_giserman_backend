@@ -50,6 +50,7 @@ model User {
   reedemaOffer     ReedemaOffer[]     @relation("UserReedemaOffer")
   businessProfile  BusinessProfile?
   spinHistory  SpinHistory[]
+   userTermsandCondition UserTermsAndConditions[]
   invoices Invoice[]
   fcmToken String?
   createdAt DateTime @default(now())

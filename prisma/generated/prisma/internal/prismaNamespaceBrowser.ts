@@ -361,6 +361,7 @@ export const UserTermsAndConditionsScalarFieldEnum = {
   canceletionAndNoShows: 'canceletionAndNoShows',
   modifications: 'modifications',
   conductAndBehaviour: 'conductAndBehaviour',
+  businessProfileId: 'businessProfileId',
   policyUpdate: 'policyUpdate',
   liability: 'liability',
   createdAt: 'createdAt',
