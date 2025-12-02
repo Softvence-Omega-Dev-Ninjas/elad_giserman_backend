@@ -27,118 +27,108 @@ export type AggregateInvoice = {
 };
 
 export type InvoiceAvgAggregateOutputType = {
-  amountCents: number | null;
-  paidCents: number | null;
+  amount: number | null;
 };
 
 export type InvoiceSumAggregateOutputType = {
-  amountCents: number | null;
-  paidCents: number | null;
+  amount: number | null;
 };
 
 export type InvoiceMinAggregateOutputType = {
   id: string | null;
-  invoiceNumber: string | null;
-  userSubscriptionId: string | null;
   stripeInvoiceId: string | null;
-  amountCents: number | null;
-  paidCents: number | null;
+  userId: string | null;
+  subscriptionId: string | null;
+  amount: number | null;
   currency: string | null;
   status: $Enums.InvoiceStatus | null;
-  periodStart: Date | null;
-  periodEnd: Date | null;
-  dueDate: Date | null;
+  paidAt: Date | null;
+  dueAt: Date | null;
+  failedAt: Date | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
 
 export type InvoiceMaxAggregateOutputType = {
   id: string | null;
-  invoiceNumber: string | null;
-  userSubscriptionId: string | null;
   stripeInvoiceId: string | null;
-  amountCents: number | null;
-  paidCents: number | null;
+  userId: string | null;
+  subscriptionId: string | null;
+  amount: number | null;
   currency: string | null;
   status: $Enums.InvoiceStatus | null;
-  periodStart: Date | null;
-  periodEnd: Date | null;
-  dueDate: Date | null;
+  paidAt: Date | null;
+  dueAt: Date | null;
+  failedAt: Date | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
 
 export type InvoiceCountAggregateOutputType = {
   id: number;
-  invoiceNumber: number;
-  userSubscriptionId: number;
   stripeInvoiceId: number;
-  amountCents: number;
-  paidCents: number;
+  userId: number;
+  subscriptionId: number;
+  amount: number;
   currency: number;
   status: number;
-  periodStart: number;
-  periodEnd: number;
-  dueDate: number;
+  paidAt: number;
+  dueAt: number;
+  failedAt: number;
   createdAt: number;
   updatedAt: number;
   _all: number;
 };
 
 export type InvoiceAvgAggregateInputType = {
-  amountCents?: true;
-  paidCents?: true;
+  amount?: true;
 };
 
 export type InvoiceSumAggregateInputType = {
-  amountCents?: true;
-  paidCents?: true;
+  amount?: true;
 };
 
 export type InvoiceMinAggregateInputType = {
   id?: true;
-  invoiceNumber?: true;
-  userSubscriptionId?: true;
   stripeInvoiceId?: true;
-  amountCents?: true;
-  paidCents?: true;
+  userId?: true;
+  subscriptionId?: true;
+  amount?: true;
   currency?: true;
   status?: true;
-  periodStart?: true;
-  periodEnd?: true;
-  dueDate?: true;
+  paidAt?: true;
+  dueAt?: true;
+  failedAt?: true;
   createdAt?: true;
   updatedAt?: true;
 };
 
 export type InvoiceMaxAggregateInputType = {
   id?: true;
-  invoiceNumber?: true;
-  userSubscriptionId?: true;
   stripeInvoiceId?: true;
-  amountCents?: true;
-  paidCents?: true;
+  userId?: true;
+  subscriptionId?: true;
+  amount?: true;
   currency?: true;
   status?: true;
-  periodStart?: true;
-  periodEnd?: true;
-  dueDate?: true;
+  paidAt?: true;
+  dueAt?: true;
+  failedAt?: true;
   createdAt?: true;
   updatedAt?: true;
 };
 
 export type InvoiceCountAggregateInputType = {
   id?: true;
-  invoiceNumber?: true;
-  userSubscriptionId?: true;
   stripeInvoiceId?: true;
-  amountCents?: true;
-  paidCents?: true;
+  userId?: true;
+  subscriptionId?: true;
+  amount?: true;
   currency?: true;
   status?: true;
-  periodStart?: true;
-  periodEnd?: true;
-  dueDate?: true;
+  paidAt?: true;
+  dueAt?: true;
+  failedAt?: true;
   createdAt?: true;
   updatedAt?: true;
   _all?: true;
@@ -239,16 +229,15 @@ export type InvoiceGroupByArgs<
 
 export type InvoiceGroupByOutputType = {
   id: string;
-  invoiceNumber: string;
-  userSubscriptionId: string;
-  stripeInvoiceId: string | null;
-  amountCents: number;
-  paidCents: number;
+  stripeInvoiceId: string;
+  userId: string;
+  subscriptionId: string;
+  amount: number;
   currency: string;
   status: $Enums.InvoiceStatus;
-  periodStart: Date;
-  periodEnd: Date;
-  dueDate: Date | null;
+  paidAt: Date | null;
+  dueAt: Date | null;
+  failedAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
   _count: InvoiceCountAggregateOutputType | null;
@@ -276,19 +265,19 @@ export type InvoiceWhereInput = {
   OR?: Prisma.InvoiceWhereInput[];
   NOT?: Prisma.InvoiceWhereInput | Prisma.InvoiceWhereInput[];
   id?: Prisma.StringFilter<'Invoice'> | string;
-  invoiceNumber?: Prisma.StringFilter<'Invoice'> | string;
-  userSubscriptionId?: Prisma.StringFilter<'Invoice'> | string;
-  stripeInvoiceId?: Prisma.StringNullableFilter<'Invoice'> | string | null;
-  amountCents?: Prisma.IntFilter<'Invoice'> | number;
-  paidCents?: Prisma.IntFilter<'Invoice'> | number;
+  stripeInvoiceId?: Prisma.StringFilter<'Invoice'> | string;
+  userId?: Prisma.StringFilter<'Invoice'> | string;
+  subscriptionId?: Prisma.StringFilter<'Invoice'> | string;
+  amount?: Prisma.FloatFilter<'Invoice'> | number;
   currency?: Prisma.StringFilter<'Invoice'> | string;
   status?: Prisma.EnumInvoiceStatusFilter<'Invoice'> | $Enums.InvoiceStatus;
-  periodStart?: Prisma.DateTimeFilter<'Invoice'> | Date | string;
-  periodEnd?: Prisma.DateTimeFilter<'Invoice'> | Date | string;
-  dueDate?: Prisma.DateTimeNullableFilter<'Invoice'> | Date | string | null;
+  paidAt?: Prisma.DateTimeNullableFilter<'Invoice'> | Date | string | null;
+  dueAt?: Prisma.DateTimeNullableFilter<'Invoice'> | Date | string | null;
+  failedAt?: Prisma.DateTimeNullableFilter<'Invoice'> | Date | string | null;
   createdAt?: Prisma.DateTimeFilter<'Invoice'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Invoice'> | Date | string;
-  userSubscription?: Prisma.XOR<
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+  subscription?: Prisma.XOR<
     Prisma.UserSubscriptionScalarRelationFilter,
     Prisma.UserSubscriptionWhereInput
   >;
@@ -296,59 +285,58 @@ export type InvoiceWhereInput = {
 
 export type InvoiceOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
-  invoiceNumber?: Prisma.SortOrder;
-  userSubscriptionId?: Prisma.SortOrder;
-  stripeInvoiceId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  amountCents?: Prisma.SortOrder;
-  paidCents?: Prisma.SortOrder;
+  stripeInvoiceId?: Prisma.SortOrder;
+  userId?: Prisma.SortOrder;
+  subscriptionId?: Prisma.SortOrder;
+  amount?: Prisma.SortOrder;
   currency?: Prisma.SortOrder;
   status?: Prisma.SortOrder;
-  periodStart?: Prisma.SortOrder;
-  periodEnd?: Prisma.SortOrder;
-  dueDate?: Prisma.SortOrderInput | Prisma.SortOrder;
+  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+  dueAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+  failedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
-  userSubscription?: Prisma.UserSubscriptionOrderByWithRelationInput;
+  user?: Prisma.UserOrderByWithRelationInput;
+  subscription?: Prisma.UserSubscriptionOrderByWithRelationInput;
 };
 
 export type InvoiceWhereUniqueInput = Prisma.AtLeast<
   {
     id?: string;
-    invoiceNumber?: string;
     stripeInvoiceId?: string;
     AND?: Prisma.InvoiceWhereInput | Prisma.InvoiceWhereInput[];
     OR?: Prisma.InvoiceWhereInput[];
     NOT?: Prisma.InvoiceWhereInput | Prisma.InvoiceWhereInput[];
-    userSubscriptionId?: Prisma.StringFilter<'Invoice'> | string;
-    amountCents?: Prisma.IntFilter<'Invoice'> | number;
-    paidCents?: Prisma.IntFilter<'Invoice'> | number;
+    userId?: Prisma.StringFilter<'Invoice'> | string;
+    subscriptionId?: Prisma.StringFilter<'Invoice'> | string;
+    amount?: Prisma.FloatFilter<'Invoice'> | number;
     currency?: Prisma.StringFilter<'Invoice'> | string;
     status?: Prisma.EnumInvoiceStatusFilter<'Invoice'> | $Enums.InvoiceStatus;
-    periodStart?: Prisma.DateTimeFilter<'Invoice'> | Date | string;
-    periodEnd?: Prisma.DateTimeFilter<'Invoice'> | Date | string;
-    dueDate?: Prisma.DateTimeNullableFilter<'Invoice'> | Date | string | null;
+    paidAt?: Prisma.DateTimeNullableFilter<'Invoice'> | Date | string | null;
+    dueAt?: Prisma.DateTimeNullableFilter<'Invoice'> | Date | string | null;
+    failedAt?: Prisma.DateTimeNullableFilter<'Invoice'> | Date | string | null;
     createdAt?: Prisma.DateTimeFilter<'Invoice'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'Invoice'> | Date | string;
-    userSubscription?: Prisma.XOR<
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    subscription?: Prisma.XOR<
       Prisma.UserSubscriptionScalarRelationFilter,
       Prisma.UserSubscriptionWhereInput
     >;
   },
-  'id' | 'invoiceNumber' | 'stripeInvoiceId'
+  'id' | 'stripeInvoiceId'
 >;
 
 export type InvoiceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
-  invoiceNumber?: Prisma.SortOrder;
-  userSubscriptionId?: Prisma.SortOrder;
-  stripeInvoiceId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  amountCents?: Prisma.SortOrder;
-  paidCents?: Prisma.SortOrder;
+  stripeInvoiceId?: Prisma.SortOrder;
+  userId?: Prisma.SortOrder;
+  subscriptionId?: Prisma.SortOrder;
+  amount?: Prisma.SortOrder;
   currency?: Prisma.SortOrder;
   status?: Prisma.SortOrder;
-  periodStart?: Prisma.SortOrder;
-  periodEnd?: Prisma.SortOrder;
-  dueDate?: Prisma.SortOrderInput | Prisma.SortOrder;
+  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+  dueAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+  failedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   _count?: Prisma.InvoiceCountOrderByAggregateInput;
@@ -367,21 +355,25 @@ export type InvoiceScalarWhereWithAggregatesInput = {
     | Prisma.InvoiceScalarWhereWithAggregatesInput
     | Prisma.InvoiceScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'Invoice'> | string;
-  invoiceNumber?: Prisma.StringWithAggregatesFilter<'Invoice'> | string;
-  userSubscriptionId?: Prisma.StringWithAggregatesFilter<'Invoice'> | string;
-  stripeInvoiceId?:
-    | Prisma.StringNullableWithAggregatesFilter<'Invoice'>
-    | string
-    | null;
-  amountCents?: Prisma.IntWithAggregatesFilter<'Invoice'> | number;
-  paidCents?: Prisma.IntWithAggregatesFilter<'Invoice'> | number;
+  stripeInvoiceId?: Prisma.StringWithAggregatesFilter<'Invoice'> | string;
+  userId?: Prisma.StringWithAggregatesFilter<'Invoice'> | string;
+  subscriptionId?: Prisma.StringWithAggregatesFilter<'Invoice'> | string;
+  amount?: Prisma.FloatWithAggregatesFilter<'Invoice'> | number;
   currency?: Prisma.StringWithAggregatesFilter<'Invoice'> | string;
   status?:
     | Prisma.EnumInvoiceStatusWithAggregatesFilter<'Invoice'>
     | $Enums.InvoiceStatus;
-  periodStart?: Prisma.DateTimeWithAggregatesFilter<'Invoice'> | Date | string;
-  periodEnd?: Prisma.DateTimeWithAggregatesFilter<'Invoice'> | Date | string;
-  dueDate?:
+  paidAt?:
+    | Prisma.DateTimeNullableWithAggregatesFilter<'Invoice'>
+    | Date
+    | string
+    | null;
+  dueAt?:
+    | Prisma.DateTimeNullableWithAggregatesFilter<'Invoice'>
+    | Date
+    | string
+    | null;
+  failedAt?:
     | Prisma.DateTimeNullableWithAggregatesFilter<'Invoice'>
     | Date
     | string
@@ -392,78 +384,84 @@ export type InvoiceScalarWhereWithAggregatesInput = {
 
 export type InvoiceCreateInput = {
   id?: string;
-  invoiceNumber: string;
-  stripeInvoiceId?: string | null;
-  amountCents: number;
-  paidCents?: number;
+  stripeInvoiceId: string;
+  amount: number;
   currency?: string;
-  status?: $Enums.InvoiceStatus;
-  periodStart: Date | string;
-  periodEnd: Date | string;
-  dueDate?: Date | string | null;
+  status: $Enums.InvoiceStatus;
+  paidAt?: Date | string | null;
+  dueAt?: Date | string | null;
+  failedAt?: Date | string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  userSubscription: Prisma.UserSubscriptionCreateNestedOneWithoutInvoicesInput;
+  user: Prisma.UserCreateNestedOneWithoutInvoicesInput;
+  subscription: Prisma.UserSubscriptionCreateNestedOneWithoutInvoicesInput;
 };
 
 export type InvoiceUncheckedCreateInput = {
   id?: string;
-  invoiceNumber: string;
-  userSubscriptionId: string;
-  stripeInvoiceId?: string | null;
-  amountCents: number;
-  paidCents?: number;
+  stripeInvoiceId: string;
+  userId: string;
+  subscriptionId: string;
+  amount: number;
   currency?: string;
-  status?: $Enums.InvoiceStatus;
-  periodStart: Date | string;
-  periodEnd: Date | string;
-  dueDate?: Date | string | null;
+  status: $Enums.InvoiceStatus;
+  paidAt?: Date | string | null;
+  dueAt?: Date | string | null;
+  failedAt?: Date | string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
 
 export type InvoiceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
-  stripeInvoiceId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  amountCents?: Prisma.IntFieldUpdateOperationsInput | number;
-  paidCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  stripeInvoiceId?: Prisma.StringFieldUpdateOperationsInput | string;
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   status?:
     | Prisma.EnumInvoiceStatusFieldUpdateOperationsInput
     | $Enums.InvoiceStatus;
-  periodStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  periodEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  dueDate?:
+  paidAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  dueAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  failedAt?:
     | Prisma.NullableDateTimeFieldUpdateOperationsInput
     | Date
     | string
     | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  userSubscription?: Prisma.UserSubscriptionUpdateOneRequiredWithoutInvoicesNestedInput;
+  user?: Prisma.UserUpdateOneRequiredWithoutInvoicesNestedInput;
+  subscription?: Prisma.UserSubscriptionUpdateOneRequiredWithoutInvoicesNestedInput;
 };
 
 export type InvoiceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
-  userSubscriptionId?: Prisma.StringFieldUpdateOperationsInput | string;
-  stripeInvoiceId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  amountCents?: Prisma.IntFieldUpdateOperationsInput | number;
-  paidCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  stripeInvoiceId?: Prisma.StringFieldUpdateOperationsInput | string;
+  userId?: Prisma.StringFieldUpdateOperationsInput | string;
+  subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string;
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   status?:
     | Prisma.EnumInvoiceStatusFieldUpdateOperationsInput
     | $Enums.InvoiceStatus;
-  periodStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  periodEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  dueDate?:
+  paidAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  dueAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  failedAt?:
     | Prisma.NullableDateTimeFieldUpdateOperationsInput
     | Date
     | string
@@ -474,36 +472,38 @@ export type InvoiceUncheckedUpdateInput = {
 
 export type InvoiceCreateManyInput = {
   id?: string;
-  invoiceNumber: string;
-  userSubscriptionId: string;
-  stripeInvoiceId?: string | null;
-  amountCents: number;
-  paidCents?: number;
+  stripeInvoiceId: string;
+  userId: string;
+  subscriptionId: string;
+  amount: number;
   currency?: string;
-  status?: $Enums.InvoiceStatus;
-  periodStart: Date | string;
-  periodEnd: Date | string;
-  dueDate?: Date | string | null;
+  status: $Enums.InvoiceStatus;
+  paidAt?: Date | string | null;
+  dueAt?: Date | string | null;
+  failedAt?: Date | string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
 
 export type InvoiceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
-  stripeInvoiceId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  amountCents?: Prisma.IntFieldUpdateOperationsInput | number;
-  paidCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  stripeInvoiceId?: Prisma.StringFieldUpdateOperationsInput | string;
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   status?:
     | Prisma.EnumInvoiceStatusFieldUpdateOperationsInput
     | $Enums.InvoiceStatus;
-  periodStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  periodEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  dueDate?:
+  paidAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  dueAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  failedAt?:
     | Prisma.NullableDateTimeFieldUpdateOperationsInput
     | Date
     | string
@@ -514,21 +514,25 @@ export type InvoiceUpdateManyMutationInput = {
 
 export type InvoiceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
-  userSubscriptionId?: Prisma.StringFieldUpdateOperationsInput | string;
-  stripeInvoiceId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  amountCents?: Prisma.IntFieldUpdateOperationsInput | number;
-  paidCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  stripeInvoiceId?: Prisma.StringFieldUpdateOperationsInput | string;
+  userId?: Prisma.StringFieldUpdateOperationsInput | string;
+  subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string;
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   status?:
     | Prisma.EnumInvoiceStatusFieldUpdateOperationsInput
     | $Enums.InvoiceStatus;
-  periodStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  periodEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  dueDate?:
+  paidAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  dueAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  failedAt?:
     | Prisma.NullableDateTimeFieldUpdateOperationsInput
     | Date
     | string
@@ -549,107 +553,102 @@ export type InvoiceOrderByRelationAggregateInput = {
 
 export type InvoiceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  invoiceNumber?: Prisma.SortOrder;
-  userSubscriptionId?: Prisma.SortOrder;
   stripeInvoiceId?: Prisma.SortOrder;
-  amountCents?: Prisma.SortOrder;
-  paidCents?: Prisma.SortOrder;
+  userId?: Prisma.SortOrder;
+  subscriptionId?: Prisma.SortOrder;
+  amount?: Prisma.SortOrder;
   currency?: Prisma.SortOrder;
   status?: Prisma.SortOrder;
-  periodStart?: Prisma.SortOrder;
-  periodEnd?: Prisma.SortOrder;
-  dueDate?: Prisma.SortOrder;
+  paidAt?: Prisma.SortOrder;
+  dueAt?: Prisma.SortOrder;
+  failedAt?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
 
 export type InvoiceAvgOrderByAggregateInput = {
-  amountCents?: Prisma.SortOrder;
-  paidCents?: Prisma.SortOrder;
+  amount?: Prisma.SortOrder;
 };
 
 export type InvoiceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  invoiceNumber?: Prisma.SortOrder;
-  userSubscriptionId?: Prisma.SortOrder;
   stripeInvoiceId?: Prisma.SortOrder;
-  amountCents?: Prisma.SortOrder;
-  paidCents?: Prisma.SortOrder;
+  userId?: Prisma.SortOrder;
+  subscriptionId?: Prisma.SortOrder;
+  amount?: Prisma.SortOrder;
   currency?: Prisma.SortOrder;
   status?: Prisma.SortOrder;
-  periodStart?: Prisma.SortOrder;
-  periodEnd?: Prisma.SortOrder;
-  dueDate?: Prisma.SortOrder;
+  paidAt?: Prisma.SortOrder;
+  dueAt?: Prisma.SortOrder;
+  failedAt?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
 
 export type InvoiceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  invoiceNumber?: Prisma.SortOrder;
-  userSubscriptionId?: Prisma.SortOrder;
   stripeInvoiceId?: Prisma.SortOrder;
-  amountCents?: Prisma.SortOrder;
-  paidCents?: Prisma.SortOrder;
+  userId?: Prisma.SortOrder;
+  subscriptionId?: Prisma.SortOrder;
+  amount?: Prisma.SortOrder;
   currency?: Prisma.SortOrder;
   status?: Prisma.SortOrder;
-  periodStart?: Prisma.SortOrder;
-  periodEnd?: Prisma.SortOrder;
-  dueDate?: Prisma.SortOrder;
+  paidAt?: Prisma.SortOrder;
+  dueAt?: Prisma.SortOrder;
+  failedAt?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
 
 export type InvoiceSumOrderByAggregateInput = {
-  amountCents?: Prisma.SortOrder;
-  paidCents?: Prisma.SortOrder;
+  amount?: Prisma.SortOrder;
 };
 
-export type InvoiceCreateNestedManyWithoutUserSubscriptionInput = {
+export type InvoiceCreateNestedManyWithoutSubscriptionInput = {
   create?:
     | Prisma.XOR<
-        Prisma.InvoiceCreateWithoutUserSubscriptionInput,
-        Prisma.InvoiceUncheckedCreateWithoutUserSubscriptionInput
+        Prisma.InvoiceCreateWithoutSubscriptionInput,
+        Prisma.InvoiceUncheckedCreateWithoutSubscriptionInput
       >
-    | Prisma.InvoiceCreateWithoutUserSubscriptionInput[]
-    | Prisma.InvoiceUncheckedCreateWithoutUserSubscriptionInput[];
+    | Prisma.InvoiceCreateWithoutSubscriptionInput[]
+    | Prisma.InvoiceUncheckedCreateWithoutSubscriptionInput[];
   connectOrCreate?:
-    | Prisma.InvoiceCreateOrConnectWithoutUserSubscriptionInput
-    | Prisma.InvoiceCreateOrConnectWithoutUserSubscriptionInput[];
-  createMany?: Prisma.InvoiceCreateManyUserSubscriptionInputEnvelope;
+    | Prisma.InvoiceCreateOrConnectWithoutSubscriptionInput
+    | Prisma.InvoiceCreateOrConnectWithoutSubscriptionInput[];
+  createMany?: Prisma.InvoiceCreateManySubscriptionInputEnvelope;
   connect?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
 };
 
-export type InvoiceUncheckedCreateNestedManyWithoutUserSubscriptionInput = {
+export type InvoiceUncheckedCreateNestedManyWithoutSubscriptionInput = {
   create?:
     | Prisma.XOR<
-        Prisma.InvoiceCreateWithoutUserSubscriptionInput,
-        Prisma.InvoiceUncheckedCreateWithoutUserSubscriptionInput
+        Prisma.InvoiceCreateWithoutSubscriptionInput,
+        Prisma.InvoiceUncheckedCreateWithoutSubscriptionInput
       >
-    | Prisma.InvoiceCreateWithoutUserSubscriptionInput[]
-    | Prisma.InvoiceUncheckedCreateWithoutUserSubscriptionInput[];
+    | Prisma.InvoiceCreateWithoutSubscriptionInput[]
+    | Prisma.InvoiceUncheckedCreateWithoutSubscriptionInput[];
   connectOrCreate?:
-    | Prisma.InvoiceCreateOrConnectWithoutUserSubscriptionInput
-    | Prisma.InvoiceCreateOrConnectWithoutUserSubscriptionInput[];
-  createMany?: Prisma.InvoiceCreateManyUserSubscriptionInputEnvelope;
+    | Prisma.InvoiceCreateOrConnectWithoutSubscriptionInput
+    | Prisma.InvoiceCreateOrConnectWithoutSubscriptionInput[];
+  createMany?: Prisma.InvoiceCreateManySubscriptionInputEnvelope;
   connect?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
 };
 
-export type InvoiceUpdateManyWithoutUserSubscriptionNestedInput = {
+export type InvoiceUpdateManyWithoutSubscriptionNestedInput = {
   create?:
     | Prisma.XOR<
-        Prisma.InvoiceCreateWithoutUserSubscriptionInput,
-        Prisma.InvoiceUncheckedCreateWithoutUserSubscriptionInput
+        Prisma.InvoiceCreateWithoutSubscriptionInput,
+        Prisma.InvoiceUncheckedCreateWithoutSubscriptionInput
       >
-    | Prisma.InvoiceCreateWithoutUserSubscriptionInput[]
-    | Prisma.InvoiceUncheckedCreateWithoutUserSubscriptionInput[];
+    | Prisma.InvoiceCreateWithoutSubscriptionInput[]
+    | Prisma.InvoiceUncheckedCreateWithoutSubscriptionInput[];
   connectOrCreate?:
-    | Prisma.InvoiceCreateOrConnectWithoutUserSubscriptionInput
-    | Prisma.InvoiceCreateOrConnectWithoutUserSubscriptionInput[];
+    | Prisma.InvoiceCreateOrConnectWithoutSubscriptionInput
+    | Prisma.InvoiceCreateOrConnectWithoutSubscriptionInput[];
   upsert?:
-    | Prisma.InvoiceUpsertWithWhereUniqueWithoutUserSubscriptionInput
-    | Prisma.InvoiceUpsertWithWhereUniqueWithoutUserSubscriptionInput[];
-  createMany?: Prisma.InvoiceCreateManyUserSubscriptionInputEnvelope;
+    | Prisma.InvoiceUpsertWithWhereUniqueWithoutSubscriptionInput
+    | Prisma.InvoiceUpsertWithWhereUniqueWithoutSubscriptionInput[];
+  createMany?: Prisma.InvoiceCreateManySubscriptionInputEnvelope;
   set?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
   disconnect?:
     | Prisma.InvoiceWhereUniqueInput
@@ -657,31 +656,31 @@ export type InvoiceUpdateManyWithoutUserSubscriptionNestedInput = {
   delete?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
   connect?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
   update?:
-    | Prisma.InvoiceUpdateWithWhereUniqueWithoutUserSubscriptionInput
-    | Prisma.InvoiceUpdateWithWhereUniqueWithoutUserSubscriptionInput[];
+    | Prisma.InvoiceUpdateWithWhereUniqueWithoutSubscriptionInput
+    | Prisma.InvoiceUpdateWithWhereUniqueWithoutSubscriptionInput[];
   updateMany?:
-    | Prisma.InvoiceUpdateManyWithWhereWithoutUserSubscriptionInput
-    | Prisma.InvoiceUpdateManyWithWhereWithoutUserSubscriptionInput[];
+    | Prisma.InvoiceUpdateManyWithWhereWithoutSubscriptionInput
+    | Prisma.InvoiceUpdateManyWithWhereWithoutSubscriptionInput[];
   deleteMany?:
     | Prisma.InvoiceScalarWhereInput
     | Prisma.InvoiceScalarWhereInput[];
 };
 
-export type InvoiceUncheckedUpdateManyWithoutUserSubscriptionNestedInput = {
+export type InvoiceUncheckedUpdateManyWithoutSubscriptionNestedInput = {
   create?:
     | Prisma.XOR<
-        Prisma.InvoiceCreateWithoutUserSubscriptionInput,
-        Prisma.InvoiceUncheckedCreateWithoutUserSubscriptionInput
+        Prisma.InvoiceCreateWithoutSubscriptionInput,
+        Prisma.InvoiceUncheckedCreateWithoutSubscriptionInput
       >
-    | Prisma.InvoiceCreateWithoutUserSubscriptionInput[]
-    | Prisma.InvoiceUncheckedCreateWithoutUserSubscriptionInput[];
+    | Prisma.InvoiceCreateWithoutSubscriptionInput[]
+    | Prisma.InvoiceUncheckedCreateWithoutSubscriptionInput[];
   connectOrCreate?:
-    | Prisma.InvoiceCreateOrConnectWithoutUserSubscriptionInput
-    | Prisma.InvoiceCreateOrConnectWithoutUserSubscriptionInput[];
+    | Prisma.InvoiceCreateOrConnectWithoutSubscriptionInput
+    | Prisma.InvoiceCreateOrConnectWithoutSubscriptionInput[];
   upsert?:
-    | Prisma.InvoiceUpsertWithWhereUniqueWithoutUserSubscriptionInput
-    | Prisma.InvoiceUpsertWithWhereUniqueWithoutUserSubscriptionInput[];
-  createMany?: Prisma.InvoiceCreateManyUserSubscriptionInputEnvelope;
+    | Prisma.InvoiceUpsertWithWhereUniqueWithoutSubscriptionInput
+    | Prisma.InvoiceUpsertWithWhereUniqueWithoutSubscriptionInput[];
+  createMany?: Prisma.InvoiceCreateManySubscriptionInputEnvelope;
   set?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
   disconnect?:
     | Prisma.InvoiceWhereUniqueInput
@@ -689,90 +688,190 @@ export type InvoiceUncheckedUpdateManyWithoutUserSubscriptionNestedInput = {
   delete?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
   connect?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
   update?:
-    | Prisma.InvoiceUpdateWithWhereUniqueWithoutUserSubscriptionInput
-    | Prisma.InvoiceUpdateWithWhereUniqueWithoutUserSubscriptionInput[];
+    | Prisma.InvoiceUpdateWithWhereUniqueWithoutSubscriptionInput
+    | Prisma.InvoiceUpdateWithWhereUniqueWithoutSubscriptionInput[];
   updateMany?:
-    | Prisma.InvoiceUpdateManyWithWhereWithoutUserSubscriptionInput
-    | Prisma.InvoiceUpdateManyWithWhereWithoutUserSubscriptionInput[];
+    | Prisma.InvoiceUpdateManyWithWhereWithoutSubscriptionInput
+    | Prisma.InvoiceUpdateManyWithWhereWithoutSubscriptionInput[];
   deleteMany?:
     | Prisma.InvoiceScalarWhereInput
     | Prisma.InvoiceScalarWhereInput[];
+};
+
+export type FloatFieldUpdateOperationsInput = {
+  set?: number;
+  increment?: number;
+  decrement?: number;
+  multiply?: number;
+  divide?: number;
 };
 
 export type EnumInvoiceStatusFieldUpdateOperationsInput = {
   set?: $Enums.InvoiceStatus;
 };
 
-export type InvoiceCreateWithoutUserSubscriptionInput = {
+export type InvoiceCreateNestedManyWithoutUserInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.InvoiceCreateWithoutUserInput,
+        Prisma.InvoiceUncheckedCreateWithoutUserInput
+      >
+    | Prisma.InvoiceCreateWithoutUserInput[]
+    | Prisma.InvoiceUncheckedCreateWithoutUserInput[];
+  connectOrCreate?:
+    | Prisma.InvoiceCreateOrConnectWithoutUserInput
+    | Prisma.InvoiceCreateOrConnectWithoutUserInput[];
+  createMany?: Prisma.InvoiceCreateManyUserInputEnvelope;
+  connect?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
+};
+
+export type InvoiceUncheckedCreateNestedManyWithoutUserInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.InvoiceCreateWithoutUserInput,
+        Prisma.InvoiceUncheckedCreateWithoutUserInput
+      >
+    | Prisma.InvoiceCreateWithoutUserInput[]
+    | Prisma.InvoiceUncheckedCreateWithoutUserInput[];
+  connectOrCreate?:
+    | Prisma.InvoiceCreateOrConnectWithoutUserInput
+    | Prisma.InvoiceCreateOrConnectWithoutUserInput[];
+  createMany?: Prisma.InvoiceCreateManyUserInputEnvelope;
+  connect?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
+};
+
+export type InvoiceUpdateManyWithoutUserNestedInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.InvoiceCreateWithoutUserInput,
+        Prisma.InvoiceUncheckedCreateWithoutUserInput
+      >
+    | Prisma.InvoiceCreateWithoutUserInput[]
+    | Prisma.InvoiceUncheckedCreateWithoutUserInput[];
+  connectOrCreate?:
+    | Prisma.InvoiceCreateOrConnectWithoutUserInput
+    | Prisma.InvoiceCreateOrConnectWithoutUserInput[];
+  upsert?:
+    | Prisma.InvoiceUpsertWithWhereUniqueWithoutUserInput
+    | Prisma.InvoiceUpsertWithWhereUniqueWithoutUserInput[];
+  createMany?: Prisma.InvoiceCreateManyUserInputEnvelope;
+  set?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
+  disconnect?:
+    | Prisma.InvoiceWhereUniqueInput
+    | Prisma.InvoiceWhereUniqueInput[];
+  delete?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
+  connect?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
+  update?:
+    | Prisma.InvoiceUpdateWithWhereUniqueWithoutUserInput
+    | Prisma.InvoiceUpdateWithWhereUniqueWithoutUserInput[];
+  updateMany?:
+    | Prisma.InvoiceUpdateManyWithWhereWithoutUserInput
+    | Prisma.InvoiceUpdateManyWithWhereWithoutUserInput[];
+  deleteMany?:
+    | Prisma.InvoiceScalarWhereInput
+    | Prisma.InvoiceScalarWhereInput[];
+};
+
+export type InvoiceUncheckedUpdateManyWithoutUserNestedInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.InvoiceCreateWithoutUserInput,
+        Prisma.InvoiceUncheckedCreateWithoutUserInput
+      >
+    | Prisma.InvoiceCreateWithoutUserInput[]
+    | Prisma.InvoiceUncheckedCreateWithoutUserInput[];
+  connectOrCreate?:
+    | Prisma.InvoiceCreateOrConnectWithoutUserInput
+    | Prisma.InvoiceCreateOrConnectWithoutUserInput[];
+  upsert?:
+    | Prisma.InvoiceUpsertWithWhereUniqueWithoutUserInput
+    | Prisma.InvoiceUpsertWithWhereUniqueWithoutUserInput[];
+  createMany?: Prisma.InvoiceCreateManyUserInputEnvelope;
+  set?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
+  disconnect?:
+    | Prisma.InvoiceWhereUniqueInput
+    | Prisma.InvoiceWhereUniqueInput[];
+  delete?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
+  connect?: Prisma.InvoiceWhereUniqueInput | Prisma.InvoiceWhereUniqueInput[];
+  update?:
+    | Prisma.InvoiceUpdateWithWhereUniqueWithoutUserInput
+    | Prisma.InvoiceUpdateWithWhereUniqueWithoutUserInput[];
+  updateMany?:
+    | Prisma.InvoiceUpdateManyWithWhereWithoutUserInput
+    | Prisma.InvoiceUpdateManyWithWhereWithoutUserInput[];
+  deleteMany?:
+    | Prisma.InvoiceScalarWhereInput
+    | Prisma.InvoiceScalarWhereInput[];
+};
+
+export type InvoiceCreateWithoutSubscriptionInput = {
   id?: string;
-  invoiceNumber: string;
-  stripeInvoiceId?: string | null;
-  amountCents: number;
-  paidCents?: number;
+  stripeInvoiceId: string;
+  amount: number;
   currency?: string;
-  status?: $Enums.InvoiceStatus;
-  periodStart: Date | string;
-  periodEnd: Date | string;
-  dueDate?: Date | string | null;
+  status: $Enums.InvoiceStatus;
+  paidAt?: Date | string | null;
+  dueAt?: Date | string | null;
+  failedAt?: Date | string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  user: Prisma.UserCreateNestedOneWithoutInvoicesInput;
+};
+
+export type InvoiceUncheckedCreateWithoutSubscriptionInput = {
+  id?: string;
+  stripeInvoiceId: string;
+  userId: string;
+  amount: number;
+  currency?: string;
+  status: $Enums.InvoiceStatus;
+  paidAt?: Date | string | null;
+  dueAt?: Date | string | null;
+  failedAt?: Date | string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
 
-export type InvoiceUncheckedCreateWithoutUserSubscriptionInput = {
-  id?: string;
-  invoiceNumber: string;
-  stripeInvoiceId?: string | null;
-  amountCents: number;
-  paidCents?: number;
-  currency?: string;
-  status?: $Enums.InvoiceStatus;
-  periodStart: Date | string;
-  periodEnd: Date | string;
-  dueDate?: Date | string | null;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-};
-
-export type InvoiceCreateOrConnectWithoutUserSubscriptionInput = {
+export type InvoiceCreateOrConnectWithoutSubscriptionInput = {
   where: Prisma.InvoiceWhereUniqueInput;
   create: Prisma.XOR<
-    Prisma.InvoiceCreateWithoutUserSubscriptionInput,
-    Prisma.InvoiceUncheckedCreateWithoutUserSubscriptionInput
+    Prisma.InvoiceCreateWithoutSubscriptionInput,
+    Prisma.InvoiceUncheckedCreateWithoutSubscriptionInput
   >;
 };
 
-export type InvoiceCreateManyUserSubscriptionInputEnvelope = {
+export type InvoiceCreateManySubscriptionInputEnvelope = {
   data:
-    | Prisma.InvoiceCreateManyUserSubscriptionInput
-    | Prisma.InvoiceCreateManyUserSubscriptionInput[];
+    | Prisma.InvoiceCreateManySubscriptionInput
+    | Prisma.InvoiceCreateManySubscriptionInput[];
   skipDuplicates?: boolean;
 };
 
-export type InvoiceUpsertWithWhereUniqueWithoutUserSubscriptionInput = {
+export type InvoiceUpsertWithWhereUniqueWithoutSubscriptionInput = {
   where: Prisma.InvoiceWhereUniqueInput;
   update: Prisma.XOR<
-    Prisma.InvoiceUpdateWithoutUserSubscriptionInput,
-    Prisma.InvoiceUncheckedUpdateWithoutUserSubscriptionInput
+    Prisma.InvoiceUpdateWithoutSubscriptionInput,
+    Prisma.InvoiceUncheckedUpdateWithoutSubscriptionInput
   >;
   create: Prisma.XOR<
-    Prisma.InvoiceCreateWithoutUserSubscriptionInput,
-    Prisma.InvoiceUncheckedCreateWithoutUserSubscriptionInput
+    Prisma.InvoiceCreateWithoutSubscriptionInput,
+    Prisma.InvoiceUncheckedCreateWithoutSubscriptionInput
   >;
 };
 
-export type InvoiceUpdateWithWhereUniqueWithoutUserSubscriptionInput = {
+export type InvoiceUpdateWithWhereUniqueWithoutSubscriptionInput = {
   where: Prisma.InvoiceWhereUniqueInput;
   data: Prisma.XOR<
-    Prisma.InvoiceUpdateWithoutUserSubscriptionInput,
-    Prisma.InvoiceUncheckedUpdateWithoutUserSubscriptionInput
+    Prisma.InvoiceUpdateWithoutSubscriptionInput,
+    Prisma.InvoiceUncheckedUpdateWithoutSubscriptionInput
   >;
 };
 
-export type InvoiceUpdateManyWithWhereWithoutUserSubscriptionInput = {
+export type InvoiceUpdateManyWithWhereWithoutSubscriptionInput = {
   where: Prisma.InvoiceScalarWhereInput;
   data: Prisma.XOR<
     Prisma.InvoiceUpdateManyMutationInput,
-    Prisma.InvoiceUncheckedUpdateManyWithoutUserSubscriptionInput
+    Prisma.InvoiceUncheckedUpdateManyWithoutSubscriptionInput
   >;
 };
 
@@ -781,51 +880,150 @@ export type InvoiceScalarWhereInput = {
   OR?: Prisma.InvoiceScalarWhereInput[];
   NOT?: Prisma.InvoiceScalarWhereInput | Prisma.InvoiceScalarWhereInput[];
   id?: Prisma.StringFilter<'Invoice'> | string;
-  invoiceNumber?: Prisma.StringFilter<'Invoice'> | string;
-  userSubscriptionId?: Prisma.StringFilter<'Invoice'> | string;
-  stripeInvoiceId?: Prisma.StringNullableFilter<'Invoice'> | string | null;
-  amountCents?: Prisma.IntFilter<'Invoice'> | number;
-  paidCents?: Prisma.IntFilter<'Invoice'> | number;
+  stripeInvoiceId?: Prisma.StringFilter<'Invoice'> | string;
+  userId?: Prisma.StringFilter<'Invoice'> | string;
+  subscriptionId?: Prisma.StringFilter<'Invoice'> | string;
+  amount?: Prisma.FloatFilter<'Invoice'> | number;
   currency?: Prisma.StringFilter<'Invoice'> | string;
   status?: Prisma.EnumInvoiceStatusFilter<'Invoice'> | $Enums.InvoiceStatus;
-  periodStart?: Prisma.DateTimeFilter<'Invoice'> | Date | string;
-  periodEnd?: Prisma.DateTimeFilter<'Invoice'> | Date | string;
-  dueDate?: Prisma.DateTimeNullableFilter<'Invoice'> | Date | string | null;
+  paidAt?: Prisma.DateTimeNullableFilter<'Invoice'> | Date | string | null;
+  dueAt?: Prisma.DateTimeNullableFilter<'Invoice'> | Date | string | null;
+  failedAt?: Prisma.DateTimeNullableFilter<'Invoice'> | Date | string | null;
   createdAt?: Prisma.DateTimeFilter<'Invoice'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Invoice'> | Date | string;
 };
 
-export type InvoiceCreateManyUserSubscriptionInput = {
+export type InvoiceCreateWithoutUserInput = {
   id?: string;
-  invoiceNumber: string;
-  stripeInvoiceId?: string | null;
-  amountCents: number;
-  paidCents?: number;
+  stripeInvoiceId: string;
+  amount: number;
   currency?: string;
-  status?: $Enums.InvoiceStatus;
-  periodStart: Date | string;
-  periodEnd: Date | string;
-  dueDate?: Date | string | null;
+  status: $Enums.InvoiceStatus;
+  paidAt?: Date | string | null;
+  dueAt?: Date | string | null;
+  failedAt?: Date | string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  subscription: Prisma.UserSubscriptionCreateNestedOneWithoutInvoicesInput;
+};
+
+export type InvoiceUncheckedCreateWithoutUserInput = {
+  id?: string;
+  stripeInvoiceId: string;
+  subscriptionId: string;
+  amount: number;
+  currency?: string;
+  status: $Enums.InvoiceStatus;
+  paidAt?: Date | string | null;
+  dueAt?: Date | string | null;
+  failedAt?: Date | string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
 
-export type InvoiceUpdateWithoutUserSubscriptionInput = {
+export type InvoiceCreateOrConnectWithoutUserInput = {
+  where: Prisma.InvoiceWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.InvoiceCreateWithoutUserInput,
+    Prisma.InvoiceUncheckedCreateWithoutUserInput
+  >;
+};
+
+export type InvoiceCreateManyUserInputEnvelope = {
+  data: Prisma.InvoiceCreateManyUserInput | Prisma.InvoiceCreateManyUserInput[];
+  skipDuplicates?: boolean;
+};
+
+export type InvoiceUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.InvoiceWhereUniqueInput;
+  update: Prisma.XOR<
+    Prisma.InvoiceUpdateWithoutUserInput,
+    Prisma.InvoiceUncheckedUpdateWithoutUserInput
+  >;
+  create: Prisma.XOR<
+    Prisma.InvoiceCreateWithoutUserInput,
+    Prisma.InvoiceUncheckedCreateWithoutUserInput
+  >;
+};
+
+export type InvoiceUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.InvoiceWhereUniqueInput;
+  data: Prisma.XOR<
+    Prisma.InvoiceUpdateWithoutUserInput,
+    Prisma.InvoiceUncheckedUpdateWithoutUserInput
+  >;
+};
+
+export type InvoiceUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.InvoiceScalarWhereInput;
+  data: Prisma.XOR<
+    Prisma.InvoiceUpdateManyMutationInput,
+    Prisma.InvoiceUncheckedUpdateManyWithoutUserInput
+  >;
+};
+
+export type InvoiceCreateManySubscriptionInput = {
+  id?: string;
+  stripeInvoiceId: string;
+  userId: string;
+  amount: number;
+  currency?: string;
+  status: $Enums.InvoiceStatus;
+  paidAt?: Date | string | null;
+  dueAt?: Date | string | null;
+  failedAt?: Date | string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+};
+
+export type InvoiceUpdateWithoutSubscriptionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
-  stripeInvoiceId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  amountCents?: Prisma.IntFieldUpdateOperationsInput | number;
-  paidCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  stripeInvoiceId?: Prisma.StringFieldUpdateOperationsInput | string;
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   status?:
     | Prisma.EnumInvoiceStatusFieldUpdateOperationsInput
     | $Enums.InvoiceStatus;
-  periodStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  periodEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  dueDate?:
+  paidAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  dueAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  failedAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  user?: Prisma.UserUpdateOneRequiredWithoutInvoicesNestedInput;
+};
+
+export type InvoiceUncheckedUpdateWithoutSubscriptionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeInvoiceId?: Prisma.StringFieldUpdateOperationsInput | string;
+  userId?: Prisma.StringFieldUpdateOperationsInput | string;
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number;
+  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  status?:
+    | Prisma.EnumInvoiceStatusFieldUpdateOperationsInput
+    | $Enums.InvoiceStatus;
+  paidAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  dueAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  failedAt?:
     | Prisma.NullableDateTimeFieldUpdateOperationsInput
     | Date
     | string
@@ -834,22 +1032,26 @@ export type InvoiceUpdateWithoutUserSubscriptionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type InvoiceUncheckedUpdateWithoutUserSubscriptionInput = {
+export type InvoiceUncheckedUpdateManyWithoutSubscriptionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
-  stripeInvoiceId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  amountCents?: Prisma.IntFieldUpdateOperationsInput | number;
-  paidCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  stripeInvoiceId?: Prisma.StringFieldUpdateOperationsInput | string;
+  userId?: Prisma.StringFieldUpdateOperationsInput | string;
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   status?:
     | Prisma.EnumInvoiceStatusFieldUpdateOperationsInput
     | $Enums.InvoiceStatus;
-  periodStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  periodEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  dueDate?:
+  paidAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  dueAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  failedAt?:
     | Prisma.NullableDateTimeFieldUpdateOperationsInput
     | Date
     | string
@@ -858,22 +1060,96 @@ export type InvoiceUncheckedUpdateWithoutUserSubscriptionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type InvoiceUncheckedUpdateManyWithoutUserSubscriptionInput = {
+export type InvoiceCreateManyUserInput = {
+  id?: string;
+  stripeInvoiceId: string;
+  subscriptionId: string;
+  amount: number;
+  currency?: string;
+  status: $Enums.InvoiceStatus;
+  paidAt?: Date | string | null;
+  dueAt?: Date | string | null;
+  failedAt?: Date | string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+};
+
+export type InvoiceUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
-  stripeInvoiceId?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  amountCents?: Prisma.IntFieldUpdateOperationsInput | number;
-  paidCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  stripeInvoiceId?: Prisma.StringFieldUpdateOperationsInput | string;
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   status?:
     | Prisma.EnumInvoiceStatusFieldUpdateOperationsInput
     | $Enums.InvoiceStatus;
-  periodStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  periodEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  dueDate?:
+  paidAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  dueAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  failedAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  subscription?: Prisma.UserSubscriptionUpdateOneRequiredWithoutInvoicesNestedInput;
+};
+
+export type InvoiceUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeInvoiceId?: Prisma.StringFieldUpdateOperationsInput | string;
+  subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string;
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number;
+  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  status?:
+    | Prisma.EnumInvoiceStatusFieldUpdateOperationsInput
+    | $Enums.InvoiceStatus;
+  paidAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  dueAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  failedAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+
+export type InvoiceUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeInvoiceId?: Prisma.StringFieldUpdateOperationsInput | string;
+  subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string;
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number;
+  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  status?:
+    | Prisma.EnumInvoiceStatusFieldUpdateOperationsInput
+    | $Enums.InvoiceStatus;
+  paidAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  dueAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  failedAt?:
     | Prisma.NullableDateTimeFieldUpdateOperationsInput
     | Date
     | string
@@ -888,19 +1164,19 @@ export type InvoiceSelect<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    invoiceNumber?: boolean;
-    userSubscriptionId?: boolean;
     stripeInvoiceId?: boolean;
-    amountCents?: boolean;
-    paidCents?: boolean;
+    userId?: boolean;
+    subscriptionId?: boolean;
+    amount?: boolean;
     currency?: boolean;
     status?: boolean;
-    periodStart?: boolean;
-    periodEnd?: boolean;
-    dueDate?: boolean;
+    paidAt?: boolean;
+    dueAt?: boolean;
+    failedAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    userSubscription?: boolean | Prisma.UserSubscriptionDefaultArgs<ExtArgs>;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    subscription?: boolean | Prisma.UserSubscriptionDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['invoice']
 >;
@@ -911,19 +1187,19 @@ export type InvoiceSelectCreateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    invoiceNumber?: boolean;
-    userSubscriptionId?: boolean;
     stripeInvoiceId?: boolean;
-    amountCents?: boolean;
-    paidCents?: boolean;
+    userId?: boolean;
+    subscriptionId?: boolean;
+    amount?: boolean;
     currency?: boolean;
     status?: boolean;
-    periodStart?: boolean;
-    periodEnd?: boolean;
-    dueDate?: boolean;
+    paidAt?: boolean;
+    dueAt?: boolean;
+    failedAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    userSubscription?: boolean | Prisma.UserSubscriptionDefaultArgs<ExtArgs>;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    subscription?: boolean | Prisma.UserSubscriptionDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['invoice']
 >;
@@ -934,35 +1210,34 @@ export type InvoiceSelectUpdateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    invoiceNumber?: boolean;
-    userSubscriptionId?: boolean;
     stripeInvoiceId?: boolean;
-    amountCents?: boolean;
-    paidCents?: boolean;
+    userId?: boolean;
+    subscriptionId?: boolean;
+    amount?: boolean;
     currency?: boolean;
     status?: boolean;
-    periodStart?: boolean;
-    periodEnd?: boolean;
-    dueDate?: boolean;
+    paidAt?: boolean;
+    dueAt?: boolean;
+    failedAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    userSubscription?: boolean | Prisma.UserSubscriptionDefaultArgs<ExtArgs>;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    subscription?: boolean | Prisma.UserSubscriptionDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['invoice']
 >;
 
 export type InvoiceSelectScalar = {
   id?: boolean;
-  invoiceNumber?: boolean;
-  userSubscriptionId?: boolean;
   stripeInvoiceId?: boolean;
-  amountCents?: boolean;
-  paidCents?: boolean;
+  userId?: boolean;
+  subscriptionId?: boolean;
+  amount?: boolean;
   currency?: boolean;
   status?: boolean;
-  periodStart?: boolean;
-  periodEnd?: boolean;
-  dueDate?: boolean;
+  paidAt?: boolean;
+  dueAt?: boolean;
+  failedAt?: boolean;
   createdAt?: boolean;
   updatedAt?: boolean;
 };
@@ -972,16 +1247,15 @@ export type InvoiceOmit<
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
   | 'id'
-  | 'invoiceNumber'
-  | 'userSubscriptionId'
   | 'stripeInvoiceId'
-  | 'amountCents'
-  | 'paidCents'
+  | 'userId'
+  | 'subscriptionId'
+  | 'amount'
   | 'currency'
   | 'status'
-  | 'periodStart'
-  | 'periodEnd'
-  | 'dueDate'
+  | 'paidAt'
+  | 'dueAt'
+  | 'failedAt'
   | 'createdAt'
   | 'updatedAt',
   ExtArgs['result']['invoice']
@@ -990,19 +1264,22 @@ export type InvoiceInclude<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  userSubscription?: boolean | Prisma.UserSubscriptionDefaultArgs<ExtArgs>;
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+  subscription?: boolean | Prisma.UserSubscriptionDefaultArgs<ExtArgs>;
 };
 export type InvoiceIncludeCreateManyAndReturn<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  userSubscription?: boolean | Prisma.UserSubscriptionDefaultArgs<ExtArgs>;
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+  subscription?: boolean | Prisma.UserSubscriptionDefaultArgs<ExtArgs>;
 };
 export type InvoiceIncludeUpdateManyAndReturn<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  userSubscription?: boolean | Prisma.UserSubscriptionDefaultArgs<ExtArgs>;
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+  subscription?: boolean | Prisma.UserSubscriptionDefaultArgs<ExtArgs>;
 };
 
 export type $InvoicePayload<
@@ -1011,21 +1288,21 @@ export type $InvoicePayload<
 > = {
   name: 'Invoice';
   objects: {
-    userSubscription: Prisma.$UserSubscriptionPayload<ExtArgs>;
+    user: Prisma.$UserPayload<ExtArgs>;
+    subscription: Prisma.$UserSubscriptionPayload<ExtArgs>;
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
       id: string;
-      invoiceNumber: string;
-      userSubscriptionId: string;
-      stripeInvoiceId: string | null;
-      amountCents: number;
-      paidCents: number;
+      stripeInvoiceId: string;
+      userId: string;
+      subscriptionId: string;
+      amount: number;
       currency: string;
       status: $Enums.InvoiceStatus;
-      periodStart: Date;
-      periodEnd: Date;
-      dueDate: Date | null;
+      paidAt: Date | null;
+      dueAt: Date | null;
+      failedAt: Date | null;
       createdAt: Date;
       updatedAt: Date;
     },
@@ -1578,7 +1855,21 @@ export interface Prisma__InvoiceClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise';
-  userSubscription<T extends Prisma.UserSubscriptionDefaultArgs<ExtArgs> = {}>(
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>,
+  ): Prisma.Prisma__UserClient<
+    | runtime.Types.Result.GetResult<
+        Prisma.$UserPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        GlobalOmitOptions
+      >
+    | Null,
+    Null,
+    ExtArgs,
+    GlobalOmitOptions
+  >;
+  subscription<T extends Prisma.UserSubscriptionDefaultArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.UserSubscriptionDefaultArgs<ExtArgs>>,
   ): Prisma.Prisma__UserSubscriptionClient<
     | runtime.Types.Result.GetResult<
@@ -1635,16 +1926,15 @@ export interface Prisma__InvoiceClient<
  */
 export interface InvoiceFieldRefs {
   readonly id: Prisma.FieldRef<'Invoice', 'String'>;
-  readonly invoiceNumber: Prisma.FieldRef<'Invoice', 'String'>;
-  readonly userSubscriptionId: Prisma.FieldRef<'Invoice', 'String'>;
   readonly stripeInvoiceId: Prisma.FieldRef<'Invoice', 'String'>;
-  readonly amountCents: Prisma.FieldRef<'Invoice', 'Int'>;
-  readonly paidCents: Prisma.FieldRef<'Invoice', 'Int'>;
+  readonly userId: Prisma.FieldRef<'Invoice', 'String'>;
+  readonly subscriptionId: Prisma.FieldRef<'Invoice', 'String'>;
+  readonly amount: Prisma.FieldRef<'Invoice', 'Float'>;
   readonly currency: Prisma.FieldRef<'Invoice', 'String'>;
   readonly status: Prisma.FieldRef<'Invoice', 'InvoiceStatus'>;
-  readonly periodStart: Prisma.FieldRef<'Invoice', 'DateTime'>;
-  readonly periodEnd: Prisma.FieldRef<'Invoice', 'DateTime'>;
-  readonly dueDate: Prisma.FieldRef<'Invoice', 'DateTime'>;
+  readonly paidAt: Prisma.FieldRef<'Invoice', 'DateTime'>;
+  readonly dueAt: Prisma.FieldRef<'Invoice', 'DateTime'>;
+  readonly failedAt: Prisma.FieldRef<'Invoice', 'DateTime'>;
   readonly createdAt: Prisma.FieldRef<'Invoice', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'Invoice', 'DateTime'>;
 }

@@ -92,6 +92,11 @@ export type SubscriptionPlan = Prisma.SubscriptionPlanModel;
  */
 export type UserSubscription = Prisma.UserSubscriptionModel;
 /**
+ * Model Invoice
+ *
+ */
+export type Invoice = Prisma.InvoiceModel;
+/**
  * Model TermsAndConditions
  *
  */
@@ -101,11 +106,6 @@ export type TermsAndConditions = Prisma.TermsAndConditionsModel;
  *
  */
 export type UserTermsAndConditions = Prisma.UserTermsAndConditionsModel;
-/**
- * Model Invoice
- *
- */
-export type Invoice = Prisma.InvoiceModel;
 /**
  * Model User
  *

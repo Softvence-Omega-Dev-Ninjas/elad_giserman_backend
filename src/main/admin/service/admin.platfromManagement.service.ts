@@ -26,6 +26,7 @@ export class AdminPlatfromManagementService {
     const { search, date, userType } = filter;
     const where: any = {};
 
+    // Search filter
     if (search) {
       where.OR = [
         { name: { contains: search, mode: 'insensitive' } },
@@ -34,10 +35,12 @@ export class AdminPlatfromManagementService {
       ];
     }
 
+    // Membership filter
     if (userType) {
       where.memberShip = userType;
     }
 
+    // Date filter
     if (date) {
       const selected = new Date(date);
       const nextDay = new Date(selected);
@@ -49,46 +52,49 @@ export class AdminPlatfromManagementService {
       };
     }
 
+    // ----------- FIXED PROMISE.ALL ORDER + MATCHING DESTRUCTURING -------------
     const [
       totalUser,
       totalFreeUser,
-      totalOrganizer,
+      totalBusinessCount,
       topBusiness,
 
-      //* NEW: Recent activity
       recentUsers,
-      recentBusinessProfile,
+      recentBusinessProfiles,
       recentReviews,
       recentOffers,
-
-      //* Recent joint
-      recentJoinedBussines,
+      recentJoinedBusinesses,
     ] = await Promise.all([
+      // 1
       this.prisma.client.user.count(),
+
+      // 2
       this.prisma.client.user.count({
         where: { memberShip: 'FREE' },
       }),
+
+      // 3
       this.prisma.client.businessProfile.count(),
+
+      // 4 (top business filtered by where)
       this.prisma.client.user.findMany({ where }),
 
-      this.prisma.client.businessProfile.findMany({
-        take: 5,
-        orderBy: { reviews: { _count: 'desc' } },
-      }),
-
-      //  Recent users
+      // 5 (recent users)
       this.prisma.client.user.findMany({
         orderBy: { updatedAt: 'desc' },
         take: 1,
       }),
 
-      //  Recent business profiles
+      // 6 (recent business profiles)
       this.prisma.client.businessProfile.findMany({
         orderBy: { updatedAt: 'desc' },
+        include: {
+          gallery: true,
+        },
         take: 5,
       }),
 
-      // Recent reviews
+      // 7 (recent reviews)
       this.prisma.client.review.findMany({
         orderBy: { updatedAt: 'desc' },
         take: 1,
@@ -97,35 +103,38 @@ export class AdminPlatfromManagementService {
           businessProfile: true,
         },
       }),
-      //
+
+      // 8 (recent offers)
       this.prisma.client.offer.findMany({
         orderBy: { updatedAt: 'desc' },
         take: 1,
         include: {
           business: {
-            select: {
-              title: true,
-            },
+            select: { title: true },
           },
         },
       }),
+
+      // 9 (recent joined businesses)
       this.prisma.client.businessProfile.findMany({
         orderBy: { updatedAt: 'desc' },
         take: 5,
       }),
     ]);
 
+    // ---------------- RETURN DATA STRUCTURE ----------------
     return {
       totalUser,
       totalFreeUser,
       totalVipUser: totalUser - totalFreeUser,
-      totalRest: totalOrganizer,
+      totalRest: totalBusinessCount,
 
       topRestaurent: topBusiness,
-      recentJoinedBussines,
+      recentJoinedBusinesses,
+
       recentActivity: {
         users: recentUsers,
-        businessProfiles: recentBusinessProfile,
+        businessProfiles: recentBusinessProfiles,
         reviews: recentReviews,
         offers: recentOffers,
       },
@@ -510,21 +519,16 @@ export class AdminPlatfromManagementService {
       orderBy: { createdAt: 'desc' },
       select: {
         id: true,
-        paidCents: true,
+        amount: true,
         createdAt: true,
-        userSubscription: {
+        status: true,
+        user: {
           select: {
-            status: true,
-            user: {
-              select: {
-                name: true,
-              },
-            },
-            plan: {
-              select: {
-                title: true,
-              },
-            },
+            name: true,
+            email: true,
+            memberShip: true,
+            currentPlan: true,
+            currentPlanId: true,
           },
         },
       },

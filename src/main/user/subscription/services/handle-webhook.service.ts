@@ -17,14 +17,10 @@ export class HandleWebhookService {
 
   @HandleError('Failed to handle Stripe webhook', 'Subscription')
   async handleWebhook(signature: string, rawBody: Buffer) {
-    // 1. Verify webhook signature
     let event: Stripe.Event;
     try {
       event = this.stripeService.constructWebhookEvent(rawBody, signature);
-
       this.logger.log(`Received Stripe event: ${event.type}`);
-
-      // 2. Process the event
       await this.handleEvent(event);
     } catch (error) {
       this.logger.error('Webhook signature verification failed', error);
@@ -67,7 +63,7 @@ export class HandleWebhookService {
     const setupIntentId = setupIntent.id;
     const metadata = setupIntent.metadata as unknown as StripePaymentMetadata;
     const customerId = setupIntent.customer as string;
-    this.logger.log(`Handling setup_intent.succeeded for id ${setupIntentId}`);
+    this.logger.log(`Processing setup_intent.succeeded: ${setupIntentId}`);
 
     const subscription = await this.prisma.client.userSubscription.findUnique({
       where: { stripeTransactionId: setupIntentId },
@@ -75,20 +71,26 @@ export class HandleWebhookService {
 
     if (!subscription) {
       this.logger.error(
-        `Subscription not found for setupIntent ${setupIntentId}. Consider storing stripeSetupIntentId on the subscription or adding subscriptionId into SetupIntent metadata.`,
+        `No local subscription found for setupIntent ${setupIntentId}`,
       );
       return;
     }
 
-    // Idempotent check
-    if (subscription.status === 'ACTIVE') {
-      this.logger.log(`Subscription ${subscription.id} already active`);
+    if (subscription.stripeSubscriptionId) {
+      this.logger.log(
+        `Subscription ${subscription.id} already linked to Stripe subscription ${subscription.stripeSubscriptionId}`,
+      );
+      return;
+    }
+
+    const paymentMethodId = setupIntent.payment_method as string;
+    if (!paymentMethodId) {
+      this.logger.warn(`SetupIntent ${setupIntentId} has no payment method`);
       return;
     }
 
     try {
-      const paymentMethodId = setupIntent.payment_method as string;
-
+      // Create Stripe subscription
       const stripeSub = await this.stripeService.createSubscription({
         customerId,
         priceId: metadata.stripePriceId,
@@ -96,26 +98,46 @@ export class HandleWebhookService {
         paymentMethodId,
       });
 
-      await this.prisma.client.user.update({
-        where: { id: subscription.userId },
-        data: {
-          subscriptionStatus: 'PENDING',
-          currentPlan: {
-            connect: {
-              id: subscription.planId,
-            },
+      await this.prisma.client.$transaction(async (prisma) => {
+        // Clear any duplicate Stripe subscription links
+        const existing = await prisma.userSubscription.findFirst({
+          where: { stripeSubscriptionId: stripeSub.id },
+        });
+
+        if (existing && existing.id !== subscription.id) {
+          this.logger.warn(
+            `Duplicate stripeSubscriptionId found for subscription ${existing.id}. Clearing.`,
+          );
+          await prisma.userSubscription.update({
+            where: { id: existing.id },
+            data: { stripeSubscriptionId: null, status: 'CANCELED' },
+          });
+        }
+
+        // Update local subscription
+        await prisma.userSubscription.update({
+          where: { id: subscription.id },
+          data: { stripeSubscriptionId: stripeSub.id, status: 'PENDING' },
+        });
+
+        // Update user with Stripe info
+        await prisma.user.update({
+          where: { id: subscription.userId },
+          data: {
+            stripeCustomerId: customerId,
+            stripeDefaultPaymentMethodId: paymentMethodId,
+            currentPlan: { connect: { id: subscription.planId } },
+            subscriptionStatus: 'PENDING',
           },
-          stripeDefaultPaymentMethodId: paymentMethodId,
-          stripeCustomerId: customerId,
-        },
+        });
       });
 
       this.logger.log(
-        `Subscription ${subscription.id} activated successfully via SetupIntent for stripe subscription ${stripeSub.id}`,
+        `Subscription ${subscription.id} linked to Stripe subscription ${stripeSub.id}`,
       );
     } catch (err) {
       this.logger.error(
-        `Failed to update subscription ${subscription.id} for setupIntent ${setupIntentId}`,
+        `Failed to handle setup_intent.succeeded for subscription ${subscription.id}`,
         err,
       );
       throw err;
@@ -124,70 +146,47 @@ export class HandleWebhookService {
 
   private async handleSetupIntentFailed(setupIntent: Stripe.SetupIntent) {
     const setupIntentId = setupIntent.id;
-    this.logger.warn(`Handling failed/canceled setup_intent ${setupIntentId}`);
-
     const subscription = await this.prisma.client.userSubscription.findUnique({
       where: { stripeTransactionId: setupIntentId },
     });
 
-    if (!subscription) {
-      this.logger.error(
-        `Subscription not found for failed setupIntent ${setupIntentId}`,
-      );
-      return;
-    }
+    if (!subscription) return;
 
-    try {
-      await this.prisma.client.userSubscription.update({
-        where: { id: subscription.id },
-        data: { status: 'FAILED', failedAt: new Date() },
-      });
-      this.logger.warn(
-        `SetupIntent failed for subscription ${subscription.id} (setupIntent: ${setupIntentId})`,
-      );
-    } catch (err) {
-      this.logger.error(
-        `Failed to update subscription ${subscription.id} for failed setupIntent ${setupIntentId}`,
-        err,
-      );
-      throw err;
-    }
+    await this.prisma.client.userSubscription.update({
+      where: { id: subscription.id },
+      data: { status: 'FAILED', failedAt: new Date() },
+    });
+
+    this.logger.warn(`SetupIntent failed for subscription ${subscription.id}`);
   }
 
   private async handleCustomerSubscriptionUpdated(
     subscription: Stripe.Subscription,
   ) {
     const stripeSubId = subscription.id;
-    this.logger.log(
-      `customer.subscription.updated: ${stripeSubId} status=${subscription.status}`,
-    );
 
     const local = await this.prisma.client.userSubscription.findUnique({
       where: { stripeSubscriptionId: stripeSubId },
       include: { plan: true },
     });
-
-    if (!local) {
-      this.logger.warn(
-        `No local subscription found for stripe subscription ${stripeSubId}`,
-      );
-      return;
-    }
+    if (!local) return;
 
     const updates: any = {};
+    switch (subscription.status) {
+      case 'active':
+        updates.status = 'ACTIVE';
+        break;
+      case 'past_due':
+        updates.status = 'FAILED';
+        break;
+      case 'canceled':
+      case 'incomplete_expired':
+      case 'unpaid':
+      case 'incomplete':
+        updates.status = 'CANCELED';
+        break;
+    }
 
-    // Map stripe->local status
-    if (subscription.status === 'active') updates.status = 'ACTIVE';
-    else if (subscription.status === 'past_due') updates.status = 'PAST_DUE';
-    else if (
-      subscription.status === 'canceled' ||
-      subscription.status === 'incomplete_expired' ||
-      subscription.status === 'unpaid' ||
-      subscription.status === 'incomplete'
-    )
-      updates.status = 'CANCELED';
-
-    // Update cancel_at or planEndedAt if present
     if (subscription.cancel_at)
       updates.planEndedAt = new Date(subscription.cancel_at * 1000);
     if (subscription.ended_at)
@@ -202,16 +201,21 @@ export class HandleWebhookService {
   }
 
   private async handleInvoicePaid(invoice: Stripe.Invoice) {
-    this.logger.log(`invoice.${invoice.status}: ${invoice.id}`);
+    this.logger.log(`Processing invoice.paid: ${invoice.id}`);
 
-    // Extract subscription info safely
-    const subDetails = invoice.parent?.subscription_details;
-    const subscriptionId = subDetails?.subscription as string | undefined;
-    const metadata = subDetails?.metadata as StripePaymentMetadata | undefined;
+    const lineItem = invoice.lines?.data?.[0];
+    if (!lineItem) {
+      this.logger.warn(`Invoice ${invoice.id} has no line items. Skipping.`);
+      return;
+    }
+
+    const subscriptionId =
+      lineItem.parent?.subscription_item_details?.subscription;
+    const metadata = lineItem.metadata as StripePaymentMetadata | undefined;
 
     if (!subscriptionId || !metadata) {
       this.logger.warn(
-        `Invoice ${invoice.id} has no subscription details — skipping.`,
+        `Invoice ${invoice.id} missing subscription ID or metadata. Skipping.`,
       );
       return;
     }
@@ -224,7 +228,7 @@ export class HandleWebhookService {
         where: {
           OR: [
             { stripeSubscriptionId: subscriptionId },
-            { userId: userId, planId: planId },
+            ...(userId && planId ? [{ userId, planId }] : []),
           ],
         },
         include: { plan: true },
@@ -232,56 +236,82 @@ export class HandleWebhookService {
 
     if (!localSubscription) {
       this.logger.error(
-        `No matching local subscription found for Stripe subscription ${subscriptionId}`,
+        `No local subscription found for Stripe subscription ${subscriptionId} (invoice ${invoice.id})`,
       );
       return;
     }
+
+    const existingInvoice = await this.prisma.client.invoice.findUnique({
+      where: { stripeInvoiceId: invoice.id },
+    });
 
     const now = new Date();
 
-    if (localSubscription.status === 'ACTIVE') {
-      this.logger.warn(
-        `Subscription ${localSubscription.id} already active (Stripe subscription ${subscriptionId})`,
-      );
-      return;
-    }
+    await this.prisma.client.$transaction(async (prisma) => {
+      // Clear duplicates
+      const duplicateSub = await prisma.userSubscription.findFirst({
+        where: {
+          stripeSubscriptionId: subscriptionId,
+          NOT: { id: localSubscription.id },
+        },
+      });
 
-    // Run updates in transaction
-    await this.prisma.client.$transaction([
-      this.prisma.client.userSubscription.update({
+      if (duplicateSub) {
+        this.logger.warn(
+          `Duplicate stripeSubscriptionId found on subscription ${duplicateSub.id}. Clearing it.`,
+        );
+        await prisma.userSubscription.update({
+          where: { id: duplicateSub.id },
+          data: { stripeSubscriptionId: null, status: 'CANCELED' },
+        });
+      }
+
+      const planStartedAt = new Date(invoice.period_start * 1000);
+      const planEndedAt = new Date(lineItem.period.end * 1000);
+
+      // Update subscription
+      await prisma.userSubscription.update({
         where: { id: localSubscription.id },
         data: {
           status: 'ACTIVE',
           paidAt: now,
+          planStartedAt,
+          planEndedAt,
           stripeSubscriptionId: subscriptionId,
         },
-      }),
+      });
 
-      this.prisma.client.user.update({
+      // Update user
+      await prisma.user.update({
         where: { id: userId },
         data: {
           memberShip: 'VIP',
           trialEndsAt: null,
           subscriptionStatus: 'ACTIVE',
+          currentPlan: planId ? { connect: { id: planId } } : undefined,
         },
-      }),
+      });
 
-      this.prisma.client.invoice.create({
-        data: {
-          stripeInvoiceId: invoice.id,
-          invoiceNumber: invoice.number as string,
-          userSubscriptionId: localSubscription.id,
-          amountCents: invoice.total as number,
-          paidCents: invoice.total as number,
-          status: 'PAID',
-          periodStart: new Date(invoice.period_start * 1000),
-          periodEnd: new Date(invoice.period_end * 1000),
-        },
-      }),
-    ]);
+      // Create invoice record
+      if (!existingInvoice) {
+        await prisma.invoice.create({
+          data: {
+            stripeInvoiceId: invoice.id,
+            user: { connect: { id: userId } },
+            subscription: { connect: { id: localSubscription.id } },
+            amount: invoice.amount_paid ?? invoice.total ?? 0,
+            currency: invoice.currency ?? 'usd',
+            status: 'PAID',
+            paidAt: invoice.status_transitions.paid_at
+              ? new Date(invoice.status_transitions.paid_at * 1000)
+              : now,
+          },
+        });
+      }
+    });
 
     this.logger.log(
-      `Subscription ${localSubscription.id} activated via invoice ${invoice.id} (Stripe subscription ${subscriptionId})`,
+      `Invoice ${invoice.id} processed. Subscription ${localSubscription.id} is now ACTIVE`,
     );
   }
 }

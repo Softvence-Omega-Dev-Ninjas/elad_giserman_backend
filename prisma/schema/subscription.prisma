@@ -54,6 +54,8 @@ model UserSubscription {
 
   invoices Invoice[] // invoices for this subscription period(s)
 
+  billingCycle Int @default(0) // Counts how many billing periods have been completed
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
@@ -74,4 +76,36 @@ enum SubscriptionStatus {
   ACTIVE // paid and active subscription
   CANCELED // user canceled
   FAILED // payment failed / incomplete
+}
+
+model Invoice {
+  id String @id @default(uuid())
+
+  stripeInvoiceId String @unique
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  subscriptionId String
+  subscription   UserSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  amount   Float
+  currency String @default("usd")
+
+  status InvoiceStatus // System-managed via Stripe webhooks
+
+  paidAt   DateTime?
+  dueAt    DateTime?
+  failedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("invoices")
+}
+
+enum InvoiceStatus {
+  DRAFT // created but not sent/charged
+  PAID // invoice fully paid
+  UNPAID // invoice unpaid / past due
 }

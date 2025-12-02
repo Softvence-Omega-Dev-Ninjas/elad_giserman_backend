@@ -315,6 +315,7 @@ export type BusinessProfileWhereInput = {
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
   reviews?: Prisma.ReviewListRelationFilter;
   reedemOffer?: Prisma.ReedemaOfferListRelationFilter;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsListRelationFilter;
 };
 
 export type BusinessProfileOrderByWithRelationInput = {
@@ -343,6 +344,7 @@ export type BusinessProfileOrderByWithRelationInput = {
   owner?: Prisma.UserOrderByWithRelationInput;
   reviews?: Prisma.ReviewOrderByRelationAggregateInput;
   reedemOffer?: Prisma.ReedemaOfferOrderByRelationAggregateInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsOrderByRelationAggregateInput;
 };
 
 export type BusinessProfileWhereUniqueInput = Prisma.AtLeast<
@@ -384,6 +386,7 @@ export type BusinessProfileWhereUniqueInput = Prisma.AtLeast<
     owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
     reviews?: Prisma.ReviewListRelationFilter;
     reedemOffer?: Prisma.ReedemaOfferListRelationFilter;
+    userTermsandCondition?: Prisma.UserTermsAndConditionsListRelationFilter;
   },
   'id' | 'ownerId'
 >;
@@ -502,6 +505,7 @@ export type BusinessProfileCreateInput = {
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateInput = {
@@ -528,6 +532,7 @@ export type BusinessProfileUncheckedCreateInput = {
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUpdateInput = {
@@ -557,6 +562,7 @@ export type BusinessProfileUpdateInput = {
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateInput = {
@@ -586,6 +592,7 @@ export type BusinessProfileUncheckedUpdateInput = {
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileCreateManyInput = {
@@ -1042,6 +1049,34 @@ export type BusinessProfileUpdateOneRequiredWithoutReviewsNestedInput = {
   >;
 };
 
+export type BusinessProfileCreateNestedOneWithoutUserTermsandConditionInput = {
+  create?: Prisma.XOR<
+    Prisma.BusinessProfileCreateWithoutUserTermsandConditionInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutUserTermsandConditionInput
+  >;
+  connectOrCreate?: Prisma.BusinessProfileCreateOrConnectWithoutUserTermsandConditionInput;
+  connect?: Prisma.BusinessProfileWhereUniqueInput;
+};
+
+export type BusinessProfileUpdateOneWithoutUserTermsandConditionNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.BusinessProfileCreateWithoutUserTermsandConditionInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutUserTermsandConditionInput
+  >;
+  connectOrCreate?: Prisma.BusinessProfileCreateOrConnectWithoutUserTermsandConditionInput;
+  upsert?: Prisma.BusinessProfileUpsertWithoutUserTermsandConditionInput;
+  disconnect?: Prisma.BusinessProfileWhereInput | boolean;
+  delete?: Prisma.BusinessProfileWhereInput | boolean;
+  connect?: Prisma.BusinessProfileWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.BusinessProfileUpdateToOneWithWhereWithoutUserTermsandConditionInput,
+      Prisma.BusinessProfileUpdateWithoutUserTermsandConditionInput
+    >,
+    Prisma.BusinessProfileUncheckedUpdateWithoutUserTermsandConditionInput
+  >;
+};
+
 export type BusinessProfileCreateNestedOneWithoutOwnerInput = {
   create?: Prisma.XOR<
     Prisma.BusinessProfileCreateWithoutOwnerInput,
@@ -1121,6 +1156,7 @@ export type BusinessProfileCreateWithoutCategoryInput = {
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutCategoryInput = {
@@ -1146,6 +1182,7 @@ export type BusinessProfileUncheckedCreateWithoutCategoryInput = {
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutCategoryInput = {
@@ -1246,6 +1283,7 @@ export type BusinessProfileCreateWithoutGalleryInput = {
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutGalleryInput = {
@@ -1271,6 +1309,7 @@ export type BusinessProfileUncheckedCreateWithoutGalleryInput = {
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutGalleryInput = {
@@ -1332,6 +1371,7 @@ export type BusinessProfileCreateWithoutOffersInput = {
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutOffersInput = {
@@ -1357,6 +1397,7 @@ export type BusinessProfileUncheckedCreateWithoutOffersInput = {
   gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutOffersInput = {
@@ -1413,6 +1454,7 @@ export type BusinessProfileUpdateWithoutOffersInput = {
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutOffersInput = {
@@ -1441,6 +1483,7 @@ export type BusinessProfileUncheckedUpdateWithoutOffersInput = {
   gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileCreateWithoutReedemOfferInput = {
@@ -1466,6 +1509,7 @@ export type BusinessProfileCreateWithoutReedemOfferInput = {
   category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutReedemOfferInput = {
@@ -1491,6 +1535,7 @@ export type BusinessProfileUncheckedCreateWithoutReedemOfferInput = {
   gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutReedemOfferInput = {
@@ -1547,6 +1592,7 @@ export type BusinessProfileUpdateWithoutReedemOfferInput = {
   category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutReedemOfferInput = {
@@ -1575,6 +1621,7 @@ export type BusinessProfileUncheckedUpdateWithoutReedemOfferInput = {
   gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileCreateWithoutReviewsInput = {
@@ -1600,6 +1647,7 @@ export type BusinessProfileCreateWithoutReviewsInput = {
   category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutReviewsInput = {
@@ -1625,6 +1673,7 @@ export type BusinessProfileUncheckedCreateWithoutReviewsInput = {
   gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutReviewsInput = {
@@ -1681,6 +1730,7 @@ export type BusinessProfileUpdateWithoutReviewsInput = {
   category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutReviewsInput = {
@@ -1709,6 +1759,146 @@ export type BusinessProfileUncheckedUpdateWithoutReviewsInput = {
   gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+};
+
+export type BusinessProfileCreateWithoutUserTermsandConditionInput = {
+  id?: string;
+  title: string;
+  description?: string | null;
+  location: string;
+  isActive?: boolean;
+  openingTime: string;
+  closingTime: string;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  youtube?: string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
+  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
+  category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
+  owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+};
+
+export type BusinessProfileUncheckedCreateWithoutUserTermsandConditionInput = {
+  id?: string;
+  title: string;
+  description?: string | null;
+  location: string;
+  isActive?: boolean;
+  openingTime: string;
+  closingTime: string;
+  categoryId?: string | null;
+  profileTypeName?: string | null;
+  ownerId: string;
+  facebook?: string | null;
+  instagram?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  youtube?: string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+};
+
+export type BusinessProfileCreateOrConnectWithoutUserTermsandConditionInput = {
+  where: Prisma.BusinessProfileWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.BusinessProfileCreateWithoutUserTermsandConditionInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutUserTermsandConditionInput
+  >;
+};
+
+export type BusinessProfileUpsertWithoutUserTermsandConditionInput = {
+  update: Prisma.XOR<
+    Prisma.BusinessProfileUpdateWithoutUserTermsandConditionInput,
+    Prisma.BusinessProfileUncheckedUpdateWithoutUserTermsandConditionInput
+  >;
+  create: Prisma.XOR<
+    Prisma.BusinessProfileCreateWithoutUserTermsandConditionInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutUserTermsandConditionInput
+  >;
+  where?: Prisma.BusinessProfileWhereInput;
+};
+
+export type BusinessProfileUpdateToOneWithWhereWithoutUserTermsandConditionInput =
+  {
+    where?: Prisma.BusinessProfileWhereInput;
+    data: Prisma.XOR<
+      Prisma.BusinessProfileUpdateWithoutUserTermsandConditionInput,
+      Prisma.BusinessProfileUncheckedUpdateWithoutUserTermsandConditionInput
+    >;
+  };
+
+export type BusinessProfileUpdateWithoutUserTermsandConditionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  title?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  location?: Prisma.StringFieldUpdateOperationsInput | string;
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
+  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
+  category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
+  owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+};
+
+export type BusinessProfileUncheckedUpdateWithoutUserTermsandConditionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  title?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  location?: Prisma.StringFieldUpdateOperationsInput | string;
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
 };
 
 export type BusinessProfileCreateWithoutOwnerInput = {
@@ -1734,6 +1924,7 @@ export type BusinessProfileCreateWithoutOwnerInput = {
   category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutOwnerInput = {
@@ -1759,6 +1950,7 @@ export type BusinessProfileUncheckedCreateWithoutOwnerInput = {
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutOwnerInput = {
@@ -1815,6 +2007,7 @@ export type BusinessProfileUpdateWithoutOwnerInput = {
   category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutOwnerInput = {
@@ -1843,6 +2036,7 @@ export type BusinessProfileUncheckedUpdateWithoutOwnerInput = {
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileCreateManyCategoryInput = {
@@ -1892,6 +2086,7 @@ export type BusinessProfileUpdateWithoutCategoryInput = {
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutCategoryInput = {
@@ -1920,6 +2115,7 @@ export type BusinessProfileUncheckedUpdateWithoutCategoryInput = {
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateManyWithoutCategoryInput = {
@@ -1972,6 +2168,7 @@ export type BusinessProfileUpdateWithoutGalleryInput = {
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutGalleryInput = {
@@ -2000,6 +2197,7 @@ export type BusinessProfileUncheckedUpdateWithoutGalleryInput = {
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateManyWithoutGalleryInput = {
@@ -2036,6 +2234,7 @@ export type BusinessProfileCountOutputType = {
   offers: number;
   reviews: number;
   reedemOffer: number;
+  userTermsandCondition: number;
 };
 
 export type BusinessProfileCountOutputTypeSelect<
@@ -2046,6 +2245,9 @@ export type BusinessProfileCountOutputTypeSelect<
   offers?: boolean | BusinessProfileCountOutputTypeCountOffersArgs;
   reviews?: boolean | BusinessProfileCountOutputTypeCountReviewsArgs;
   reedemOffer?: boolean | BusinessProfileCountOutputTypeCountReedemOfferArgs;
+  userTermsandCondition?:
+    | boolean
+    | BusinessProfileCountOutputTypeCountUserTermsandConditionArgs;
 };
 
 /**
@@ -2101,6 +2303,16 @@ export type BusinessProfileCountOutputTypeCountReedemOfferArgs<
   where?: Prisma.ReedemaOfferWhereInput;
 };
 
+/**
+ * BusinessProfileCountOutputType without action
+ */
+export type BusinessProfileCountOutputTypeCountUserTermsandConditionArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.UserTermsAndConditionsWhereInput;
+};
+
 export type BusinessProfileSelect<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
@@ -2131,6 +2343,9 @@ export type BusinessProfileSelect<
     owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     reviews?: boolean | Prisma.BusinessProfile$reviewsArgs<ExtArgs>;
     reedemOffer?: boolean | Prisma.BusinessProfile$reedemOfferArgs<ExtArgs>;
+    userTermsandCondition?:
+      | boolean
+      | Prisma.BusinessProfile$userTermsandConditionArgs<ExtArgs>;
     _count?:
       | boolean
       | Prisma.BusinessProfileCountOutputTypeDefaultArgs<ExtArgs>;
@@ -2255,6 +2470,9 @@ export type BusinessProfileInclude<
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   reviews?: boolean | Prisma.BusinessProfile$reviewsArgs<ExtArgs>;
   reedemOffer?: boolean | Prisma.BusinessProfile$reedemOfferArgs<ExtArgs>;
+  userTermsandCondition?:
+    | boolean
+    | Prisma.BusinessProfile$userTermsandConditionArgs<ExtArgs>;
   _count?: boolean | Prisma.BusinessProfileCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type BusinessProfileIncludeCreateManyAndReturn<
@@ -2284,6 +2502,7 @@ export type $BusinessProfilePayload<
     owner: Prisma.$UserPayload<ExtArgs>;
     reviews: Prisma.$ReviewPayload<ExtArgs>[];
     reedemOffer: Prisma.$ReedemaOfferPayload<ExtArgs>[];
+    userTermsandCondition: Prisma.$UserTermsAndConditionsPayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -2933,6 +3152,22 @@ export interface Prisma__BusinessProfileClient<
   ): Prisma.PrismaPromise<
     | runtime.Types.Result.GetResult<
         Prisma.$ReedemaOfferPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  userTermsandCondition<
+    T extends Prisma.BusinessProfile$userTermsandConditionArgs<ExtArgs> = {},
+  >(
+    args?: Prisma.Subset<
+      T,
+      Prisma.BusinessProfile$userTermsandConditionArgs<ExtArgs>
+    >,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$UserTermsAndConditionsPayload<ExtArgs>,
         T,
         'findMany',
         GlobalOmitOptions
@@ -3610,6 +3845,37 @@ export type BusinessProfile$reedemOfferArgs<
   distinct?:
     | Prisma.ReedemaOfferScalarFieldEnum
     | Prisma.ReedemaOfferScalarFieldEnum[];
+};
+
+/**
+ * BusinessProfile.userTermsandCondition
+ */
+export type BusinessProfile$userTermsandConditionArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the UserTermsAndConditions
+   */
+  select?: Prisma.UserTermsAndConditionsSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the UserTermsAndConditions
+   */
+  omit?: Prisma.UserTermsAndConditionsOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserTermsAndConditionsInclude<ExtArgs> | null;
+  where?: Prisma.UserTermsAndConditionsWhereInput;
+  orderBy?:
+    | Prisma.UserTermsAndConditionsOrderByWithRelationInput
+    | Prisma.UserTermsAndConditionsOrderByWithRelationInput[];
+  cursor?: Prisma.UserTermsAndConditionsWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.UserTermsAndConditionsScalarFieldEnum
+    | Prisma.UserTermsAndConditionsScalarFieldEnum[];
 };
 
 /**

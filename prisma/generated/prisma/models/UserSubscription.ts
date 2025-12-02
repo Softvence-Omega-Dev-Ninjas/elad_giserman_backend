@@ -20,8 +20,18 @@ export type UserSubscriptionModel =
 
 export type AggregateUserSubscription = {
   _count: UserSubscriptionCountAggregateOutputType | null;
+  _avg: UserSubscriptionAvgAggregateOutputType | null;
+  _sum: UserSubscriptionSumAggregateOutputType | null;
   _min: UserSubscriptionMinAggregateOutputType | null;
   _max: UserSubscriptionMaxAggregateOutputType | null;
+};
+
+export type UserSubscriptionAvgAggregateOutputType = {
+  billingCycle: number | null;
+};
+
+export type UserSubscriptionSumAggregateOutputType = {
+  billingCycle: number | null;
 };
 
 export type UserSubscriptionMinAggregateOutputType = {
@@ -35,6 +45,7 @@ export type UserSubscriptionMinAggregateOutputType = {
   planEndedAt: Date | null;
   paidAt: Date | null;
   failedAt: Date | null;
+  billingCycle: number | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
@@ -50,6 +61,7 @@ export type UserSubscriptionMaxAggregateOutputType = {
   planEndedAt: Date | null;
   paidAt: Date | null;
   failedAt: Date | null;
+  billingCycle: number | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
@@ -65,9 +77,18 @@ export type UserSubscriptionCountAggregateOutputType = {
   planEndedAt: number;
   paidAt: number;
   failedAt: number;
+  billingCycle: number;
   createdAt: number;
   updatedAt: number;
   _all: number;
+};
+
+export type UserSubscriptionAvgAggregateInputType = {
+  billingCycle?: true;
+};
+
+export type UserSubscriptionSumAggregateInputType = {
+  billingCycle?: true;
 };
 
 export type UserSubscriptionMinAggregateInputType = {
@@ -81,6 +102,7 @@ export type UserSubscriptionMinAggregateInputType = {
   planEndedAt?: true;
   paidAt?: true;
   failedAt?: true;
+  billingCycle?: true;
   createdAt?: true;
   updatedAt?: true;
 };
@@ -96,6 +118,7 @@ export type UserSubscriptionMaxAggregateInputType = {
   planEndedAt?: true;
   paidAt?: true;
   failedAt?: true;
+  billingCycle?: true;
   createdAt?: true;
   updatedAt?: true;
 };
@@ -111,6 +134,7 @@ export type UserSubscriptionCountAggregateInputType = {
   planEndedAt?: true;
   paidAt?: true;
   failedAt?: true;
+  billingCycle?: true;
   createdAt?: true;
   updatedAt?: true;
   _all?: true;
@@ -159,6 +183,18 @@ export type UserSubscriptionAggregateArgs<
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    *
+   * Select which fields to average
+   **/
+  _avg?: UserSubscriptionAvgAggregateInputType;
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   *
+   * Select which fields to sum
+   **/
+  _sum?: UserSubscriptionSumAggregateInputType;
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   *
    * Select which fields to find the minimum value
    **/
   _min?: UserSubscriptionMinAggregateInputType;
@@ -195,6 +231,8 @@ export type UserSubscriptionGroupByArgs<
   take?: number;
   skip?: number;
   _count?: UserSubscriptionCountAggregateInputType | true;
+  _avg?: UserSubscriptionAvgAggregateInputType;
+  _sum?: UserSubscriptionSumAggregateInputType;
   _min?: UserSubscriptionMinAggregateInputType;
   _max?: UserSubscriptionMaxAggregateInputType;
 };
@@ -210,9 +248,12 @@ export type UserSubscriptionGroupByOutputType = {
   planEndedAt: Date;
   paidAt: Date | null;
   failedAt: Date | null;
+  billingCycle: number;
   createdAt: Date;
   updatedAt: Date;
   _count: UserSubscriptionCountAggregateOutputType | null;
+  _avg: UserSubscriptionAvgAggregateOutputType | null;
+  _sum: UserSubscriptionSumAggregateOutputType | null;
   _min: UserSubscriptionMinAggregateOutputType | null;
   _max: UserSubscriptionMaxAggregateOutputType | null;
 };
@@ -258,6 +299,7 @@ export type UserSubscriptionWhereInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFilter<'UserSubscription'> | number;
   createdAt?: Prisma.DateTimeFilter<'UserSubscription'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'UserSubscription'> | Date | string;
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
@@ -279,6 +321,7 @@ export type UserSubscriptionOrderByWithRelationInput = {
   planEndedAt?: Prisma.SortOrder;
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder;
   failedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+  billingCycle?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   user?: Prisma.UserOrderByWithRelationInput;
@@ -315,6 +358,7 @@ export type UserSubscriptionWhereUniqueInput = Prisma.AtLeast<
       | Date
       | string
       | null;
+    billingCycle?: Prisma.IntFilter<'UserSubscription'> | number;
     createdAt?: Prisma.DateTimeFilter<'UserSubscription'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'UserSubscription'> | Date | string;
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
@@ -338,11 +382,14 @@ export type UserSubscriptionOrderByWithAggregationInput = {
   planEndedAt?: Prisma.SortOrder;
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder;
   failedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+  billingCycle?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   _count?: Prisma.UserSubscriptionCountOrderByAggregateInput;
+  _avg?: Prisma.UserSubscriptionAvgOrderByAggregateInput;
   _max?: Prisma.UserSubscriptionMaxOrderByAggregateInput;
   _min?: Prisma.UserSubscriptionMinOrderByAggregateInput;
+  _sum?: Prisma.UserSubscriptionSumOrderByAggregateInput;
 };
 
 export type UserSubscriptionScalarWhereWithAggregatesInput = {
@@ -384,6 +431,7 @@ export type UserSubscriptionScalarWhereWithAggregatesInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntWithAggregatesFilter<'UserSubscription'> | number;
   createdAt?:
     | Prisma.DateTimeWithAggregatesFilter<'UserSubscription'>
     | Date
@@ -403,11 +451,12 @@ export type UserSubscriptionCreateInput = {
   planEndedAt: Date | string;
   paidAt?: Date | string | null;
   failedAt?: Date | string | null;
+  billingCycle?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   user: Prisma.UserCreateNestedOneWithoutUserSubscriptionInput;
   plan: Prisma.SubscriptionPlanCreateNestedOneWithoutUserSubscriptionsInput;
-  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserSubscriptionInput;
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutSubscriptionInput;
 };
 
 export type UserSubscriptionUncheckedCreateInput = {
@@ -421,9 +470,10 @@ export type UserSubscriptionUncheckedCreateInput = {
   planEndedAt: Date | string;
   paidAt?: Date | string | null;
   failedAt?: Date | string | null;
+  billingCycle?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserSubscriptionInput;
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutSubscriptionInput;
 };
 
 export type UserSubscriptionUpdateInput = {
@@ -448,11 +498,12 @@ export type UserSubscriptionUpdateInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   user?: Prisma.UserUpdateOneRequiredWithoutUserSubscriptionNestedInput;
   plan?: Prisma.SubscriptionPlanUpdateOneRequiredWithoutUserSubscriptionsNestedInput;
-  invoices?: Prisma.InvoiceUpdateManyWithoutUserSubscriptionNestedInput;
+  invoices?: Prisma.InvoiceUpdateManyWithoutSubscriptionNestedInput;
 };
 
 export type UserSubscriptionUncheckedUpdateInput = {
@@ -479,9 +530,10 @@ export type UserSubscriptionUncheckedUpdateInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserSubscriptionNestedInput;
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutSubscriptionNestedInput;
 };
 
 export type UserSubscriptionCreateManyInput = {
@@ -495,6 +547,7 @@ export type UserSubscriptionCreateManyInput = {
   planEndedAt: Date | string;
   paidAt?: Date | string | null;
   failedAt?: Date | string | null;
+  billingCycle?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -521,6 +574,7 @@ export type UserSubscriptionUpdateManyMutationInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -549,6 +603,7 @@ export type UserSubscriptionUncheckedUpdateManyInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -574,8 +629,13 @@ export type UserSubscriptionCountOrderByAggregateInput = {
   planEndedAt?: Prisma.SortOrder;
   paidAt?: Prisma.SortOrder;
   failedAt?: Prisma.SortOrder;
+  billingCycle?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+};
+
+export type UserSubscriptionAvgOrderByAggregateInput = {
+  billingCycle?: Prisma.SortOrder;
 };
 
 export type UserSubscriptionMaxOrderByAggregateInput = {
@@ -589,6 +649,7 @@ export type UserSubscriptionMaxOrderByAggregateInput = {
   planEndedAt?: Prisma.SortOrder;
   paidAt?: Prisma.SortOrder;
   failedAt?: Prisma.SortOrder;
+  billingCycle?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
@@ -604,8 +665,13 @@ export type UserSubscriptionMinOrderByAggregateInput = {
   planEndedAt?: Prisma.SortOrder;
   paidAt?: Prisma.SortOrder;
   failedAt?: Prisma.SortOrder;
+  billingCycle?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+};
+
+export type UserSubscriptionSumOrderByAggregateInput = {
+  billingCycle?: Prisma.SortOrder;
 };
 
 export type UserSubscriptionScalarRelationFilter = {
@@ -872,10 +938,11 @@ export type UserSubscriptionCreateWithoutPlanInput = {
   planEndedAt: Date | string;
   paidAt?: Date | string | null;
   failedAt?: Date | string | null;
+  billingCycle?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   user: Prisma.UserCreateNestedOneWithoutUserSubscriptionInput;
-  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserSubscriptionInput;
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutSubscriptionInput;
 };
 
 export type UserSubscriptionUncheckedCreateWithoutPlanInput = {
@@ -888,9 +955,10 @@ export type UserSubscriptionUncheckedCreateWithoutPlanInput = {
   planEndedAt: Date | string;
   paidAt?: Date | string | null;
   failedAt?: Date | string | null;
+  billingCycle?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserSubscriptionInput;
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutSubscriptionInput;
 };
 
 export type UserSubscriptionCreateOrConnectWithoutPlanInput = {
@@ -967,6 +1035,7 @@ export type UserSubscriptionScalarWhereInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFilter<'UserSubscription'> | number;
   createdAt?: Prisma.DateTimeFilter<'UserSubscription'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'UserSubscription'> | Date | string;
 };
@@ -980,6 +1049,7 @@ export type UserSubscriptionCreateWithoutInvoicesInput = {
   planEndedAt: Date | string;
   paidAt?: Date | string | null;
   failedAt?: Date | string | null;
+  billingCycle?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   user: Prisma.UserCreateNestedOneWithoutUserSubscriptionInput;
@@ -997,6 +1067,7 @@ export type UserSubscriptionUncheckedCreateWithoutInvoicesInput = {
   planEndedAt: Date | string;
   paidAt?: Date | string | null;
   failedAt?: Date | string | null;
+  billingCycle?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -1051,6 +1122,7 @@ export type UserSubscriptionUpdateWithoutInvoicesInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   user?: Prisma.UserUpdateOneRequiredWithoutUserSubscriptionNestedInput;
@@ -1081,6 +1153,7 @@ export type UserSubscriptionUncheckedUpdateWithoutInvoicesInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -1094,10 +1167,11 @@ export type UserSubscriptionCreateWithoutUserInput = {
   planEndedAt: Date | string;
   paidAt?: Date | string | null;
   failedAt?: Date | string | null;
+  billingCycle?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   plan: Prisma.SubscriptionPlanCreateNestedOneWithoutUserSubscriptionsInput;
-  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserSubscriptionInput;
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutSubscriptionInput;
 };
 
 export type UserSubscriptionUncheckedCreateWithoutUserInput = {
@@ -1110,9 +1184,10 @@ export type UserSubscriptionUncheckedCreateWithoutUserInput = {
   planEndedAt: Date | string;
   paidAt?: Date | string | null;
   failedAt?: Date | string | null;
+  billingCycle?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserSubscriptionInput;
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutSubscriptionInput;
 };
 
 export type UserSubscriptionCreateOrConnectWithoutUserInput = {
@@ -1168,6 +1243,7 @@ export type UserSubscriptionCreateManyPlanInput = {
   planEndedAt: Date | string;
   paidAt?: Date | string | null;
   failedAt?: Date | string | null;
+  billingCycle?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -1194,10 +1270,11 @@ export type UserSubscriptionUpdateWithoutPlanInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   user?: Prisma.UserUpdateOneRequiredWithoutUserSubscriptionNestedInput;
-  invoices?: Prisma.InvoiceUpdateManyWithoutUserSubscriptionNestedInput;
+  invoices?: Prisma.InvoiceUpdateManyWithoutSubscriptionNestedInput;
 };
 
 export type UserSubscriptionUncheckedUpdateWithoutPlanInput = {
@@ -1223,9 +1300,10 @@ export type UserSubscriptionUncheckedUpdateWithoutPlanInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserSubscriptionNestedInput;
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutSubscriptionNestedInput;
 };
 
 export type UserSubscriptionUncheckedUpdateManyWithoutPlanInput = {
@@ -1251,6 +1329,7 @@ export type UserSubscriptionUncheckedUpdateManyWithoutPlanInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -1265,6 +1344,7 @@ export type UserSubscriptionCreateManyUserInput = {
   planEndedAt: Date | string;
   paidAt?: Date | string | null;
   failedAt?: Date | string | null;
+  billingCycle?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -1291,10 +1371,11 @@ export type UserSubscriptionUpdateWithoutUserInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   plan?: Prisma.SubscriptionPlanUpdateOneRequiredWithoutUserSubscriptionsNestedInput;
-  invoices?: Prisma.InvoiceUpdateManyWithoutUserSubscriptionNestedInput;
+  invoices?: Prisma.InvoiceUpdateManyWithoutSubscriptionNestedInput;
 };
 
 export type UserSubscriptionUncheckedUpdateWithoutUserInput = {
@@ -1320,9 +1401,10 @@ export type UserSubscriptionUncheckedUpdateWithoutUserInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserSubscriptionNestedInput;
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutSubscriptionNestedInput;
 };
 
 export type UserSubscriptionUncheckedUpdateManyWithoutUserInput = {
@@ -1348,6 +1430,7 @@ export type UserSubscriptionUncheckedUpdateManyWithoutUserInput = {
     | Date
     | string
     | null;
+  billingCycle?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -1405,6 +1488,7 @@ export type UserSubscriptionSelect<
     planEndedAt?: boolean;
     paidAt?: boolean;
     failedAt?: boolean;
+    billingCycle?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -1432,6 +1516,7 @@ export type UserSubscriptionSelectCreateManyAndReturn<
     planEndedAt?: boolean;
     paidAt?: boolean;
     failedAt?: boolean;
+    billingCycle?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -1455,6 +1540,7 @@ export type UserSubscriptionSelectUpdateManyAndReturn<
     planEndedAt?: boolean;
     paidAt?: boolean;
     failedAt?: boolean;
+    billingCycle?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -1474,6 +1560,7 @@ export type UserSubscriptionSelectScalar = {
   planEndedAt?: boolean;
   paidAt?: boolean;
   failedAt?: boolean;
+  billingCycle?: boolean;
   createdAt?: boolean;
   updatedAt?: boolean;
 };
@@ -1492,6 +1579,7 @@ export type UserSubscriptionOmit<
   | 'planEndedAt'
   | 'paidAt'
   | 'failedAt'
+  | 'billingCycle'
   | 'createdAt'
   | 'updatedAt',
   ExtArgs['result']['userSubscription']
@@ -1542,6 +1630,7 @@ export type $UserSubscriptionPayload<
       planEndedAt: Date;
       paidAt: Date | null;
       failedAt: Date | null;
+      billingCycle: number;
       createdAt: Date;
       updatedAt: Date;
     },
@@ -2207,6 +2296,7 @@ export interface UserSubscriptionFieldRefs {
   readonly planEndedAt: Prisma.FieldRef<'UserSubscription', 'DateTime'>;
   readonly paidAt: Prisma.FieldRef<'UserSubscription', 'DateTime'>;
   readonly failedAt: Prisma.FieldRef<'UserSubscription', 'DateTime'>;
+  readonly billingCycle: Prisma.FieldRef<'UserSubscription', 'Int'>;
   readonly createdAt: Prisma.FieldRef<'UserSubscription', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'UserSubscription', 'DateTime'>;
 }
