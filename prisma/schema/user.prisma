@@ -51,6 +51,7 @@ model User {
   businessProfile  BusinessProfile?
   spinHistory  SpinHistory[]
    userTermsandCondition UserTermsAndConditions[]
+  invoices Invoice[]
   fcmToken String?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

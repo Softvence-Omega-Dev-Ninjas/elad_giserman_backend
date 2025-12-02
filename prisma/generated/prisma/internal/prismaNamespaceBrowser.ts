@@ -69,9 +69,9 @@ export const ModelName = {
   SpinHistory: 'SpinHistory',
   SubscriptionPlan: 'SubscriptionPlan',
   UserSubscription: 'UserSubscription',
+  Invoice: 'Invoice',
   TermsAndConditions: 'TermsAndConditions',
   UserTermsAndConditions: 'UserTermsAndConditions',
-  Invoice: 'Invoice',
   User: 'User',
 } as const;
 
@@ -309,12 +309,31 @@ export const UserSubscriptionScalarFieldEnum = {
   planEndedAt: 'planEndedAt',
   paidAt: 'paidAt',
   failedAt: 'failedAt',
+  billingCycle: 'billingCycle',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
 } as const;
 
 export type UserSubscriptionScalarFieldEnum =
   (typeof UserSubscriptionScalarFieldEnum)[keyof typeof UserSubscriptionScalarFieldEnum];
+
+export const InvoiceScalarFieldEnum = {
+  id: 'id',
+  stripeInvoiceId: 'stripeInvoiceId',
+  userId: 'userId',
+  subscriptionId: 'subscriptionId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  paidAt: 'paidAt',
+  dueAt: 'dueAt',
+  failedAt: 'failedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+} as const;
+
+export type InvoiceScalarFieldEnum =
+  (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum];
 
 export const TermsAndConditionsScalarFieldEnum = {
   id: 'id',
@@ -351,25 +370,6 @@ export const UserTermsAndConditionsScalarFieldEnum = {
 
 export type UserTermsAndConditionsScalarFieldEnum =
   (typeof UserTermsAndConditionsScalarFieldEnum)[keyof typeof UserTermsAndConditionsScalarFieldEnum];
-
-export const InvoiceScalarFieldEnum = {
-  id: 'id',
-  invoiceNumber: 'invoiceNumber',
-  userSubscriptionId: 'userSubscriptionId',
-  stripeInvoiceId: 'stripeInvoiceId',
-  amountCents: 'amountCents',
-  paidCents: 'paidCents',
-  currency: 'currency',
-  status: 'status',
-  periodStart: 'periodStart',
-  periodEnd: 'periodEnd',
-  dueDate: 'dueDate',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-} as const;
-
-export type InvoiceScalarFieldEnum =
-  (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum];
 
 export const UserScalarFieldEnum = {
   id: 'id',
