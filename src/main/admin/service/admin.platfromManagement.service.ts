@@ -13,6 +13,7 @@ import { PlatformFilter } from '../dto/getPlatform.dto';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
+import { count } from 'node:console';
 // import { log } from 'console';
 @Injectable()
 export class AdminPlatfromManagementService {
@@ -22,124 +23,162 @@ export class AdminPlatfromManagementService {
   ) {}
 
   //*Get platform statictis
-  async getPlatfromStat(filter: PlatformFilter) {
-    const { search, date, userType } = filter;
-    const where: any = {};
+ async getPlatfromStat(filter: PlatformFilter) {
+  const { search, date, userType } = filter;
 
-    // Search filter
-    if (search) {
-      where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { email: { contains: search, mode: 'insensitive' } },
-        { mobile: { contains: search, mode: 'insensitive' } },
-      ];
-    }
+  // ==========================
+  // 1. Build User Filter
+  // ==========================
+  const userWhere: any = {};
 
-    // Membership filter
-    if (userType) {
-      where.memberShip = userType;
-    }
+  if (search) {
+    userWhere.OR = [
+      { name: { contains: search, mode: 'insensitive' } },
+      { email: { contains: search, mode: 'insensitive' } },
+      { mobile: { contains: search, mode: 'insensitive' } },
+    ];
+  }
 
-    // Date filter
-    if (date) {
-      const selected = new Date(date);
-      const nextDay = new Date(selected);
-      nextDay.setDate(selected.getDate() + 1);
+  if (userType) {
+    userWhere.memberShip = userType; // FREE / VIP
+  }
 
-      where.createdAt = {
-        gte: selected,
-        lt: nextDay,
-      };
-    }
+  if (date) {
+    const selected = new Date(date);
+    const nextDay = new Date(selected);
+    nextDay.setDate(selected.getDate() + 1);
 
-    // ----------- FIXED PROMISE.ALL ORDER + MATCHING DESTRUCTURING -------------
-    const [
-      totalUser,
-      totalFreeUser,
-      totalBusinessCount,
-      topBusiness,
-
-      recentUsers,
-      recentBusinessProfiles,
-      recentReviews,
-      recentOffers,
-      recentJoinedBusinesses,
-    ] = await Promise.all([
-      // 1
-      this.prisma.client.user.count(),
-
-      // 2
-      this.prisma.client.user.count({
-        where: { memberShip: 'FREE' },
-      }),
-
-      // 3
-      this.prisma.client.businessProfile.count(),
-
-      // 4 (top business filtered by where)
-      this.prisma.client.user.findMany({ where }),
-
-      // 5 (recent users)
-      this.prisma.client.user.findMany({
-        orderBy: { updatedAt: 'desc' },
-        take: 1,
-      }),
-
-      // 6 (recent business profiles)
-      this.prisma.client.businessProfile.findMany({
-        orderBy: { updatedAt: 'desc' },
-        include: {
-          gallery: true,
-        },
-        take: 5,
-      }),
-
-      // 7 (recent reviews)
-      this.prisma.client.review.findMany({
-        orderBy: { updatedAt: 'desc' },
-        take: 1,
-        include: {
-          user: true,
-          businessProfile: true,
-        },
-      }),
-
-      // 8 (recent offers)
-      this.prisma.client.offer.findMany({
-        orderBy: { updatedAt: 'desc' },
-        take: 1,
-        include: {
-          business: {
-            select: { title: true },
-          },
-        },
-      }),
-
-      // 9 (recent joined businesses)
-      this.prisma.client.businessProfile.findMany({
-        orderBy: { updatedAt: 'desc' },
-        take: 5,
-      }),
-    ]);
-
-    // ---------------- RETURN DATA STRUCTURE ----------------
-    return {
-      totalUser,
-      totalFreeUser,
-      totalVipUser: totalUser - totalFreeUser,
-      totalRest: totalBusinessCount,
-
-      topRestaurent: topBusiness,
-      recentJoinedBusinesses,
-
-      recentActivity: {
-        users: recentUsers,
-        businessProfiles: recentBusinessProfiles,
-        reviews: recentReviews,
-        offers: recentOffers,
-      },
+    userWhere.createdAt = {
+      gte: selected,
+      lt: nextDay,
     };
   }
+
+  // ==========================
+  // 2. Build Business Filter
+  // (business has NO memberShip)
+  // ==========================
+  const businessWhere: any = {};
+
+  if (search) {
+    businessWhere.OR = [
+      { title: { contains: search, mode: 'insensitive' } },
+      { description: { contains: search, mode: 'insensitive' } },
+    ];
+  }
+
+  if (date) {
+    const selected = new Date(date);
+    const nextDay = new Date(selected);
+    nextDay.setDate(selected.getDate() + 1);
+
+    businessWhere.createdAt = {
+      gtr: selected,
+      lt: nextDay,
+    };
+  }
+
+  const topBusiness=await this.prisma.client.businessProfile.findMany({
+    where: businessWhere,
+    take: 5,
+    orderBy: {
+      reviews: {
+        _count: 'desc'
+      }
+    },
+    include:{
+      gallery:true
+    }
+  
+  })
+
+  // ==========================
+  // 3. Promise.all
+  // ==========================
+  const [
+     
+    totalUser,
+    totalFreeUser,
+    totalBusinessCount,
+
+
+    recentUsers,
+    recentBusinessProfiles,
+    recentReviews,
+    recentOffers,
+    recentJoinedBusinesses,
+  ] = await Promise.all([
+
+
+    // User counts
+    this.prisma.client.user.count(),
+
+    this.prisma.client.user.count({
+      where: { memberShip: 'FREE' },
+    }),
+
+    // Business count
+    this.prisma.client.businessProfile.count(),
+
+    // ⭐ FIXED — apply filtering + take top 5
+,
+
+    // Recent users
+    this.prisma.client.user.findMany({
+      where: userWhere,
+      orderBy: { updatedAt: 'desc' },
+      take: 1,
+    }),
+
+    // Recent businesses
+    this.prisma.client.businessProfile.findMany({
+      where: businessWhere,
+      orderBy: { updatedAt: 'desc' },
+      include: { gallery: true },
+      take: 5,
+    }),
+
+    // Recent reviews
+    this.prisma.client.review.findMany({
+      orderBy: { updatedAt: 'desc' },
+      take: 1,
+      include: {
+        user: true,
+        businessProfile: true,
+      },
+    }),
+
+    // Recent offers
+    this.prisma.client.offer.findMany({
+      orderBy: { updatedAt: 'desc' },
+      take: 1,
+      include: { business: { select: { title: true } } },
+    }),
+
+    // Recent joined businesses
+    this.prisma.client.businessProfile.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 5,
+    }),
+  ]);
+
+  return {
+    totalUser,
+    totalFreeUser,
+    totalVipUser: totalUser - totalFreeUser,
+    totalRest: totalBusinessCount,
+
+    topRestaurent: topBusiness,
+    recentJoinedBusinesses,
+
+    recentActivity: {
+      users: recentUsers,
+      businessProfiles: recentBusinessProfiles,
+      reviews: recentReviews,
+      offers: recentOffers,
+    },
+  };
+}
 
   //*  get user details
   async getUserDetils(userId: string) {

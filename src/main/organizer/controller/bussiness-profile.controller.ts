@@ -358,17 +358,11 @@ export class BusinessProfileController {
   @ValidateOrganizer()
   @Post('create-user-termsAndCondition')
   @ApiBody({ type: CreateUserTermsAndConditionsDto })
-  async createPlatformTerm(
-    @Body() dto: CreateUserTermsAndConditionsDto,
-    @GetUser('sub') userId: string,
-  ) {
+  async createPlatformTerm(@Body() dto: CreateUserTermsAndConditionsDto,@GetUser('sub') userId:string) {
     try {
-      console.log(userId);
+    console.log(userId)
       const res =
-        await this.businessProfileService.createAdminTermsAdnConditions(
-          dto,
-          userId,
-        );
+        await this.businessProfileService.createAdminTermsAdnConditions(dto,userId);
       return {
         status: HttpStatus.OK,
         message: 'Terms and Conditions created successfully',
@@ -382,16 +376,10 @@ export class BusinessProfileController {
   @ValidateOrganizer()
   @Patch('update-termsCondition')
   @ApiBody({ type: UpdateUserTermsAndConditionsDto })
-  async updatePlatformTerm(
-    @Body() dto: UpdateUserTermsAndConditionsDto,
-    @GetUser('sub') userId: string,
-  ) {
+  async updatePlatformTerm(@Body() dto: UpdateUserTermsAndConditionsDto,@GetUser('sub') userId:string) {
     try {
       const res =
-        await this.businessProfileService.updateAdminTermsAndConditions(
-          dto,
-          userId,
-        );
+        await this.businessProfileService.updateAdminTermsAndConditions(dto,userId);
       return {
         status: HttpStatus.OK,
         message: 'Terms and Conditions updated successfully',
@@ -404,10 +392,9 @@ export class BusinessProfileController {
 
   @ValidateOrganizer()
   @Get('organizer/terms-conditions')
-  async getTermsAndConditions(@GetUser('sub') userId: string) {
+  async getTermsAndConditions(@GetUser('sub')  userId:string) {
     try {
-      const res =
-        await this.businessProfileService.getTemsAndConditions(userId);
+      const res = await this.businessProfileService.getTemsAndConditions(userId);
       return {
         status: HttpStatus.OK,
         message: 'Terms and Conditions fetched successfully',
