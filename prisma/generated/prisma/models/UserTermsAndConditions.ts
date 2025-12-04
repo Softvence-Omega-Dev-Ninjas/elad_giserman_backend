@@ -250,8 +250,8 @@ export type UserTermsAndConditionsWhereInput = {
   createdAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
   businessProfile?: Prisma.XOR<
-    Prisma.BusinessProfileNullableScalarRelationFilter,
-    Prisma.BusinessProfileWhereInput
+    Prisma.UserNullableScalarRelationFilter,
+    Prisma.UserWhereInput
   > | null;
 };
 
@@ -268,7 +268,7 @@ export type UserTermsAndConditionsOrderByWithRelationInput = {
   liability?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
-  businessProfile?: Prisma.BusinessProfileOrderByWithRelationInput;
+  businessProfile?: Prisma.UserOrderByWithRelationInput;
 };
 
 export type UserTermsAndConditionsWhereUniqueInput = Prisma.AtLeast<
@@ -302,8 +302,8 @@ export type UserTermsAndConditionsWhereUniqueInput = Prisma.AtLeast<
     createdAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
     businessProfile?: Prisma.XOR<
-      Prisma.BusinessProfileNullableScalarRelationFilter,
-      Prisma.BusinessProfileWhereInput
+      Prisma.UserNullableScalarRelationFilter,
+      Prisma.UserWhereInput
     > | null;
   },
   'id'
@@ -388,7 +388,7 @@ export type UserTermsAndConditionsCreateInput = {
   liability: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutUserTermsandConditionInput;
+  businessProfile?: Prisma.UserCreateNestedOneWithoutUserTermsandConditionInput;
 };
 
 export type UserTermsAndConditionsUncheckedCreateInput = {
@@ -444,7 +444,7 @@ export type UserTermsAndConditionsUpdateInput = {
   liability?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutUserTermsandConditionNestedInput;
+  businessProfile?: Prisma.UserUpdateOneWithoutUserTermsandConditionNestedInput;
 };
 
 export type UserTermsAndConditionsUncheckedUpdateInput = {
@@ -570,16 +570,6 @@ export type UserTermsAndConditionsUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type UserTermsAndConditionsListRelationFilter = {
-  every?: Prisma.UserTermsAndConditionsWhereInput;
-  some?: Prisma.UserTermsAndConditionsWhereInput;
-  none?: Prisma.UserTermsAndConditionsWhereInput;
-};
-
-export type UserTermsAndConditionsOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder;
-};
-
 export type UserTermsAndConditionsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   generalAgrement?: Prisma.SortOrder;
@@ -613,6 +603,61 @@ export type UserTermsAndConditionsMinOrderByAggregateInput = {
   liability?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+};
+
+export type UserTermsAndConditionsListRelationFilter = {
+  every?: Prisma.UserTermsAndConditionsWhereInput;
+  some?: Prisma.UserTermsAndConditionsWhereInput;
+  none?: Prisma.UserTermsAndConditionsWhereInput;
+};
+
+export type UserTermsAndConditionsOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder;
+};
+
+export type UserTermsAndConditionsCreatereservationConfirmationInput = {
+  set: string[];
+};
+
+export type UserTermsAndConditionsCreatearrvalAndSeatingPolicyInput = {
+  set: string[];
+};
+
+export type UserTermsAndConditionsCreatecanceletionAndNoShowsInput = {
+  set: string[];
+};
+
+export type UserTermsAndConditionsCreatemodificationsInput = {
+  set: string[];
+};
+
+export type UserTermsAndConditionsCreateconductAndBehaviourInput = {
+  set: string[];
+};
+
+export type UserTermsAndConditionsUpdatereservationConfirmationInput = {
+  set?: string[];
+  push?: string | string[];
+};
+
+export type UserTermsAndConditionsUpdatearrvalAndSeatingPolicyInput = {
+  set?: string[];
+  push?: string | string[];
+};
+
+export type UserTermsAndConditionsUpdatecanceletionAndNoShowsInput = {
+  set?: string[];
+  push?: string | string[];
+};
+
+export type UserTermsAndConditionsUpdatemodificationsInput = {
+  set?: string[];
+  push?: string | string[];
+};
+
+export type UserTermsAndConditionsUpdateconductAndBehaviourInput = {
+  set?: string[];
+  push?: string | string[];
 };
 
 export type UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput =
@@ -728,51 +773,6 @@ export type UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNeste
       | Prisma.UserTermsAndConditionsScalarWhereInput
       | Prisma.UserTermsAndConditionsScalarWhereInput[];
   };
-
-export type UserTermsAndConditionsCreatereservationConfirmationInput = {
-  set: string[];
-};
-
-export type UserTermsAndConditionsCreatearrvalAndSeatingPolicyInput = {
-  set: string[];
-};
-
-export type UserTermsAndConditionsCreatecanceletionAndNoShowsInput = {
-  set: string[];
-};
-
-export type UserTermsAndConditionsCreatemodificationsInput = {
-  set: string[];
-};
-
-export type UserTermsAndConditionsCreateconductAndBehaviourInput = {
-  set: string[];
-};
-
-export type UserTermsAndConditionsUpdatereservationConfirmationInput = {
-  set?: string[];
-  push?: string | string[];
-};
-
-export type UserTermsAndConditionsUpdatearrvalAndSeatingPolicyInput = {
-  set?: string[];
-  push?: string | string[];
-};
-
-export type UserTermsAndConditionsUpdatecanceletionAndNoShowsInput = {
-  set?: string[];
-  push?: string | string[];
-};
-
-export type UserTermsAndConditionsUpdatemodificationsInput = {
-  set?: string[];
-  push?: string | string[];
-};
-
-export type UserTermsAndConditionsUpdateconductAndBehaviourInput = {
-  set?: string[];
-  push?: string | string[];
-};
 
 export type UserTermsAndConditionsCreateWithoutBusinessProfileInput = {
   id?: string;
@@ -1150,7 +1150,7 @@ export type $UserTermsAndConditionsPayload<
 > = {
   name: 'UserTermsAndConditions';
   objects: {
-    businessProfile: Prisma.$BusinessProfilePayload<ExtArgs> | null;
+    businessProfile: Prisma.$UserPayload<ExtArgs> | null;
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -1751,9 +1751,9 @@ export interface Prisma__UserTermsAndConditionsClient<
       T,
       Prisma.UserTermsAndConditions$businessProfileArgs<ExtArgs>
     >,
-  ): Prisma.Prisma__BusinessProfileClient<
+  ): Prisma.Prisma__UserClient<
     runtime.Types.Result.GetResult<
-      Prisma.$BusinessProfilePayload<ExtArgs>,
+      Prisma.$UserPayload<ExtArgs>,
       T,
       'findUniqueOrThrow',
       GlobalOmitOptions
@@ -2309,18 +2309,18 @@ export type UserTermsAndConditions$businessProfileArgs<
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
   /**
-   * Select specific fields to fetch from the BusinessProfile
+   * Select specific fields to fetch from the User
    */
-  select?: Prisma.BusinessProfileSelect<ExtArgs> | null;
+  select?: Prisma.UserSelect<ExtArgs> | null;
   /**
-   * Omit specific fields from the BusinessProfile
+   * Omit specific fields from the User
    */
-  omit?: Prisma.BusinessProfileOmit<ExtArgs> | null;
+  omit?: Prisma.UserOmit<ExtArgs> | null;
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.BusinessProfileInclude<ExtArgs> | null;
-  where?: Prisma.BusinessProfileWhereInput;
+  include?: Prisma.UserInclude<ExtArgs> | null;
+  where?: Prisma.UserWhereInput;
 };
 
 /**
