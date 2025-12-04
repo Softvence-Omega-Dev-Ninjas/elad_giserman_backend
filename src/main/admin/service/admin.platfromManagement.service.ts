@@ -552,7 +552,7 @@ export class AdminPlatfromManagementService {
       orderBy: { createdAt: 'desc' },
       select: {
         id: true,
-        amount:true,
+        amount: true,
         createdAt: true,
         status: true,
         user: {
