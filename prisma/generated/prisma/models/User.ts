@@ -405,6 +405,7 @@ export type UserWhereInput = {
     Prisma.BusinessProfileWhereInput
   > | null;
   spinHistory?: Prisma.SpinHistoryListRelationFilter;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsListRelationFilter;
   invoices?: Prisma.InvoiceListRelationFilter;
 };
 
@@ -447,6 +448,7 @@ export type UserOrderByWithRelationInput = {
   reedemaOffer?: Prisma.ReedemaOfferOrderByRelationAggregateInput;
   businessProfile?: Prisma.BusinessProfileOrderByWithRelationInput;
   spinHistory?: Prisma.SpinHistoryOrderByRelationAggregateInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsOrderByRelationAggregateInput;
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput;
 };
 
@@ -502,6 +504,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<
       Prisma.BusinessProfileWhereInput
     > | null;
     spinHistory?: Prisma.SpinHistoryListRelationFilter;
+    userTermsandCondition?: Prisma.UserTermsAndConditionsListRelationFilter;
     invoices?: Prisma.InvoiceListRelationFilter;
   },
   | 'id'
@@ -667,6 +670,7 @@ export type UserCreateInput = {
   reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
 };
 
@@ -708,6 +712,7 @@ export type UserUncheckedCreateInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
 };
 
@@ -785,6 +790,7 @@ export type UserUpdateInput = {
   reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
 };
 
@@ -865,6 +871,7 @@ export type UserUncheckedUpdateInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
 };
 
@@ -1054,6 +1061,11 @@ export type UserListRelationFilter = {
 
 export type UserOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder;
+};
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null;
+  isNot?: Prisma.UserWhereInput | null;
 };
 
 export type UserCountOrderByAggregateInput = {
@@ -1449,6 +1461,34 @@ export type UserUpdateOneRequiredWithoutInvoicesNestedInput = {
   >;
 };
 
+export type UserCreateNestedOneWithoutUserTermsandConditionInput = {
+  create?: Prisma.XOR<
+    Prisma.UserCreateWithoutUserTermsandConditionInput,
+    Prisma.UserUncheckedCreateWithoutUserTermsandConditionInput
+  >;
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserTermsandConditionInput;
+  connect?: Prisma.UserWhereUniqueInput;
+};
+
+export type UserUpdateOneWithoutUserTermsandConditionNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.UserCreateWithoutUserTermsandConditionInput,
+    Prisma.UserUncheckedCreateWithoutUserTermsandConditionInput
+  >;
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserTermsandConditionInput;
+  upsert?: Prisma.UserUpsertWithoutUserTermsandConditionInput;
+  disconnect?: Prisma.UserWhereInput | boolean;
+  delete?: Prisma.UserWhereInput | boolean;
+  connect?: Prisma.UserWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.UserUpdateToOneWithWhereWithoutUserTermsandConditionInput,
+      Prisma.UserUpdateWithoutUserTermsandConditionInput
+    >,
+    Prisma.UserUncheckedUpdateWithoutUserTermsandConditionInput
+  >;
+};
+
 export type EnumUserRoleFieldUpdateOperationsInput = {
   set?: $Enums.UserRole;
 };
@@ -1510,6 +1550,7 @@ export type UserCreateWithoutBusinessProfileInput = {
   reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
   reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
 };
 
@@ -1550,6 +1591,7 @@ export type UserUncheckedCreateWithoutBusinessProfileInput = {
   reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
   reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
 };
 
@@ -1654,6 +1696,7 @@ export type UserUpdateWithoutBusinessProfileInput = {
   reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
   reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
 };
 
@@ -1733,6 +1776,7 @@ export type UserUncheckedUpdateWithoutBusinessProfileInput = {
   reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
   reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
 };
 
@@ -1773,6 +1817,7 @@ export type UserCreateWithoutNotificationsInput = {
   reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
 };
 
@@ -1813,6 +1858,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
 };
 
@@ -1917,6 +1963,7 @@ export type UserUpdateWithoutNotificationsInput = {
   reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
 };
 
@@ -1996,6 +2043,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
 };
 
@@ -2036,6 +2084,7 @@ export type UserCreateWithoutReedemaOfferInput = {
   reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
 };
 
@@ -2076,6 +2125,7 @@ export type UserUncheckedCreateWithoutReedemaOfferInput = {
   reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
 };
 
@@ -2180,6 +2230,7 @@ export type UserUpdateWithoutReedemaOfferInput = {
   reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
 };
 
@@ -2259,6 +2310,7 @@ export type UserUncheckedUpdateWithoutReedemaOfferInput = {
   reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
 };
 
@@ -2299,6 +2351,7 @@ export type UserCreateWithoutReviewsInput = {
   reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
 };
 
@@ -2339,6 +2392,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
 };
 
@@ -2443,6 +2497,7 @@ export type UserUpdateWithoutReviewsInput = {
   reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
 };
 
@@ -2522,6 +2577,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
 };
 
@@ -2562,6 +2618,7 @@ export type UserCreateWithoutReviewReplyInput = {
   reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
 };
 
@@ -2602,6 +2659,7 @@ export type UserUncheckedCreateWithoutReviewReplyInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
 };
 
@@ -2706,6 +2764,7 @@ export type UserUpdateWithoutReviewReplyInput = {
   reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
 };
 
@@ -2785,6 +2844,7 @@ export type UserUncheckedUpdateWithoutReviewReplyInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
 };
 
@@ -2825,6 +2885,7 @@ export type UserCreateWithoutSpinHistoryInput = {
   reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
   reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
 };
 
@@ -2865,6 +2926,7 @@ export type UserUncheckedCreateWithoutSpinHistoryInput = {
   reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
   reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
 };
 
@@ -2969,6 +3031,7 @@ export type UserUpdateWithoutSpinHistoryInput = {
   reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
   reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
 };
 
@@ -3048,6 +3111,7 @@ export type UserUncheckedUpdateWithoutSpinHistoryInput = {
   reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
   reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
 };
 
@@ -3088,6 +3152,7 @@ export type UserCreateWithoutCurrentPlanInput = {
   reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
 };
 
@@ -3128,6 +3193,7 @@ export type UserUncheckedCreateWithoutCurrentPlanInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
 };
 
@@ -3253,6 +3319,7 @@ export type UserCreateWithoutUserSubscriptionInput = {
   reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
 };
 
@@ -3293,6 +3360,7 @@ export type UserUncheckedCreateWithoutUserSubscriptionInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
 };
 
@@ -3397,6 +3465,7 @@ export type UserUpdateWithoutUserSubscriptionInput = {
   reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
 };
 
@@ -3476,6 +3545,7 @@ export type UserUncheckedUpdateWithoutUserSubscriptionInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
 };
 
@@ -3517,6 +3587,7 @@ export type UserCreateWithoutInvoicesInput = {
   reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type UserUncheckedCreateWithoutInvoicesInput = {
@@ -3557,6 +3628,7 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
   businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type UserCreateOrConnectWithoutInvoicesInput = {
@@ -3661,6 +3733,7 @@ export type UserUpdateWithoutInvoicesInput = {
   reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutInvoicesInput = {
@@ -3740,6 +3813,274 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+};
+
+export type UserCreateWithoutUserTermsandConditionInput = {
+  id?: string;
+  email: string;
+  username: string;
+  googleId?: string | null;
+  password?: string | null;
+  name?: string | null;
+  avatarUrl?: string | null;
+  mobile?: string | null;
+  role?: $Enums.UserRole;
+  status?: $Enums.UserStatus;
+  isVerified?: boolean;
+  timezone?: string;
+  language?: $Enums.UserLanguage;
+  allowNotification?: boolean;
+  isLoggedIn?: boolean;
+  lastLoginAt?: Date | string | null;
+  lastLogoutAt?: Date | string | null;
+  lastActiveAt?: Date | string | null;
+  otp?: string | null;
+  otpExpiresAt?: Date | string | null;
+  otpType?: $Enums.OtpType | null;
+  stripeCustomerId?: string | null;
+  stripeDefaultPaymentMethodId?: string | null;
+  memberShip?: $Enums.MemberShip;
+  trialEndsAt?: Date | string | null;
+  subscriptionStatus?: $Enums.SubscriptionStatus | null;
+  fcmToken?: string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
+  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+};
+
+export type UserUncheckedCreateWithoutUserTermsandConditionInput = {
+  id?: string;
+  email: string;
+  username: string;
+  googleId?: string | null;
+  password?: string | null;
+  name?: string | null;
+  avatarUrl?: string | null;
+  mobile?: string | null;
+  role?: $Enums.UserRole;
+  status?: $Enums.UserStatus;
+  isVerified?: boolean;
+  timezone?: string;
+  language?: $Enums.UserLanguage;
+  allowNotification?: boolean;
+  isLoggedIn?: boolean;
+  lastLoginAt?: Date | string | null;
+  lastLogoutAt?: Date | string | null;
+  lastActiveAt?: Date | string | null;
+  otp?: string | null;
+  otpExpiresAt?: Date | string | null;
+  otpType?: $Enums.OtpType | null;
+  stripeCustomerId?: string | null;
+  stripeDefaultPaymentMethodId?: string | null;
+  memberShip?: $Enums.MemberShip;
+  trialEndsAt?: Date | string | null;
+  subscriptionStatus?: $Enums.SubscriptionStatus | null;
+  currentPlanId?: string | null;
+  fcmToken?: string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
+};
+
+export type UserCreateOrConnectWithoutUserTermsandConditionInput = {
+  where: Prisma.UserWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.UserCreateWithoutUserTermsandConditionInput,
+    Prisma.UserUncheckedCreateWithoutUserTermsandConditionInput
+  >;
+};
+
+export type UserUpsertWithoutUserTermsandConditionInput = {
+  update: Prisma.XOR<
+    Prisma.UserUpdateWithoutUserTermsandConditionInput,
+    Prisma.UserUncheckedUpdateWithoutUserTermsandConditionInput
+  >;
+  create: Prisma.XOR<
+    Prisma.UserCreateWithoutUserTermsandConditionInput,
+    Prisma.UserUncheckedCreateWithoutUserTermsandConditionInput
+  >;
+  where?: Prisma.UserWhereInput;
+};
+
+export type UserUpdateToOneWithWhereWithoutUserTermsandConditionInput = {
+  where?: Prisma.UserWhereInput;
+  data: Prisma.XOR<
+    Prisma.UserUpdateWithoutUserTermsandConditionInput,
+    Prisma.UserUncheckedUpdateWithoutUserTermsandConditionInput
+  >;
+};
+
+export type UserUpdateWithoutUserTermsandConditionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  email?: Prisma.StringFieldUpdateOperationsInput | string;
+  username?: Prisma.StringFieldUpdateOperationsInput | string;
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string;
+  language?:
+    | Prisma.EnumUserLanguageFieldUpdateOperationsInput
+    | $Enums.UserLanguage;
+  allowNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  isLoggedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  lastLoginAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  lastLogoutAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  lastActiveAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  otpExpiresAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  otpType?:
+    | Prisma.NullableEnumOtpTypeFieldUpdateOperationsInput
+    | $Enums.OtpType
+    | null;
+  stripeCustomerId?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  stripeDefaultPaymentMethodId?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  memberShip?:
+    | Prisma.EnumMemberShipFieldUpdateOperationsInput
+    | $Enums.MemberShip;
+  trialEndsAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  subscriptionStatus?:
+    | Prisma.NullableEnumSubscriptionStatusFieldUpdateOperationsInput
+    | $Enums.SubscriptionStatus
+    | null;
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
+  invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+};
+
+export type UserUncheckedUpdateWithoutUserTermsandConditionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  email?: Prisma.StringFieldUpdateOperationsInput | string;
+  username?: Prisma.StringFieldUpdateOperationsInput | string;
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string;
+  language?:
+    | Prisma.EnumUserLanguageFieldUpdateOperationsInput
+    | $Enums.UserLanguage;
+  allowNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  isLoggedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  lastLoginAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  lastLogoutAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  lastActiveAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  otpExpiresAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  otpType?:
+    | Prisma.NullableEnumOtpTypeFieldUpdateOperationsInput
+    | $Enums.OtpType
+    | null;
+  stripeCustomerId?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  stripeDefaultPaymentMethodId?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  memberShip?:
+    | Prisma.EnumMemberShipFieldUpdateOperationsInput
+    | $Enums.MemberShip;
+  trialEndsAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  subscriptionStatus?:
+    | Prisma.NullableEnumSubscriptionStatusFieldUpdateOperationsInput
+    | $Enums.SubscriptionStatus
+    | null;
+  currentPlanId?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateManyCurrentPlanInput = {
@@ -3847,6 +4188,7 @@ export type UserUpdateWithoutCurrentPlanInput = {
   reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
 };
 
@@ -3923,6 +4265,7 @@ export type UserUncheckedUpdateWithoutCurrentPlanInput = {
   reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
   businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
 };
 
@@ -4005,6 +4348,7 @@ export type UserCountOutputType = {
   reviewReply: number;
   reedemaOffer: number;
   spinHistory: number;
+  userTermsandCondition: number;
   invoices: number;
 };
 
@@ -4018,6 +4362,9 @@ export type UserCountOutputTypeSelect<
   reviewReply?: boolean | UserCountOutputTypeCountReviewReplyArgs;
   reedemaOffer?: boolean | UserCountOutputTypeCountReedemaOfferArgs;
   spinHistory?: boolean | UserCountOutputTypeCountSpinHistoryArgs;
+  userTermsandCondition?:
+    | boolean
+    | UserCountOutputTypeCountUserTermsandConditionArgs;
   invoices?: boolean | UserCountOutputTypeCountInvoicesArgs;
 };
 
@@ -4097,6 +4444,16 @@ export type UserCountOutputTypeCountSpinHistoryArgs<
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountUserTermsandConditionArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.UserTermsAndConditionsWhereInput;
+};
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountInvoicesArgs<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
@@ -4147,6 +4504,9 @@ export type UserSelect<
     reedemaOffer?: boolean | Prisma.User$reedemaOfferArgs<ExtArgs>;
     businessProfile?: boolean | Prisma.User$businessProfileArgs<ExtArgs>;
     spinHistory?: boolean | Prisma.User$spinHistoryArgs<ExtArgs>;
+    userTermsandCondition?:
+      | boolean
+      | Prisma.User$userTermsandConditionArgs<ExtArgs>;
     invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
   },
@@ -4314,6 +4674,9 @@ export type UserInclude<
   reedemaOffer?: boolean | Prisma.User$reedemaOfferArgs<ExtArgs>;
   businessProfile?: boolean | Prisma.User$businessProfileArgs<ExtArgs>;
   spinHistory?: boolean | Prisma.User$spinHistoryArgs<ExtArgs>;
+  userTermsandCondition?:
+    | boolean
+    | Prisma.User$userTermsandConditionArgs<ExtArgs>;
   invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>;
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
@@ -4344,6 +4707,7 @@ export type $UserPayload<
     reedemaOffer: Prisma.$ReedemaOfferPayload<ExtArgs>[];
     businessProfile: Prisma.$BusinessProfilePayload<ExtArgs> | null;
     spinHistory: Prisma.$SpinHistoryPayload<ExtArgs>[];
+    userTermsandCondition: Prisma.$UserTermsAndConditionsPayload<ExtArgs>[];
     invoices: Prisma.$InvoicePayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
@@ -5014,6 +5378,19 @@ export interface Prisma__UserClient<
   ): Prisma.PrismaPromise<
     | runtime.Types.Result.GetResult<
         Prisma.$SpinHistoryPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  userTermsandCondition<
+    T extends Prisma.User$userTermsandConditionArgs<ExtArgs> = {},
+  >(
+    args?: Prisma.Subset<T, Prisma.User$userTermsandConditionArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$UserTermsAndConditionsPayload<ExtArgs>,
         T,
         'findMany',
         GlobalOmitOptions
@@ -5777,6 +6154,37 @@ export type User$spinHistoryArgs<
   distinct?:
     | Prisma.SpinHistoryScalarFieldEnum
     | Prisma.SpinHistoryScalarFieldEnum[];
+};
+
+/**
+ * User.userTermsandCondition
+ */
+export type User$userTermsandConditionArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the UserTermsAndConditions
+   */
+  select?: Prisma.UserTermsAndConditionsSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the UserTermsAndConditions
+   */
+  omit?: Prisma.UserTermsAndConditionsOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserTermsAndConditionsInclude<ExtArgs> | null;
+  where?: Prisma.UserTermsAndConditionsWhereInput;
+  orderBy?:
+    | Prisma.UserTermsAndConditionsOrderByWithRelationInput
+    | Prisma.UserTermsAndConditionsOrderByWithRelationInput[];
+  cursor?: Prisma.UserTermsAndConditionsWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.UserTermsAndConditionsScalarFieldEnum
+    | Prisma.UserTermsAndConditionsScalarFieldEnum[];
 };
 
 /**
