@@ -105,7 +105,7 @@ export class BusinessProfileService {
   // get my businessProfile
   async getBusinessProfile(id: string) {
     const profile = await this.prisma.client.businessProfile.findUnique({
-      where: { ownerId: id },
+      where: { id: id },
       include: {
         gallery: true,
         offers: true,
