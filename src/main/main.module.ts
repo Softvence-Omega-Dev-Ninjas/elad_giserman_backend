@@ -8,7 +8,14 @@ import { ReviewModule } from './review/review.module';
 import { UserReservationModule } from './user-reservation/user-reservation.module';
 
 @Module({
-  imports: [AuthModule, AdminModule, OrganizerModule, UserModule, ReviewModule, UserReservationModule],
+  imports: [
+    AuthModule,
+    AdminModule,
+    OrganizerModule,
+    UserModule,
+    ReviewModule,
+    UserReservationModule,
+  ],
   controllers: [],
   providers: [],
 })
