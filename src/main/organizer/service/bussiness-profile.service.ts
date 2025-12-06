@@ -105,7 +105,7 @@ export class BusinessProfileService {
   // get my businessProfile
   async getBusinessProfile(id: string) {
     const profile = await this.prisma.client.businessProfile.findUnique({
-      where: { ownerId: id },
+      where: { id: id },
       include: {
         gallery: true,
         offers: true,
@@ -225,19 +225,23 @@ export class BusinessProfileService {
     const { search, profileType, page = 1, limit = 10 } = filter;
     const skip = (page - 1) * limit;
 
-    // Build where condition
     const where: any = {};
+
+    // Search filter
     if (search) {
       where.OR = [
         { title: { contains: search, mode: 'insensitive' } },
         { description: { contains: search, mode: 'insensitive' } },
       ];
     }
+
+    // Category name filter
     if (profileType) {
-      where.profileType = profileType;
+      where.category = {
+        name: { contains: profileType, mode: 'insensitive' },
+      };
     }
 
-    // Fetch profiles with gallery, owner, and counts for offers & redemptions
     const profiles = await this.prisma.client.businessProfile.findMany({
       skip,
       take: limit,
