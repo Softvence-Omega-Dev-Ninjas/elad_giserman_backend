@@ -1,60 +1,45 @@
 model User {
-  id String @id @default(uuid())
-
-  // Auth
-  email    String  @unique
-  username String  @unique
-  googleId String? @unique // google id or firebase uid
-  password String? // hashed password (nullable for social accounts)
-
-  // Profile
-  name      String? @default("Unnamed User")
-  avatarUrl String? @default("https://www.gravatar.com/avatar/000000000000000000000000000000?d=mp&f=y")
-  mobile    String?
-
-  // Settings
-  role              UserRole     @default(USER)
-  status            UserStatus   @default(ACTIVE)
-  isVerified        Boolean      @default(false)
-  timezone          String       @default("UTC") // e.g., "America/New_York"
-  language          UserLanguage @default(EN)
-  allowNotification Boolean      @default(true)
-
-  // Logout tracking
-  isLoggedIn   Boolean   @default(false)
-  lastLoginAt  DateTime?
-  lastLogoutAt DateTime?
-  lastActiveAt DateTime?
-
-  // OTP
-  otp          String? // 4 digit hashed OTP code
-  otpExpiresAt DateTime?
-  otpType      OtpType?
-
-  // Subscription-related
-  stripeCustomerId             String? @unique // Stripe customer id
-  stripeDefaultPaymentMethodId String? @unique // Stripe default payment method
-
-  memberShip  MemberShip @default(FREE)
-  trialEndsAt DateTime? // 3-month free trial expiry timestamp after sign up
-
-  // current plan quick link
-  subscriptionStatus SubscriptionStatus? // last known overall status
-  currentPlanId      String?
-  currentPlan        SubscriptionPlan?   @relation(fields: [currentPlanId], references: [id], onDelete: SetNull)
-
-  notifications    UserNotification[]
-  userSubscription UserSubscription[]
-  reviews          Review[]
-  reviewReply      ReviewReply[]
-  reedemaOffer     ReedemaOffer[]     @relation("UserReedemaOffer")
-  businessProfile  BusinessProfile?
-  spinHistory  SpinHistory[]
-   userTermsandCondition UserTermsAndConditions[]
-  invoices Invoice[]
-  fcmToken String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id                           String                   @id @default(uuid())
+  email                        String                   @unique
+  username                     String                   @unique
+  googleId                     String?                  @unique
+  password                     String?
+  name                         String?                  @default("Unnamed User")
+  avatarUrl                    String?                  @default("https://www.gravatar.com/avatar/000000000000000000000000000000?d=mp&f=y")
+  mobile                       String?
+  role                         UserRole                 @default(USER)
+  status                       UserStatus               @default(ACTIVE)
+  isVerified                   Boolean                  @default(false)
+  timezone                     String                   @default("UTC")
+  language                     UserLanguage             @default(EN)
+  allowNotification            Boolean                  @default(true)
+  isLoggedIn                   Boolean                  @default(false)
+  lastLoginAt                  DateTime?
+  lastLogoutAt                 DateTime?
+  lastActiveAt                 DateTime?
+  otp                          String?
+  otpExpiresAt                 DateTime?
+  otpType                      OtpType?
+  stripeCustomerId             String?                  @unique
+  stripeDefaultPaymentMethodId String?                  @unique
+  memberShip                   MemberShip               @default(FREE)
+  trialEndsAt                  DateTime?
+  subscriptionStatus           SubscriptionStatus?
+  currentPlanId                String?
+  fcmToken                     String?
+  createdAt                    DateTime                 @default(now())
+  updatedAt                    DateTime                 @default(now()) @updatedAt
+  reservation                  Reservation[]
+  spinHistory                  SpinHistory[]
+  userTermsandCondition        UserTermsAndConditions[]
+  businessProfile              BusinessProfile?
+  invoices                     Invoice[]
+  reedemaOffer                 ReedemaOffer[]           @relation("UserReedemaOffer")
+  reviewReply                  ReviewReply[]
+  reviews                      Review[]
+  notifications                UserNotification[]
+  userSubscription             UserSubscription[]
+  currentPlan                  SubscriptionPlan?        @relation(fields: [currentPlanId], references: [id])
 
   @@map("users")
 }

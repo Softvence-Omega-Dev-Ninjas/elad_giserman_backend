@@ -1,33 +1,30 @@
 model TermsAndConditions {
-    id String @id @default(uuid())
-    account String
-    subscription String[]
-    offerAndRedemtions String[]
-    reservations String[]
-    businesses String[]
-    adminRight String[]
-    dataAndPolicy String
-    liability String
-    governingLaw String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    
- }
+  id                 String   @id @default(uuid())
+  account            String
+  subscription       String[]
+  offerAndRedemtions String[]
+  reservations       String[]
+  businesses         String[]
+  adminRight         String[]
+  dataAndPolicy      String
+  liability          String
+  governingLaw       String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
 
- model UserTermsAndConditions {
-    id String @id @default(uuid())
-    generalAgrement String?
-    reservationConfirmation String[]
-    arrvalAndSeatingPolicy String[]
-    canceletionAndNoShows String[]
-    modifications String[]
-    conductAndBehaviour String[]
-    businessProfileId String?
-    businessProfile User? @relation(fields: [businessProfileId],references: [id])
-    policyUpdate String?
-    liability String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    
- }
+model UserTermsAndConditions {
+  id                      String   @id @default(uuid())
+  liability               String
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  arrvalAndSeatingPolicy  String[]
+  canceletionAndNoShows   String[]
+  conductAndBehaviour     String[]
+  generalAgrement         String?
+  modifications           String[]
+  policyUpdate            String?
+  reservationConfirmation String[]
+  businessProfileId       String?
+  businessProfile         User?    @relation(fields: [businessProfileId], references: [id])
+}

@@ -1,18 +1,15 @@
 model FileInstance {
-  id String @id @default(uuid())
-
+  id               String            @id @default(uuid())
   filename         String
   originalFilename String
   path             String
   url              String
-  fileType         FileType @default(any)
+  fileType         FileType          @default(any)
   mimeType         String
   size             Int
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-
-  BusinessProfile BusinessProfile[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @default(now()) @updatedAt
+  BusinessProfile  BusinessProfile[] @relation("BusinessProfileToFileInstance")
 
   @@map("file_instances")
 }
