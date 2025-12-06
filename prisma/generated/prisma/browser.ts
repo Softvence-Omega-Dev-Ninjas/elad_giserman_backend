@@ -62,6 +62,11 @@ export type Offer = Prisma.OfferModel;
  */
 export type ReedemaOffer = Prisma.ReedemaOfferModel;
 /**
+ * Model Reservation
+ *
+ */
+export type Reservation = Prisma.ReservationModel;
+/**
  * Model Review
  *
  */

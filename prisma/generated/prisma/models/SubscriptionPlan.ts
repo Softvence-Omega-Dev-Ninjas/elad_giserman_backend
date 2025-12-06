@@ -311,8 +311,8 @@ export type SubscriptionPlanWhereInput = {
     | $Enums.BillingPeriod;
   createdAt?: Prisma.DateTimeFilter<'SubscriptionPlan'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'SubscriptionPlan'> | Date | string;
-  user?: Prisma.UserListRelationFilter;
   userSubscriptions?: Prisma.UserSubscriptionListRelationFilter;
+  user?: Prisma.UserListRelationFilter;
 };
 
 export type SubscriptionPlanOrderByWithRelationInput = {
@@ -331,8 +331,8 @@ export type SubscriptionPlanOrderByWithRelationInput = {
   billingPeriod?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
-  user?: Prisma.UserOrderByRelationAggregateInput;
   userSubscriptions?: Prisma.UserSubscriptionOrderByRelationAggregateInput;
+  user?: Prisma.UserOrderByRelationAggregateInput;
 };
 
 export type SubscriptionPlanWhereUniqueInput = Prisma.AtLeast<
@@ -364,8 +364,8 @@ export type SubscriptionPlanWhereUniqueInput = Prisma.AtLeast<
       | $Enums.BillingPeriod;
     createdAt?: Prisma.DateTimeFilter<'SubscriptionPlan'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'SubscriptionPlan'> | Date | string;
-    user?: Prisma.UserListRelationFilter;
     userSubscriptions?: Prisma.UserSubscriptionListRelationFilter;
+    user?: Prisma.UserListRelationFilter;
   },
   'id' | 'stripeProductId' | 'stripePriceId'
 >;
@@ -451,8 +451,8 @@ export type SubscriptionPlanCreateInput = {
   billingPeriod: $Enums.BillingPeriod;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  user?: Prisma.UserCreateNestedManyWithoutCurrentPlanInput;
   userSubscriptions?: Prisma.UserSubscriptionCreateNestedManyWithoutPlanInput;
+  user?: Prisma.UserCreateNestedManyWithoutCurrentPlanInput;
 };
 
 export type SubscriptionPlanUncheckedCreateInput = {
@@ -471,8 +471,8 @@ export type SubscriptionPlanUncheckedCreateInput = {
   billingPeriod: $Enums.BillingPeriod;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  user?: Prisma.UserUncheckedCreateNestedManyWithoutCurrentPlanInput;
   userSubscriptions?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutPlanInput;
+  user?: Prisma.UserUncheckedCreateNestedManyWithoutCurrentPlanInput;
 };
 
 export type SubscriptionPlanUpdateInput = {
@@ -493,8 +493,8 @@ export type SubscriptionPlanUpdateInput = {
     | $Enums.BillingPeriod;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  user?: Prisma.UserUpdateManyWithoutCurrentPlanNestedInput;
   userSubscriptions?: Prisma.UserSubscriptionUpdateManyWithoutPlanNestedInput;
+  user?: Prisma.UserUpdateManyWithoutCurrentPlanNestedInput;
 };
 
 export type SubscriptionPlanUncheckedUpdateInput = {
@@ -515,8 +515,8 @@ export type SubscriptionPlanUncheckedUpdateInput = {
     | $Enums.BillingPeriod;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  user?: Prisma.UserUncheckedUpdateManyWithoutCurrentPlanNestedInput;
   userSubscriptions?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutPlanNestedInput;
+  user?: Prisma.UserUncheckedUpdateManyWithoutCurrentPlanNestedInput;
 };
 
 export type SubscriptionPlanCreateManyInput = {
@@ -949,18 +949,18 @@ export type SubscriptionPlanUncheckedUpdateWithoutUserInput = {
  */
 
 export type SubscriptionPlanCountOutputType = {
-  user: number;
   userSubscriptions: number;
+  user: number;
 };
 
 export type SubscriptionPlanCountOutputTypeSelect<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  user?: boolean | SubscriptionPlanCountOutputTypeCountUserArgs;
   userSubscriptions?:
     | boolean
     | SubscriptionPlanCountOutputTypeCountUserSubscriptionsArgs;
+  user?: boolean | SubscriptionPlanCountOutputTypeCountUserArgs;
 };
 
 /**
@@ -979,21 +979,21 @@ export type SubscriptionPlanCountOutputTypeDefaultArgs<
 /**
  * SubscriptionPlanCountOutputType without action
  */
-export type SubscriptionPlanCountOutputTypeCountUserArgs<
-  ExtArgs extends
-    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-  where?: Prisma.UserWhereInput;
-};
-
-/**
- * SubscriptionPlanCountOutputType without action
- */
 export type SubscriptionPlanCountOutputTypeCountUserSubscriptionsArgs<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
   where?: Prisma.UserSubscriptionWhereInput;
+};
+
+/**
+ * SubscriptionPlanCountOutputType without action
+ */
+export type SubscriptionPlanCountOutputTypeCountUserArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.UserWhereInput;
 };
 
 export type SubscriptionPlanSelect<
@@ -1016,10 +1016,10 @@ export type SubscriptionPlanSelect<
     billingPeriod?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    user?: boolean | Prisma.SubscriptionPlan$userArgs<ExtArgs>;
     userSubscriptions?:
       | boolean
       | Prisma.SubscriptionPlan$userSubscriptionsArgs<ExtArgs>;
+    user?: boolean | Prisma.SubscriptionPlan$userArgs<ExtArgs>;
     _count?:
       | boolean
       | Prisma.SubscriptionPlanCountOutputTypeDefaultArgs<ExtArgs>;
@@ -1118,10 +1118,10 @@ export type SubscriptionPlanInclude<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  user?: boolean | Prisma.SubscriptionPlan$userArgs<ExtArgs>;
   userSubscriptions?:
     | boolean
     | Prisma.SubscriptionPlan$userSubscriptionsArgs<ExtArgs>;
+  user?: boolean | Prisma.SubscriptionPlan$userArgs<ExtArgs>;
   _count?: boolean | Prisma.SubscriptionPlanCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type SubscriptionPlanIncludeCreateManyAndReturn<
@@ -1139,8 +1139,8 @@ export type $SubscriptionPlanPayload<
 > = {
   name: 'SubscriptionPlan';
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>[];
     userSubscriptions: Prisma.$UserSubscriptionPayload<ExtArgs>[];
+    user: Prisma.$UserPayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -1731,17 +1731,6 @@ export interface Prisma__SubscriptionPlanClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise';
-  user<T extends Prisma.SubscriptionPlan$userArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.SubscriptionPlan$userArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<
-    | runtime.Types.Result.GetResult<
-        Prisma.$UserPayload<ExtArgs>,
-        T,
-        'findMany',
-        GlobalOmitOptions
-      >
-    | Null
-  >;
   userSubscriptions<
     T extends Prisma.SubscriptionPlan$userSubscriptionsArgs<ExtArgs> = {},
   >(
@@ -1752,6 +1741,17 @@ export interface Prisma__SubscriptionPlanClient<
   ): Prisma.PrismaPromise<
     | runtime.Types.Result.GetResult<
         Prisma.$UserSubscriptionPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  user<T extends Prisma.SubscriptionPlan$userArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.SubscriptionPlan$userArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$UserPayload<ExtArgs>,
         T,
         'findMany',
         GlobalOmitOptions
@@ -2281,35 +2281,6 @@ export type SubscriptionPlanDeleteManyArgs<
 };
 
 /**
- * SubscriptionPlan.user
- */
-export type SubscriptionPlan$userArgs<
-  ExtArgs extends
-    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null;
-  where?: Prisma.UserWhereInput;
-  orderBy?:
-    | Prisma.UserOrderByWithRelationInput
-    | Prisma.UserOrderByWithRelationInput[];
-  cursor?: Prisma.UserWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[];
-};
-
-/**
  * SubscriptionPlan.userSubscriptions
  */
 export type SubscriptionPlan$userSubscriptionsArgs<
@@ -2338,6 +2309,35 @@ export type SubscriptionPlan$userSubscriptionsArgs<
   distinct?:
     | Prisma.UserSubscriptionScalarFieldEnum
     | Prisma.UserSubscriptionScalarFieldEnum[];
+};
+
+/**
+ * SubscriptionPlan.user
+ */
+export type SubscriptionPlan$userArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null;
+  where?: Prisma.UserWhereInput;
+  orderBy?:
+    | Prisma.UserOrderByWithRelationInput
+    | Prisma.UserOrderByWithRelationInput[];
+  cursor?: Prisma.UserWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[];
 };
 
 /**

@@ -16,6 +16,7 @@ export type * from './models/Notification';
 export type * from './models/UserNotification';
 export type * from './models/Offer';
 export type * from './models/ReedemaOffer';
+export type * from './models/Reservation';
 export type * from './models/Review';
 export type * from './models/ReviewReply';
 export type * from './models/Spin';

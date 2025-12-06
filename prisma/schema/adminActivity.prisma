@@ -1,12 +1,12 @@
 model AdminActivity {
-    id String @id @default(uuid())
-    stripeConnectionStatus             Boolean? @default(false)
-    appleConnection                    Boolean? @default(false)
-    googleConnection                   Boolean? @default(false)
-    apiKeys                            String?
-    subscriptionStatus                 Boolean? @default(false)
-    reedemtionStatus                   Boolean? @default(false)
-    pushNotifications                  Boolean? @default(false)
-    createdAt DateTime                          @default(now())
-    updatedAt DateTime                          @updatedAt
+  id                     String   @id @default(uuid())
+  stripeConnectionStatus Boolean? @default(false)
+  appleConnection        Boolean? @default(false)
+  googleConnection       Boolean? @default(false)
+  apiKeys                String?
+  subscriptionStatus     Boolean? @default(false)
+  reedemtionStatus       Boolean? @default(false)
+  pushNotifications      Boolean? @default(false)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 }

@@ -5,9 +5,17 @@ import { OrganizerModule } from './organizer/organizer.module';
 import { UserModule } from './user/user.module';
 import { ReviewModule } from './review/review.module';
 // import { ReviewController } from './review/review.controller';
+import { UserReservationModule } from './user-reservation/user-reservation.module';
 
 @Module({
-  imports: [AuthModule, AdminModule, OrganizerModule, UserModule, ReviewModule],
+  imports: [
+    AuthModule,
+    AdminModule,
+    OrganizerModule,
+    UserModule,
+    ReviewModule,
+    UserReservationModule,
+  ],
   controllers: [],
   providers: [],
 })

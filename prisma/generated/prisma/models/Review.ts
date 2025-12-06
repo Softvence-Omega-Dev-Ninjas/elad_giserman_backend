@@ -236,12 +236,12 @@ export type ReviewWhereInput = {
   businessProfileId?: Prisma.StringFilter<'Review'> | string;
   createdAt?: Prisma.DateTimeFilter<'Review'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Review'> | Date | string;
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+  reply?: Prisma.ReviewReplyListRelationFilter;
   businessProfile?: Prisma.XOR<
     Prisma.BusinessProfileScalarRelationFilter,
     Prisma.BusinessProfileWhereInput
   >;
-  reply?: Prisma.ReviewReplyListRelationFilter;
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
 };
 
 export type ReviewOrderByWithRelationInput = {
@@ -252,9 +252,9 @@ export type ReviewOrderByWithRelationInput = {
   businessProfileId?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
-  user?: Prisma.UserOrderByWithRelationInput;
-  businessProfile?: Prisma.BusinessProfileOrderByWithRelationInput;
   reply?: Prisma.ReviewReplyOrderByRelationAggregateInput;
+  businessProfile?: Prisma.BusinessProfileOrderByWithRelationInput;
+  user?: Prisma.UserOrderByWithRelationInput;
 };
 
 export type ReviewWhereUniqueInput = Prisma.AtLeast<
@@ -269,12 +269,12 @@ export type ReviewWhereUniqueInput = Prisma.AtLeast<
     businessProfileId?: Prisma.StringFilter<'Review'> | string;
     createdAt?: Prisma.DateTimeFilter<'Review'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'Review'> | Date | string;
-    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    reply?: Prisma.ReviewReplyListRelationFilter;
     businessProfile?: Prisma.XOR<
       Prisma.BusinessProfileScalarRelationFilter,
       Prisma.BusinessProfileWhereInput
     >;
-    reply?: Prisma.ReviewReplyListRelationFilter;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
   },
   'id'
 >;
@@ -317,9 +317,9 @@ export type ReviewCreateInput = {
   rating: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  user: Prisma.UserCreateNestedOneWithoutReviewsInput;
-  businessProfile: Prisma.BusinessProfileCreateNestedOneWithoutReviewsInput;
   reply?: Prisma.ReviewReplyCreateNestedManyWithoutReviewInput;
+  businessProfile: Prisma.BusinessProfileCreateNestedOneWithoutReviewsInput;
+  user: Prisma.UserCreateNestedOneWithoutReviewsInput;
 };
 
 export type ReviewUncheckedCreateInput = {
@@ -339,9 +339,9 @@ export type ReviewUpdateInput = {
   rating?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  user?: Prisma.UserUpdateOneRequiredWithoutReviewsNestedInput;
-  businessProfile?: Prisma.BusinessProfileUpdateOneRequiredWithoutReviewsNestedInput;
   reply?: Prisma.ReviewReplyUpdateManyWithoutReviewNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneRequiredWithoutReviewsNestedInput;
+  user?: Prisma.UserUpdateOneRequiredWithoutReviewsNestedInput;
 };
 
 export type ReviewUncheckedUpdateInput = {
@@ -640,8 +640,8 @@ export type ReviewCreateWithoutBusinessProfileInput = {
   rating: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  user: Prisma.UserCreateNestedOneWithoutReviewsInput;
   reply?: Prisma.ReviewReplyCreateNestedManyWithoutReviewInput;
+  user: Prisma.UserCreateNestedOneWithoutReviewsInput;
 };
 
 export type ReviewUncheckedCreateWithoutBusinessProfileInput = {
@@ -716,8 +716,8 @@ export type ReviewCreateWithoutReplyInput = {
   rating: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  user: Prisma.UserCreateNestedOneWithoutReviewsInput;
   businessProfile: Prisma.BusinessProfileCreateNestedOneWithoutReviewsInput;
+  user: Prisma.UserCreateNestedOneWithoutReviewsInput;
 };
 
 export type ReviewUncheckedCreateWithoutReplyInput = {
@@ -764,8 +764,8 @@ export type ReviewUpdateWithoutReplyInput = {
   rating?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  user?: Prisma.UserUpdateOneRequiredWithoutReviewsNestedInput;
   businessProfile?: Prisma.BusinessProfileUpdateOneRequiredWithoutReviewsNestedInput;
+  user?: Prisma.UserUpdateOneRequiredWithoutReviewsNestedInput;
 };
 
 export type ReviewUncheckedUpdateWithoutReplyInput = {
@@ -784,8 +784,8 @@ export type ReviewCreateWithoutUserInput = {
   rating: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  businessProfile: Prisma.BusinessProfileCreateNestedOneWithoutReviewsInput;
   reply?: Prisma.ReviewReplyCreateNestedManyWithoutReviewInput;
+  businessProfile: Prisma.BusinessProfileCreateNestedOneWithoutReviewsInput;
 };
 
 export type ReviewUncheckedCreateWithoutUserInput = {
@@ -854,8 +854,8 @@ export type ReviewUpdateWithoutBusinessProfileInput = {
   rating?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  user?: Prisma.UserUpdateOneRequiredWithoutReviewsNestedInput;
   reply?: Prisma.ReviewReplyUpdateManyWithoutReviewNestedInput;
+  user?: Prisma.UserUpdateOneRequiredWithoutReviewsNestedInput;
 };
 
 export type ReviewUncheckedUpdateWithoutBusinessProfileInput = {
@@ -892,8 +892,8 @@ export type ReviewUpdateWithoutUserInput = {
   rating?: Prisma.IntFieldUpdateOperationsInput | number;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  businessProfile?: Prisma.BusinessProfileUpdateOneRequiredWithoutReviewsNestedInput;
   reply?: Prisma.ReviewReplyUpdateManyWithoutReviewNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneRequiredWithoutReviewsNestedInput;
 };
 
 export type ReviewUncheckedUpdateWithoutUserInput = {
@@ -965,9 +965,9 @@ export type ReviewSelect<
     businessProfileId?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
-    businessProfile?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
     reply?: boolean | Prisma.Review$replyArgs<ExtArgs>;
+    businessProfile?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     _count?: boolean | Prisma.ReviewCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['review']
@@ -985,8 +985,8 @@ export type ReviewSelectCreateManyAndReturn<
     businessProfileId?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     businessProfile?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['review']
 >;
@@ -1003,8 +1003,8 @@ export type ReviewSelectUpdateManyAndReturn<
     businessProfileId?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     businessProfile?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['review']
 >;
@@ -1036,24 +1036,24 @@ export type ReviewInclude<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
-  businessProfile?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
   reply?: boolean | Prisma.Review$replyArgs<ExtArgs>;
+  businessProfile?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   _count?: boolean | Prisma.ReviewCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type ReviewIncludeCreateManyAndReturn<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   businessProfile?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 export type ReviewIncludeUpdateManyAndReturn<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   businessProfile?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 
 export type $ReviewPayload<
@@ -1062,9 +1062,9 @@ export type $ReviewPayload<
 > = {
   name: 'Review';
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>;
-    businessProfile: Prisma.$BusinessProfilePayload<ExtArgs>;
     reply: Prisma.$ReviewReplyPayload<ExtArgs>[];
+    businessProfile: Prisma.$BusinessProfilePayload<ExtArgs>;
+    user: Prisma.$UserPayload<ExtArgs>;
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -1625,19 +1625,16 @@ export interface Prisma__ReviewClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise';
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>,
-  ): Prisma.Prisma__UserClient<
+  reply<T extends Prisma.Review$replyArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Review$replyArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
     | runtime.Types.Result.GetResult<
-        Prisma.$UserPayload<ExtArgs>,
+        Prisma.$ReviewReplyPayload<ExtArgs>,
         T,
-        'findUniqueOrThrow',
+        'findMany',
         GlobalOmitOptions
       >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
+    | Null
   >;
   businessProfile<T extends Prisma.BusinessProfileDefaultArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.BusinessProfileDefaultArgs<ExtArgs>>,
@@ -1653,16 +1650,19 @@ export interface Prisma__ReviewClient<
     ExtArgs,
     GlobalOmitOptions
   >;
-  reply<T extends Prisma.Review$replyArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.Review$replyArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>,
+  ): Prisma.Prisma__UserClient<
     | runtime.Types.Result.GetResult<
-        Prisma.$ReviewReplyPayload<ExtArgs>,
+        Prisma.$UserPayload<ExtArgs>,
         T,
-        'findMany',
+        'findUniqueOrThrow',
         GlobalOmitOptions
       >
-    | Null
+    | Null,
+    Null,
+    ExtArgs,
+    GlobalOmitOptions
   >;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

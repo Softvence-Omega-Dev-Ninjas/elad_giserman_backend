@@ -33,17 +33,17 @@ export type BusinessProfileMinAggregateOutputType = {
   openingTime: string | null;
   closingTime: string | null;
   categoryId: string | null;
-  profileTypeName: string | null;
   ownerId: string | null;
-  facebook: string | null;
-  instagram: string | null;
-  twitter: string | null;
-  website: string | null;
-  linkedin: string | null;
-  pinterest: string | null;
-  youtube: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
+  profileTypeName: string | null;
+  facebook: string | null;
+  instagram: string | null;
+  linkedin: string | null;
+  pinterest: string | null;
+  twitter: string | null;
+  website: string | null;
+  youtube: string | null;
 };
 
 export type BusinessProfileMaxAggregateOutputType = {
@@ -55,17 +55,17 @@ export type BusinessProfileMaxAggregateOutputType = {
   openingTime: string | null;
   closingTime: string | null;
   categoryId: string | null;
-  profileTypeName: string | null;
   ownerId: string | null;
-  facebook: string | null;
-  instagram: string | null;
-  twitter: string | null;
-  website: string | null;
-  linkedin: string | null;
-  pinterest: string | null;
-  youtube: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
+  profileTypeName: string | null;
+  facebook: string | null;
+  instagram: string | null;
+  linkedin: string | null;
+  pinterest: string | null;
+  twitter: string | null;
+  website: string | null;
+  youtube: string | null;
 };
 
 export type BusinessProfileCountAggregateOutputType = {
@@ -77,17 +77,17 @@ export type BusinessProfileCountAggregateOutputType = {
   openingTime: number;
   closingTime: number;
   categoryId: number;
-  profileTypeName: number;
   ownerId: number;
-  facebook: number;
-  instagram: number;
-  twitter: number;
-  website: number;
-  linkedin: number;
-  pinterest: number;
-  youtube: number;
   createdAt: number;
   updatedAt: number;
+  profileTypeName: number;
+  facebook: number;
+  instagram: number;
+  linkedin: number;
+  pinterest: number;
+  twitter: number;
+  website: number;
+  youtube: number;
   _all: number;
 };
 
@@ -100,17 +100,17 @@ export type BusinessProfileMinAggregateInputType = {
   openingTime?: true;
   closingTime?: true;
   categoryId?: true;
-  profileTypeName?: true;
   ownerId?: true;
-  facebook?: true;
-  instagram?: true;
-  twitter?: true;
-  website?: true;
-  linkedin?: true;
-  pinterest?: true;
-  youtube?: true;
   createdAt?: true;
   updatedAt?: true;
+  profileTypeName?: true;
+  facebook?: true;
+  instagram?: true;
+  linkedin?: true;
+  pinterest?: true;
+  twitter?: true;
+  website?: true;
+  youtube?: true;
 };
 
 export type BusinessProfileMaxAggregateInputType = {
@@ -122,17 +122,17 @@ export type BusinessProfileMaxAggregateInputType = {
   openingTime?: true;
   closingTime?: true;
   categoryId?: true;
-  profileTypeName?: true;
   ownerId?: true;
-  facebook?: true;
-  instagram?: true;
-  twitter?: true;
-  website?: true;
-  linkedin?: true;
-  pinterest?: true;
-  youtube?: true;
   createdAt?: true;
   updatedAt?: true;
+  profileTypeName?: true;
+  facebook?: true;
+  instagram?: true;
+  linkedin?: true;
+  pinterest?: true;
+  twitter?: true;
+  website?: true;
+  youtube?: true;
 };
 
 export type BusinessProfileCountAggregateInputType = {
@@ -144,17 +144,17 @@ export type BusinessProfileCountAggregateInputType = {
   openingTime?: true;
   closingTime?: true;
   categoryId?: true;
-  profileTypeName?: true;
   ownerId?: true;
-  facebook?: true;
-  instagram?: true;
-  twitter?: true;
-  website?: true;
-  linkedin?: true;
-  pinterest?: true;
-  youtube?: true;
   createdAt?: true;
   updatedAt?: true;
+  profileTypeName?: true;
+  facebook?: true;
+  instagram?: true;
+  linkedin?: true;
+  pinterest?: true;
+  twitter?: true;
+  website?: true;
+  youtube?: true;
   _all?: true;
 };
 
@@ -250,17 +250,17 @@ export type BusinessProfileGroupByOutputType = {
   openingTime: string;
   closingTime: string;
   categoryId: string | null;
-  profileTypeName: string | null;
   ownerId: string;
-  facebook: string | null;
-  instagram: string | null;
-  twitter: string | null;
-  website: string | null;
-  linkedin: string | null;
-  pinterest: string | null;
-  youtube: string | null;
   createdAt: Date;
   updatedAt: Date;
+  profileTypeName: string | null;
+  facebook: string | null;
+  instagram: string | null;
+  linkedin: string | null;
+  pinterest: string | null;
+  twitter: string | null;
+  website: string | null;
+  youtube: string | null;
   _count: BusinessProfileCountAggregateOutputType | null;
   _min: BusinessProfileMinAggregateOutputType | null;
   _max: BusinessProfileMaxAggregateOutputType | null;
@@ -292,29 +292,30 @@ export type BusinessProfileWhereInput = {
   openingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
   closingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
   categoryId?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+  ownerId?: Prisma.StringFilter<'BusinessProfile'> | string;
+  createdAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
+  updatedAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
   profileTypeName?:
     | Prisma.StringNullableFilter<'BusinessProfile'>
     | string
     | null;
-  ownerId?: Prisma.StringFilter<'BusinessProfile'> | string;
   facebook?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
   instagram?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
-  twitter?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
-  website?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
   linkedin?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
   pinterest?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+  twitter?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+  website?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
   youtube?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
-  createdAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
-  updatedAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
-  gallery?: Prisma.FileInstanceListRelationFilter;
-  offers?: Prisma.OfferListRelationFilter;
+  reservation?: Prisma.ReservationListRelationFilter;
   category?: Prisma.XOR<
     Prisma.CategoryNullableScalarRelationFilter,
     Prisma.CategoryWhereInput
   > | null;
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
-  reviews?: Prisma.ReviewListRelationFilter;
+  offers?: Prisma.OfferListRelationFilter;
   reedemOffer?: Prisma.ReedemaOfferListRelationFilter;
+  reviews?: Prisma.ReviewListRelationFilter;
+  gallery?: Prisma.FileInstanceListRelationFilter;
 };
 
 export type BusinessProfileOrderByWithRelationInput = {
@@ -326,23 +327,24 @@ export type BusinessProfileOrderByWithRelationInput = {
   openingTime?: Prisma.SortOrder;
   closingTime?: Prisma.SortOrder;
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  profileTypeName?: Prisma.SortOrderInput | Prisma.SortOrder;
   ownerId?: Prisma.SortOrder;
-  facebook?: Prisma.SortOrderInput | Prisma.SortOrder;
-  instagram?: Prisma.SortOrderInput | Prisma.SortOrder;
-  twitter?: Prisma.SortOrderInput | Prisma.SortOrder;
-  website?: Prisma.SortOrderInput | Prisma.SortOrder;
-  linkedin?: Prisma.SortOrderInput | Prisma.SortOrder;
-  pinterest?: Prisma.SortOrderInput | Prisma.SortOrder;
-  youtube?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
-  gallery?: Prisma.FileInstanceOrderByRelationAggregateInput;
-  offers?: Prisma.OfferOrderByRelationAggregateInput;
+  profileTypeName?: Prisma.SortOrderInput | Prisma.SortOrder;
+  facebook?: Prisma.SortOrderInput | Prisma.SortOrder;
+  instagram?: Prisma.SortOrderInput | Prisma.SortOrder;
+  linkedin?: Prisma.SortOrderInput | Prisma.SortOrder;
+  pinterest?: Prisma.SortOrderInput | Prisma.SortOrder;
+  twitter?: Prisma.SortOrderInput | Prisma.SortOrder;
+  website?: Prisma.SortOrderInput | Prisma.SortOrder;
+  youtube?: Prisma.SortOrderInput | Prisma.SortOrder;
+  reservation?: Prisma.ReservationOrderByRelationAggregateInput;
   category?: Prisma.CategoryOrderByWithRelationInput;
   owner?: Prisma.UserOrderByWithRelationInput;
-  reviews?: Prisma.ReviewOrderByRelationAggregateInput;
+  offers?: Prisma.OfferOrderByRelationAggregateInput;
   reedemOffer?: Prisma.ReedemaOfferOrderByRelationAggregateInput;
+  reviews?: Prisma.ReviewOrderByRelationAggregateInput;
+  gallery?: Prisma.FileInstanceOrderByRelationAggregateInput;
 };
 
 export type BusinessProfileWhereUniqueInput = Prisma.AtLeast<
@@ -362,28 +364,29 @@ export type BusinessProfileWhereUniqueInput = Prisma.AtLeast<
     openingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
     closingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
     categoryId?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+    createdAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
     profileTypeName?:
       | Prisma.StringNullableFilter<'BusinessProfile'>
       | string
       | null;
     facebook?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
     instagram?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
-    twitter?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
-    website?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
     linkedin?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
     pinterest?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+    twitter?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+    website?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
     youtube?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
-    createdAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
-    updatedAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
-    gallery?: Prisma.FileInstanceListRelationFilter;
-    offers?: Prisma.OfferListRelationFilter;
+    reservation?: Prisma.ReservationListRelationFilter;
     category?: Prisma.XOR<
       Prisma.CategoryNullableScalarRelationFilter,
       Prisma.CategoryWhereInput
     > | null;
     owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
-    reviews?: Prisma.ReviewListRelationFilter;
+    offers?: Prisma.OfferListRelationFilter;
     reedemOffer?: Prisma.ReedemaOfferListRelationFilter;
+    reviews?: Prisma.ReviewListRelationFilter;
+    gallery?: Prisma.FileInstanceListRelationFilter;
   },
   'id' | 'ownerId'
 >;
@@ -397,17 +400,17 @@ export type BusinessProfileOrderByWithAggregationInput = {
   openingTime?: Prisma.SortOrder;
   closingTime?: Prisma.SortOrder;
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  profileTypeName?: Prisma.SortOrderInput | Prisma.SortOrder;
   ownerId?: Prisma.SortOrder;
-  facebook?: Prisma.SortOrderInput | Prisma.SortOrder;
-  instagram?: Prisma.SortOrderInput | Prisma.SortOrder;
-  twitter?: Prisma.SortOrderInput | Prisma.SortOrder;
-  website?: Prisma.SortOrderInput | Prisma.SortOrder;
-  linkedin?: Prisma.SortOrderInput | Prisma.SortOrder;
-  pinterest?: Prisma.SortOrderInput | Prisma.SortOrder;
-  youtube?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  profileTypeName?: Prisma.SortOrderInput | Prisma.SortOrder;
+  facebook?: Prisma.SortOrderInput | Prisma.SortOrder;
+  instagram?: Prisma.SortOrderInput | Prisma.SortOrder;
+  linkedin?: Prisma.SortOrderInput | Prisma.SortOrder;
+  pinterest?: Prisma.SortOrderInput | Prisma.SortOrder;
+  twitter?: Prisma.SortOrderInput | Prisma.SortOrder;
+  website?: Prisma.SortOrderInput | Prisma.SortOrder;
+  youtube?: Prisma.SortOrderInput | Prisma.SortOrder;
   _count?: Prisma.BusinessProfileCountOrderByAggregateInput;
   _max?: Prisma.BusinessProfileMaxOrderByAggregateInput;
   _min?: Prisma.BusinessProfileMinOrderByAggregateInput;
@@ -435,24 +438,24 @@ export type BusinessProfileScalarWhereWithAggregatesInput = {
     | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
     | string
     | null;
+  ownerId?: Prisma.StringWithAggregatesFilter<'BusinessProfile'> | string;
+  createdAt?:
+    | Prisma.DateTimeWithAggregatesFilter<'BusinessProfile'>
+    | Date
+    | string;
+  updatedAt?:
+    | Prisma.DateTimeWithAggregatesFilter<'BusinessProfile'>
+    | Date
+    | string;
   profileTypeName?:
     | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
     | string
     | null;
-  ownerId?: Prisma.StringWithAggregatesFilter<'BusinessProfile'> | string;
   facebook?:
     | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
     | string
     | null;
   instagram?:
-    | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
-    | string
-    | null;
-  twitter?:
-    | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
-    | string
-    | null;
-  website?:
     | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
     | string
     | null;
@@ -464,18 +467,18 @@ export type BusinessProfileScalarWhereWithAggregatesInput = {
     | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
     | string
     | null;
+  twitter?:
+    | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
+    | string
+    | null;
+  website?:
+    | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
+    | string
+    | null;
   youtube?:
     | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
     | string
     | null;
-  createdAt?:
-    | Prisma.DateTimeWithAggregatesFilter<'BusinessProfile'>
-    | Date
-    | string;
-  updatedAt?:
-    | Prisma.DateTimeWithAggregatesFilter<'BusinessProfile'>
-    | Date
-    | string;
 };
 
 export type BusinessProfileCreateInput = {
@@ -486,22 +489,23 @@ export type BusinessProfileCreateInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   profileTypeName?: string | null;
   facebook?: string | null;
   instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
   linkedin?: string | null;
   pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
   youtube?: string | null;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
-  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutRestaurantInput;
   category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateInput = {
@@ -513,21 +517,22 @@ export type BusinessProfileUncheckedCreateInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
-  profileTypeName?: string | null;
   ownerId: string;
-  facebook?: string | null;
-  instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
-  linkedin?: string | null;
-  pinterest?: string | null;
-  youtube?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutRestaurantInput;
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUpdateInput = {
@@ -538,25 +543,26 @@ export type BusinessProfileUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
-  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutRestaurantNestedInput;
   category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateInput = {
@@ -568,24 +574,25 @@ export type BusinessProfileUncheckedUpdateInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutRestaurantNestedInput;
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileCreateManyInput = {
@@ -597,17 +604,17 @@ export type BusinessProfileCreateManyInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
-  profileTypeName?: string | null;
   ownerId: string;
-  facebook?: string | null;
-  instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
-  linkedin?: string | null;
-  pinterest?: string | null;
-  youtube?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
 };
 
 export type BusinessProfileUpdateManyMutationInput = {
@@ -618,19 +625,19 @@ export type BusinessProfileUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
 export type BusinessProfileUncheckedUpdateManyInput = {
@@ -642,20 +649,20 @@ export type BusinessProfileUncheckedUpdateManyInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
 export type BusinessProfileCountOrderByAggregateInput = {
@@ -667,17 +674,17 @@ export type BusinessProfileCountOrderByAggregateInput = {
   openingTime?: Prisma.SortOrder;
   closingTime?: Prisma.SortOrder;
   categoryId?: Prisma.SortOrder;
-  profileTypeName?: Prisma.SortOrder;
   ownerId?: Prisma.SortOrder;
-  facebook?: Prisma.SortOrder;
-  instagram?: Prisma.SortOrder;
-  twitter?: Prisma.SortOrder;
-  website?: Prisma.SortOrder;
-  linkedin?: Prisma.SortOrder;
-  pinterest?: Prisma.SortOrder;
-  youtube?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  profileTypeName?: Prisma.SortOrder;
+  facebook?: Prisma.SortOrder;
+  instagram?: Prisma.SortOrder;
+  linkedin?: Prisma.SortOrder;
+  pinterest?: Prisma.SortOrder;
+  twitter?: Prisma.SortOrder;
+  website?: Prisma.SortOrder;
+  youtube?: Prisma.SortOrder;
 };
 
 export type BusinessProfileMaxOrderByAggregateInput = {
@@ -689,17 +696,17 @@ export type BusinessProfileMaxOrderByAggregateInput = {
   openingTime?: Prisma.SortOrder;
   closingTime?: Prisma.SortOrder;
   categoryId?: Prisma.SortOrder;
-  profileTypeName?: Prisma.SortOrder;
   ownerId?: Prisma.SortOrder;
-  facebook?: Prisma.SortOrder;
-  instagram?: Prisma.SortOrder;
-  twitter?: Prisma.SortOrder;
-  website?: Prisma.SortOrder;
-  linkedin?: Prisma.SortOrder;
-  pinterest?: Prisma.SortOrder;
-  youtube?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  profileTypeName?: Prisma.SortOrder;
+  facebook?: Prisma.SortOrder;
+  instagram?: Prisma.SortOrder;
+  linkedin?: Prisma.SortOrder;
+  pinterest?: Prisma.SortOrder;
+  twitter?: Prisma.SortOrder;
+  website?: Prisma.SortOrder;
+  youtube?: Prisma.SortOrder;
 };
 
 export type BusinessProfileMinOrderByAggregateInput = {
@@ -711,17 +718,17 @@ export type BusinessProfileMinOrderByAggregateInput = {
   openingTime?: Prisma.SortOrder;
   closingTime?: Prisma.SortOrder;
   categoryId?: Prisma.SortOrder;
-  profileTypeName?: Prisma.SortOrder;
   ownerId?: Prisma.SortOrder;
-  facebook?: Prisma.SortOrder;
-  instagram?: Prisma.SortOrder;
-  twitter?: Prisma.SortOrder;
-  website?: Prisma.SortOrder;
-  linkedin?: Prisma.SortOrder;
-  pinterest?: Prisma.SortOrder;
-  youtube?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  profileTypeName?: Prisma.SortOrder;
+  facebook?: Prisma.SortOrder;
+  instagram?: Prisma.SortOrder;
+  linkedin?: Prisma.SortOrder;
+  pinterest?: Prisma.SortOrder;
+  twitter?: Prisma.SortOrder;
+  website?: Prisma.SortOrder;
+  youtube?: Prisma.SortOrder;
 };
 
 export type BusinessProfileListRelationFilter = {
@@ -1016,6 +1023,32 @@ export type BusinessProfileUpdateOneRequiredWithoutReedemOfferNestedInput = {
   >;
 };
 
+export type BusinessProfileCreateNestedOneWithoutReservationInput = {
+  create?: Prisma.XOR<
+    Prisma.BusinessProfileCreateWithoutReservationInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutReservationInput
+  >;
+  connectOrCreate?: Prisma.BusinessProfileCreateOrConnectWithoutReservationInput;
+  connect?: Prisma.BusinessProfileWhereUniqueInput;
+};
+
+export type BusinessProfileUpdateOneRequiredWithoutReservationNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.BusinessProfileCreateWithoutReservationInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutReservationInput
+  >;
+  connectOrCreate?: Prisma.BusinessProfileCreateOrConnectWithoutReservationInput;
+  upsert?: Prisma.BusinessProfileUpsertWithoutReservationInput;
+  connect?: Prisma.BusinessProfileWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.BusinessProfileUpdateToOneWithWhereWithoutReservationInput,
+      Prisma.BusinessProfileUpdateWithoutReservationInput
+    >,
+    Prisma.BusinessProfileUncheckedUpdateWithoutReservationInput
+  >;
+};
+
 export type BusinessProfileCreateNestedOneWithoutReviewsInput = {
   create?: Prisma.XOR<
     Prisma.BusinessProfileCreateWithoutReviewsInput,
@@ -1106,21 +1139,22 @@ export type BusinessProfileCreateWithoutCategoryInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   profileTypeName?: string | null;
   facebook?: string | null;
   instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
   linkedin?: string | null;
   pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
   youtube?: string | null;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
-  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutRestaurantInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutCategoryInput = {
@@ -1131,21 +1165,22 @@ export type BusinessProfileUncheckedCreateWithoutCategoryInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
-  profileTypeName?: string | null;
   ownerId: string;
-  facebook?: string | null;
-  instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
-  linkedin?: string | null;
-  pinterest?: string | null;
-  youtube?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutRestaurantInput;
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutCategoryInput = {
@@ -1207,20 +1242,20 @@ export type BusinessProfileScalarWhereInput = {
   openingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
   closingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
   categoryId?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+  ownerId?: Prisma.StringFilter<'BusinessProfile'> | string;
+  createdAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
+  updatedAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
   profileTypeName?:
     | Prisma.StringNullableFilter<'BusinessProfile'>
     | string
     | null;
-  ownerId?: Prisma.StringFilter<'BusinessProfile'> | string;
   facebook?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
   instagram?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
-  twitter?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
-  website?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
   linkedin?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
   pinterest?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+  twitter?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+  website?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
   youtube?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
-  createdAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
-  updatedAt?: Prisma.DateTimeFilter<'BusinessProfile'> | Date | string;
 };
 
 export type BusinessProfileCreateWithoutGalleryInput = {
@@ -1231,21 +1266,22 @@ export type BusinessProfileCreateWithoutGalleryInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   profileTypeName?: string | null;
   facebook?: string | null;
   instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
   linkedin?: string | null;
   pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
   youtube?: string | null;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutRestaurantInput;
   category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutGalleryInput = {
@@ -1257,20 +1293,21 @@ export type BusinessProfileUncheckedCreateWithoutGalleryInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
-  profileTypeName?: string | null;
   ownerId: string;
-  facebook?: string | null;
-  instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
-  linkedin?: string | null;
-  pinterest?: string | null;
-  youtube?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutRestaurantInput;
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutGalleryInput = {
@@ -1317,21 +1354,22 @@ export type BusinessProfileCreateWithoutOffersInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   profileTypeName?: string | null;
   facebook?: string | null;
   instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
   linkedin?: string | null;
   pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
   youtube?: string | null;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutRestaurantInput;
   category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutOffersInput = {
@@ -1343,20 +1381,21 @@ export type BusinessProfileUncheckedCreateWithoutOffersInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
-  profileTypeName?: string | null;
   ownerId: string;
-  facebook?: string | null;
-  instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
-  linkedin?: string | null;
-  pinterest?: string | null;
-  youtube?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutRestaurantInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutOffersInput = {
@@ -1395,24 +1434,25 @@ export type BusinessProfileUpdateWithoutOffersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutRestaurantNestedInput;
   category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutOffersInput = {
@@ -1424,23 +1464,24 @@ export type BusinessProfileUncheckedUpdateWithoutOffersInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutRestaurantNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileCreateWithoutReedemOfferInput = {
@@ -1451,21 +1492,22 @@ export type BusinessProfileCreateWithoutReedemOfferInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   profileTypeName?: string | null;
   facebook?: string | null;
   instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
   linkedin?: string | null;
   pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
   youtube?: string | null;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
-  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutRestaurantInput;
   category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
+  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutReedemOfferInput = {
@@ -1477,20 +1519,21 @@ export type BusinessProfileUncheckedCreateWithoutReedemOfferInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
-  profileTypeName?: string | null;
   ownerId: string;
-  facebook?: string | null;
-  instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
-  linkedin?: string | null;
-  pinterest?: string | null;
-  youtube?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutRestaurantInput;
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutReedemOfferInput = {
@@ -1529,24 +1572,25 @@ export type BusinessProfileUpdateWithoutReedemOfferInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
-  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutRestaurantNestedInput;
   category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
+  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutReedemOfferInput = {
@@ -1558,23 +1602,162 @@ export type BusinessProfileUncheckedUpdateWithoutReedemOfferInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutRestaurantNestedInput;
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+};
+
+export type BusinessProfileCreateWithoutReservationInput = {
+  id?: string;
+  title: string;
+  description?: string | null;
+  location: string;
+  isActive?: boolean;
+  openingTime: string;
+  closingTime: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
+  category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
+  owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
+  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
+  reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
+};
+
+export type BusinessProfileUncheckedCreateWithoutReservationInput = {
+  id?: string;
+  title: string;
+  description?: string | null;
+  location: string;
+  isActive?: boolean;
+  openingTime: string;
+  closingTime: string;
+  categoryId?: string | null;
+  ownerId: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
+  offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
+  reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
+};
+
+export type BusinessProfileCreateOrConnectWithoutReservationInput = {
+  where: Prisma.BusinessProfileWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.BusinessProfileCreateWithoutReservationInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutReservationInput
+  >;
+};
+
+export type BusinessProfileUpsertWithoutReservationInput = {
+  update: Prisma.XOR<
+    Prisma.BusinessProfileUpdateWithoutReservationInput,
+    Prisma.BusinessProfileUncheckedUpdateWithoutReservationInput
+  >;
+  create: Prisma.XOR<
+    Prisma.BusinessProfileCreateWithoutReservationInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutReservationInput
+  >;
+  where?: Prisma.BusinessProfileWhereInput;
+};
+
+export type BusinessProfileUpdateToOneWithWhereWithoutReservationInput = {
+  where?: Prisma.BusinessProfileWhereInput;
+  data: Prisma.XOR<
+    Prisma.BusinessProfileUpdateWithoutReservationInput,
+    Prisma.BusinessProfileUncheckedUpdateWithoutReservationInput
+  >;
+};
+
+export type BusinessProfileUpdateWithoutReservationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  title?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  location?: Prisma.StringFieldUpdateOperationsInput | string;
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
+  owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
+  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
+  reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
+};
+
+export type BusinessProfileUncheckedUpdateWithoutReservationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  title?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  location?: Prisma.StringFieldUpdateOperationsInput | string;
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileCreateWithoutReviewsInput = {
@@ -1585,21 +1768,22 @@ export type BusinessProfileCreateWithoutReviewsInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   profileTypeName?: string | null;
   facebook?: string | null;
   instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
   linkedin?: string | null;
   pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
   youtube?: string | null;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
-  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutRestaurantInput;
   category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
+  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutReviewsInput = {
@@ -1611,20 +1795,21 @@ export type BusinessProfileUncheckedCreateWithoutReviewsInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
-  profileTypeName?: string | null;
   ownerId: string;
-  facebook?: string | null;
-  instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
-  linkedin?: string | null;
-  pinterest?: string | null;
-  youtube?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutRestaurantInput;
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutReviewsInput = {
@@ -1663,24 +1848,25 @@ export type BusinessProfileUpdateWithoutReviewsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
-  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutRestaurantNestedInput;
   category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
+  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutReviewsInput = {
@@ -1692,23 +1878,24 @@ export type BusinessProfileUncheckedUpdateWithoutReviewsInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutRestaurantNestedInput;
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileCreateWithoutOwnerInput = {
@@ -1719,21 +1906,22 @@ export type BusinessProfileCreateWithoutOwnerInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   profileTypeName?: string | null;
   facebook?: string | null;
   instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
   linkedin?: string | null;
   pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
   youtube?: string | null;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
-  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutRestaurantInput;
   category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutOwnerInput = {
@@ -1745,20 +1933,21 @@ export type BusinessProfileUncheckedCreateWithoutOwnerInput = {
   openingTime: string;
   closingTime: string;
   categoryId?: string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   profileTypeName?: string | null;
   facebook?: string | null;
   instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
   linkedin?: string | null;
   pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
   youtube?: string | null;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutRestaurantInput;
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutOwnerInput = {
@@ -1797,24 +1986,25 @@ export type BusinessProfileUpdateWithoutOwnerInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
-  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutRestaurantNestedInput;
   category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutOwnerInput = {
@@ -1826,23 +2016,24 @@ export type BusinessProfileUncheckedUpdateWithoutOwnerInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutRestaurantNestedInput;
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileCreateManyCategoryInput = {
@@ -1853,17 +2044,17 @@ export type BusinessProfileCreateManyCategoryInput = {
   isActive?: boolean;
   openingTime: string;
   closingTime: string;
-  profileTypeName?: string | null;
   ownerId: string;
-  facebook?: string | null;
-  instagram?: string | null;
-  twitter?: string | null;
-  website?: string | null;
-  linkedin?: string | null;
-  pinterest?: string | null;
-  youtube?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
 };
 
 export type BusinessProfileUpdateWithoutCategoryInput = {
@@ -1874,24 +2065,25 @@ export type BusinessProfileUpdateWithoutCategoryInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
-  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutRestaurantNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutCategoryInput = {
@@ -1902,24 +2094,25 @@ export type BusinessProfileUncheckedUpdateWithoutCategoryInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutRestaurantNestedInput;
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateManyWithoutCategoryInput = {
@@ -1930,20 +2123,20 @@ export type BusinessProfileUncheckedUpdateManyWithoutCategoryInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
 export type BusinessProfileUpdateWithoutGalleryInput = {
@@ -1954,24 +2147,25 @@ export type BusinessProfileUpdateWithoutGalleryInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutRestaurantNestedInput;
   category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutGalleryInput = {
@@ -1983,23 +2177,24 @@ export type BusinessProfileUncheckedUpdateWithoutGalleryInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutRestaurantNestedInput;
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateManyWithoutGalleryInput = {
@@ -2011,20 +2206,20 @@ export type BusinessProfileUncheckedUpdateManyWithoutGalleryInput = {
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   profileTypeName?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
   facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
 /**
@@ -2032,20 +2227,22 @@ export type BusinessProfileUncheckedUpdateManyWithoutGalleryInput = {
  */
 
 export type BusinessProfileCountOutputType = {
-  gallery: number;
+  reservation: number;
   offers: number;
-  reviews: number;
   reedemOffer: number;
+  reviews: number;
+  gallery: number;
 };
 
 export type BusinessProfileCountOutputTypeSelect<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  gallery?: boolean | BusinessProfileCountOutputTypeCountGalleryArgs;
+  reservation?: boolean | BusinessProfileCountOutputTypeCountReservationArgs;
   offers?: boolean | BusinessProfileCountOutputTypeCountOffersArgs;
-  reviews?: boolean | BusinessProfileCountOutputTypeCountReviewsArgs;
   reedemOffer?: boolean | BusinessProfileCountOutputTypeCountReedemOfferArgs;
+  reviews?: boolean | BusinessProfileCountOutputTypeCountReviewsArgs;
+  gallery?: boolean | BusinessProfileCountOutputTypeCountGalleryArgs;
 };
 
 /**
@@ -2064,11 +2261,11 @@ export type BusinessProfileCountOutputTypeDefaultArgs<
 /**
  * BusinessProfileCountOutputType without action
  */
-export type BusinessProfileCountOutputTypeCountGalleryArgs<
+export type BusinessProfileCountOutputTypeCountReservationArgs<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  where?: Prisma.FileInstanceWhereInput;
+  where?: Prisma.ReservationWhereInput;
 };
 
 /**
@@ -2084,6 +2281,16 @@ export type BusinessProfileCountOutputTypeCountOffersArgs<
 /**
  * BusinessProfileCountOutputType without action
  */
+export type BusinessProfileCountOutputTypeCountReedemOfferArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.ReedemaOfferWhereInput;
+};
+
+/**
+ * BusinessProfileCountOutputType without action
+ */
 export type BusinessProfileCountOutputTypeCountReviewsArgs<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
@@ -2094,11 +2301,11 @@ export type BusinessProfileCountOutputTypeCountReviewsArgs<
 /**
  * BusinessProfileCountOutputType without action
  */
-export type BusinessProfileCountOutputTypeCountReedemOfferArgs<
+export type BusinessProfileCountOutputTypeCountGalleryArgs<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  where?: Prisma.ReedemaOfferWhereInput;
+  where?: Prisma.FileInstanceWhereInput;
 };
 
 export type BusinessProfileSelect<
@@ -2114,23 +2321,24 @@ export type BusinessProfileSelect<
     openingTime?: boolean;
     closingTime?: boolean;
     categoryId?: boolean;
-    profileTypeName?: boolean;
     ownerId?: boolean;
-    facebook?: boolean;
-    instagram?: boolean;
-    twitter?: boolean;
-    website?: boolean;
-    linkedin?: boolean;
-    pinterest?: boolean;
-    youtube?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    gallery?: boolean | Prisma.BusinessProfile$galleryArgs<ExtArgs>;
-    offers?: boolean | Prisma.BusinessProfile$offersArgs<ExtArgs>;
+    profileTypeName?: boolean;
+    facebook?: boolean;
+    instagram?: boolean;
+    linkedin?: boolean;
+    pinterest?: boolean;
+    twitter?: boolean;
+    website?: boolean;
+    youtube?: boolean;
+    reservation?: boolean | Prisma.BusinessProfile$reservationArgs<ExtArgs>;
     category?: boolean | Prisma.BusinessProfile$categoryArgs<ExtArgs>;
     owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
-    reviews?: boolean | Prisma.BusinessProfile$reviewsArgs<ExtArgs>;
+    offers?: boolean | Prisma.BusinessProfile$offersArgs<ExtArgs>;
     reedemOffer?: boolean | Prisma.BusinessProfile$reedemOfferArgs<ExtArgs>;
+    reviews?: boolean | Prisma.BusinessProfile$reviewsArgs<ExtArgs>;
+    gallery?: boolean | Prisma.BusinessProfile$galleryArgs<ExtArgs>;
     _count?:
       | boolean
       | Prisma.BusinessProfileCountOutputTypeDefaultArgs<ExtArgs>;
@@ -2151,17 +2359,17 @@ export type BusinessProfileSelectCreateManyAndReturn<
     openingTime?: boolean;
     closingTime?: boolean;
     categoryId?: boolean;
-    profileTypeName?: boolean;
     ownerId?: boolean;
-    facebook?: boolean;
-    instagram?: boolean;
-    twitter?: boolean;
-    website?: boolean;
-    linkedin?: boolean;
-    pinterest?: boolean;
-    youtube?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    profileTypeName?: boolean;
+    facebook?: boolean;
+    instagram?: boolean;
+    linkedin?: boolean;
+    pinterest?: boolean;
+    twitter?: boolean;
+    website?: boolean;
+    youtube?: boolean;
     category?: boolean | Prisma.BusinessProfile$categoryArgs<ExtArgs>;
     owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   },
@@ -2181,17 +2389,17 @@ export type BusinessProfileSelectUpdateManyAndReturn<
     openingTime?: boolean;
     closingTime?: boolean;
     categoryId?: boolean;
-    profileTypeName?: boolean;
     ownerId?: boolean;
-    facebook?: boolean;
-    instagram?: boolean;
-    twitter?: boolean;
-    website?: boolean;
-    linkedin?: boolean;
-    pinterest?: boolean;
-    youtube?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    profileTypeName?: boolean;
+    facebook?: boolean;
+    instagram?: boolean;
+    linkedin?: boolean;
+    pinterest?: boolean;
+    twitter?: boolean;
+    website?: boolean;
+    youtube?: boolean;
     category?: boolean | Prisma.BusinessProfile$categoryArgs<ExtArgs>;
     owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   },
@@ -2207,17 +2415,17 @@ export type BusinessProfileSelectScalar = {
   openingTime?: boolean;
   closingTime?: boolean;
   categoryId?: boolean;
-  profileTypeName?: boolean;
   ownerId?: boolean;
-  facebook?: boolean;
-  instagram?: boolean;
-  twitter?: boolean;
-  website?: boolean;
-  linkedin?: boolean;
-  pinterest?: boolean;
-  youtube?: boolean;
   createdAt?: boolean;
   updatedAt?: boolean;
+  profileTypeName?: boolean;
+  facebook?: boolean;
+  instagram?: boolean;
+  linkedin?: boolean;
+  pinterest?: boolean;
+  twitter?: boolean;
+  website?: boolean;
+  youtube?: boolean;
 };
 
 export type BusinessProfileOmit<
@@ -2232,29 +2440,30 @@ export type BusinessProfileOmit<
   | 'openingTime'
   | 'closingTime'
   | 'categoryId'
-  | 'profileTypeName'
   | 'ownerId'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'profileTypeName'
   | 'facebook'
   | 'instagram'
-  | 'twitter'
-  | 'website'
   | 'linkedin'
   | 'pinterest'
-  | 'youtube'
-  | 'createdAt'
-  | 'updatedAt',
+  | 'twitter'
+  | 'website'
+  | 'youtube',
   ExtArgs['result']['businessProfile']
 >;
 export type BusinessProfileInclude<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  gallery?: boolean | Prisma.BusinessProfile$galleryArgs<ExtArgs>;
-  offers?: boolean | Prisma.BusinessProfile$offersArgs<ExtArgs>;
+  reservation?: boolean | Prisma.BusinessProfile$reservationArgs<ExtArgs>;
   category?: boolean | Prisma.BusinessProfile$categoryArgs<ExtArgs>;
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
-  reviews?: boolean | Prisma.BusinessProfile$reviewsArgs<ExtArgs>;
+  offers?: boolean | Prisma.BusinessProfile$offersArgs<ExtArgs>;
   reedemOffer?: boolean | Prisma.BusinessProfile$reedemOfferArgs<ExtArgs>;
+  reviews?: boolean | Prisma.BusinessProfile$reviewsArgs<ExtArgs>;
+  gallery?: boolean | Prisma.BusinessProfile$galleryArgs<ExtArgs>;
   _count?: boolean | Prisma.BusinessProfileCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type BusinessProfileIncludeCreateManyAndReturn<
@@ -2278,12 +2487,13 @@ export type $BusinessProfilePayload<
 > = {
   name: 'BusinessProfile';
   objects: {
-    gallery: Prisma.$FileInstancePayload<ExtArgs>[];
-    offers: Prisma.$OfferPayload<ExtArgs>[];
+    reservation: Prisma.$ReservationPayload<ExtArgs>[];
     category: Prisma.$CategoryPayload<ExtArgs> | null;
     owner: Prisma.$UserPayload<ExtArgs>;
-    reviews: Prisma.$ReviewPayload<ExtArgs>[];
+    offers: Prisma.$OfferPayload<ExtArgs>[];
     reedemOffer: Prisma.$ReedemaOfferPayload<ExtArgs>[];
+    reviews: Prisma.$ReviewPayload<ExtArgs>[];
+    gallery: Prisma.$FileInstancePayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -2295,17 +2505,17 @@ export type $BusinessProfilePayload<
       openingTime: string;
       closingTime: string;
       categoryId: string | null;
-      profileTypeName: string | null;
       ownerId: string;
-      facebook: string | null;
-      instagram: string | null;
-      twitter: string | null;
-      website: string | null;
-      linkedin: string | null;
-      pinterest: string | null;
-      youtube: string | null;
       createdAt: Date;
       updatedAt: Date;
+      profileTypeName: string | null;
+      facebook: string | null;
+      instagram: string | null;
+      linkedin: string | null;
+      pinterest: string | null;
+      twitter: string | null;
+      website: string | null;
+      youtube: string | null;
     },
     ExtArgs['result']['businessProfile']
   >;
@@ -2868,22 +3078,11 @@ export interface Prisma__BusinessProfileClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise';
-  gallery<T extends Prisma.BusinessProfile$galleryArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.BusinessProfile$galleryArgs<ExtArgs>>,
+  reservation<T extends Prisma.BusinessProfile$reservationArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.BusinessProfile$reservationArgs<ExtArgs>>,
   ): Prisma.PrismaPromise<
     | runtime.Types.Result.GetResult<
-        Prisma.$FileInstancePayload<ExtArgs>,
-        T,
-        'findMany',
-        GlobalOmitOptions
-      >
-    | Null
-  >;
-  offers<T extends Prisma.BusinessProfile$offersArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.BusinessProfile$offersArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<
-    | runtime.Types.Result.GetResult<
-        Prisma.$OfferPayload<ExtArgs>,
+        Prisma.$ReservationPayload<ExtArgs>,
         T,
         'findMany',
         GlobalOmitOptions
@@ -2917,11 +3116,11 @@ export interface Prisma__BusinessProfileClient<
     ExtArgs,
     GlobalOmitOptions
   >;
-  reviews<T extends Prisma.BusinessProfile$reviewsArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.BusinessProfile$reviewsArgs<ExtArgs>>,
+  offers<T extends Prisma.BusinessProfile$offersArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.BusinessProfile$offersArgs<ExtArgs>>,
   ): Prisma.PrismaPromise<
     | runtime.Types.Result.GetResult<
-        Prisma.$ReviewPayload<ExtArgs>,
+        Prisma.$OfferPayload<ExtArgs>,
         T,
         'findMany',
         GlobalOmitOptions
@@ -2933,6 +3132,28 @@ export interface Prisma__BusinessProfileClient<
   ): Prisma.PrismaPromise<
     | runtime.Types.Result.GetResult<
         Prisma.$ReedemaOfferPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  reviews<T extends Prisma.BusinessProfile$reviewsArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.BusinessProfile$reviewsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$ReviewPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  gallery<T extends Prisma.BusinessProfile$galleryArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.BusinessProfile$galleryArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$FileInstancePayload<ExtArgs>,
         T,
         'findMany',
         GlobalOmitOptions
@@ -2989,17 +3210,17 @@ export interface BusinessProfileFieldRefs {
   readonly openingTime: Prisma.FieldRef<'BusinessProfile', 'String'>;
   readonly closingTime: Prisma.FieldRef<'BusinessProfile', 'String'>;
   readonly categoryId: Prisma.FieldRef<'BusinessProfile', 'String'>;
-  readonly profileTypeName: Prisma.FieldRef<'BusinessProfile', 'String'>;
   readonly ownerId: Prisma.FieldRef<'BusinessProfile', 'String'>;
-  readonly facebook: Prisma.FieldRef<'BusinessProfile', 'String'>;
-  readonly instagram: Prisma.FieldRef<'BusinessProfile', 'String'>;
-  readonly twitter: Prisma.FieldRef<'BusinessProfile', 'String'>;
-  readonly website: Prisma.FieldRef<'BusinessProfile', 'String'>;
-  readonly linkedin: Prisma.FieldRef<'BusinessProfile', 'String'>;
-  readonly pinterest: Prisma.FieldRef<'BusinessProfile', 'String'>;
-  readonly youtube: Prisma.FieldRef<'BusinessProfile', 'String'>;
   readonly createdAt: Prisma.FieldRef<'BusinessProfile', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'BusinessProfile', 'DateTime'>;
+  readonly profileTypeName: Prisma.FieldRef<'BusinessProfile', 'String'>;
+  readonly facebook: Prisma.FieldRef<'BusinessProfile', 'String'>;
+  readonly instagram: Prisma.FieldRef<'BusinessProfile', 'String'>;
+  readonly linkedin: Prisma.FieldRef<'BusinessProfile', 'String'>;
+  readonly pinterest: Prisma.FieldRef<'BusinessProfile', 'String'>;
+  readonly twitter: Prisma.FieldRef<'BusinessProfile', 'String'>;
+  readonly website: Prisma.FieldRef<'BusinessProfile', 'String'>;
+  readonly youtube: Prisma.FieldRef<'BusinessProfile', 'String'>;
 }
 
 // Custom InputTypes
@@ -3471,34 +3692,56 @@ export type BusinessProfileDeleteManyArgs<
 };
 
 /**
- * BusinessProfile.gallery
+ * BusinessProfile.reservation
  */
-export type BusinessProfile$galleryArgs<
+export type BusinessProfile$reservationArgs<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
   /**
-   * Select specific fields to fetch from the FileInstance
+   * Select specific fields to fetch from the Reservation
    */
-  select?: Prisma.FileInstanceSelect<ExtArgs> | null;
+  select?: Prisma.ReservationSelect<ExtArgs> | null;
   /**
-   * Omit specific fields from the FileInstance
+   * Omit specific fields from the Reservation
    */
-  omit?: Prisma.FileInstanceOmit<ExtArgs> | null;
+  omit?: Prisma.ReservationOmit<ExtArgs> | null;
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.FileInstanceInclude<ExtArgs> | null;
-  where?: Prisma.FileInstanceWhereInput;
+  include?: Prisma.ReservationInclude<ExtArgs> | null;
+  where?: Prisma.ReservationWhereInput;
   orderBy?:
-    | Prisma.FileInstanceOrderByWithRelationInput
-    | Prisma.FileInstanceOrderByWithRelationInput[];
-  cursor?: Prisma.FileInstanceWhereUniqueInput;
+    | Prisma.ReservationOrderByWithRelationInput
+    | Prisma.ReservationOrderByWithRelationInput[];
+  cursor?: Prisma.ReservationWhereUniqueInput;
   take?: number;
   skip?: number;
   distinct?:
-    | Prisma.FileInstanceScalarFieldEnum
-    | Prisma.FileInstanceScalarFieldEnum[];
+    | Prisma.ReservationScalarFieldEnum
+    | Prisma.ReservationScalarFieldEnum[];
+};
+
+/**
+ * BusinessProfile.category
+ */
+export type BusinessProfile$categoryArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the Category
+   */
+  select?: Prisma.CategorySelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the Category
+   */
+  omit?: Prisma.CategoryOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryInclude<ExtArgs> | null;
+  where?: Prisma.CategoryWhereInput;
 };
 
 /**
@@ -3531,25 +3774,34 @@ export type BusinessProfile$offersArgs<
 };
 
 /**
- * BusinessProfile.category
+ * BusinessProfile.reedemOffer
  */
-export type BusinessProfile$categoryArgs<
+export type BusinessProfile$reedemOfferArgs<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
   /**
-   * Select specific fields to fetch from the Category
+   * Select specific fields to fetch from the ReedemaOffer
    */
-  select?: Prisma.CategorySelect<ExtArgs> | null;
+  select?: Prisma.ReedemaOfferSelect<ExtArgs> | null;
   /**
-   * Omit specific fields from the Category
+   * Omit specific fields from the ReedemaOffer
    */
-  omit?: Prisma.CategoryOmit<ExtArgs> | null;
+  omit?: Prisma.ReedemaOfferOmit<ExtArgs> | null;
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.CategoryInclude<ExtArgs> | null;
-  where?: Prisma.CategoryWhereInput;
+  include?: Prisma.ReedemaOfferInclude<ExtArgs> | null;
+  where?: Prisma.ReedemaOfferWhereInput;
+  orderBy?:
+    | Prisma.ReedemaOfferOrderByWithRelationInput
+    | Prisma.ReedemaOfferOrderByWithRelationInput[];
+  cursor?: Prisma.ReedemaOfferWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.ReedemaOfferScalarFieldEnum
+    | Prisma.ReedemaOfferScalarFieldEnum[];
 };
 
 /**
@@ -3582,34 +3834,34 @@ export type BusinessProfile$reviewsArgs<
 };
 
 /**
- * BusinessProfile.reedemOffer
+ * BusinessProfile.gallery
  */
-export type BusinessProfile$reedemOfferArgs<
+export type BusinessProfile$galleryArgs<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
   /**
-   * Select specific fields to fetch from the ReedemaOffer
+   * Select specific fields to fetch from the FileInstance
    */
-  select?: Prisma.ReedemaOfferSelect<ExtArgs> | null;
+  select?: Prisma.FileInstanceSelect<ExtArgs> | null;
   /**
-   * Omit specific fields from the ReedemaOffer
+   * Omit specific fields from the FileInstance
    */
-  omit?: Prisma.ReedemaOfferOmit<ExtArgs> | null;
+  omit?: Prisma.FileInstanceOmit<ExtArgs> | null;
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ReedemaOfferInclude<ExtArgs> | null;
-  where?: Prisma.ReedemaOfferWhereInput;
+  include?: Prisma.FileInstanceInclude<ExtArgs> | null;
+  where?: Prisma.FileInstanceWhereInput;
   orderBy?:
-    | Prisma.ReedemaOfferOrderByWithRelationInput
-    | Prisma.ReedemaOfferOrderByWithRelationInput[];
-  cursor?: Prisma.ReedemaOfferWhereUniqueInput;
+    | Prisma.FileInstanceOrderByWithRelationInput
+    | Prisma.FileInstanceOrderByWithRelationInput[];
+  cursor?: Prisma.FileInstanceWhereUniqueInput;
   take?: number;
   skip?: number;
   distinct?:
-    | Prisma.ReedemaOfferScalarFieldEnum
-    | Prisma.ReedemaOfferScalarFieldEnum[];
+    | Prisma.FileInstanceScalarFieldEnum
+    | Prisma.FileInstanceScalarFieldEnum[];
 };
 
 /**
