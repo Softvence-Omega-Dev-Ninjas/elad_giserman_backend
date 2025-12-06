@@ -391,22 +391,23 @@ export type UserWhereInput = {
   fcmToken?: Prisma.StringNullableFilter<'User'> | string | null;
   createdAt?: Prisma.DateTimeFilter<'User'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'User'> | Date | string;
-  currentPlan?: Prisma.XOR<
-    Prisma.SubscriptionPlanNullableScalarRelationFilter,
-    Prisma.SubscriptionPlanWhereInput
-  > | null;
-  notifications?: Prisma.UserNotificationListRelationFilter;
-  userSubscription?: Prisma.UserSubscriptionListRelationFilter;
-  reviews?: Prisma.ReviewListRelationFilter;
-  reviewReply?: Prisma.ReviewReplyListRelationFilter;
-  reedemaOffer?: Prisma.ReedemaOfferListRelationFilter;
+  reservation?: Prisma.ReservationListRelationFilter;
+  spinHistory?: Prisma.SpinHistoryListRelationFilter;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsListRelationFilter;
   businessProfile?: Prisma.XOR<
     Prisma.BusinessProfileNullableScalarRelationFilter,
     Prisma.BusinessProfileWhereInput
   > | null;
-  spinHistory?: Prisma.SpinHistoryListRelationFilter;
-  userTermsandCondition?: Prisma.UserTermsAndConditionsListRelationFilter;
   invoices?: Prisma.InvoiceListRelationFilter;
+  reedemaOffer?: Prisma.ReedemaOfferListRelationFilter;
+  reviewReply?: Prisma.ReviewReplyListRelationFilter;
+  reviews?: Prisma.ReviewListRelationFilter;
+  notifications?: Prisma.UserNotificationListRelationFilter;
+  userSubscription?: Prisma.UserSubscriptionListRelationFilter;
+  currentPlan?: Prisma.XOR<
+    Prisma.SubscriptionPlanNullableScalarRelationFilter,
+    Prisma.SubscriptionPlanWhereInput
+  > | null;
 };
 
 export type UserOrderByWithRelationInput = {
@@ -440,16 +441,17 @@ export type UserOrderByWithRelationInput = {
   fcmToken?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
-  currentPlan?: Prisma.SubscriptionPlanOrderByWithRelationInput;
-  notifications?: Prisma.UserNotificationOrderByRelationAggregateInput;
-  userSubscription?: Prisma.UserSubscriptionOrderByRelationAggregateInput;
-  reviews?: Prisma.ReviewOrderByRelationAggregateInput;
-  reviewReply?: Prisma.ReviewReplyOrderByRelationAggregateInput;
-  reedemaOffer?: Prisma.ReedemaOfferOrderByRelationAggregateInput;
-  businessProfile?: Prisma.BusinessProfileOrderByWithRelationInput;
+  reservation?: Prisma.ReservationOrderByRelationAggregateInput;
   spinHistory?: Prisma.SpinHistoryOrderByRelationAggregateInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsOrderByRelationAggregateInput;
+  businessProfile?: Prisma.BusinessProfileOrderByWithRelationInput;
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput;
+  reedemaOffer?: Prisma.ReedemaOfferOrderByRelationAggregateInput;
+  reviewReply?: Prisma.ReviewReplyOrderByRelationAggregateInput;
+  reviews?: Prisma.ReviewOrderByRelationAggregateInput;
+  notifications?: Prisma.UserNotificationOrderByRelationAggregateInput;
+  userSubscription?: Prisma.UserSubscriptionOrderByRelationAggregateInput;
+  currentPlan?: Prisma.SubscriptionPlanOrderByWithRelationInput;
 };
 
 export type UserWhereUniqueInput = Prisma.AtLeast<
@@ -490,22 +492,23 @@ export type UserWhereUniqueInput = Prisma.AtLeast<
     fcmToken?: Prisma.StringNullableFilter<'User'> | string | null;
     createdAt?: Prisma.DateTimeFilter<'User'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'User'> | Date | string;
-    currentPlan?: Prisma.XOR<
-      Prisma.SubscriptionPlanNullableScalarRelationFilter,
-      Prisma.SubscriptionPlanWhereInput
-    > | null;
-    notifications?: Prisma.UserNotificationListRelationFilter;
-    userSubscription?: Prisma.UserSubscriptionListRelationFilter;
-    reviews?: Prisma.ReviewListRelationFilter;
-    reviewReply?: Prisma.ReviewReplyListRelationFilter;
-    reedemaOffer?: Prisma.ReedemaOfferListRelationFilter;
+    reservation?: Prisma.ReservationListRelationFilter;
+    spinHistory?: Prisma.SpinHistoryListRelationFilter;
+    userTermsandCondition?: Prisma.UserTermsAndConditionsListRelationFilter;
     businessProfile?: Prisma.XOR<
       Prisma.BusinessProfileNullableScalarRelationFilter,
       Prisma.BusinessProfileWhereInput
     > | null;
-    spinHistory?: Prisma.SpinHistoryListRelationFilter;
-    userTermsandCondition?: Prisma.UserTermsAndConditionsListRelationFilter;
     invoices?: Prisma.InvoiceListRelationFilter;
+    reedemaOffer?: Prisma.ReedemaOfferListRelationFilter;
+    reviewReply?: Prisma.ReviewReplyListRelationFilter;
+    reviews?: Prisma.ReviewListRelationFilter;
+    notifications?: Prisma.UserNotificationListRelationFilter;
+    userSubscription?: Prisma.UserSubscriptionListRelationFilter;
+    currentPlan?: Prisma.XOR<
+      Prisma.SubscriptionPlanNullableScalarRelationFilter,
+      Prisma.SubscriptionPlanWhereInput
+    > | null;
   },
   | 'id'
   | 'email'
@@ -662,16 +665,17 @@ export type UserCreateInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
-  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
+  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
 };
 
 export type UserUncheckedCreateInput = {
@@ -705,15 +709,16 @@ export type UserUncheckedCreateInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserUpdateInput = {
@@ -782,16 +787,17 @@ export type UserUpdateInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
-  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
+  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateInput = {
@@ -864,15 +870,16 @@ export type UserUncheckedUpdateInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateManyInput = {
@@ -1245,6 +1252,32 @@ export type UserUpdateOneRequiredWithoutReedemaOfferNestedInput = {
   >;
 };
 
+export type UserCreateNestedOneWithoutReservationInput = {
+  create?: Prisma.XOR<
+    Prisma.UserCreateWithoutReservationInput,
+    Prisma.UserUncheckedCreateWithoutReservationInput
+  >;
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReservationInput;
+  connect?: Prisma.UserWhereUniqueInput;
+};
+
+export type UserUpdateOneRequiredWithoutReservationNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.UserCreateWithoutReservationInput,
+    Prisma.UserUncheckedCreateWithoutReservationInput
+  >;
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReservationInput;
+  upsert?: Prisma.UserUpsertWithoutReservationInput;
+  connect?: Prisma.UserWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.UserUpdateToOneWithWhereWithoutReservationInput,
+      Prisma.UserUpdateWithoutReservationInput
+    >,
+    Prisma.UserUncheckedUpdateWithoutReservationInput
+  >;
+};
+
 export type UserCreateNestedOneWithoutReviewsInput = {
   create?: Prisma.XOR<
     Prisma.UserCreateWithoutReviewsInput,
@@ -1543,15 +1576,16 @@ export type UserCreateWithoutBusinessProfileInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
-  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
+  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutBusinessProfileInput = {
@@ -1585,14 +1619,15 @@ export type UserUncheckedCreateWithoutBusinessProfileInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutBusinessProfileInput = {
@@ -1689,15 +1724,16 @@ export type UserUpdateWithoutBusinessProfileInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
-  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
+  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutBusinessProfileInput = {
@@ -1770,14 +1806,15 @@ export type UserUncheckedUpdateWithoutBusinessProfileInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateWithoutNotificationsInput = {
@@ -1810,15 +1847,16 @@ export type UserCreateWithoutNotificationsInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
+  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -1852,14 +1890,15 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -1956,15 +1995,16 @@ export type UserUpdateWithoutNotificationsInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
+  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -2037,14 +2077,15 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateWithoutReedemaOfferInput = {
@@ -2077,15 +2118,16 @@ export type UserCreateWithoutReedemaOfferInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
-  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
+  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutReedemaOfferInput = {
@@ -2119,14 +2161,15 @@ export type UserUncheckedCreateWithoutReedemaOfferInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutReedemaOfferInput = {
@@ -2223,15 +2266,16 @@ export type UserUpdateWithoutReedemaOfferInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
-  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
+  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutReedemaOfferInput = {
@@ -2304,14 +2348,286 @@ export type UserUncheckedUpdateWithoutReedemaOfferInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
+};
+
+export type UserCreateWithoutReservationInput = {
+  id?: string;
+  email: string;
+  username: string;
+  googleId?: string | null;
+  password?: string | null;
+  name?: string | null;
+  avatarUrl?: string | null;
+  mobile?: string | null;
+  role?: $Enums.UserRole;
+  status?: $Enums.UserStatus;
+  isVerified?: boolean;
+  timezone?: string;
+  language?: $Enums.UserLanguage;
+  allowNotification?: boolean;
+  isLoggedIn?: boolean;
+  lastLoginAt?: Date | string | null;
+  lastLogoutAt?: Date | string | null;
+  lastActiveAt?: Date | string | null;
+  otp?: string | null;
+  otpExpiresAt?: Date | string | null;
+  otpType?: $Enums.OtpType | null;
+  stripeCustomerId?: string | null;
+  stripeDefaultPaymentMethodId?: string | null;
+  memberShip?: $Enums.MemberShip;
+  trialEndsAt?: Date | string | null;
+  subscriptionStatus?: $Enums.SubscriptionStatus | null;
+  fcmToken?: string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
+  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
+};
+
+export type UserUncheckedCreateWithoutReservationInput = {
+  id?: string;
+  email: string;
+  username: string;
+  googleId?: string | null;
+  password?: string | null;
+  name?: string | null;
+  avatarUrl?: string | null;
+  mobile?: string | null;
+  role?: $Enums.UserRole;
+  status?: $Enums.UserStatus;
+  isVerified?: boolean;
+  timezone?: string;
+  language?: $Enums.UserLanguage;
+  allowNotification?: boolean;
+  isLoggedIn?: boolean;
+  lastLoginAt?: Date | string | null;
+  lastLogoutAt?: Date | string | null;
+  lastActiveAt?: Date | string | null;
+  otp?: string | null;
+  otpExpiresAt?: Date | string | null;
+  otpType?: $Enums.OtpType | null;
+  stripeCustomerId?: string | null;
+  stripeDefaultPaymentMethodId?: string | null;
+  memberShip?: $Enums.MemberShip;
+  trialEndsAt?: Date | string | null;
+  subscriptionStatus?: $Enums.SubscriptionStatus | null;
+  currentPlanId?: string | null;
+  fcmToken?: string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
+};
+
+export type UserCreateOrConnectWithoutReservationInput = {
+  where: Prisma.UserWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.UserCreateWithoutReservationInput,
+    Prisma.UserUncheckedCreateWithoutReservationInput
+  >;
+};
+
+export type UserUpsertWithoutReservationInput = {
+  update: Prisma.XOR<
+    Prisma.UserUpdateWithoutReservationInput,
+    Prisma.UserUncheckedUpdateWithoutReservationInput
+  >;
+  create: Prisma.XOR<
+    Prisma.UserCreateWithoutReservationInput,
+    Prisma.UserUncheckedCreateWithoutReservationInput
+  >;
+  where?: Prisma.UserWhereInput;
+};
+
+export type UserUpdateToOneWithWhereWithoutReservationInput = {
+  where?: Prisma.UserWhereInput;
+  data: Prisma.XOR<
+    Prisma.UserUpdateWithoutReservationInput,
+    Prisma.UserUncheckedUpdateWithoutReservationInput
+  >;
+};
+
+export type UserUpdateWithoutReservationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  email?: Prisma.StringFieldUpdateOperationsInput | string;
+  username?: Prisma.StringFieldUpdateOperationsInput | string;
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string;
+  language?:
+    | Prisma.EnumUserLanguageFieldUpdateOperationsInput
+    | $Enums.UserLanguage;
+  allowNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  isLoggedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  lastLoginAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  lastLogoutAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  lastActiveAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  otpExpiresAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  otpType?:
+    | Prisma.NullableEnumOtpTypeFieldUpdateOperationsInput
+    | $Enums.OtpType
+    | null;
+  stripeCustomerId?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  stripeDefaultPaymentMethodId?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  memberShip?:
+    | Prisma.EnumMemberShipFieldUpdateOperationsInput
+    | $Enums.MemberShip;
+  trialEndsAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  subscriptionStatus?:
+    | Prisma.NullableEnumSubscriptionStatusFieldUpdateOperationsInput
+    | $Enums.SubscriptionStatus
+    | null;
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
+  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
+};
+
+export type UserUncheckedUpdateWithoutReservationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  email?: Prisma.StringFieldUpdateOperationsInput | string;
+  username?: Prisma.StringFieldUpdateOperationsInput | string;
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string;
+  language?:
+    | Prisma.EnumUserLanguageFieldUpdateOperationsInput
+    | $Enums.UserLanguage;
+  allowNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  isLoggedIn?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  lastLoginAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  lastLogoutAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  lastActiveAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  otp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  otpExpiresAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  otpType?:
+    | Prisma.NullableEnumOtpTypeFieldUpdateOperationsInput
+    | $Enums.OtpType
+    | null;
+  stripeCustomerId?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  stripeDefaultPaymentMethodId?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  memberShip?:
+    | Prisma.EnumMemberShipFieldUpdateOperationsInput
+    | $Enums.MemberShip;
+  trialEndsAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  subscriptionStatus?:
+    | Prisma.NullableEnumSubscriptionStatusFieldUpdateOperationsInput
+    | $Enums.SubscriptionStatus
+    | null;
+  currentPlanId?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateWithoutReviewsInput = {
@@ -2344,15 +2660,16 @@ export type UserCreateWithoutReviewsInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
-  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
+  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutReviewsInput = {
@@ -2386,14 +2703,15 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutReviewsInput = {
@@ -2490,15 +2808,16 @@ export type UserUpdateWithoutReviewsInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
-  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
+  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -2571,14 +2890,15 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateWithoutReviewReplyInput = {
@@ -2611,15 +2931,16 @@ export type UserCreateWithoutReviewReplyInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
-  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
+  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutReviewReplyInput = {
@@ -2653,14 +2974,15 @@ export type UserUncheckedCreateWithoutReviewReplyInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutReviewReplyInput = {
@@ -2757,15 +3079,16 @@ export type UserUpdateWithoutReviewReplyInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
-  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
+  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutReviewReplyInput = {
@@ -2838,14 +3161,15 @@ export type UserUncheckedUpdateWithoutReviewReplyInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateWithoutSpinHistoryInput = {
@@ -2878,15 +3202,16 @@ export type UserCreateWithoutSpinHistoryInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
   userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
-  userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
-  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutSpinHistoryInput = {
@@ -2920,14 +3245,15 @@ export type UserUncheckedCreateWithoutSpinHistoryInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
   userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
-  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
-  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutSpinHistoryInput = {
@@ -3024,15 +3350,16 @@ export type UserUpdateWithoutSpinHistoryInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
   userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
-  userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
-  invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutSpinHistoryInput = {
@@ -3105,14 +3432,15 @@ export type UserUncheckedUpdateWithoutSpinHistoryInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput;
+  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
   userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
-  userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
-  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateWithoutCurrentPlanInput = {
@@ -3145,15 +3473,16 @@ export type UserCreateWithoutCurrentPlanInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutCurrentPlanInput = {
@@ -3186,15 +3515,16 @@ export type UserUncheckedCreateWithoutCurrentPlanInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutCurrentPlanInput = {
@@ -3312,15 +3642,16 @@ export type UserCreateWithoutUserSubscriptionInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
-  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
+  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutUserSubscriptionInput = {
@@ -3354,14 +3685,15 @@ export type UserUncheckedCreateWithoutUserSubscriptionInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutUserSubscriptionInput = {
@@ -3458,15 +3790,16 @@ export type UserUpdateWithoutUserSubscriptionInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
-  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
+  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutUserSubscriptionInput = {
@@ -3539,14 +3872,15 @@ export type UserUncheckedUpdateWithoutUserSubscriptionInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateWithoutInvoicesInput = {
@@ -3579,15 +3913,16 @@ export type UserCreateWithoutInvoicesInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
-  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
+  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutInvoicesInput = {
@@ -3621,14 +3956,15 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput;
   spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
+  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutInvoicesInput = {
@@ -3725,15 +4061,16 @@ export type UserUpdateWithoutInvoicesInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
-  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
+  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutInvoicesInput = {
@@ -3806,14 +4143,15 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateWithoutUserTermsandConditionInput = {
@@ -3846,15 +4184,16 @@ export type UserCreateWithoutUserTermsandConditionInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutUserInput;
+  spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
+  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput;
   userSubscription?: Prisma.UserSubscriptionCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileCreateNestedOneWithoutOwnerInput;
-  spinHistory?: Prisma.SpinHistoryCreateNestedManyWithoutUserInput;
-  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput;
+  currentPlan?: Prisma.SubscriptionPlanCreateNestedOneWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutUserTermsandConditionInput = {
@@ -3888,14 +4227,15 @@ export type UserUncheckedCreateWithoutUserTermsandConditionInput = {
   fcmToken?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutUserInput;
+  spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput;
   userSubscription?: Prisma.UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
-  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedCreateNestedManyWithoutUserInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutUserInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedCreateNestedOneWithoutOwnerInput;
-  spinHistory?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutUserInput;
-  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutUserTermsandConditionInput = {
@@ -3992,15 +4332,16 @@ export type UserUpdateWithoutUserTermsandConditionInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutUserNestedInput;
+  spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
   userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
-  spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
-  invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  currentPlan?: Prisma.SubscriptionPlanUpdateOneWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutUserTermsandConditionInput = {
@@ -4073,14 +4414,15 @@ export type UserUncheckedUpdateWithoutUserTermsandConditionInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput;
+  spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
   userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
-  spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
-  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateManyCurrentPlanInput = {
@@ -4181,15 +4523,16 @@ export type UserUpdateWithoutCurrentPlanInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUpdateManyWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutCurrentPlanInput = {
@@ -4258,15 +4601,16 @@ export type UserUncheckedUpdateWithoutCurrentPlanInput = {
   fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
-  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
-  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
-  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
-  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
-  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutUserNestedInput;
   spinHistory?: Prisma.SpinHistoryUncheckedUpdateManyWithoutUserNestedInput;
   userTermsandCondition?: Prisma.UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  businessProfile?: Prisma.BusinessProfileUncheckedUpdateOneWithoutOwnerNestedInput;
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput;
+  reedemaOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutUserNestedInput;
+  reviewReply?: Prisma.ReviewReplyUncheckedUpdateManyWithoutUserNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput;
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput;
+  userSubscription?: Prisma.UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateManyWithoutCurrentPlanInput = {
@@ -4342,30 +4686,32 @@ export type UserUncheckedUpdateManyWithoutCurrentPlanInput = {
  */
 
 export type UserCountOutputType = {
-  notifications: number;
-  userSubscription: number;
-  reviews: number;
-  reviewReply: number;
-  reedemaOffer: number;
+  reservation: number;
   spinHistory: number;
   userTermsandCondition: number;
   invoices: number;
+  reedemaOffer: number;
+  reviewReply: number;
+  reviews: number;
+  notifications: number;
+  userSubscription: number;
 };
 
 export type UserCountOutputTypeSelect<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs;
-  userSubscription?: boolean | UserCountOutputTypeCountUserSubscriptionArgs;
-  reviews?: boolean | UserCountOutputTypeCountReviewsArgs;
-  reviewReply?: boolean | UserCountOutputTypeCountReviewReplyArgs;
-  reedemaOffer?: boolean | UserCountOutputTypeCountReedemaOfferArgs;
+  reservation?: boolean | UserCountOutputTypeCountReservationArgs;
   spinHistory?: boolean | UserCountOutputTypeCountSpinHistoryArgs;
   userTermsandCondition?:
     | boolean
     | UserCountOutputTypeCountUserTermsandConditionArgs;
   invoices?: boolean | UserCountOutputTypeCountInvoicesArgs;
+  reedemaOffer?: boolean | UserCountOutputTypeCountReedemaOfferArgs;
+  reviewReply?: boolean | UserCountOutputTypeCountReviewReplyArgs;
+  reviews?: boolean | UserCountOutputTypeCountReviewsArgs;
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs;
+  userSubscription?: boolean | UserCountOutputTypeCountUserSubscriptionArgs;
 };
 
 /**
@@ -4384,51 +4730,11 @@ export type UserCountOutputTypeDefaultArgs<
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountNotificationsArgs<
+export type UserCountOutputTypeCountReservationArgs<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  where?: Prisma.UserNotificationWhereInput;
-};
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountUserSubscriptionArgs<
-  ExtArgs extends
-    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-  where?: Prisma.UserSubscriptionWhereInput;
-};
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountReviewsArgs<
-  ExtArgs extends
-    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-  where?: Prisma.ReviewWhereInput;
-};
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountReviewReplyArgs<
-  ExtArgs extends
-    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-  where?: Prisma.ReviewReplyWhereInput;
-};
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountReedemaOfferArgs<
-  ExtArgs extends
-    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-  where?: Prisma.ReedemaOfferWhereInput;
+  where?: Prisma.ReservationWhereInput;
 };
 
 /**
@@ -4459,6 +4765,56 @@ export type UserCountOutputTypeCountInvoicesArgs<
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
   where?: Prisma.InvoiceWhereInput;
+};
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReedemaOfferArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.ReedemaOfferWhereInput;
+};
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReviewReplyArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.ReviewReplyWhereInput;
+};
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReviewsArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.ReviewWhereInput;
+};
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.UserNotificationWhereInput;
+};
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUserSubscriptionArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.UserSubscriptionWhereInput;
 };
 
 export type UserSelect<
@@ -4496,18 +4852,19 @@ export type UserSelect<
     fcmToken?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    currentPlan?: boolean | Prisma.User$currentPlanArgs<ExtArgs>;
-    notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>;
-    userSubscription?: boolean | Prisma.User$userSubscriptionArgs<ExtArgs>;
-    reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>;
-    reviewReply?: boolean | Prisma.User$reviewReplyArgs<ExtArgs>;
-    reedemaOffer?: boolean | Prisma.User$reedemaOfferArgs<ExtArgs>;
-    businessProfile?: boolean | Prisma.User$businessProfileArgs<ExtArgs>;
+    reservation?: boolean | Prisma.User$reservationArgs<ExtArgs>;
     spinHistory?: boolean | Prisma.User$spinHistoryArgs<ExtArgs>;
     userTermsandCondition?:
       | boolean
       | Prisma.User$userTermsandConditionArgs<ExtArgs>;
+    businessProfile?: boolean | Prisma.User$businessProfileArgs<ExtArgs>;
     invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>;
+    reedemaOffer?: boolean | Prisma.User$reedemaOfferArgs<ExtArgs>;
+    reviewReply?: boolean | Prisma.User$reviewReplyArgs<ExtArgs>;
+    reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>;
+    notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>;
+    userSubscription?: boolean | Prisma.User$userSubscriptionArgs<ExtArgs>;
+    currentPlan?: boolean | Prisma.User$currentPlanArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['user']
@@ -4666,18 +5023,19 @@ export type UserInclude<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  currentPlan?: boolean | Prisma.User$currentPlanArgs<ExtArgs>;
-  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>;
-  userSubscription?: boolean | Prisma.User$userSubscriptionArgs<ExtArgs>;
-  reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>;
-  reviewReply?: boolean | Prisma.User$reviewReplyArgs<ExtArgs>;
-  reedemaOffer?: boolean | Prisma.User$reedemaOfferArgs<ExtArgs>;
-  businessProfile?: boolean | Prisma.User$businessProfileArgs<ExtArgs>;
+  reservation?: boolean | Prisma.User$reservationArgs<ExtArgs>;
   spinHistory?: boolean | Prisma.User$spinHistoryArgs<ExtArgs>;
   userTermsandCondition?:
     | boolean
     | Prisma.User$userTermsandConditionArgs<ExtArgs>;
+  businessProfile?: boolean | Prisma.User$businessProfileArgs<ExtArgs>;
   invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>;
+  reedemaOffer?: boolean | Prisma.User$reedemaOfferArgs<ExtArgs>;
+  reviewReply?: boolean | Prisma.User$reviewReplyArgs<ExtArgs>;
+  reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>;
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>;
+  userSubscription?: boolean | Prisma.User$userSubscriptionArgs<ExtArgs>;
+  currentPlan?: boolean | Prisma.User$currentPlanArgs<ExtArgs>;
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type UserIncludeCreateManyAndReturn<
@@ -4699,16 +5057,17 @@ export type $UserPayload<
 > = {
   name: 'User';
   objects: {
-    currentPlan: Prisma.$SubscriptionPlanPayload<ExtArgs> | null;
-    notifications: Prisma.$UserNotificationPayload<ExtArgs>[];
-    userSubscription: Prisma.$UserSubscriptionPayload<ExtArgs>[];
-    reviews: Prisma.$ReviewPayload<ExtArgs>[];
-    reviewReply: Prisma.$ReviewReplyPayload<ExtArgs>[];
-    reedemaOffer: Prisma.$ReedemaOfferPayload<ExtArgs>[];
-    businessProfile: Prisma.$BusinessProfilePayload<ExtArgs> | null;
+    reservation: Prisma.$ReservationPayload<ExtArgs>[];
     spinHistory: Prisma.$SpinHistoryPayload<ExtArgs>[];
     userTermsandCondition: Prisma.$UserTermsAndConditionsPayload<ExtArgs>[];
+    businessProfile: Prisma.$BusinessProfilePayload<ExtArgs> | null;
     invoices: Prisma.$InvoicePayload<ExtArgs>[];
+    reedemaOffer: Prisma.$ReedemaOfferPayload<ExtArgs>[];
+    reviewReply: Prisma.$ReviewReplyPayload<ExtArgs>[];
+    reviews: Prisma.$ReviewPayload<ExtArgs>[];
+    notifications: Prisma.$UserNotificationPayload<ExtArgs>[];
+    userSubscription: Prisma.$UserSubscriptionPayload<ExtArgs>[];
+    currentPlan: Prisma.$SubscriptionPlanPayload<ExtArgs> | null;
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -5292,86 +5651,16 @@ export interface Prisma__UserClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise';
-  currentPlan<T extends Prisma.User$currentPlanArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.User$currentPlanArgs<ExtArgs>>,
-  ): Prisma.Prisma__SubscriptionPlanClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$SubscriptionPlanPayload<ExtArgs>,
-      T,
-      'findUniqueOrThrow',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
-  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>,
+  reservation<T extends Prisma.User$reservationArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.User$reservationArgs<ExtArgs>>,
   ): Prisma.PrismaPromise<
     | runtime.Types.Result.GetResult<
-        Prisma.$UserNotificationPayload<ExtArgs>,
+        Prisma.$ReservationPayload<ExtArgs>,
         T,
         'findMany',
         GlobalOmitOptions
       >
     | Null
-  >;
-  userSubscription<T extends Prisma.User$userSubscriptionArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.User$userSubscriptionArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<
-    | runtime.Types.Result.GetResult<
-        Prisma.$UserSubscriptionPayload<ExtArgs>,
-        T,
-        'findMany',
-        GlobalOmitOptions
-      >
-    | Null
-  >;
-  reviews<T extends Prisma.User$reviewsArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.User$reviewsArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<
-    | runtime.Types.Result.GetResult<
-        Prisma.$ReviewPayload<ExtArgs>,
-        T,
-        'findMany',
-        GlobalOmitOptions
-      >
-    | Null
-  >;
-  reviewReply<T extends Prisma.User$reviewReplyArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.User$reviewReplyArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<
-    | runtime.Types.Result.GetResult<
-        Prisma.$ReviewReplyPayload<ExtArgs>,
-        T,
-        'findMany',
-        GlobalOmitOptions
-      >
-    | Null
-  >;
-  reedemaOffer<T extends Prisma.User$reedemaOfferArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.User$reedemaOfferArgs<ExtArgs>>,
-  ): Prisma.PrismaPromise<
-    | runtime.Types.Result.GetResult<
-        Prisma.$ReedemaOfferPayload<ExtArgs>,
-        T,
-        'findMany',
-        GlobalOmitOptions
-      >
-    | Null
-  >;
-  businessProfile<T extends Prisma.User$businessProfileArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.User$businessProfileArgs<ExtArgs>>,
-  ): Prisma.Prisma__BusinessProfileClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$BusinessProfilePayload<ExtArgs>,
-      T,
-      'findUniqueOrThrow',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
   >;
   spinHistory<T extends Prisma.User$spinHistoryArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.User$spinHistoryArgs<ExtArgs>>,
@@ -5397,6 +5686,19 @@ export interface Prisma__UserClient<
       >
     | Null
   >;
+  businessProfile<T extends Prisma.User$businessProfileArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.User$businessProfileArgs<ExtArgs>>,
+  ): Prisma.Prisma__BusinessProfileClient<
+    runtime.Types.Result.GetResult<
+      Prisma.$BusinessProfilePayload<ExtArgs>,
+      T,
+      'findUniqueOrThrow',
+      GlobalOmitOptions
+    > | null,
+    null,
+    ExtArgs,
+    GlobalOmitOptions
+  >;
   invoices<T extends Prisma.User$invoicesArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.User$invoicesArgs<ExtArgs>>,
   ): Prisma.PrismaPromise<
@@ -5407,6 +5709,74 @@ export interface Prisma__UserClient<
         GlobalOmitOptions
       >
     | Null
+  >;
+  reedemaOffer<T extends Prisma.User$reedemaOfferArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.User$reedemaOfferArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$ReedemaOfferPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  reviewReply<T extends Prisma.User$reviewReplyArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.User$reviewReplyArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$ReviewReplyPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  reviews<T extends Prisma.User$reviewsArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.User$reviewsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$ReviewPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$UserNotificationPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  userSubscription<T extends Prisma.User$userSubscriptionArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.User$userSubscriptionArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$UserSubscriptionPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  currentPlan<T extends Prisma.User$currentPlanArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.User$currentPlanArgs<ExtArgs>>,
+  ): Prisma.Prisma__SubscriptionPlanClient<
+    runtime.Types.Result.GetResult<
+      Prisma.$SubscriptionPlanPayload<ExtArgs>,
+      T,
+      'findUniqueOrThrow',
+      GlobalOmitOptions
+    > | null,
+    null,
+    ExtArgs,
+    GlobalOmitOptions
   >;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5929,200 +6299,34 @@ export type UserDeleteManyArgs<
 };
 
 /**
- * User.currentPlan
+ * User.reservation
  */
-export type User$currentPlanArgs<
+export type User$reservationArgs<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
   /**
-   * Select specific fields to fetch from the SubscriptionPlan
+   * Select specific fields to fetch from the Reservation
    */
-  select?: Prisma.SubscriptionPlanSelect<ExtArgs> | null;
+  select?: Prisma.ReservationSelect<ExtArgs> | null;
   /**
-   * Omit specific fields from the SubscriptionPlan
+   * Omit specific fields from the Reservation
    */
-  omit?: Prisma.SubscriptionPlanOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SubscriptionPlanInclude<ExtArgs> | null;
-  where?: Prisma.SubscriptionPlanWhereInput;
-};
-
-/**
- * User.notifications
- */
-export type User$notificationsArgs<
-  ExtArgs extends
-    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the UserNotification
-   */
-  select?: Prisma.UserNotificationSelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the UserNotification
-   */
-  omit?: Prisma.UserNotificationOmit<ExtArgs> | null;
+  omit?: Prisma.ReservationOmit<ExtArgs> | null;
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserNotificationInclude<ExtArgs> | null;
-  where?: Prisma.UserNotificationWhereInput;
+  include?: Prisma.ReservationInclude<ExtArgs> | null;
+  where?: Prisma.ReservationWhereInput;
   orderBy?:
-    | Prisma.UserNotificationOrderByWithRelationInput
-    | Prisma.UserNotificationOrderByWithRelationInput[];
-  cursor?: Prisma.UserNotificationWhereUniqueInput;
+    | Prisma.ReservationOrderByWithRelationInput
+    | Prisma.ReservationOrderByWithRelationInput[];
+  cursor?: Prisma.ReservationWhereUniqueInput;
   take?: number;
   skip?: number;
   distinct?:
-    | Prisma.UserNotificationScalarFieldEnum
-    | Prisma.UserNotificationScalarFieldEnum[];
-};
-
-/**
- * User.userSubscription
- */
-export type User$userSubscriptionArgs<
-  ExtArgs extends
-    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the UserSubscription
-   */
-  select?: Prisma.UserSubscriptionSelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the UserSubscription
-   */
-  omit?: Prisma.UserSubscriptionOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserSubscriptionInclude<ExtArgs> | null;
-  where?: Prisma.UserSubscriptionWhereInput;
-  orderBy?:
-    | Prisma.UserSubscriptionOrderByWithRelationInput
-    | Prisma.UserSubscriptionOrderByWithRelationInput[];
-  cursor?: Prisma.UserSubscriptionWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  distinct?:
-    | Prisma.UserSubscriptionScalarFieldEnum
-    | Prisma.UserSubscriptionScalarFieldEnum[];
-};
-
-/**
- * User.reviews
- */
-export type User$reviewsArgs<
-  ExtArgs extends
-    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the Review
-   */
-  select?: Prisma.ReviewSelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Review
-   */
-  omit?: Prisma.ReviewOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ReviewInclude<ExtArgs> | null;
-  where?: Prisma.ReviewWhereInput;
-  orderBy?:
-    | Prisma.ReviewOrderByWithRelationInput
-    | Prisma.ReviewOrderByWithRelationInput[];
-  cursor?: Prisma.ReviewWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[];
-};
-
-/**
- * User.reviewReply
- */
-export type User$reviewReplyArgs<
-  ExtArgs extends
-    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the ReviewReply
-   */
-  select?: Prisma.ReviewReplySelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the ReviewReply
-   */
-  omit?: Prisma.ReviewReplyOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ReviewReplyInclude<ExtArgs> | null;
-  where?: Prisma.ReviewReplyWhereInput;
-  orderBy?:
-    | Prisma.ReviewReplyOrderByWithRelationInput
-    | Prisma.ReviewReplyOrderByWithRelationInput[];
-  cursor?: Prisma.ReviewReplyWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  distinct?:
-    | Prisma.ReviewReplyScalarFieldEnum
-    | Prisma.ReviewReplyScalarFieldEnum[];
-};
-
-/**
- * User.reedemaOffer
- */
-export type User$reedemaOfferArgs<
-  ExtArgs extends
-    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the ReedemaOffer
-   */
-  select?: Prisma.ReedemaOfferSelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the ReedemaOffer
-   */
-  omit?: Prisma.ReedemaOfferOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ReedemaOfferInclude<ExtArgs> | null;
-  where?: Prisma.ReedemaOfferWhereInput;
-  orderBy?:
-    | Prisma.ReedemaOfferOrderByWithRelationInput
-    | Prisma.ReedemaOfferOrderByWithRelationInput[];
-  cursor?: Prisma.ReedemaOfferWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  distinct?:
-    | Prisma.ReedemaOfferScalarFieldEnum
-    | Prisma.ReedemaOfferScalarFieldEnum[];
-};
-
-/**
- * User.businessProfile
- */
-export type User$businessProfileArgs<
-  ExtArgs extends
-    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-> = {
-  /**
-   * Select specific fields to fetch from the BusinessProfile
-   */
-  select?: Prisma.BusinessProfileSelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the BusinessProfile
-   */
-  omit?: Prisma.BusinessProfileOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.BusinessProfileInclude<ExtArgs> | null;
-  where?: Prisma.BusinessProfileWhereInput;
+    | Prisma.ReservationScalarFieldEnum
+    | Prisma.ReservationScalarFieldEnum[];
 };
 
 /**
@@ -6188,6 +6392,28 @@ export type User$userTermsandConditionArgs<
 };
 
 /**
+ * User.businessProfile
+ */
+export type User$businessProfileArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the BusinessProfile
+   */
+  select?: Prisma.BusinessProfileSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the BusinessProfile
+   */
+  omit?: Prisma.BusinessProfileOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BusinessProfileInclude<ExtArgs> | null;
+  where?: Prisma.BusinessProfileWhereInput;
+};
+
+/**
  * User.invoices
  */
 export type User$invoicesArgs<
@@ -6214,6 +6440,181 @@ export type User$invoicesArgs<
   take?: number;
   skip?: number;
   distinct?: Prisma.InvoiceScalarFieldEnum | Prisma.InvoiceScalarFieldEnum[];
+};
+
+/**
+ * User.reedemaOffer
+ */
+export type User$reedemaOfferArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the ReedemaOffer
+   */
+  select?: Prisma.ReedemaOfferSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the ReedemaOffer
+   */
+  omit?: Prisma.ReedemaOfferOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReedemaOfferInclude<ExtArgs> | null;
+  where?: Prisma.ReedemaOfferWhereInput;
+  orderBy?:
+    | Prisma.ReedemaOfferOrderByWithRelationInput
+    | Prisma.ReedemaOfferOrderByWithRelationInput[];
+  cursor?: Prisma.ReedemaOfferWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.ReedemaOfferScalarFieldEnum
+    | Prisma.ReedemaOfferScalarFieldEnum[];
+};
+
+/**
+ * User.reviewReply
+ */
+export type User$reviewReplyArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the ReviewReply
+   */
+  select?: Prisma.ReviewReplySelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the ReviewReply
+   */
+  omit?: Prisma.ReviewReplyOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewReplyInclude<ExtArgs> | null;
+  where?: Prisma.ReviewReplyWhereInput;
+  orderBy?:
+    | Prisma.ReviewReplyOrderByWithRelationInput
+    | Prisma.ReviewReplyOrderByWithRelationInput[];
+  cursor?: Prisma.ReviewReplyWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.ReviewReplyScalarFieldEnum
+    | Prisma.ReviewReplyScalarFieldEnum[];
+};
+
+/**
+ * User.reviews
+ */
+export type User$reviewsArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the Review
+   */
+  select?: Prisma.ReviewSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the Review
+   */
+  omit?: Prisma.ReviewOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewInclude<ExtArgs> | null;
+  where?: Prisma.ReviewWhereInput;
+  orderBy?:
+    | Prisma.ReviewOrderByWithRelationInput
+    | Prisma.ReviewOrderByWithRelationInput[];
+  cursor?: Prisma.ReviewWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[];
+};
+
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the UserNotification
+   */
+  select?: Prisma.UserNotificationSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the UserNotification
+   */
+  omit?: Prisma.UserNotificationOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserNotificationInclude<ExtArgs> | null;
+  where?: Prisma.UserNotificationWhereInput;
+  orderBy?:
+    | Prisma.UserNotificationOrderByWithRelationInput
+    | Prisma.UserNotificationOrderByWithRelationInput[];
+  cursor?: Prisma.UserNotificationWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.UserNotificationScalarFieldEnum
+    | Prisma.UserNotificationScalarFieldEnum[];
+};
+
+/**
+ * User.userSubscription
+ */
+export type User$userSubscriptionArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the UserSubscription
+   */
+  select?: Prisma.UserSubscriptionSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the UserSubscription
+   */
+  omit?: Prisma.UserSubscriptionOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserSubscriptionInclude<ExtArgs> | null;
+  where?: Prisma.UserSubscriptionWhereInput;
+  orderBy?:
+    | Prisma.UserSubscriptionOrderByWithRelationInput
+    | Prisma.UserSubscriptionOrderByWithRelationInput[];
+  cursor?: Prisma.UserSubscriptionWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.UserSubscriptionScalarFieldEnum
+    | Prisma.UserSubscriptionScalarFieldEnum[];
+};
+
+/**
+ * User.currentPlan
+ */
+export type User$currentPlanArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the SubscriptionPlan
+   */
+  select?: Prisma.SubscriptionPlanSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the SubscriptionPlan
+   */
+  omit?: Prisma.SubscriptionPlanOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionPlanInclude<ExtArgs> | null;
+  where?: Prisma.SubscriptionPlanWhereInput;
 };
 
 /**

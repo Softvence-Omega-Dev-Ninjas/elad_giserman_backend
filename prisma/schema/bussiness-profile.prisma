@@ -1,39 +1,30 @@
 model BusinessProfile {
-  id String @id @default(uuid())
-
-  // Basic Info
-  title       String
-  description String?
-  location    String
-  isActive    Boolean @default(true)
-
-  // Business hours
-  openingTime String // e.g., "11:00 AM"
-  closingTime String // e.g., "10:00 PM"
-
-  // Gallery (images)
-  gallery FileInstance[]
-
-  // Offers
-  offers      Offer[]
-  categoryId  String?
-  category Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  id              String         @id @default(uuid())
+  title           String
+  description     String?
+  location        String
+  isActive        Boolean        @default(true)
+  openingTime     String
+  closingTime     String
+  categoryId      String?
+  ownerId         String         @unique
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @default(now()) @updatedAt
   profileTypeName String?
-  // Owner / organizer
-  ownerId     String       @unique // unique makes one to one relation
-  owner       User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-
-  reviews     Review[]
-  reedemOffer ReedemaOffer[]
-  facebook String?
-  instagram String?
-  twitter String?
-  website String?
-  linkedin String?
-  pinterest String?
-  youtube String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  facebook        String?
+  instagram       String?
+  linkedin        String?
+  pinterest       String?
+  twitter         String?
+  website         String?
+  youtube         String?
+  reservation     Reservation[]
+  category        Category?      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  owner           User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  offers          Offer[]
+  reedemOffer     ReedemaOffer[]
+  reviews         Review[]
+  gallery         FileInstance[] @relation("BusinessProfileToFileInstance")
 
   @@map("business_profiles")
 }

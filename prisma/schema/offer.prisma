@@ -1,44 +1,35 @@
 model Offer {
-  id          String          @id @default(uuid())
-  title       String
-  description String?
-  isActive    Boolean         @default(true)
-  status      OfferStatus     @default(PENDING)
-  // relation to the business
-  businessId  String
-  business    BusinessProfile @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  expiredsAt  DateTime?
-  code        String
-  qrCodeUrl   String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-
+  id              String          @id @default(uuid())
+  title           String
+  description     String?
+  isActive        Boolean         @default(true)
+  status          OfferStatus     @default(PENDING)
+  businessId      String
+  expiredsAt      DateTime?
+  code            String
+  qrCodeUrl       String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @default(now()) @updatedAt
+  business        BusinessProfile @relation(fields: [businessId], references: [id], onDelete: Cascade)
   redeemableOffer ReedemaOffer[]
 
   @@map("offers")
 }
 
 model ReedemaOffer {
-  id String @id @default(uuid())
-
-  offerId String
-  offer   Offer  @relation(fields: [offerId], references: [id], onDelete: Cascade)
-
-  code       String    @unique
-  isRedeemed Boolean   @default(false)
-  redeemedAt DateTime?
-
+  id          String          @id @default(uuid())
+  offerId     String
+  code        String          @unique
+  isRedeemed  Boolean         @default(false)
+  redeemedAt  DateTime?
   bussinessId String
+  userId      String
+  expiresAt   DateTime
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @default(now()) @updatedAt
   business    BusinessProfile @relation(fields: [bussinessId], references: [id], onDelete: Cascade)
-
-  userId String
-  user   User   @relation("UserReedemaOffer", fields: [userId], references: [id])
-
-  expiresAt DateTime
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  offer       Offer           @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  user        User            @relation("UserReedemaOffer", fields: [userId], references: [id])
 
   @@map("redeemable_offers")
 }

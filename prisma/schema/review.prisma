@@ -3,28 +3,25 @@ model Review {
   comment           String
   rating            Int
   userId            String
-  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   businessProfileId String
-  businessProfile   BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @default(now()) @updatedAt
   reply             ReviewReply[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  businessProfile   BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("reviews")
 }
 
 model ReviewReply {
-  id String @id @default(uuid())
-
-  comment  String
-  reviewId String
-  review   Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
-  userId   String
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  id        String   @id @default(uuid())
+  comment   String
+  reviewId  String
+  userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+  review    Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("review_replies")
 }

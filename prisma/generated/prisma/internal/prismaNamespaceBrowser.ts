@@ -63,6 +63,7 @@ export const ModelName = {
   UserNotification: 'UserNotification',
   Offer: 'Offer',
   ReedemaOffer: 'ReedemaOffer',
+  Reservation: 'Reservation',
   Review: 'Review',
   ReviewReply: 'ReviewReply',
   Spin: 'Spin',
@@ -116,17 +117,17 @@ export const BusinessProfileScalarFieldEnum = {
   openingTime: 'openingTime',
   closingTime: 'closingTime',
   categoryId: 'categoryId',
-  profileTypeName: 'profileTypeName',
   ownerId: 'ownerId',
-  facebook: 'facebook',
-  instagram: 'instagram',
-  twitter: 'twitter',
-  website: 'website',
-  linkedin: 'linkedin',
-  pinterest: 'pinterest',
-  youtube: 'youtube',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  profileTypeName: 'profileTypeName',
+  facebook: 'facebook',
+  instagram: 'instagram',
+  linkedin: 'linkedin',
+  pinterest: 'pinterest',
+  twitter: 'twitter',
+  website: 'website',
+  youtube: 'youtube',
 } as const;
 
 export type BusinessProfileScalarFieldEnum =
@@ -230,6 +231,21 @@ export const ReedemaOfferScalarFieldEnum = {
 export type ReedemaOfferScalarFieldEnum =
   (typeof ReedemaOfferScalarFieldEnum)[keyof typeof ReedemaOfferScalarFieldEnum];
 
+export const ReservationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  restaurntId: 'restaurntId',
+  date: 'date',
+  time: 'time',
+  phoneNumber: 'phoneNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isActive: 'isActive',
+} as const;
+
+export type ReservationScalarFieldEnum =
+  (typeof ReservationScalarFieldEnum)[keyof typeof ReservationScalarFieldEnum];
+
 export const ReviewScalarFieldEnum = {
   id: 'id',
   comment: 'comment',
@@ -309,9 +325,9 @@ export const UserSubscriptionScalarFieldEnum = {
   planEndedAt: 'planEndedAt',
   paidAt: 'paidAt',
   failedAt: 'failedAt',
-  billingCycle: 'billingCycle',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  billingCycle: 'billingCycle',
 } as const;
 
 export type UserSubscriptionScalarFieldEnum =
@@ -320,16 +336,16 @@ export type UserSubscriptionScalarFieldEnum =
 export const InvoiceScalarFieldEnum = {
   id: 'id',
   stripeInvoiceId: 'stripeInvoiceId',
-  userId: 'userId',
-  subscriptionId: 'subscriptionId',
-  amount: 'amount',
   currency: 'currency',
   status: 'status',
-  paidAt: 'paidAt',
-  dueAt: 'dueAt',
-  failedAt: 'failedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  amount: 'amount',
+  dueAt: 'dueAt',
+  failedAt: 'failedAt',
+  paidAt: 'paidAt',
+  subscriptionId: 'subscriptionId',
+  userId: 'userId',
 } as const;
 
 export type InvoiceScalarFieldEnum =
@@ -355,17 +371,17 @@ export type TermsAndConditionsScalarFieldEnum =
 
 export const UserTermsAndConditionsScalarFieldEnum = {
   id: 'id',
-  generalAgrement: 'generalAgrement',
-  reservationConfirmation: 'reservationConfirmation',
-  arrvalAndSeatingPolicy: 'arrvalAndSeatingPolicy',
-  canceletionAndNoShows: 'canceletionAndNoShows',
-  modifications: 'modifications',
-  conductAndBehaviour: 'conductAndBehaviour',
-  businessProfileId: 'businessProfileId',
-  policyUpdate: 'policyUpdate',
   liability: 'liability',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  arrvalAndSeatingPolicy: 'arrvalAndSeatingPolicy',
+  canceletionAndNoShows: 'canceletionAndNoShows',
+  conductAndBehaviour: 'conductAndBehaviour',
+  generalAgrement: 'generalAgrement',
+  modifications: 'modifications',
+  policyUpdate: 'policyUpdate',
+  reservationConfirmation: 'reservationConfirmation',
+  businessProfileId: 'businessProfileId',
 } as const;
 
 export type UserTermsAndConditionsScalarFieldEnum =

@@ -231,11 +231,11 @@ export type ReedemaOfferWhereInput = {
   expiresAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
   createdAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
-  offer?: Prisma.XOR<Prisma.OfferScalarRelationFilter, Prisma.OfferWhereInput>;
   business?: Prisma.XOR<
     Prisma.BusinessProfileScalarRelationFilter,
     Prisma.BusinessProfileWhereInput
   >;
+  offer?: Prisma.XOR<Prisma.OfferScalarRelationFilter, Prisma.OfferWhereInput>;
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
 };
 
@@ -250,8 +250,8 @@ export type ReedemaOfferOrderByWithRelationInput = {
   expiresAt?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
-  offer?: Prisma.OfferOrderByWithRelationInput;
   business?: Prisma.BusinessProfileOrderByWithRelationInput;
+  offer?: Prisma.OfferOrderByWithRelationInput;
   user?: Prisma.UserOrderByWithRelationInput;
 };
 
@@ -274,13 +274,13 @@ export type ReedemaOfferWhereUniqueInput = Prisma.AtLeast<
     expiresAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
     createdAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
-    offer?: Prisma.XOR<
-      Prisma.OfferScalarRelationFilter,
-      Prisma.OfferWhereInput
-    >;
     business?: Prisma.XOR<
       Prisma.BusinessProfileScalarRelationFilter,
       Prisma.BusinessProfileWhereInput
+    >;
+    offer?: Prisma.XOR<
+      Prisma.OfferScalarRelationFilter,
+      Prisma.OfferWhereInput
     >;
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
   },
@@ -344,8 +344,8 @@ export type ReedemaOfferCreateInput = {
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  offer: Prisma.OfferCreateNestedOneWithoutRedeemableOfferInput;
   business: Prisma.BusinessProfileCreateNestedOneWithoutReedemOfferInput;
+  offer: Prisma.OfferCreateNestedOneWithoutRedeemableOfferInput;
   user: Prisma.UserCreateNestedOneWithoutReedemaOfferInput;
 };
 
@@ -374,8 +374,8 @@ export type ReedemaOfferUpdateInput = {
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  offer?: Prisma.OfferUpdateOneRequiredWithoutRedeemableOfferNestedInput;
   business?: Prisma.BusinessProfileUpdateOneRequiredWithoutReedemOfferNestedInput;
+  offer?: Prisma.OfferUpdateOneRequiredWithoutRedeemableOfferNestedInput;
   user?: Prisma.UserUpdateOneRequiredWithoutReedemaOfferNestedInput;
 };
 
@@ -985,8 +985,8 @@ export type ReedemaOfferCreateWithoutUserInput = {
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  offer: Prisma.OfferCreateNestedOneWithoutRedeemableOfferInput;
   business: Prisma.BusinessProfileCreateNestedOneWithoutReedemOfferInput;
+  offer: Prisma.OfferCreateNestedOneWithoutRedeemableOfferInput;
 };
 
 export type ReedemaOfferUncheckedCreateWithoutUserInput = {
@@ -1188,8 +1188,8 @@ export type ReedemaOfferUpdateWithoutUserInput = {
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  offer?: Prisma.OfferUpdateOneRequiredWithoutRedeemableOfferNestedInput;
   business?: Prisma.BusinessProfileUpdateOneRequiredWithoutReedemOfferNestedInput;
+  offer?: Prisma.OfferUpdateOneRequiredWithoutRedeemableOfferNestedInput;
 };
 
 export type ReedemaOfferUncheckedUpdateWithoutUserInput = {
@@ -1239,8 +1239,8 @@ export type ReedemaOfferSelect<
     expiresAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    offer?: boolean | Prisma.OfferDefaultArgs<ExtArgs>;
     business?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
+    offer?: boolean | Prisma.OfferDefaultArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['reedemaOffer']
@@ -1261,8 +1261,8 @@ export type ReedemaOfferSelectCreateManyAndReturn<
     expiresAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    offer?: boolean | Prisma.OfferDefaultArgs<ExtArgs>;
     business?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
+    offer?: boolean | Prisma.OfferDefaultArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['reedemaOffer']
@@ -1283,8 +1283,8 @@ export type ReedemaOfferSelectUpdateManyAndReturn<
     expiresAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    offer?: boolean | Prisma.OfferDefaultArgs<ExtArgs>;
     business?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
+    offer?: boolean | Prisma.OfferDefaultArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['reedemaOffer']
@@ -1323,24 +1323,24 @@ export type ReedemaOfferInclude<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  offer?: boolean | Prisma.OfferDefaultArgs<ExtArgs>;
   business?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
+  offer?: boolean | Prisma.OfferDefaultArgs<ExtArgs>;
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 export type ReedemaOfferIncludeCreateManyAndReturn<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  offer?: boolean | Prisma.OfferDefaultArgs<ExtArgs>;
   business?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
+  offer?: boolean | Prisma.OfferDefaultArgs<ExtArgs>;
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 export type ReedemaOfferIncludeUpdateManyAndReturn<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  offer?: boolean | Prisma.OfferDefaultArgs<ExtArgs>;
   business?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
+  offer?: boolean | Prisma.OfferDefaultArgs<ExtArgs>;
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 
@@ -1350,8 +1350,8 @@ export type $ReedemaOfferPayload<
 > = {
   name: 'ReedemaOffer';
   objects: {
-    offer: Prisma.$OfferPayload<ExtArgs>;
     business: Prisma.$BusinessProfilePayload<ExtArgs>;
+    offer: Prisma.$OfferPayload<ExtArgs>;
     user: Prisma.$UserPayload<ExtArgs>;
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
@@ -1922,11 +1922,11 @@ export interface Prisma__ReedemaOfferClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise';
-  offer<T extends Prisma.OfferDefaultArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.OfferDefaultArgs<ExtArgs>>,
-  ): Prisma.Prisma__OfferClient<
+  business<T extends Prisma.BusinessProfileDefaultArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.BusinessProfileDefaultArgs<ExtArgs>>,
+  ): Prisma.Prisma__BusinessProfileClient<
     | runtime.Types.Result.GetResult<
-        Prisma.$OfferPayload<ExtArgs>,
+        Prisma.$BusinessProfilePayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
         GlobalOmitOptions
@@ -1936,11 +1936,11 @@ export interface Prisma__ReedemaOfferClient<
     ExtArgs,
     GlobalOmitOptions
   >;
-  business<T extends Prisma.BusinessProfileDefaultArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.BusinessProfileDefaultArgs<ExtArgs>>,
-  ): Prisma.Prisma__BusinessProfileClient<
+  offer<T extends Prisma.OfferDefaultArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.OfferDefaultArgs<ExtArgs>>,
+  ): Prisma.Prisma__OfferClient<
     | runtime.Types.Result.GetResult<
-        Prisma.$BusinessProfilePayload<ExtArgs>,
+        Prisma.$OfferPayload<ExtArgs>,
         T,
         'findUniqueOrThrow',
         GlobalOmitOptions

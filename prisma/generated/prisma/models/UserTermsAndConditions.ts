@@ -26,73 +26,73 @@ export type AggregateUserTermsAndConditions = {
 
 export type UserTermsAndConditionsMinAggregateOutputType = {
   id: string | null;
-  generalAgrement: string | null;
-  businessProfileId: string | null;
-  policyUpdate: string | null;
   liability: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
+  generalAgrement: string | null;
+  policyUpdate: string | null;
+  businessProfileId: string | null;
 };
 
 export type UserTermsAndConditionsMaxAggregateOutputType = {
   id: string | null;
-  generalAgrement: string | null;
-  businessProfileId: string | null;
-  policyUpdate: string | null;
   liability: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
+  generalAgrement: string | null;
+  policyUpdate: string | null;
+  businessProfileId: string | null;
 };
 
 export type UserTermsAndConditionsCountAggregateOutputType = {
   id: number;
-  generalAgrement: number;
-  reservationConfirmation: number;
-  arrvalAndSeatingPolicy: number;
-  canceletionAndNoShows: number;
-  modifications: number;
-  conductAndBehaviour: number;
-  businessProfileId: number;
-  policyUpdate: number;
   liability: number;
   createdAt: number;
   updatedAt: number;
+  arrvalAndSeatingPolicy: number;
+  canceletionAndNoShows: number;
+  conductAndBehaviour: number;
+  generalAgrement: number;
+  modifications: number;
+  policyUpdate: number;
+  reservationConfirmation: number;
+  businessProfileId: number;
   _all: number;
 };
 
 export type UserTermsAndConditionsMinAggregateInputType = {
   id?: true;
-  generalAgrement?: true;
-  businessProfileId?: true;
-  policyUpdate?: true;
   liability?: true;
   createdAt?: true;
   updatedAt?: true;
+  generalAgrement?: true;
+  policyUpdate?: true;
+  businessProfileId?: true;
 };
 
 export type UserTermsAndConditionsMaxAggregateInputType = {
   id?: true;
-  generalAgrement?: true;
-  businessProfileId?: true;
-  policyUpdate?: true;
   liability?: true;
   createdAt?: true;
   updatedAt?: true;
+  generalAgrement?: true;
+  policyUpdate?: true;
+  businessProfileId?: true;
 };
 
 export type UserTermsAndConditionsCountAggregateInputType = {
   id?: true;
-  generalAgrement?: true;
-  reservationConfirmation?: true;
-  arrvalAndSeatingPolicy?: true;
-  canceletionAndNoShows?: true;
-  modifications?: true;
-  conductAndBehaviour?: true;
-  businessProfileId?: true;
-  policyUpdate?: true;
   liability?: true;
   createdAt?: true;
   updatedAt?: true;
+  arrvalAndSeatingPolicy?: true;
+  canceletionAndNoShows?: true;
+  conductAndBehaviour?: true;
+  generalAgrement?: true;
+  modifications?: true;
+  policyUpdate?: true;
+  reservationConfirmation?: true;
+  businessProfileId?: true;
   _all?: true;
 };
 
@@ -183,17 +183,17 @@ export type UserTermsAndConditionsGroupByArgs<
 
 export type UserTermsAndConditionsGroupByOutputType = {
   id: string;
-  generalAgrement: string | null;
-  reservationConfirmation: string[];
-  arrvalAndSeatingPolicy: string[];
-  canceletionAndNoShows: string[];
-  modifications: string[];
-  conductAndBehaviour: string[];
-  businessProfileId: string | null;
-  policyUpdate: string | null;
   liability: string;
   createdAt: Date;
   updatedAt: Date;
+  arrvalAndSeatingPolicy: string[];
+  canceletionAndNoShows: string[];
+  conductAndBehaviour: string[];
+  generalAgrement: string | null;
+  modifications: string[];
+  policyUpdate: string | null;
+  reservationConfirmation: string[];
+  businessProfileId: string | null;
   _count: UserTermsAndConditionsCountAggregateOutputType | null;
   _min: UserTermsAndConditionsMinAggregateOutputType | null;
   _max: UserTermsAndConditionsMaxAggregateOutputType | null;
@@ -229,26 +229,26 @@ export type UserTermsAndConditionsWhereInput = {
     | Prisma.UserTermsAndConditionsWhereInput
     | Prisma.UserTermsAndConditionsWhereInput[];
   id?: Prisma.StringFilter<'UserTermsAndConditions'> | string;
+  liability?: Prisma.StringFilter<'UserTermsAndConditions'> | string;
+  createdAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
+  updatedAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
+  arrvalAndSeatingPolicy?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+  canceletionAndNoShows?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+  conductAndBehaviour?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
   generalAgrement?:
     | Prisma.StringNullableFilter<'UserTermsAndConditions'>
     | string
     | null;
-  reservationConfirmation?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  arrvalAndSeatingPolicy?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  canceletionAndNoShows?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
   modifications?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  conductAndBehaviour?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  businessProfileId?:
-    | Prisma.StringNullableFilter<'UserTermsAndConditions'>
-    | string
-    | null;
   policyUpdate?:
     | Prisma.StringNullableFilter<'UserTermsAndConditions'>
     | string
     | null;
-  liability?: Prisma.StringFilter<'UserTermsAndConditions'> | string;
-  createdAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
-  updatedAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
+  reservationConfirmation?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+  businessProfileId?:
+    | Prisma.StringNullableFilter<'UserTermsAndConditions'>
+    | string
+    | null;
   businessProfile?: Prisma.XOR<
     Prisma.UserNullableScalarRelationFilter,
     Prisma.UserWhereInput
@@ -257,17 +257,17 @@ export type UserTermsAndConditionsWhereInput = {
 
 export type UserTermsAndConditionsOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
-  generalAgrement?: Prisma.SortOrderInput | Prisma.SortOrder;
-  reservationConfirmation?: Prisma.SortOrder;
-  arrvalAndSeatingPolicy?: Prisma.SortOrder;
-  canceletionAndNoShows?: Prisma.SortOrder;
-  modifications?: Prisma.SortOrder;
-  conductAndBehaviour?: Prisma.SortOrder;
-  businessProfileId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  policyUpdate?: Prisma.SortOrderInput | Prisma.SortOrder;
   liability?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  arrvalAndSeatingPolicy?: Prisma.SortOrder;
+  canceletionAndNoShows?: Prisma.SortOrder;
+  conductAndBehaviour?: Prisma.SortOrder;
+  generalAgrement?: Prisma.SortOrderInput | Prisma.SortOrder;
+  modifications?: Prisma.SortOrder;
+  policyUpdate?: Prisma.SortOrderInput | Prisma.SortOrder;
+  reservationConfirmation?: Prisma.SortOrder;
+  businessProfileId?: Prisma.SortOrderInput | Prisma.SortOrder;
   businessProfile?: Prisma.UserOrderByWithRelationInput;
 };
 
@@ -281,26 +281,26 @@ export type UserTermsAndConditionsWhereUniqueInput = Prisma.AtLeast<
     NOT?:
       | Prisma.UserTermsAndConditionsWhereInput
       | Prisma.UserTermsAndConditionsWhereInput[];
+    liability?: Prisma.StringFilter<'UserTermsAndConditions'> | string;
+    createdAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
+    arrvalAndSeatingPolicy?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+    canceletionAndNoShows?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+    conductAndBehaviour?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
     generalAgrement?:
       | Prisma.StringNullableFilter<'UserTermsAndConditions'>
       | string
       | null;
-    reservationConfirmation?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-    arrvalAndSeatingPolicy?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-    canceletionAndNoShows?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
     modifications?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-    conductAndBehaviour?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-    businessProfileId?:
-      | Prisma.StringNullableFilter<'UserTermsAndConditions'>
-      | string
-      | null;
     policyUpdate?:
       | Prisma.StringNullableFilter<'UserTermsAndConditions'>
       | string
       | null;
-    liability?: Prisma.StringFilter<'UserTermsAndConditions'> | string;
-    createdAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
-    updatedAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
+    reservationConfirmation?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+    businessProfileId?:
+      | Prisma.StringNullableFilter<'UserTermsAndConditions'>
+      | string
+      | null;
     businessProfile?: Prisma.XOR<
       Prisma.UserNullableScalarRelationFilter,
       Prisma.UserWhereInput
@@ -311,17 +311,17 @@ export type UserTermsAndConditionsWhereUniqueInput = Prisma.AtLeast<
 
 export type UserTermsAndConditionsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
-  generalAgrement?: Prisma.SortOrderInput | Prisma.SortOrder;
-  reservationConfirmation?: Prisma.SortOrder;
-  arrvalAndSeatingPolicy?: Prisma.SortOrder;
-  canceletionAndNoShows?: Prisma.SortOrder;
-  modifications?: Prisma.SortOrder;
-  conductAndBehaviour?: Prisma.SortOrder;
-  businessProfileId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  policyUpdate?: Prisma.SortOrderInput | Prisma.SortOrder;
   liability?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  arrvalAndSeatingPolicy?: Prisma.SortOrder;
+  canceletionAndNoShows?: Prisma.SortOrder;
+  conductAndBehaviour?: Prisma.SortOrder;
+  generalAgrement?: Prisma.SortOrderInput | Prisma.SortOrder;
+  modifications?: Prisma.SortOrder;
+  policyUpdate?: Prisma.SortOrderInput | Prisma.SortOrder;
+  reservationConfirmation?: Prisma.SortOrder;
+  businessProfileId?: Prisma.SortOrderInput | Prisma.SortOrder;
   _count?: Prisma.UserTermsAndConditionsCountOrderByAggregateInput;
   _max?: Prisma.UserTermsAndConditionsMaxOrderByAggregateInput;
   _min?: Prisma.UserTermsAndConditionsMinOrderByAggregateInput;
@@ -336,23 +336,6 @@ export type UserTermsAndConditionsScalarWhereWithAggregatesInput = {
     | Prisma.UserTermsAndConditionsScalarWhereWithAggregatesInput
     | Prisma.UserTermsAndConditionsScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'UserTermsAndConditions'> | string;
-  generalAgrement?:
-    | Prisma.StringNullableWithAggregatesFilter<'UserTermsAndConditions'>
-    | string
-    | null;
-  reservationConfirmation?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  arrvalAndSeatingPolicy?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  canceletionAndNoShows?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  modifications?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  conductAndBehaviour?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  businessProfileId?:
-    | Prisma.StringNullableWithAggregatesFilter<'UserTermsAndConditions'>
-    | string
-    | null;
-  policyUpdate?:
-    | Prisma.StringNullableWithAggregatesFilter<'UserTermsAndConditions'>
-    | string
-    | null;
   liability?:
     | Prisma.StringWithAggregatesFilter<'UserTermsAndConditions'>
     | string;
@@ -364,245 +347,262 @@ export type UserTermsAndConditionsScalarWhereWithAggregatesInput = {
     | Prisma.DateTimeWithAggregatesFilter<'UserTermsAndConditions'>
     | Date
     | string;
+  arrvalAndSeatingPolicy?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+  canceletionAndNoShows?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+  conductAndBehaviour?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+  generalAgrement?:
+    | Prisma.StringNullableWithAggregatesFilter<'UserTermsAndConditions'>
+    | string
+    | null;
+  modifications?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+  policyUpdate?:
+    | Prisma.StringNullableWithAggregatesFilter<'UserTermsAndConditions'>
+    | string
+    | null;
+  reservationConfirmation?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+  businessProfileId?:
+    | Prisma.StringNullableWithAggregatesFilter<'UserTermsAndConditions'>
+    | string
+    | null;
 };
 
 export type UserTermsAndConditionsCreateInput = {
   id?: string;
-  generalAgrement?: string | null;
-  reservationConfirmation?:
-    | Prisma.UserTermsAndConditionsCreatereservationConfirmationInput
-    | string[];
+  liability: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   arrvalAndSeatingPolicy?:
     | Prisma.UserTermsAndConditionsCreatearrvalAndSeatingPolicyInput
     | string[];
   canceletionAndNoShows?:
     | Prisma.UserTermsAndConditionsCreatecanceletionAndNoShowsInput
     | string[];
-  modifications?:
-    | Prisma.UserTermsAndConditionsCreatemodificationsInput
-    | string[];
   conductAndBehaviour?:
     | Prisma.UserTermsAndConditionsCreateconductAndBehaviourInput
     | string[];
+  generalAgrement?: string | null;
+  modifications?:
+    | Prisma.UserTermsAndConditionsCreatemodificationsInput
+    | string[];
   policyUpdate?: string | null;
-  liability: string;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
+  reservationConfirmation?:
+    | Prisma.UserTermsAndConditionsCreatereservationConfirmationInput
+    | string[];
   businessProfile?: Prisma.UserCreateNestedOneWithoutUserTermsandConditionInput;
 };
 
 export type UserTermsAndConditionsUncheckedCreateInput = {
   id?: string;
-  generalAgrement?: string | null;
-  reservationConfirmation?:
-    | Prisma.UserTermsAndConditionsCreatereservationConfirmationInput
-    | string[];
+  liability: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   arrvalAndSeatingPolicy?:
     | Prisma.UserTermsAndConditionsCreatearrvalAndSeatingPolicyInput
     | string[];
   canceletionAndNoShows?:
     | Prisma.UserTermsAndConditionsCreatecanceletionAndNoShowsInput
     | string[];
-  modifications?:
-    | Prisma.UserTermsAndConditionsCreatemodificationsInput
-    | string[];
   conductAndBehaviour?:
     | Prisma.UserTermsAndConditionsCreateconductAndBehaviourInput
     | string[];
-  businessProfileId?: string | null;
+  generalAgrement?: string | null;
+  modifications?:
+    | Prisma.UserTermsAndConditionsCreatemodificationsInput
+    | string[];
   policyUpdate?: string | null;
-  liability: string;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
+  reservationConfirmation?:
+    | Prisma.UserTermsAndConditionsCreatereservationConfirmationInput
+    | string[];
+  businessProfileId?: string | null;
 };
 
 export type UserTermsAndConditionsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  generalAgrement?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  reservationConfirmation?:
-    | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
-    | string[];
+  liability?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   arrvalAndSeatingPolicy?:
     | Prisma.UserTermsAndConditionsUpdatearrvalAndSeatingPolicyInput
     | string[];
   canceletionAndNoShows?:
     | Prisma.UserTermsAndConditionsUpdatecanceletionAndNoShowsInput
     | string[];
-  modifications?:
-    | Prisma.UserTermsAndConditionsUpdatemodificationsInput
-    | string[];
   conductAndBehaviour?:
     | Prisma.UserTermsAndConditionsUpdateconductAndBehaviourInput
+    | string[];
+  generalAgrement?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  modifications?:
+    | Prisma.UserTermsAndConditionsUpdatemodificationsInput
     | string[];
   policyUpdate?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  liability?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  reservationConfirmation?:
+    | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
+    | string[];
   businessProfile?: Prisma.UserUpdateOneWithoutUserTermsandConditionNestedInput;
 };
 
 export type UserTermsAndConditionsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  generalAgrement?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  reservationConfirmation?:
-    | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
-    | string[];
+  liability?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   arrvalAndSeatingPolicy?:
     | Prisma.UserTermsAndConditionsUpdatearrvalAndSeatingPolicyInput
     | string[];
   canceletionAndNoShows?:
     | Prisma.UserTermsAndConditionsUpdatecanceletionAndNoShowsInput
     | string[];
+  conductAndBehaviour?:
+    | Prisma.UserTermsAndConditionsUpdateconductAndBehaviourInput
+    | string[];
+  generalAgrement?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   modifications?:
     | Prisma.UserTermsAndConditionsUpdatemodificationsInput
     | string[];
-  conductAndBehaviour?:
-    | Prisma.UserTermsAndConditionsUpdateconductAndBehaviourInput
+  policyUpdate?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  reservationConfirmation?:
+    | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
     | string[];
   businessProfileId?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  policyUpdate?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  liability?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
 export type UserTermsAndConditionsCreateManyInput = {
   id?: string;
-  generalAgrement?: string | null;
-  reservationConfirmation?:
-    | Prisma.UserTermsAndConditionsCreatereservationConfirmationInput
-    | string[];
+  liability: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   arrvalAndSeatingPolicy?:
     | Prisma.UserTermsAndConditionsCreatearrvalAndSeatingPolicyInput
     | string[];
   canceletionAndNoShows?:
     | Prisma.UserTermsAndConditionsCreatecanceletionAndNoShowsInput
     | string[];
-  modifications?:
-    | Prisma.UserTermsAndConditionsCreatemodificationsInput
-    | string[];
   conductAndBehaviour?:
     | Prisma.UserTermsAndConditionsCreateconductAndBehaviourInput
     | string[];
-  businessProfileId?: string | null;
+  generalAgrement?: string | null;
+  modifications?:
+    | Prisma.UserTermsAndConditionsCreatemodificationsInput
+    | string[];
   policyUpdate?: string | null;
-  liability: string;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
+  reservationConfirmation?:
+    | Prisma.UserTermsAndConditionsCreatereservationConfirmationInput
+    | string[];
+  businessProfileId?: string | null;
 };
 
 export type UserTermsAndConditionsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  generalAgrement?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  reservationConfirmation?:
-    | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
-    | string[];
+  liability?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   arrvalAndSeatingPolicy?:
     | Prisma.UserTermsAndConditionsUpdatearrvalAndSeatingPolicyInput
     | string[];
   canceletionAndNoShows?:
     | Prisma.UserTermsAndConditionsUpdatecanceletionAndNoShowsInput
     | string[];
-  modifications?:
-    | Prisma.UserTermsAndConditionsUpdatemodificationsInput
-    | string[];
   conductAndBehaviour?:
     | Prisma.UserTermsAndConditionsUpdateconductAndBehaviourInput
+    | string[];
+  generalAgrement?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  modifications?:
+    | Prisma.UserTermsAndConditionsUpdatemodificationsInput
     | string[];
   policyUpdate?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  liability?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  reservationConfirmation?:
+    | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
+    | string[];
 };
 
 export type UserTermsAndConditionsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  generalAgrement?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  reservationConfirmation?:
-    | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
-    | string[];
+  liability?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   arrvalAndSeatingPolicy?:
     | Prisma.UserTermsAndConditionsUpdatearrvalAndSeatingPolicyInput
     | string[];
   canceletionAndNoShows?:
     | Prisma.UserTermsAndConditionsUpdatecanceletionAndNoShowsInput
     | string[];
+  conductAndBehaviour?:
+    | Prisma.UserTermsAndConditionsUpdateconductAndBehaviourInput
+    | string[];
+  generalAgrement?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
   modifications?:
     | Prisma.UserTermsAndConditionsUpdatemodificationsInput
     | string[];
-  conductAndBehaviour?:
-    | Prisma.UserTermsAndConditionsUpdateconductAndBehaviourInput
+  policyUpdate?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  reservationConfirmation?:
+    | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
     | string[];
   businessProfileId?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  policyUpdate?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  liability?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
 export type UserTermsAndConditionsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  generalAgrement?: Prisma.SortOrder;
-  reservationConfirmation?: Prisma.SortOrder;
-  arrvalAndSeatingPolicy?: Prisma.SortOrder;
-  canceletionAndNoShows?: Prisma.SortOrder;
-  modifications?: Prisma.SortOrder;
-  conductAndBehaviour?: Prisma.SortOrder;
-  businessProfileId?: Prisma.SortOrder;
-  policyUpdate?: Prisma.SortOrder;
   liability?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  arrvalAndSeatingPolicy?: Prisma.SortOrder;
+  canceletionAndNoShows?: Prisma.SortOrder;
+  conductAndBehaviour?: Prisma.SortOrder;
+  generalAgrement?: Prisma.SortOrder;
+  modifications?: Prisma.SortOrder;
+  policyUpdate?: Prisma.SortOrder;
+  reservationConfirmation?: Prisma.SortOrder;
+  businessProfileId?: Prisma.SortOrder;
 };
 
 export type UserTermsAndConditionsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  generalAgrement?: Prisma.SortOrder;
-  businessProfileId?: Prisma.SortOrder;
-  policyUpdate?: Prisma.SortOrder;
   liability?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  generalAgrement?: Prisma.SortOrder;
+  policyUpdate?: Prisma.SortOrder;
+  businessProfileId?: Prisma.SortOrder;
 };
 
 export type UserTermsAndConditionsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  generalAgrement?: Prisma.SortOrder;
-  businessProfileId?: Prisma.SortOrder;
-  policyUpdate?: Prisma.SortOrder;
   liability?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  generalAgrement?: Prisma.SortOrder;
+  policyUpdate?: Prisma.SortOrder;
+  businessProfileId?: Prisma.SortOrder;
 };
 
 export type UserTermsAndConditionsListRelationFilter = {
@@ -615,10 +615,6 @@ export type UserTermsAndConditionsOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder;
 };
 
-export type UserTermsAndConditionsCreatereservationConfirmationInput = {
-  set: string[];
-};
-
 export type UserTermsAndConditionsCreatearrvalAndSeatingPolicyInput = {
   set: string[];
 };
@@ -627,17 +623,16 @@ export type UserTermsAndConditionsCreatecanceletionAndNoShowsInput = {
   set: string[];
 };
 
-export type UserTermsAndConditionsCreatemodificationsInput = {
-  set: string[];
-};
-
 export type UserTermsAndConditionsCreateconductAndBehaviourInput = {
   set: string[];
 };
 
-export type UserTermsAndConditionsUpdatereservationConfirmationInput = {
-  set?: string[];
-  push?: string | string[];
+export type UserTermsAndConditionsCreatemodificationsInput = {
+  set: string[];
+};
+
+export type UserTermsAndConditionsCreatereservationConfirmationInput = {
+  set: string[];
 };
 
 export type UserTermsAndConditionsUpdatearrvalAndSeatingPolicyInput = {
@@ -650,12 +645,17 @@ export type UserTermsAndConditionsUpdatecanceletionAndNoShowsInput = {
   push?: string | string[];
 };
 
+export type UserTermsAndConditionsUpdateconductAndBehaviourInput = {
+  set?: string[];
+  push?: string | string[];
+};
+
 export type UserTermsAndConditionsUpdatemodificationsInput = {
   set?: string[];
   push?: string | string[];
 };
 
-export type UserTermsAndConditionsUpdateconductAndBehaviourInput = {
+export type UserTermsAndConditionsUpdatereservationConfirmationInput = {
   set?: string[];
   push?: string | string[];
 };
@@ -776,50 +776,50 @@ export type UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileNeste
 
 export type UserTermsAndConditionsCreateWithoutBusinessProfileInput = {
   id?: string;
-  generalAgrement?: string | null;
-  reservationConfirmation?:
-    | Prisma.UserTermsAndConditionsCreatereservationConfirmationInput
-    | string[];
+  liability: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   arrvalAndSeatingPolicy?:
     | Prisma.UserTermsAndConditionsCreatearrvalAndSeatingPolicyInput
     | string[];
   canceletionAndNoShows?:
     | Prisma.UserTermsAndConditionsCreatecanceletionAndNoShowsInput
     | string[];
-  modifications?:
-    | Prisma.UserTermsAndConditionsCreatemodificationsInput
-    | string[];
   conductAndBehaviour?:
     | Prisma.UserTermsAndConditionsCreateconductAndBehaviourInput
     | string[];
+  generalAgrement?: string | null;
+  modifications?:
+    | Prisma.UserTermsAndConditionsCreatemodificationsInput
+    | string[];
   policyUpdate?: string | null;
-  liability: string;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
+  reservationConfirmation?:
+    | Prisma.UserTermsAndConditionsCreatereservationConfirmationInput
+    | string[];
 };
 
 export type UserTermsAndConditionsUncheckedCreateWithoutBusinessProfileInput = {
   id?: string;
-  generalAgrement?: string | null;
-  reservationConfirmation?:
-    | Prisma.UserTermsAndConditionsCreatereservationConfirmationInput
-    | string[];
+  liability: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   arrvalAndSeatingPolicy?:
     | Prisma.UserTermsAndConditionsCreatearrvalAndSeatingPolicyInput
     | string[];
   canceletionAndNoShows?:
     | Prisma.UserTermsAndConditionsCreatecanceletionAndNoShowsInput
     | string[];
-  modifications?:
-    | Prisma.UserTermsAndConditionsCreatemodificationsInput
-    | string[];
   conductAndBehaviour?:
     | Prisma.UserTermsAndConditionsCreateconductAndBehaviourInput
     | string[];
+  generalAgrement?: string | null;
+  modifications?:
+    | Prisma.UserTermsAndConditionsCreatemodificationsInput
+    | string[];
   policyUpdate?: string | null;
-  liability: string;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
+  reservationConfirmation?:
+    | Prisma.UserTermsAndConditionsCreatereservationConfirmationInput
+    | string[];
 };
 
 export type UserTermsAndConditionsCreateOrConnectWithoutBusinessProfileInput = {
@@ -877,141 +877,141 @@ export type UserTermsAndConditionsScalarWhereInput = {
     | Prisma.UserTermsAndConditionsScalarWhereInput
     | Prisma.UserTermsAndConditionsScalarWhereInput[];
   id?: Prisma.StringFilter<'UserTermsAndConditions'> | string;
+  liability?: Prisma.StringFilter<'UserTermsAndConditions'> | string;
+  createdAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
+  updatedAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
+  arrvalAndSeatingPolicy?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+  canceletionAndNoShows?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+  conductAndBehaviour?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
   generalAgrement?:
     | Prisma.StringNullableFilter<'UserTermsAndConditions'>
     | string
     | null;
-  reservationConfirmation?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  arrvalAndSeatingPolicy?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  canceletionAndNoShows?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
   modifications?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  conductAndBehaviour?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
-  businessProfileId?:
-    | Prisma.StringNullableFilter<'UserTermsAndConditions'>
-    | string
-    | null;
   policyUpdate?:
     | Prisma.StringNullableFilter<'UserTermsAndConditions'>
     | string
     | null;
-  liability?: Prisma.StringFilter<'UserTermsAndConditions'> | string;
-  createdAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
-  updatedAt?: Prisma.DateTimeFilter<'UserTermsAndConditions'> | Date | string;
+  reservationConfirmation?: Prisma.StringNullableListFilter<'UserTermsAndConditions'>;
+  businessProfileId?:
+    | Prisma.StringNullableFilter<'UserTermsAndConditions'>
+    | string
+    | null;
 };
 
 export type UserTermsAndConditionsCreateManyBusinessProfileInput = {
   id?: string;
-  generalAgrement?: string | null;
-  reservationConfirmation?:
-    | Prisma.UserTermsAndConditionsCreatereservationConfirmationInput
-    | string[];
+  liability: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
   arrvalAndSeatingPolicy?:
     | Prisma.UserTermsAndConditionsCreatearrvalAndSeatingPolicyInput
     | string[];
   canceletionAndNoShows?:
     | Prisma.UserTermsAndConditionsCreatecanceletionAndNoShowsInput
     | string[];
-  modifications?:
-    | Prisma.UserTermsAndConditionsCreatemodificationsInput
-    | string[];
   conductAndBehaviour?:
     | Prisma.UserTermsAndConditionsCreateconductAndBehaviourInput
     | string[];
+  generalAgrement?: string | null;
+  modifications?:
+    | Prisma.UserTermsAndConditionsCreatemodificationsInput
+    | string[];
   policyUpdate?: string | null;
-  liability: string;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
+  reservationConfirmation?:
+    | Prisma.UserTermsAndConditionsCreatereservationConfirmationInput
+    | string[];
 };
 
 export type UserTermsAndConditionsUpdateWithoutBusinessProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  generalAgrement?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  reservationConfirmation?:
-    | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
-    | string[];
+  liability?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   arrvalAndSeatingPolicy?:
     | Prisma.UserTermsAndConditionsUpdatearrvalAndSeatingPolicyInput
     | string[];
   canceletionAndNoShows?:
     | Prisma.UserTermsAndConditionsUpdatecanceletionAndNoShowsInput
     | string[];
-  modifications?:
-    | Prisma.UserTermsAndConditionsUpdatemodificationsInput
-    | string[];
   conductAndBehaviour?:
     | Prisma.UserTermsAndConditionsUpdateconductAndBehaviourInput
+    | string[];
+  generalAgrement?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  modifications?:
+    | Prisma.UserTermsAndConditionsUpdatemodificationsInput
     | string[];
   policyUpdate?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  liability?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  reservationConfirmation?:
+    | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
+    | string[];
 };
 
 export type UserTermsAndConditionsUncheckedUpdateWithoutBusinessProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  generalAgrement?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null;
-  reservationConfirmation?:
-    | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
-    | string[];
+  liability?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   arrvalAndSeatingPolicy?:
     | Prisma.UserTermsAndConditionsUpdatearrvalAndSeatingPolicyInput
     | string[];
   canceletionAndNoShows?:
     | Prisma.UserTermsAndConditionsUpdatecanceletionAndNoShowsInput
     | string[];
-  modifications?:
-    | Prisma.UserTermsAndConditionsUpdatemodificationsInput
-    | string[];
   conductAndBehaviour?:
     | Prisma.UserTermsAndConditionsUpdateconductAndBehaviourInput
+    | string[];
+  generalAgrement?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  modifications?:
+    | Prisma.UserTermsAndConditionsUpdatemodificationsInput
     | string[];
   policyUpdate?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null;
-  liability?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  reservationConfirmation?:
+    | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
+    | string[];
 };
 
 export type UserTermsAndConditionsUncheckedUpdateManyWithoutBusinessProfileInput =
   {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
-    generalAgrement?:
-      | Prisma.NullableStringFieldUpdateOperationsInput
-      | string
-      | null;
-    reservationConfirmation?:
-      | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
-      | string[];
+    liability?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     arrvalAndSeatingPolicy?:
       | Prisma.UserTermsAndConditionsUpdatearrvalAndSeatingPolicyInput
       | string[];
     canceletionAndNoShows?:
       | Prisma.UserTermsAndConditionsUpdatecanceletionAndNoShowsInput
       | string[];
-    modifications?:
-      | Prisma.UserTermsAndConditionsUpdatemodificationsInput
-      | string[];
     conductAndBehaviour?:
       | Prisma.UserTermsAndConditionsUpdateconductAndBehaviourInput
+      | string[];
+    generalAgrement?:
+      | Prisma.NullableStringFieldUpdateOperationsInput
+      | string
+      | null;
+    modifications?:
+      | Prisma.UserTermsAndConditionsUpdatemodificationsInput
       | string[];
     policyUpdate?:
       | Prisma.NullableStringFieldUpdateOperationsInput
       | string
       | null;
-    liability?: Prisma.StringFieldUpdateOperationsInput | string;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    reservationConfirmation?:
+      | Prisma.UserTermsAndConditionsUpdatereservationConfirmationInput
+      | string[];
   };
 
 export type UserTermsAndConditionsSelect<
@@ -1020,17 +1020,17 @@ export type UserTermsAndConditionsSelect<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    generalAgrement?: boolean;
-    reservationConfirmation?: boolean;
-    arrvalAndSeatingPolicy?: boolean;
-    canceletionAndNoShows?: boolean;
-    modifications?: boolean;
-    conductAndBehaviour?: boolean;
-    businessProfileId?: boolean;
-    policyUpdate?: boolean;
     liability?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    arrvalAndSeatingPolicy?: boolean;
+    canceletionAndNoShows?: boolean;
+    conductAndBehaviour?: boolean;
+    generalAgrement?: boolean;
+    modifications?: boolean;
+    policyUpdate?: boolean;
+    reservationConfirmation?: boolean;
+    businessProfileId?: boolean;
     businessProfile?:
       | boolean
       | Prisma.UserTermsAndConditions$businessProfileArgs<ExtArgs>;
@@ -1044,17 +1044,17 @@ export type UserTermsAndConditionsSelectCreateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    generalAgrement?: boolean;
-    reservationConfirmation?: boolean;
-    arrvalAndSeatingPolicy?: boolean;
-    canceletionAndNoShows?: boolean;
-    modifications?: boolean;
-    conductAndBehaviour?: boolean;
-    businessProfileId?: boolean;
-    policyUpdate?: boolean;
     liability?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    arrvalAndSeatingPolicy?: boolean;
+    canceletionAndNoShows?: boolean;
+    conductAndBehaviour?: boolean;
+    generalAgrement?: boolean;
+    modifications?: boolean;
+    policyUpdate?: boolean;
+    reservationConfirmation?: boolean;
+    businessProfileId?: boolean;
     businessProfile?:
       | boolean
       | Prisma.UserTermsAndConditions$businessProfileArgs<ExtArgs>;
@@ -1068,17 +1068,17 @@ export type UserTermsAndConditionsSelectUpdateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    generalAgrement?: boolean;
-    reservationConfirmation?: boolean;
-    arrvalAndSeatingPolicy?: boolean;
-    canceletionAndNoShows?: boolean;
-    modifications?: boolean;
-    conductAndBehaviour?: boolean;
-    businessProfileId?: boolean;
-    policyUpdate?: boolean;
     liability?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    arrvalAndSeatingPolicy?: boolean;
+    canceletionAndNoShows?: boolean;
+    conductAndBehaviour?: boolean;
+    generalAgrement?: boolean;
+    modifications?: boolean;
+    policyUpdate?: boolean;
+    reservationConfirmation?: boolean;
+    businessProfileId?: boolean;
     businessProfile?:
       | boolean
       | Prisma.UserTermsAndConditions$businessProfileArgs<ExtArgs>;
@@ -1088,17 +1088,17 @@ export type UserTermsAndConditionsSelectUpdateManyAndReturn<
 
 export type UserTermsAndConditionsSelectScalar = {
   id?: boolean;
-  generalAgrement?: boolean;
-  reservationConfirmation?: boolean;
-  arrvalAndSeatingPolicy?: boolean;
-  canceletionAndNoShows?: boolean;
-  modifications?: boolean;
-  conductAndBehaviour?: boolean;
-  businessProfileId?: boolean;
-  policyUpdate?: boolean;
   liability?: boolean;
   createdAt?: boolean;
   updatedAt?: boolean;
+  arrvalAndSeatingPolicy?: boolean;
+  canceletionAndNoShows?: boolean;
+  conductAndBehaviour?: boolean;
+  generalAgrement?: boolean;
+  modifications?: boolean;
+  policyUpdate?: boolean;
+  reservationConfirmation?: boolean;
+  businessProfileId?: boolean;
 };
 
 export type UserTermsAndConditionsOmit<
@@ -1106,17 +1106,17 @@ export type UserTermsAndConditionsOmit<
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
   | 'id'
-  | 'generalAgrement'
-  | 'reservationConfirmation'
-  | 'arrvalAndSeatingPolicy'
-  | 'canceletionAndNoShows'
-  | 'modifications'
-  | 'conductAndBehaviour'
-  | 'businessProfileId'
-  | 'policyUpdate'
   | 'liability'
   | 'createdAt'
-  | 'updatedAt',
+  | 'updatedAt'
+  | 'arrvalAndSeatingPolicy'
+  | 'canceletionAndNoShows'
+  | 'conductAndBehaviour'
+  | 'generalAgrement'
+  | 'modifications'
+  | 'policyUpdate'
+  | 'reservationConfirmation'
+  | 'businessProfileId',
   ExtArgs['result']['userTermsAndConditions']
 >;
 export type UserTermsAndConditionsInclude<
@@ -1155,17 +1155,17 @@ export type $UserTermsAndConditionsPayload<
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
       id: string;
-      generalAgrement: string | null;
-      reservationConfirmation: string[];
-      arrvalAndSeatingPolicy: string[];
-      canceletionAndNoShows: string[];
-      modifications: string[];
-      conductAndBehaviour: string[];
-      businessProfileId: string | null;
-      policyUpdate: string | null;
       liability: string;
       createdAt: Date;
       updatedAt: Date;
+      arrvalAndSeatingPolicy: string[];
+      canceletionAndNoShows: string[];
+      conductAndBehaviour: string[];
+      generalAgrement: string | null;
+      modifications: string[];
+      policyUpdate: string | null;
+      reservationConfirmation: string[];
+      businessProfileId: string | null;
     },
     ExtArgs['result']['userTermsAndConditions']
   >;
@@ -1805,11 +1805,9 @@ export interface Prisma__UserTermsAndConditionsClient<
  */
 export interface UserTermsAndConditionsFieldRefs {
   readonly id: Prisma.FieldRef<'UserTermsAndConditions', 'String'>;
-  readonly generalAgrement: Prisma.FieldRef<'UserTermsAndConditions', 'String'>;
-  readonly reservationConfirmation: Prisma.FieldRef<
-    'UserTermsAndConditions',
-    'String[]'
-  >;
+  readonly liability: Prisma.FieldRef<'UserTermsAndConditions', 'String'>;
+  readonly createdAt: Prisma.FieldRef<'UserTermsAndConditions', 'DateTime'>;
+  readonly updatedAt: Prisma.FieldRef<'UserTermsAndConditions', 'DateTime'>;
   readonly arrvalAndSeatingPolicy: Prisma.FieldRef<
     'UserTermsAndConditions',
     'String[]'
@@ -1818,8 +1816,14 @@ export interface UserTermsAndConditionsFieldRefs {
     'UserTermsAndConditions',
     'String[]'
   >;
-  readonly modifications: Prisma.FieldRef<'UserTermsAndConditions', 'String[]'>;
   readonly conductAndBehaviour: Prisma.FieldRef<
+    'UserTermsAndConditions',
+    'String[]'
+  >;
+  readonly generalAgrement: Prisma.FieldRef<'UserTermsAndConditions', 'String'>;
+  readonly modifications: Prisma.FieldRef<'UserTermsAndConditions', 'String[]'>;
+  readonly policyUpdate: Prisma.FieldRef<'UserTermsAndConditions', 'String'>;
+  readonly reservationConfirmation: Prisma.FieldRef<
     'UserTermsAndConditions',
     'String[]'
   >;
@@ -1827,10 +1831,6 @@ export interface UserTermsAndConditionsFieldRefs {
     'UserTermsAndConditions',
     'String'
   >;
-  readonly policyUpdate: Prisma.FieldRef<'UserTermsAndConditions', 'String'>;
-  readonly liability: Prisma.FieldRef<'UserTermsAndConditions', 'String'>;
-  readonly createdAt: Prisma.FieldRef<'UserTermsAndConditions', 'DateTime'>;
-  readonly updatedAt: Prisma.FieldRef<'UserTermsAndConditions', 'DateTime'>;
 }
 
 // Custom InputTypes
