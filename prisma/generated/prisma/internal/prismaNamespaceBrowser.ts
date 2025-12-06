@@ -58,6 +58,7 @@ export const ModelName = {
   BusinessProfile: 'BusinessProfile',
   Category: 'Category',
   CustomApp: 'CustomApp',
+  Favorite: 'Favorite',
   FileInstance: 'FileInstance',
   Notification: 'Notification',
   UserNotification: 'UserNotification',
@@ -156,6 +157,17 @@ export const CustomAppScalarFieldEnum = {
 
 export type CustomAppScalarFieldEnum =
   (typeof CustomAppScalarFieldEnum)[keyof typeof CustomAppScalarFieldEnum];
+
+export const FavoriteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  restaurantId: 'restaurantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+} as const;
+
+export type FavoriteScalarFieldEnum =
+  (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum];
 
 export const FileInstanceScalarFieldEnum = {
   id: 'id',

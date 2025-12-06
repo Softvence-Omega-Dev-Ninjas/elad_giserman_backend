@@ -416,6 +416,7 @@ export const ModelName = {
   BusinessProfile: 'BusinessProfile',
   Category: 'Category',
   CustomApp: 'CustomApp',
+  Favorite: 'Favorite',
   FileInstance: 'FileInstance',
   Notification: 'Notification',
   UserNotification: 'UserNotification',
@@ -458,6 +459,7 @@ export type TypeMap<
       | 'businessProfile'
       | 'category'
       | 'customApp'
+      | 'favorite'
       | 'fileInstance'
       | 'notification'
       | 'userNotification'
@@ -777,6 +779,82 @@ export type TypeMap<
           args: Prisma.CustomAppCountArgs<ExtArgs>;
           result:
             | runtime.Types.Utils.Optional<Prisma.CustomAppCountAggregateOutputType>
+            | number;
+        };
+      };
+    };
+    Favorite: {
+      payload: Prisma.$FavoritePayload<ExtArgs>;
+      fields: Prisma.FavoriteFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.FavoriteFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.FavoriteFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>;
+        };
+        findFirst: {
+          args: Prisma.FavoriteFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.FavoriteFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>;
+        };
+        findMany: {
+          args: Prisma.FavoriteFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>[];
+        };
+        create: {
+          args: Prisma.FavoriteCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>;
+        };
+        createMany: {
+          args: Prisma.FavoriteCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        createManyAndReturn: {
+          args: Prisma.FavoriteCreateManyAndReturnArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>[];
+        };
+        delete: {
+          args: Prisma.FavoriteDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>;
+        };
+        update: {
+          args: Prisma.FavoriteUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>;
+        };
+        deleteMany: {
+          args: Prisma.FavoriteDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.FavoriteUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateManyAndReturn: {
+          args: Prisma.FavoriteUpdateManyAndReturnArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>[];
+        };
+        upsert: {
+          args: Prisma.FavoriteUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoritePayload>;
+        };
+        aggregate: {
+          args: Prisma.FavoriteAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFavorite>;
+        };
+        groupBy: {
+          args: Prisma.FavoriteGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.FavoriteGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.FavoriteCountArgs<ExtArgs>;
+          result:
+            | runtime.Types.Utils.Optional<Prisma.FavoriteCountAggregateOutputType>
             | number;
         };
       };
@@ -2101,6 +2179,17 @@ export const CustomAppScalarFieldEnum = {
 export type CustomAppScalarFieldEnum =
   (typeof CustomAppScalarFieldEnum)[keyof typeof CustomAppScalarFieldEnum];
 
+export const FavoriteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  restaurantId: 'restaurantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+} as const;
+
+export type FavoriteScalarFieldEnum =
+  (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum];
+
 export const FileInstanceScalarFieldEnum = {
   id: 'id',
   filename: 'filename',
@@ -2739,6 +2828,7 @@ export type GlobalOmitConfig = {
   businessProfile?: Prisma.BusinessProfileOmit;
   category?: Prisma.CategoryOmit;
   customApp?: Prisma.CustomAppOmit;
+  favorite?: Prisma.FavoriteOmit;
   fileInstance?: Prisma.FileInstanceOmit;
   notification?: Prisma.NotificationOmit;
   userNotification?: Prisma.UserNotificationOmit;

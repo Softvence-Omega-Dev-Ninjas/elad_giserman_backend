@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { ReviewModule } from './review/review.module';
 // import { ReviewController } from './review/review.controller';
 import { UserReservationModule } from './user-reservation/user-reservation.module';
+import { UserFavoriteModule } from './user-favorite/user-favorite.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UserReservationModule } from './user-reservation/user-reservation.modul
     UserModule,
     ReviewModule,
     UserReservationModule,
+    UserFavoriteModule,
   ],
   controllers: [],
   providers: [],

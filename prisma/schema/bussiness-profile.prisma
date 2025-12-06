@@ -24,6 +24,7 @@ model BusinessProfile {
   offers          Offer[]
   reedemOffer     ReedemaOffer[]
   reviews         Review[]
+  favorite        Favorite[]
   gallery         FileInstance[] @relation("BusinessProfileToFileInstance")
 
   @@map("business_profiles")

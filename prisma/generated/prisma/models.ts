@@ -11,6 +11,7 @@ export type * from './models/AdminActivity';
 export type * from './models/BusinessProfile';
 export type * from './models/Category';
 export type * from './models/CustomApp';
+export type * from './models/Favorite';
 export type * from './models/FileInstance';
 export type * from './models/Notification';
 export type * from './models/UserNotification';
