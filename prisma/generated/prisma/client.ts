@@ -63,6 +63,11 @@ export type Category = Prisma.CategoryModel;
  */
 export type CustomApp = Prisma.CustomAppModel;
 /**
+ * Model Favorite
+ *
+ */
+export type Favorite = Prisma.FavoriteModel;
+/**
  * Model FileInstance
  *
  */

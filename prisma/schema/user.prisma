@@ -39,6 +39,7 @@ model User {
   reviews                      Review[]
   notifications                UserNotification[]
   userSubscription             UserSubscription[]
+  favorite                     Favorite[]
   currentPlan                  SubscriptionPlan?        @relation(fields: [currentPlanId], references: [id])
 
   @@map("users")

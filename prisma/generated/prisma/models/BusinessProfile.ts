@@ -315,6 +315,7 @@ export type BusinessProfileWhereInput = {
   offers?: Prisma.OfferListRelationFilter;
   reedemOffer?: Prisma.ReedemaOfferListRelationFilter;
   reviews?: Prisma.ReviewListRelationFilter;
+  favorite?: Prisma.FavoriteListRelationFilter;
   gallery?: Prisma.FileInstanceListRelationFilter;
 };
 
@@ -344,6 +345,7 @@ export type BusinessProfileOrderByWithRelationInput = {
   offers?: Prisma.OfferOrderByRelationAggregateInput;
   reedemOffer?: Prisma.ReedemaOfferOrderByRelationAggregateInput;
   reviews?: Prisma.ReviewOrderByRelationAggregateInput;
+  favorite?: Prisma.FavoriteOrderByRelationAggregateInput;
   gallery?: Prisma.FileInstanceOrderByRelationAggregateInput;
 };
 
@@ -386,6 +388,7 @@ export type BusinessProfileWhereUniqueInput = Prisma.AtLeast<
     offers?: Prisma.OfferListRelationFilter;
     reedemOffer?: Prisma.ReedemaOfferListRelationFilter;
     reviews?: Prisma.ReviewListRelationFilter;
+    favorite?: Prisma.FavoriteListRelationFilter;
     gallery?: Prisma.FileInstanceListRelationFilter;
   },
   'id' | 'ownerId'
@@ -505,6 +508,7 @@ export type BusinessProfileCreateInput = {
   offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -532,6 +536,7 @@ export type BusinessProfileUncheckedCreateInput = {
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteUncheckedCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -562,6 +567,7 @@ export type BusinessProfileUpdateInput = {
   offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -592,6 +598,7 @@ export type BusinessProfileUncheckedUpdateInput = {
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUncheckedUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -863,6 +870,32 @@ export type BusinessProfileUncheckedUpdateManyWithoutCategoryNestedInput = {
   deleteMany?:
     | Prisma.BusinessProfileScalarWhereInput
     | Prisma.BusinessProfileScalarWhereInput[];
+};
+
+export type BusinessProfileCreateNestedOneWithoutFavoriteInput = {
+  create?: Prisma.XOR<
+    Prisma.BusinessProfileCreateWithoutFavoriteInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutFavoriteInput
+  >;
+  connectOrCreate?: Prisma.BusinessProfileCreateOrConnectWithoutFavoriteInput;
+  connect?: Prisma.BusinessProfileWhereUniqueInput;
+};
+
+export type BusinessProfileUpdateOneRequiredWithoutFavoriteNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.BusinessProfileCreateWithoutFavoriteInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutFavoriteInput
+  >;
+  connectOrCreate?: Prisma.BusinessProfileCreateOrConnectWithoutFavoriteInput;
+  upsert?: Prisma.BusinessProfileUpsertWithoutFavoriteInput;
+  connect?: Prisma.BusinessProfileWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.BusinessProfileUpdateToOneWithWhereWithoutFavoriteInput,
+      Prisma.BusinessProfileUpdateWithoutFavoriteInput
+    >,
+    Prisma.BusinessProfileUncheckedUpdateWithoutFavoriteInput
+  >;
 };
 
 export type BusinessProfileCreateNestedManyWithoutGalleryInput = {
@@ -1154,6 +1187,7 @@ export type BusinessProfileCreateWithoutCategoryInput = {
   offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -1180,6 +1214,7 @@ export type BusinessProfileUncheckedCreateWithoutCategoryInput = {
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteUncheckedCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -1258,6 +1293,148 @@ export type BusinessProfileScalarWhereInput = {
   youtube?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
 };
 
+export type BusinessProfileCreateWithoutFavoriteInput = {
+  id?: string;
+  title: string;
+  description?: string | null;
+  location: string;
+  isActive?: boolean;
+  openingTime: string;
+  closingTime: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
+  reservation?: Prisma.ReservationCreateNestedManyWithoutRestaurantInput;
+  category?: Prisma.CategoryCreateNestedOneWithoutProfileInput;
+  owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
+  offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
+  reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
+};
+
+export type BusinessProfileUncheckedCreateWithoutFavoriteInput = {
+  id?: string;
+  title: string;
+  description?: string | null;
+  location: string;
+  isActive?: boolean;
+  openingTime: string;
+  closingTime: string;
+  categoryId?: string | null;
+  ownerId: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  profileTypeName?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  pinterest?: string | null;
+  twitter?: string | null;
+  website?: string | null;
+  youtube?: string | null;
+  reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutRestaurantInput;
+  offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
+  reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
+};
+
+export type BusinessProfileCreateOrConnectWithoutFavoriteInput = {
+  where: Prisma.BusinessProfileWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.BusinessProfileCreateWithoutFavoriteInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutFavoriteInput
+  >;
+};
+
+export type BusinessProfileUpsertWithoutFavoriteInput = {
+  update: Prisma.XOR<
+    Prisma.BusinessProfileUpdateWithoutFavoriteInput,
+    Prisma.BusinessProfileUncheckedUpdateWithoutFavoriteInput
+  >;
+  create: Prisma.XOR<
+    Prisma.BusinessProfileCreateWithoutFavoriteInput,
+    Prisma.BusinessProfileUncheckedCreateWithoutFavoriteInput
+  >;
+  where?: Prisma.BusinessProfileWhereInput;
+};
+
+export type BusinessProfileUpdateToOneWithWhereWithoutFavoriteInput = {
+  where?: Prisma.BusinessProfileWhereInput;
+  data: Prisma.XOR<
+    Prisma.BusinessProfileUpdateWithoutFavoriteInput,
+    Prisma.BusinessProfileUncheckedUpdateWithoutFavoriteInput
+  >;
+};
+
+export type BusinessProfileUpdateWithoutFavoriteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  title?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  location?: Prisma.StringFieldUpdateOperationsInput | string;
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  reservation?: Prisma.ReservationUpdateManyWithoutRestaurantNestedInput;
+  category?: Prisma.CategoryUpdateOneWithoutProfileNestedInput;
+  owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
+  offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
+  reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
+};
+
+export type BusinessProfileUncheckedUpdateWithoutFavoriteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  title?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  location?: Prisma.StringFieldUpdateOperationsInput | string;
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  closingTime?: Prisma.StringFieldUpdateOperationsInput | string;
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  profileTypeName?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null;
+  facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  instagram?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  linkedin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  pinterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  twitter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  youtube?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  reservation?: Prisma.ReservationUncheckedUpdateManyWithoutRestaurantNestedInput;
+  offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+};
+
 export type BusinessProfileCreateWithoutGalleryInput = {
   id?: string;
   title: string;
@@ -1282,6 +1459,7 @@ export type BusinessProfileCreateWithoutGalleryInput = {
   offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteCreateNestedManyWithoutRestaurantInput;
 };
 
 export type BusinessProfileUncheckedCreateWithoutGalleryInput = {
@@ -1308,6 +1486,7 @@ export type BusinessProfileUncheckedCreateWithoutGalleryInput = {
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteUncheckedCreateNestedManyWithoutRestaurantInput;
 };
 
 export type BusinessProfileCreateOrConnectWithoutGalleryInput = {
@@ -1369,6 +1548,7 @@ export type BusinessProfileCreateWithoutOffersInput = {
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -1395,6 +1575,7 @@ export type BusinessProfileUncheckedCreateWithoutOffersInput = {
   reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutRestaurantInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteUncheckedCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -1452,6 +1633,7 @@ export type BusinessProfileUpdateWithoutOffersInput = {
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -1481,6 +1663,7 @@ export type BusinessProfileUncheckedUpdateWithoutOffersInput = {
   reservation?: Prisma.ReservationUncheckedUpdateManyWithoutRestaurantNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUncheckedUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -1507,6 +1690,7 @@ export type BusinessProfileCreateWithoutReedemOfferInput = {
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -1533,6 +1717,7 @@ export type BusinessProfileUncheckedCreateWithoutReedemOfferInput = {
   reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutRestaurantInput;
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteUncheckedCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -1590,6 +1775,7 @@ export type BusinessProfileUpdateWithoutReedemOfferInput = {
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -1619,6 +1805,7 @@ export type BusinessProfileUncheckedUpdateWithoutReedemOfferInput = {
   reservation?: Prisma.ReservationUncheckedUpdateManyWithoutRestaurantNestedInput;
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUncheckedUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -1645,6 +1832,7 @@ export type BusinessProfileCreateWithoutReservationInput = {
   offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -1671,6 +1859,7 @@ export type BusinessProfileUncheckedCreateWithoutReservationInput = {
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteUncheckedCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -1728,6 +1917,7 @@ export type BusinessProfileUpdateWithoutReservationInput = {
   offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -1757,6 +1947,7 @@ export type BusinessProfileUncheckedUpdateWithoutReservationInput = {
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUncheckedUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -1783,6 +1974,7 @@ export type BusinessProfileCreateWithoutReviewsInput = {
   owner: Prisma.UserCreateNestedOneWithoutBusinessProfileInput;
   offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
+  favorite?: Prisma.FavoriteCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -1809,6 +2001,7 @@ export type BusinessProfileUncheckedCreateWithoutReviewsInput = {
   reservation?: Prisma.ReservationUncheckedCreateNestedManyWithoutRestaurantInput;
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
+  favorite?: Prisma.FavoriteUncheckedCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -1866,6 +2059,7 @@ export type BusinessProfileUpdateWithoutReviewsInput = {
   owner?: Prisma.UserUpdateOneRequiredWithoutBusinessProfileNestedInput;
   offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
+  favorite?: Prisma.FavoriteUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -1895,6 +2089,7 @@ export type BusinessProfileUncheckedUpdateWithoutReviewsInput = {
   reservation?: Prisma.ReservationUncheckedUpdateManyWithoutRestaurantNestedInput;
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
+  favorite?: Prisma.FavoriteUncheckedUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -1921,6 +2116,7 @@ export type BusinessProfileCreateWithoutOwnerInput = {
   offers?: Prisma.OfferCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -1947,6 +2143,7 @@ export type BusinessProfileUncheckedCreateWithoutOwnerInput = {
   offers?: Prisma.OfferUncheckedCreateNestedManyWithoutBusinessInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedCreateNestedManyWithoutBusinessInput;
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBusinessProfileInput;
+  favorite?: Prisma.FavoriteUncheckedCreateNestedManyWithoutRestaurantInput;
   gallery?: Prisma.FileInstanceUncheckedCreateNestedManyWithoutBusinessProfileInput;
 };
 
@@ -2004,6 +2201,7 @@ export type BusinessProfileUpdateWithoutOwnerInput = {
   offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -2033,6 +2231,7 @@ export type BusinessProfileUncheckedUpdateWithoutOwnerInput = {
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUncheckedUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -2083,6 +2282,7 @@ export type BusinessProfileUpdateWithoutCategoryInput = {
   offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -2112,6 +2312,7 @@ export type BusinessProfileUncheckedUpdateWithoutCategoryInput = {
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUncheckedUpdateManyWithoutRestaurantNestedInput;
   gallery?: Prisma.FileInstanceUncheckedUpdateManyWithoutBusinessProfileNestedInput;
 };
 
@@ -2166,6 +2367,7 @@ export type BusinessProfileUpdateWithoutGalleryInput = {
   offers?: Prisma.OfferUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUpdateManyWithoutRestaurantNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateWithoutGalleryInput = {
@@ -2195,6 +2397,7 @@ export type BusinessProfileUncheckedUpdateWithoutGalleryInput = {
   offers?: Prisma.OfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reedemOffer?: Prisma.ReedemaOfferUncheckedUpdateManyWithoutBusinessNestedInput;
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBusinessProfileNestedInput;
+  favorite?: Prisma.FavoriteUncheckedUpdateManyWithoutRestaurantNestedInput;
 };
 
 export type BusinessProfileUncheckedUpdateManyWithoutGalleryInput = {
@@ -2231,6 +2434,7 @@ export type BusinessProfileCountOutputType = {
   offers: number;
   reedemOffer: number;
   reviews: number;
+  favorite: number;
   gallery: number;
 };
 
@@ -2242,6 +2446,7 @@ export type BusinessProfileCountOutputTypeSelect<
   offers?: boolean | BusinessProfileCountOutputTypeCountOffersArgs;
   reedemOffer?: boolean | BusinessProfileCountOutputTypeCountReedemOfferArgs;
   reviews?: boolean | BusinessProfileCountOutputTypeCountReviewsArgs;
+  favorite?: boolean | BusinessProfileCountOutputTypeCountFavoriteArgs;
   gallery?: boolean | BusinessProfileCountOutputTypeCountGalleryArgs;
 };
 
@@ -2301,6 +2506,16 @@ export type BusinessProfileCountOutputTypeCountReviewsArgs<
 /**
  * BusinessProfileCountOutputType without action
  */
+export type BusinessProfileCountOutputTypeCountFavoriteArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.FavoriteWhereInput;
+};
+
+/**
+ * BusinessProfileCountOutputType without action
+ */
 export type BusinessProfileCountOutputTypeCountGalleryArgs<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
@@ -2338,6 +2553,7 @@ export type BusinessProfileSelect<
     offers?: boolean | Prisma.BusinessProfile$offersArgs<ExtArgs>;
     reedemOffer?: boolean | Prisma.BusinessProfile$reedemOfferArgs<ExtArgs>;
     reviews?: boolean | Prisma.BusinessProfile$reviewsArgs<ExtArgs>;
+    favorite?: boolean | Prisma.BusinessProfile$favoriteArgs<ExtArgs>;
     gallery?: boolean | Prisma.BusinessProfile$galleryArgs<ExtArgs>;
     _count?:
       | boolean
@@ -2463,6 +2679,7 @@ export type BusinessProfileInclude<
   offers?: boolean | Prisma.BusinessProfile$offersArgs<ExtArgs>;
   reedemOffer?: boolean | Prisma.BusinessProfile$reedemOfferArgs<ExtArgs>;
   reviews?: boolean | Prisma.BusinessProfile$reviewsArgs<ExtArgs>;
+  favorite?: boolean | Prisma.BusinessProfile$favoriteArgs<ExtArgs>;
   gallery?: boolean | Prisma.BusinessProfile$galleryArgs<ExtArgs>;
   _count?: boolean | Prisma.BusinessProfileCountOutputTypeDefaultArgs<ExtArgs>;
 };
@@ -2493,6 +2710,7 @@ export type $BusinessProfilePayload<
     offers: Prisma.$OfferPayload<ExtArgs>[];
     reedemOffer: Prisma.$ReedemaOfferPayload<ExtArgs>[];
     reviews: Prisma.$ReviewPayload<ExtArgs>[];
+    favorite: Prisma.$FavoritePayload<ExtArgs>[];
     gallery: Prisma.$FileInstancePayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
@@ -3143,6 +3361,17 @@ export interface Prisma__BusinessProfileClient<
   ): Prisma.PrismaPromise<
     | runtime.Types.Result.GetResult<
         Prisma.$ReviewPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
+  favorite<T extends Prisma.BusinessProfile$favoriteArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.BusinessProfile$favoriteArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$FavoritePayload<ExtArgs>,
         T,
         'findMany',
         GlobalOmitOptions
@@ -3831,6 +4060,35 @@ export type BusinessProfile$reviewsArgs<
   take?: number;
   skip?: number;
   distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[];
+};
+
+/**
+ * BusinessProfile.favorite
+ */
+export type BusinessProfile$favoriteArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the Favorite
+   */
+  select?: Prisma.FavoriteSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the Favorite
+   */
+  omit?: Prisma.FavoriteOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FavoriteInclude<ExtArgs> | null;
+  where?: Prisma.FavoriteWhereInput;
+  orderBy?:
+    | Prisma.FavoriteOrderByWithRelationInput
+    | Prisma.FavoriteOrderByWithRelationInput[];
+  cursor?: Prisma.FavoriteWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: Prisma.FavoriteScalarFieldEnum | Prisma.FavoriteScalarFieldEnum[];
 };
 
 /**
