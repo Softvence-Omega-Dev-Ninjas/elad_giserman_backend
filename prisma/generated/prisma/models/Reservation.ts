@@ -34,6 +34,7 @@ export type ReservationMinAggregateOutputType = {
   createdAt: Date | null;
   updatedAt: Date | null;
   isActive: boolean | null;
+  aproval: boolean | null;
 };
 
 export type ReservationMaxAggregateOutputType = {
@@ -46,6 +47,7 @@ export type ReservationMaxAggregateOutputType = {
   createdAt: Date | null;
   updatedAt: Date | null;
   isActive: boolean | null;
+  aproval: boolean | null;
 };
 
 export type ReservationCountAggregateOutputType = {
@@ -58,6 +60,7 @@ export type ReservationCountAggregateOutputType = {
   createdAt: number;
   updatedAt: number;
   isActive: number;
+  aproval: number;
   _all: number;
 };
 
@@ -71,6 +74,7 @@ export type ReservationMinAggregateInputType = {
   createdAt?: true;
   updatedAt?: true;
   isActive?: true;
+  aproval?: true;
 };
 
 export type ReservationMaxAggregateInputType = {
@@ -83,6 +87,7 @@ export type ReservationMaxAggregateInputType = {
   createdAt?: true;
   updatedAt?: true;
   isActive?: true;
+  aproval?: true;
 };
 
 export type ReservationCountAggregateInputType = {
@@ -95,6 +100,7 @@ export type ReservationCountAggregateInputType = {
   createdAt?: true;
   updatedAt?: true;
   isActive?: true;
+  aproval?: true;
   _all?: true;
 };
 
@@ -187,6 +193,7 @@ export type ReservationGroupByOutputType = {
   createdAt: Date;
   updatedAt: Date;
   isActive: boolean | null;
+  aproval: boolean | null;
   _count: ReservationCountAggregateOutputType | null;
   _min: ReservationMinAggregateOutputType | null;
   _max: ReservationMaxAggregateOutputType | null;
@@ -218,6 +225,7 @@ export type ReservationWhereInput = {
   createdAt?: Prisma.DateTimeFilter<'Reservation'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Reservation'> | Date | string;
   isActive?: Prisma.BoolNullableFilter<'Reservation'> | boolean | null;
+  aproval?: Prisma.BoolNullableFilter<'Reservation'> | boolean | null;
   restaurant?: Prisma.XOR<
     Prisma.BusinessProfileScalarRelationFilter,
     Prisma.BusinessProfileWhereInput
@@ -235,6 +243,7 @@ export type ReservationOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   isActive?: Prisma.SortOrderInput | Prisma.SortOrder;
+  aproval?: Prisma.SortOrderInput | Prisma.SortOrder;
   restaurant?: Prisma.BusinessProfileOrderByWithRelationInput;
   user?: Prisma.UserOrderByWithRelationInput;
 };
@@ -253,6 +262,7 @@ export type ReservationWhereUniqueInput = Prisma.AtLeast<
     createdAt?: Prisma.DateTimeFilter<'Reservation'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'Reservation'> | Date | string;
     isActive?: Prisma.BoolNullableFilter<'Reservation'> | boolean | null;
+    aproval?: Prisma.BoolNullableFilter<'Reservation'> | boolean | null;
     restaurant?: Prisma.XOR<
       Prisma.BusinessProfileScalarRelationFilter,
       Prisma.BusinessProfileWhereInput
@@ -272,6 +282,7 @@ export type ReservationOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   isActive?: Prisma.SortOrderInput | Prisma.SortOrder;
+  aproval?: Prisma.SortOrderInput | Prisma.SortOrder;
   _count?: Prisma.ReservationCountOrderByAggregateInput;
   _max?: Prisma.ReservationMaxOrderByAggregateInput;
   _min?: Prisma.ReservationMinOrderByAggregateInput;
@@ -303,6 +314,10 @@ export type ReservationScalarWhereWithAggregatesInput = {
     | Prisma.BoolNullableWithAggregatesFilter<'Reservation'>
     | boolean
     | null;
+  aproval?:
+    | Prisma.BoolNullableWithAggregatesFilter<'Reservation'>
+    | boolean
+    | null;
 };
 
 export type ReservationCreateInput = {
@@ -313,6 +328,7 @@ export type ReservationCreateInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   isActive?: boolean | null;
+  aproval?: boolean | null;
   restaurant: Prisma.BusinessProfileCreateNestedOneWithoutReservationInput;
   user: Prisma.UserCreateNestedOneWithoutReservationInput;
 };
@@ -327,6 +343,7 @@ export type ReservationUncheckedCreateInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   isActive?: boolean | null;
+  aproval?: boolean | null;
 };
 
 export type ReservationUpdateInput = {
@@ -337,6 +354,7 @@ export type ReservationUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  aproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
   restaurant?: Prisma.BusinessProfileUpdateOneRequiredWithoutReservationNestedInput;
   user?: Prisma.UserUpdateOneRequiredWithoutReservationNestedInput;
 };
@@ -351,6 +369,7 @@ export type ReservationUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  aproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
 };
 
 export type ReservationCreateManyInput = {
@@ -363,6 +382,7 @@ export type ReservationCreateManyInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   isActive?: boolean | null;
+  aproval?: boolean | null;
 };
 
 export type ReservationUpdateManyMutationInput = {
@@ -373,6 +393,7 @@ export type ReservationUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  aproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
 };
 
 export type ReservationUncheckedUpdateManyInput = {
@@ -385,6 +406,7 @@ export type ReservationUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  aproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
 };
 
 export type ReservationListRelationFilter = {
@@ -407,6 +429,7 @@ export type ReservationCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   isActive?: Prisma.SortOrder;
+  aproval?: Prisma.SortOrder;
 };
 
 export type ReservationMaxOrderByAggregateInput = {
@@ -419,6 +442,7 @@ export type ReservationMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   isActive?: Prisma.SortOrder;
+  aproval?: Prisma.SortOrder;
 };
 
 export type ReservationMinOrderByAggregateInput = {
@@ -431,6 +455,7 @@ export type ReservationMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   isActive?: Prisma.SortOrder;
+  aproval?: Prisma.SortOrder;
 };
 
 export type ReservationCreateNestedManyWithoutRestaurantInput = {
@@ -661,6 +686,7 @@ export type ReservationCreateWithoutRestaurantInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   isActive?: boolean | null;
+  aproval?: boolean | null;
   user: Prisma.UserCreateNestedOneWithoutReservationInput;
 };
 
@@ -673,6 +699,7 @@ export type ReservationUncheckedCreateWithoutRestaurantInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   isActive?: boolean | null;
+  aproval?: boolean | null;
 };
 
 export type ReservationCreateOrConnectWithoutRestaurantInput = {
@@ -735,6 +762,7 @@ export type ReservationScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<'Reservation'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Reservation'> | Date | string;
   isActive?: Prisma.BoolNullableFilter<'Reservation'> | boolean | null;
+  aproval?: Prisma.BoolNullableFilter<'Reservation'> | boolean | null;
 };
 
 export type ReservationCreateWithoutUserInput = {
@@ -745,6 +773,7 @@ export type ReservationCreateWithoutUserInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   isActive?: boolean | null;
+  aproval?: boolean | null;
   restaurant: Prisma.BusinessProfileCreateNestedOneWithoutReservationInput;
 };
 
@@ -757,6 +786,7 @@ export type ReservationUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   isActive?: boolean | null;
+  aproval?: boolean | null;
 };
 
 export type ReservationCreateOrConnectWithoutUserInput = {
@@ -811,6 +841,7 @@ export type ReservationCreateManyRestaurantInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   isActive?: boolean | null;
+  aproval?: boolean | null;
 };
 
 export type ReservationUpdateWithoutRestaurantInput = {
@@ -821,6 +852,7 @@ export type ReservationUpdateWithoutRestaurantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  aproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
   user?: Prisma.UserUpdateOneRequiredWithoutReservationNestedInput;
 };
 
@@ -833,6 +865,7 @@ export type ReservationUncheckedUpdateWithoutRestaurantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  aproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
 };
 
 export type ReservationUncheckedUpdateManyWithoutRestaurantInput = {
@@ -844,6 +877,7 @@ export type ReservationUncheckedUpdateManyWithoutRestaurantInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  aproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
 };
 
 export type ReservationCreateManyUserInput = {
@@ -855,6 +889,7 @@ export type ReservationCreateManyUserInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   isActive?: boolean | null;
+  aproval?: boolean | null;
 };
 
 export type ReservationUpdateWithoutUserInput = {
@@ -865,6 +900,7 @@ export type ReservationUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  aproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
   restaurant?: Prisma.BusinessProfileUpdateOneRequiredWithoutReservationNestedInput;
 };
 
@@ -877,6 +913,7 @@ export type ReservationUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  aproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
 };
 
 export type ReservationUncheckedUpdateManyWithoutUserInput = {
@@ -888,6 +925,7 @@ export type ReservationUncheckedUpdateManyWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  aproval?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
 };
 
 export type ReservationSelect<
@@ -904,6 +942,7 @@ export type ReservationSelect<
     createdAt?: boolean;
     updatedAt?: boolean;
     isActive?: boolean;
+    aproval?: boolean;
     restaurant?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   },
@@ -924,6 +963,7 @@ export type ReservationSelectCreateManyAndReturn<
     createdAt?: boolean;
     updatedAt?: boolean;
     isActive?: boolean;
+    aproval?: boolean;
     restaurant?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   },
@@ -944,6 +984,7 @@ export type ReservationSelectUpdateManyAndReturn<
     createdAt?: boolean;
     updatedAt?: boolean;
     isActive?: boolean;
+    aproval?: boolean;
     restaurant?: boolean | Prisma.BusinessProfileDefaultArgs<ExtArgs>;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   },
@@ -960,6 +1001,7 @@ export type ReservationSelectScalar = {
   createdAt?: boolean;
   updatedAt?: boolean;
   isActive?: boolean;
+  aproval?: boolean;
 };
 
 export type ReservationOmit<
@@ -974,7 +1016,8 @@ export type ReservationOmit<
   | 'phoneNumber'
   | 'createdAt'
   | 'updatedAt'
-  | 'isActive',
+  | 'isActive'
+  | 'aproval',
   ExtArgs['result']['reservation']
 >;
 export type ReservationInclude<
@@ -1019,6 +1062,7 @@ export type $ReservationPayload<
       createdAt: Date;
       updatedAt: Date;
       isActive: boolean | null;
+      aproval: boolean | null;
     },
     ExtArgs['result']['reservation']
   >;
@@ -1651,6 +1695,7 @@ export interface ReservationFieldRefs {
   readonly createdAt: Prisma.FieldRef<'Reservation', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'Reservation', 'DateTime'>;
   readonly isActive: Prisma.FieldRef<'Reservation', 'Boolean'>;
+  readonly aproval: Prisma.FieldRef<'Reservation', 'Boolean'>;
 }
 
 // Custom InputTypes
