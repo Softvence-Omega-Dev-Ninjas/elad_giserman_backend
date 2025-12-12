@@ -2274,6 +2274,7 @@ export const ReservationScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isActive: 'isActive',
+  aproval: 'aproval',
 } as const;
 
 export type ReservationScalarFieldEnum =
