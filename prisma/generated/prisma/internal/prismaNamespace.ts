@@ -2256,6 +2256,8 @@ export const ReedemaOfferScalarFieldEnum = {
   redeemedAt: 'redeemedAt',
   bussinessId: 'bussinessId',
   userId: 'userId',
+  isClaimed: 'isClaimed',
+  isOrganizedApproved: 'isOrganizedApproved',
   expiresAt: 'expiresAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',

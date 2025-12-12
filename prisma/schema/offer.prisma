@@ -24,6 +24,8 @@ model ReedemaOffer {
   redeemedAt  DateTime?
   bussinessId String
   userId      String
+  isClaimed  Boolean? @default(false)
+  isOrganizedApproved  Boolean @default(false)
   expiresAt   DateTime
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @default(now()) @updatedAt

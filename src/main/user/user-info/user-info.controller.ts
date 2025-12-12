@@ -14,7 +14,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UpdateUserInfoDto } from './dto/update-user-info.dto';
 import { UserInfoService } from './user-info.service';
 import { SpinHistoryDto } from './dto/createSpinHistory.dto';
@@ -133,6 +139,22 @@ export class UserInfoController {
       };
     } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
+  @ValidateAuth()
+  @Patch('claim-redeemtion/:id')
+  @ApiOperation({ summary: 'Claim user redemtion by user' })
+  async claimOffer(@Param('id') id: string, @GetUser('sub') userId: string) {
+    try {
+      const res = await this.userInfoService.claimOffer(id, userId);
+      return {
+        status: HttpStatus.OK,
+        message: 'Offer claimed successful',
+        data: res,
+      };
+    } catch (err) {
+      throw new InternalServerErrorException(err.message, err.status);
     }
   }
 }
