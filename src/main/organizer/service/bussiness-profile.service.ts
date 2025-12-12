@@ -477,18 +477,17 @@ export class BusinessProfileService {
       where,
       include: {
         offer: true,
-        user:{
-          select:{
-            name:true,
-            email:true,
-            avatarUrl:true,
-            id:true
-          }
-        }
+        user: {
+          select: {
+            name: true,
+            email: true,
+            avatarUrl: true,
+            id: true,
+          },
+        },
       },
     });
   }
-
 
   //*Get all reservations
   async getARestReservation(userId: string, filter: ReservationFilter) {
@@ -547,7 +546,6 @@ export class BusinessProfileService {
       total,
     };
   }
-
 
   // *Accept Reservation
   async acceptReservation(id: string) {

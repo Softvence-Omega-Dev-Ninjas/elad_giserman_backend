@@ -129,12 +129,12 @@ export class BusinessProfileController {
   @ApiOperation({ summary: 'Get own Bussiness Profile (only for organizer)' })
   @Get('myBusinessProfile')
   async getBusinessProfile(@GetUser('sub') id: string) {
-    const res=await this.businessProfileService.getBusinessProfile(id);
+    const res = await this.businessProfileService.getBusinessProfile(id);
     return {
       status: HttpStatus.OK,
       message: 'Business Profile fetched successful',
       data: res,
-    }
+    };
   }
 
   // user profile update.
@@ -480,12 +480,11 @@ export class BusinessProfileController {
     }
   }
 
-
-//* approve users Cliaimd offer
-@ValidateOrganizer()
+  //* approve users Cliaimd offer
+  @ValidateOrganizer()
   @Patch('approve-redemtions/:id')
-  @ApiOperation({summary:"Apprord user redemtion by organizer"})
-  async approveRedemtions(@Param('id') id:string) {
+  @ApiOperation({ summary: 'Apprord user redemtion by organizer' })
+  async approveRedemtions(@Param('id') id: string) {
     try {
       const res = await this.offerService.approveUserOfferClaimed(id);
       return {

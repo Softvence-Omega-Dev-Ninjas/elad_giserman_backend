@@ -240,25 +240,24 @@ export class UserInfoService {
     return res;
   }
 
-
-  //*claimed offer 
-  async claimOffer(id:string,userId:string){
+  //*claimed offer
+  async claimOffer(id: string, userId: string) {
     const isClaimed = await this.prisma.client.reedemaOffer.findFirst({
       where: {
-        id:id,
-        userId:userId
-       },
+        id: id,
+        userId: userId,
+      },
     });
-    if(!isClaimed){
+    if (!isClaimed) {
       throw new NotFoundException('You Did not redeem this offer yet');
     }
-    if(isClaimed.isClaimed){
+    if (isClaimed.isClaimed) {
       throw new BadRequestException('You already claimed this offer');
     }
-   const res= await this.prisma.client.reedemaOffer.update({
+    const res = await this.prisma.client.reedemaOffer.update({
       where: {
-        id:id,
-        userId:userId
+        id: id,
+        userId: userId,
       },
       data: {
         isClaimed: true,

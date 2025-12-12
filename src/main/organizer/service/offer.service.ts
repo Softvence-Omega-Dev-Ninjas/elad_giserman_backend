@@ -262,20 +262,19 @@ export class OfferService {
     return null;
   }
 
-
-
-  async approveUserOfferClaimed(redemtionId:string){
+  async approveUserOfferClaimed(redemtionId: string) {
     const redemption = await this.prisma.client.reedemaOffer.findFirst({
-      where:{id:redemtionId}
-    })
-    if(!redemption) throw new NotFoundException('Redemption not found');
-    if(redemption.isOrganizedApproved) throw new BadRequestException('Already approved');
+      where: { id: redemtionId },
+    });
+    if (!redemption) throw new NotFoundException('Redemption not found');
+    if (redemption.isOrganizedApproved)
+      throw new BadRequestException('Already approved');
     const updatedRedemption = await this.prisma.client.reedemaOffer.update({
-      where:{id:redemtionId},
-      data:{
-        isOrganizedApproved:true
-      }
-    })
+      where: { id: redemtionId },
+      data: {
+        isOrganizedApproved: true,
+      },
+    });
     return updatedRedemption;
   }
 }
