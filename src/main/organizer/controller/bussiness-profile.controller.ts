@@ -42,6 +42,7 @@ import {
   CreateUserTermsAndConditionsDto,
   UpdateUserTermsAndConditionsDto,
 } from '../dto/termsAndContidion.dto';
+import { ReservationFilter } from '../dto/getReservation.dto';
 
 @ApiTags('Business Profiles')
 @ApiBearerAuth()
@@ -435,6 +436,41 @@ export class BusinessProfileController {
         data: res,
       };
     } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
+
+
+  @ValidateOrganizer()
+  @Get('restaurent-reservation')
+  async getAllRestReservation( 
+    @GetUser('sub') userId: string,
+    @Query() filter:ReservationFilter
+  ){
+    try{
+      const res=await this.businessProfileService.getARestReservation(userId,filter)
+      return {
+        status: HttpStatus.OK,
+        message: 'Redemtions fetched successfully',
+        res
+      };
+    }catch(error){
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
+
+  @Patch('accetp-reservation/:id')
+  async acceptReservation(@Param('id') id:string){
+    try{
+       const res=await this.businessProfileService.acceptReservation(id)
+       return {
+        status:HttpStatus.ACCEPTED,
+        message:'Reservation accepted successfully',
+        data:res
+       }
+    }catch(error){
       throw new InternalServerErrorException(error.message, error.status);
     }
   }

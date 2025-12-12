@@ -33,6 +33,7 @@ import { GetUserDto } from '../dto/getuser.dto';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
+import { ReservationFilter } from '@/main/organizer/dto/getReservation.dto';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -398,6 +399,27 @@ export class AdminPlatformManagementController {
       return {
         status: HttpStatus.OK,
         message: 'Custom app details fetched successfully',
+        data: res,
+      };
+    } catch (error) {
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save spin data`, error.stack);
+      throw new InternalServerErrorException(message);
+    }
+  }
+
+
+
+
+
+
+  @Get('all-reservation')
+  async getAllReservation(@Query() filter: ReservationFilter) {
+    try {
+      const res = await this.platformManagementService.getAllReservation(filter);
+      return {
+        status: HttpStatus.OK,
+        message: 'Reservation fetched successfully',
         data: res,
       };
     } catch (error) {

@@ -14,6 +14,7 @@ import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { count } from 'node:console';
+import { ReservationFilter } from '@/main/organizer/dto/getReservation.dto';
 // import { log } from 'console';
 @Injectable()
 export class AdminPlatfromManagementService {
@@ -156,9 +157,11 @@ export class AdminPlatfromManagementService {
       }),
     ]);
 
+    const totalReservation=await this.prisma.client.reservation.count()
     return {
       totalUser,
       totalFreeUser,
+      totalReservation,
       totalVipUser: totalUser - totalFreeUser,
       totalRest: totalBusinessCount,
 
@@ -169,7 +172,7 @@ export class AdminPlatfromManagementService {
         users: recentUsers,
         businessProfiles: recentBusinessProfiles,
         reviews: recentReviews,
-        offers: recentOffers,
+        offers: recentOffers
       },
     };
   }
@@ -589,4 +592,65 @@ export class AdminPlatfromManagementService {
     const res = await this.prisma.client.customApp.findFirst();
     return res;
   }
+
+
+
+async getAllReservation(filter: ReservationFilter) {
+  const { page = 1, limit = 10, search, date } = filter;
+  const skip = (page - 1) * limit;
+
+
+  const where: any = {
+ 
+  };
+  if (search) {
+    where.OR = [
+      { reservationName: { contains: search, mode: 'insensitive' } },
+      { user: { name: { contains: search, mode: 'insensitive' } } },
+    ];
+  }
+  if (date) {
+    where.createdAt = {
+      gte: new Date(`${date}T00:00:00.000Z`),
+      lte: new Date(`${date}T23:59:59.999Z`),
+    };
+  }
+  const reservations = await this.prisma.client.reservation.findMany({
+    where,
+    include: {
+      user:{
+        select:{
+          name:true,
+          email:true,
+          mobile:true
+        }
+      },
+      restaurant:{
+        select:{
+          title:true,
+          location:true,
+          category:{
+            select:{
+              name:true
+            }
+          }
+        }
+      }
+    },
+    skip,
+    take: limit,
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+  const total = await this.prisma.client.reservation.count({ where });
+
+  return {
+    data: reservations,
+    page,
+    limit,
+    total,
+  };
+}
+
 }

@@ -17,6 +17,7 @@ import {
   CreateUserTermsAndConditionsDto,
   UpdateUserTermsAndConditionsDto,
 } from '../dto/termsAndContidion.dto';
+import { ReservationFilter } from '../dto/getReservation.dto';
 
 function shuffleArray<T>(array: T[]): T[] {
   return array.sort(() => Math.random() - 0.5);
@@ -249,11 +250,13 @@ export class BusinessProfileService {
       include: {
         category: true,
         gallery: true,
+        reservation:true,
         owner: { select: { name: true } },
         _count: {
           select: {
             offers: true,
             reedemOffer: true,
+            reservation:true
           },
         },
       },
@@ -479,4 +482,82 @@ export class BusinessProfileService {
       },
     });
   }
+
+
+async getARestReservation(userId: string, filter: ReservationFilter) {
+  const { page = 1, limit = 10, search, date } = filter;
+  const skip = (page - 1) * limit;
+
+  const findOrganizationProfile = await this.prisma.client.businessProfile.findFirst({
+    where: {
+      ownerId: userId,
+    },
+  });
+
+  if (!findOrganizationProfile) {
+    return [];
+  }
+  const where: any = {
+    restaurntId: findOrganizationProfile.id,
+  };
+  if (search) {
+    where.OR = [
+      { reservationName: { contains: search, mode: 'insensitive' } },
+      { user: { name: { contains: search, mode: 'insensitive' } } },
+    ];
+  }
+  if (date) {
+    where.createdAt = {
+      gte: new Date(`${date}T00:00:00.000Z`),
+      lte: new Date(`${date}T23:59:59.999Z`),
+    };
+  }
+  const reservations = await this.prisma.client.reservation.findMany({
+    where,
+    include: {
+      user:{
+        select:{
+          name:true,
+          email:true,
+          avatarUrl:true,
+          mobile:true
+        }
+      },
+    },
+    skip,
+    take: limit,
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+  const total = await this.prisma.client.reservation.count({ where });
+
+  return {
+    data: reservations,
+    page,
+    limit,
+    total,
+  };
+}
+
+
+async acceptReservation(id:string){
+  const isExist=await this.prisma.client.reservation.findFirst({
+    where:{
+      id:id
+    }
+  })
+  if(!isExist){
+    throw new NotFoundException('Reservation not found')
+  }
+  const res=await this.prisma.client.reservation.update({
+    where:{
+      id:id
+    },
+    data:{
+      aproval:true
+    }
+  })
+  return res
+}
 }
