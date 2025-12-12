@@ -440,37 +440,37 @@ export class BusinessProfileController {
     }
   }
 
-
-
   @ValidateOrganizer()
   @Get('restaurent-reservation')
-  async getAllRestReservation( 
+  async getAllRestReservation(
     @GetUser('sub') userId: string,
-    @Query() filter:ReservationFilter
-  ){
-    try{
-      const res=await this.businessProfileService.getARestReservation(userId,filter)
+    @Query() filter: ReservationFilter,
+  ) {
+    try {
+      const res = await this.businessProfileService.getARestReservation(
+        userId,
+        filter,
+      );
       return {
         status: HttpStatus.OK,
         message: 'Redemtions fetched successfully',
-        res
+        res,
       };
-    }catch(error){
+    } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }
 
-
   @Patch('accetp-reservation/:id')
-  async acceptReservation(@Param('id') id:string){
-    try{
-       const res=await this.businessProfileService.acceptReservation(id)
-       return {
-        status:HttpStatus.ACCEPTED,
-        message:'Reservation accepted successfully',
-        data:res
-       }
-    }catch(error){
+  async acceptReservation(@Param('id') id: string) {
+    try {
+      const res = await this.businessProfileService.acceptReservation(id);
+      return {
+        status: HttpStatus.ACCEPTED,
+        message: 'Reservation accepted successfully',
+        data: res,
+      };
+    } catch (error) {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }

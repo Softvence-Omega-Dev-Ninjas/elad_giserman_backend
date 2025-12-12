@@ -408,15 +408,11 @@ export class AdminPlatformManagementController {
     }
   }
 
-
-
-
-
-
   @Get('all-reservation')
   async getAllReservation(@Query() filter: ReservationFilter) {
     try {
-      const res = await this.platformManagementService.getAllReservation(filter);
+      const res =
+        await this.platformManagementService.getAllReservation(filter);
       return {
         status: HttpStatus.OK,
         message: 'Reservation fetched successfully',

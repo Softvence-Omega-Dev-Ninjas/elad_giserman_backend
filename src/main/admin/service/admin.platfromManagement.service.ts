@@ -157,7 +157,7 @@ export class AdminPlatfromManagementService {
       }),
     ]);
 
-    const totalReservation=await this.prisma.client.reservation.count()
+    const totalReservation = await this.prisma.client.reservation.count();
     return {
       totalUser,
       totalFreeUser,
@@ -172,7 +172,7 @@ export class AdminPlatfromManagementService {
         users: recentUsers,
         businessProfiles: recentBusinessProfiles,
         reviews: recentReviews,
-        offers: recentOffers
+        offers: recentOffers,
       },
     };
   }
@@ -593,64 +593,58 @@ export class AdminPlatfromManagementService {
     return res;
   }
 
+  async getAllReservation(filter: ReservationFilter) {
+    const { page = 1, limit = 10, search, date } = filter;
+    const skip = (page - 1) * limit;
 
+    const where: any = {};
+    if (search) {
+      where.OR = [
+        { reservationName: { contains: search, mode: 'insensitive' } },
+        { user: { name: { contains: search, mode: 'insensitive' } } },
+      ];
+    }
+    if (date) {
+      where.createdAt = {
+        gte: new Date(`${date}T00:00:00.000Z`),
+        lte: new Date(`${date}T23:59:59.999Z`),
+      };
+    }
+    const reservations = await this.prisma.client.reservation.findMany({
+      where,
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+            mobile: true,
+          },
+        },
+        restaurant: {
+          select: {
+            title: true,
+            location: true,
+            category: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+      skip,
+      take: limit,
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+    const total = await this.prisma.client.reservation.count({ where });
 
-async getAllReservation(filter: ReservationFilter) {
-  const { page = 1, limit = 10, search, date } = filter;
-  const skip = (page - 1) * limit;
-
-
-  const where: any = {
- 
-  };
-  if (search) {
-    where.OR = [
-      { reservationName: { contains: search, mode: 'insensitive' } },
-      { user: { name: { contains: search, mode: 'insensitive' } } },
-    ];
-  }
-  if (date) {
-    where.createdAt = {
-      gte: new Date(`${date}T00:00:00.000Z`),
-      lte: new Date(`${date}T23:59:59.999Z`),
+    return {
+      data: reservations,
+      page,
+      limit,
+      total,
     };
   }
-  const reservations = await this.prisma.client.reservation.findMany({
-    where,
-    include: {
-      user:{
-        select:{
-          name:true,
-          email:true,
-          mobile:true
-        }
-      },
-      restaurant:{
-        select:{
-          title:true,
-          location:true,
-          category:{
-            select:{
-              name:true
-            }
-          }
-        }
-      }
-    },
-    skip,
-    take: limit,
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
-  const total = await this.prisma.client.reservation.count({ where });
-
-  return {
-    data: reservations,
-    page,
-    limit,
-    total,
-  };
-}
-
 }
