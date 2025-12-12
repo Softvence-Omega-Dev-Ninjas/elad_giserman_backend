@@ -32,6 +32,8 @@ export type ReedemaOfferMinAggregateOutputType = {
   redeemedAt: Date | null;
   bussinessId: string | null;
   userId: string | null;
+  isClaimed: boolean | null;
+  isOrganizedApproved: boolean | null;
   expiresAt: Date | null;
   createdAt: Date | null;
   updatedAt: Date | null;
@@ -45,6 +47,8 @@ export type ReedemaOfferMaxAggregateOutputType = {
   redeemedAt: Date | null;
   bussinessId: string | null;
   userId: string | null;
+  isClaimed: boolean | null;
+  isOrganizedApproved: boolean | null;
   expiresAt: Date | null;
   createdAt: Date | null;
   updatedAt: Date | null;
@@ -58,6 +62,8 @@ export type ReedemaOfferCountAggregateOutputType = {
   redeemedAt: number;
   bussinessId: number;
   userId: number;
+  isClaimed: number;
+  isOrganizedApproved: number;
   expiresAt: number;
   createdAt: number;
   updatedAt: number;
@@ -72,6 +78,8 @@ export type ReedemaOfferMinAggregateInputType = {
   redeemedAt?: true;
   bussinessId?: true;
   userId?: true;
+  isClaimed?: true;
+  isOrganizedApproved?: true;
   expiresAt?: true;
   createdAt?: true;
   updatedAt?: true;
@@ -85,6 +93,8 @@ export type ReedemaOfferMaxAggregateInputType = {
   redeemedAt?: true;
   bussinessId?: true;
   userId?: true;
+  isClaimed?: true;
+  isOrganizedApproved?: true;
   expiresAt?: true;
   createdAt?: true;
   updatedAt?: true;
@@ -98,6 +108,8 @@ export type ReedemaOfferCountAggregateInputType = {
   redeemedAt?: true;
   bussinessId?: true;
   userId?: true;
+  isClaimed?: true;
+  isOrganizedApproved?: true;
   expiresAt?: true;
   createdAt?: true;
   updatedAt?: true;
@@ -192,6 +204,8 @@ export type ReedemaOfferGroupByOutputType = {
   redeemedAt: Date | null;
   bussinessId: string;
   userId: string;
+  isClaimed: boolean | null;
+  isOrganizedApproved: boolean;
   expiresAt: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -228,6 +242,8 @@ export type ReedemaOfferWhereInput = {
     | null;
   bussinessId?: Prisma.StringFilter<'ReedemaOffer'> | string;
   userId?: Prisma.StringFilter<'ReedemaOffer'> | string;
+  isClaimed?: Prisma.BoolNullableFilter<'ReedemaOffer'> | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFilter<'ReedemaOffer'> | boolean;
   expiresAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
   createdAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
@@ -247,6 +263,8 @@ export type ReedemaOfferOrderByWithRelationInput = {
   redeemedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
   bussinessId?: Prisma.SortOrder;
   userId?: Prisma.SortOrder;
+  isClaimed?: Prisma.SortOrderInput | Prisma.SortOrder;
+  isOrganizedApproved?: Prisma.SortOrder;
   expiresAt?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -271,6 +289,8 @@ export type ReedemaOfferWhereUniqueInput = Prisma.AtLeast<
       | null;
     bussinessId?: Prisma.StringFilter<'ReedemaOffer'> | string;
     userId?: Prisma.StringFilter<'ReedemaOffer'> | string;
+    isClaimed?: Prisma.BoolNullableFilter<'ReedemaOffer'> | boolean | null;
+    isOrganizedApproved?: Prisma.BoolFilter<'ReedemaOffer'> | boolean;
     expiresAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
     createdAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
@@ -295,6 +315,8 @@ export type ReedemaOfferOrderByWithAggregationInput = {
   redeemedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
   bussinessId?: Prisma.SortOrder;
   userId?: Prisma.SortOrder;
+  isClaimed?: Prisma.SortOrderInput | Prisma.SortOrder;
+  isOrganizedApproved?: Prisma.SortOrder;
   expiresAt?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -322,6 +344,13 @@ export type ReedemaOfferScalarWhereWithAggregatesInput = {
     | null;
   bussinessId?: Prisma.StringWithAggregatesFilter<'ReedemaOffer'> | string;
   userId?: Prisma.StringWithAggregatesFilter<'ReedemaOffer'> | string;
+  isClaimed?:
+    | Prisma.BoolNullableWithAggregatesFilter<'ReedemaOffer'>
+    | boolean
+    | null;
+  isOrganizedApproved?:
+    | Prisma.BoolWithAggregatesFilter<'ReedemaOffer'>
+    | boolean;
   expiresAt?:
     | Prisma.DateTimeWithAggregatesFilter<'ReedemaOffer'>
     | Date
@@ -341,6 +370,8 @@ export type ReedemaOfferCreateInput = {
   code: string;
   isRedeemed?: boolean;
   redeemedAt?: Date | string | null;
+  isClaimed?: boolean | null;
+  isOrganizedApproved?: boolean;
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -357,6 +388,8 @@ export type ReedemaOfferUncheckedCreateInput = {
   redeemedAt?: Date | string | null;
   bussinessId: string;
   userId: string;
+  isClaimed?: boolean | null;
+  isOrganizedApproved?: boolean;
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -371,6 +404,8 @@ export type ReedemaOfferUpdateInput = {
     | Date
     | string
     | null;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -391,6 +426,8 @@ export type ReedemaOfferUncheckedUpdateInput = {
     | null;
   bussinessId?: Prisma.StringFieldUpdateOperationsInput | string;
   userId?: Prisma.StringFieldUpdateOperationsInput | string;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -404,6 +441,8 @@ export type ReedemaOfferCreateManyInput = {
   redeemedAt?: Date | string | null;
   bussinessId: string;
   userId: string;
+  isClaimed?: boolean | null;
+  isOrganizedApproved?: boolean;
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -418,6 +457,8 @@ export type ReedemaOfferUpdateManyMutationInput = {
     | Date
     | string
     | null;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -435,6 +476,8 @@ export type ReedemaOfferUncheckedUpdateManyInput = {
     | null;
   bussinessId?: Prisma.StringFieldUpdateOperationsInput | string;
   userId?: Prisma.StringFieldUpdateOperationsInput | string;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -458,6 +501,8 @@ export type ReedemaOfferCountOrderByAggregateInput = {
   redeemedAt?: Prisma.SortOrder;
   bussinessId?: Prisma.SortOrder;
   userId?: Prisma.SortOrder;
+  isClaimed?: Prisma.SortOrder;
+  isOrganizedApproved?: Prisma.SortOrder;
   expiresAt?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -471,6 +516,8 @@ export type ReedemaOfferMaxOrderByAggregateInput = {
   redeemedAt?: Prisma.SortOrder;
   bussinessId?: Prisma.SortOrder;
   userId?: Prisma.SortOrder;
+  isClaimed?: Prisma.SortOrder;
+  isOrganizedApproved?: Prisma.SortOrder;
   expiresAt?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -484,6 +531,8 @@ export type ReedemaOfferMinOrderByAggregateInput = {
   redeemedAt?: Prisma.SortOrder;
   bussinessId?: Prisma.SortOrder;
   userId?: Prisma.SortOrder;
+  isClaimed?: Prisma.SortOrder;
+  isOrganizedApproved?: Prisma.SortOrder;
   expiresAt?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -824,6 +873,8 @@ export type ReedemaOfferCreateWithoutBusinessInput = {
   code: string;
   isRedeemed?: boolean;
   redeemedAt?: Date | string | null;
+  isClaimed?: boolean | null;
+  isOrganizedApproved?: boolean;
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -838,6 +889,8 @@ export type ReedemaOfferUncheckedCreateWithoutBusinessInput = {
   isRedeemed?: boolean;
   redeemedAt?: Date | string | null;
   userId: string;
+  isClaimed?: boolean | null;
+  isOrganizedApproved?: boolean;
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -905,6 +958,8 @@ export type ReedemaOfferScalarWhereInput = {
     | null;
   bussinessId?: Prisma.StringFilter<'ReedemaOffer'> | string;
   userId?: Prisma.StringFilter<'ReedemaOffer'> | string;
+  isClaimed?: Prisma.BoolNullableFilter<'ReedemaOffer'> | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFilter<'ReedemaOffer'> | boolean;
   expiresAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
   createdAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'ReedemaOffer'> | Date | string;
@@ -915,6 +970,8 @@ export type ReedemaOfferCreateWithoutOfferInput = {
   code: string;
   isRedeemed?: boolean;
   redeemedAt?: Date | string | null;
+  isClaimed?: boolean | null;
+  isOrganizedApproved?: boolean;
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -929,6 +986,8 @@ export type ReedemaOfferUncheckedCreateWithoutOfferInput = {
   redeemedAt?: Date | string | null;
   bussinessId: string;
   userId: string;
+  isClaimed?: boolean | null;
+  isOrganizedApproved?: boolean;
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -982,6 +1041,8 @@ export type ReedemaOfferCreateWithoutUserInput = {
   code: string;
   isRedeemed?: boolean;
   redeemedAt?: Date | string | null;
+  isClaimed?: boolean | null;
+  isOrganizedApproved?: boolean;
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -996,6 +1057,8 @@ export type ReedemaOfferUncheckedCreateWithoutUserInput = {
   isRedeemed?: boolean;
   redeemedAt?: Date | string | null;
   bussinessId: string;
+  isClaimed?: boolean | null;
+  isOrganizedApproved?: boolean;
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -1051,6 +1114,8 @@ export type ReedemaOfferCreateManyBusinessInput = {
   isRedeemed?: boolean;
   redeemedAt?: Date | string | null;
   userId: string;
+  isClaimed?: boolean | null;
+  isOrganizedApproved?: boolean;
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -1065,6 +1130,8 @@ export type ReedemaOfferUpdateWithoutBusinessInput = {
     | Date
     | string
     | null;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1083,6 +1150,8 @@ export type ReedemaOfferUncheckedUpdateWithoutBusinessInput = {
     | string
     | null;
   userId?: Prisma.StringFieldUpdateOperationsInput | string;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1099,6 +1168,8 @@ export type ReedemaOfferUncheckedUpdateManyWithoutBusinessInput = {
     | string
     | null;
   userId?: Prisma.StringFieldUpdateOperationsInput | string;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1111,6 +1182,8 @@ export type ReedemaOfferCreateManyOfferInput = {
   redeemedAt?: Date | string | null;
   bussinessId: string;
   userId: string;
+  isClaimed?: boolean | null;
+  isOrganizedApproved?: boolean;
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -1125,6 +1198,8 @@ export type ReedemaOfferUpdateWithoutOfferInput = {
     | Date
     | string
     | null;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1143,6 +1218,8 @@ export type ReedemaOfferUncheckedUpdateWithoutOfferInput = {
     | null;
   bussinessId?: Prisma.StringFieldUpdateOperationsInput | string;
   userId?: Prisma.StringFieldUpdateOperationsInput | string;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1159,6 +1236,8 @@ export type ReedemaOfferUncheckedUpdateManyWithoutOfferInput = {
     | null;
   bussinessId?: Prisma.StringFieldUpdateOperationsInput | string;
   userId?: Prisma.StringFieldUpdateOperationsInput | string;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1171,6 +1250,8 @@ export type ReedemaOfferCreateManyUserInput = {
   isRedeemed?: boolean;
   redeemedAt?: Date | string | null;
   bussinessId: string;
+  isClaimed?: boolean | null;
+  isOrganizedApproved?: boolean;
   expiresAt: Date | string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -1185,6 +1266,8 @@ export type ReedemaOfferUpdateWithoutUserInput = {
     | Date
     | string
     | null;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1203,6 +1286,8 @@ export type ReedemaOfferUncheckedUpdateWithoutUserInput = {
     | string
     | null;
   bussinessId?: Prisma.StringFieldUpdateOperationsInput | string;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1219,6 +1304,8 @@ export type ReedemaOfferUncheckedUpdateManyWithoutUserInput = {
     | string
     | null;
   bussinessId?: Prisma.StringFieldUpdateOperationsInput | string;
+  isClaimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null;
+  isOrganizedApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -1236,6 +1323,8 @@ export type ReedemaOfferSelect<
     redeemedAt?: boolean;
     bussinessId?: boolean;
     userId?: boolean;
+    isClaimed?: boolean;
+    isOrganizedApproved?: boolean;
     expiresAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
@@ -1258,6 +1347,8 @@ export type ReedemaOfferSelectCreateManyAndReturn<
     redeemedAt?: boolean;
     bussinessId?: boolean;
     userId?: boolean;
+    isClaimed?: boolean;
+    isOrganizedApproved?: boolean;
     expiresAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
@@ -1280,6 +1371,8 @@ export type ReedemaOfferSelectUpdateManyAndReturn<
     redeemedAt?: boolean;
     bussinessId?: boolean;
     userId?: boolean;
+    isClaimed?: boolean;
+    isOrganizedApproved?: boolean;
     expiresAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
@@ -1298,6 +1391,8 @@ export type ReedemaOfferSelectScalar = {
   redeemedAt?: boolean;
   bussinessId?: boolean;
   userId?: boolean;
+  isClaimed?: boolean;
+  isOrganizedApproved?: boolean;
   expiresAt?: boolean;
   createdAt?: boolean;
   updatedAt?: boolean;
@@ -1314,6 +1409,8 @@ export type ReedemaOfferOmit<
   | 'redeemedAt'
   | 'bussinessId'
   | 'userId'
+  | 'isClaimed'
+  | 'isOrganizedApproved'
   | 'expiresAt'
   | 'createdAt'
   | 'updatedAt',
@@ -1363,6 +1460,8 @@ export type $ReedemaOfferPayload<
       redeemedAt: Date | null;
       bussinessId: string;
       userId: string;
+      isClaimed: boolean | null;
+      isOrganizedApproved: boolean;
       expiresAt: Date;
       createdAt: Date;
       updatedAt: Date;
@@ -2013,6 +2112,8 @@ export interface ReedemaOfferFieldRefs {
   readonly redeemedAt: Prisma.FieldRef<'ReedemaOffer', 'DateTime'>;
   readonly bussinessId: Prisma.FieldRef<'ReedemaOffer', 'String'>;
   readonly userId: Prisma.FieldRef<'ReedemaOffer', 'String'>;
+  readonly isClaimed: Prisma.FieldRef<'ReedemaOffer', 'Boolean'>;
+  readonly isOrganizedApproved: Prisma.FieldRef<'ReedemaOffer', 'Boolean'>;
   readonly expiresAt: Prisma.FieldRef<'ReedemaOffer', 'DateTime'>;
   readonly createdAt: Prisma.FieldRef<'ReedemaOffer', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'ReedemaOffer', 'DateTime'>;

@@ -103,10 +103,10 @@ export class BusinessProfileService {
     });
   }
 
-  // get my businessProfile
+  //* get my businessProfile
   async getBusinessProfile(id: string) {
     const profile = await this.prisma.client.businessProfile.findUnique({
-      where: { id: id },
+      where: { ownerId: id },
       include: {
         gallery: true,
         offers: true,
@@ -121,8 +121,7 @@ export class BusinessProfileService {
 
     return profile;
   }
-  // update profile
-
+  //* update profile
   async update(
     userId: string,
     dto: UpdateBusinessProfileDto,
@@ -221,7 +220,7 @@ export class BusinessProfileService {
     return updatedProfile;
   }
 
-  // get all profile
+  //* get all profile
   async getAllProfiles(filter: ProfileFilter) {
     const { search, profileType, page = 1, limit = 10 } = filter;
     const skip = (page - 1) * limit;
@@ -287,7 +286,7 @@ export class BusinessProfileService {
     return profilesWithStats;
   }
 
-  // get all reviews
+  //* get all reviews
   async getAllReviews(userId: string) {
     const findOrganizationProfile =
       await this.prisma.client.businessProfile.findFirst({
@@ -316,7 +315,7 @@ export class BusinessProfileService {
     return reviews;
   }
 
-  // get single review
+  //* get single review
   async getSingleReview(id: string) {
     if (!id) {
       throw new BadRequestException('Review ID must be provided.');
@@ -341,7 +340,7 @@ export class BusinessProfileService {
     return review;
   }
 
-  // get organizations stat
+  //* get organizations stat
   async getOrganizationStats(userId: string) {
     const findOrganizationProfile =
       await this.prisma.client.businessProfile.findFirst({
@@ -448,6 +447,7 @@ export class BusinessProfileService {
     return isExistTerm;
   }
 
+  //*Get all redeemtions
   async getAllRedemtions(filter: GetReviewDto, userId: string) {
     const { page = 1, limit = 10, search } = filter;
     const skip = (page - 1) * limit;
@@ -477,12 +477,19 @@ export class BusinessProfileService {
       where,
       include: {
         offer: true,
-        user: true,
-        business: true,
+        user: {
+          select: {
+            name: true,
+            email: true,
+            avatarUrl: true,
+            id: true,
+          },
+        },
       },
     });
   }
 
+  //*Get all reservations
   async getARestReservation(userId: string, filter: ReservationFilter) {
     const { page = 1, limit = 10, search, date } = filter;
     const skip = (page - 1) * limit;
@@ -540,6 +547,7 @@ export class BusinessProfileService {
     };
   }
 
+  // *Accept Reservation
   async acceptReservation(id: string) {
     const isExist = await this.prisma.client.reservation.findFirst({
       where: {
