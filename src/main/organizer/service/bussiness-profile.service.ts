@@ -112,7 +112,7 @@ export class BusinessProfileService {
         offers: true,
         reviews: true,
         reedemOffer: true,
-        reservation:true
+        reservation: true,
       },
     });
     return profile;
@@ -358,29 +358,30 @@ export class BusinessProfileService {
         },
       });
 
-    const [totalOffter, totalReedmOffer, totalReview,totalReservation] = await Promise.all([
-      this.prisma.client.offer.count({
-        where: {
-          businessId: findOrganizationProfile?.id,
-        },
-      }),
-      this.prisma.client.reedemaOffer.count({
-        where: {
-          bussinessId: findOrganizationProfile?.id,
-          isRedeemed: true,
-        },
-      }),
-      this.prisma.client.review.count({
-        where: {
-          businessProfileId: findOrganizationProfile?.id,
-        },
-      }),
-      this.prisma.client.reservation.count({
-        where: {
-          restaurntId: findOrganizationProfile?.id,
-        },
-      }),
-    ]);
+    const [totalOffter, totalReedmOffer, totalReview, totalReservation] =
+      await Promise.all([
+        this.prisma.client.offer.count({
+          where: {
+            businessId: findOrganizationProfile?.id,
+          },
+        }),
+        this.prisma.client.reedemaOffer.count({
+          where: {
+            bussinessId: findOrganizationProfile?.id,
+            isRedeemed: true,
+          },
+        }),
+        this.prisma.client.review.count({
+          where: {
+            businessProfileId: findOrganizationProfile?.id,
+          },
+        }),
+        this.prisma.client.reservation.count({
+          where: {
+            restaurntId: findOrganizationProfile?.id,
+          },
+        }),
+      ]);
     return {
       totalOffter: totalOffter,
       totalReedmOffer: totalReedmOffer,
