@@ -75,11 +75,12 @@ async function bootstrap() {
   );
 
   const upload_dir = join(process.cwd(), 'uploads');
+
   if (!fs.existsSync(upload_dir)) {
     fs.mkdirSync(upload_dir, { recursive: true });
     console.log('Created uploads folder at', upload_dir);
   }
-  app.use('/uploads', express.static(upload_dir));
+  app.use('/api/uploads', express.static(upload_dir));
 
   const port = parseInt(configService.get<string>(ENVEnum.PORT) ?? '5050', 10);
   await app.listen(port);
