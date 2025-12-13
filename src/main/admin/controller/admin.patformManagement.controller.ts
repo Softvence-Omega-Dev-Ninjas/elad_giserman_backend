@@ -391,7 +391,7 @@ export class AdminPlatformManagementController {
     }
   }
 
-  @ValidateAdmin()
+  
   @Get('customAppDetails')
   async getCustomAppDetails() {
     try {
@@ -425,13 +425,9 @@ export class AdminPlatformManagementController {
     }
   }
 
-
-
-
-
   @Patch('demo-premiun/:id')
-  @ApiOperation({summary:"JUST FOR test user will be make premium"})
-  async makeDemoPremium(@Param('id') id:string){
+  @ApiOperation({ summary: 'JUST FOR test user will be make premium' })
+  async makeDemoPremium(@Param('id') id: string) {
     try {
       const res = await this.platformManagementService.makeDemoPremium(id);
       return {
@@ -444,5 +440,5 @@ export class AdminPlatformManagementController {
       this.logger.error(`Faild to save spin data`, error.stack);
       throw new InternalServerErrorException(message);
     }
-}
+  }
 }

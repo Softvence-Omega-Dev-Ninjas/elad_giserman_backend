@@ -650,24 +650,24 @@ export class AdminPlatfromManagementService {
 
   //* just for demo make a user premiun
   // TODO: It must be remove from here beacuse it very dangerous
-  async makeDemoPremium(id:string){
+  async makeDemoPremium(id: string) {
     const isUserExist = await this.prisma.client.user.findUnique({
       where: {
         id: id,
       },
-    })
+    });
     if (!isUserExist) {
       throw new NotFoundException('User not found');
     }
-  const res=  await this.prisma.client.user.update({
-      where:{
-        id:id,
+    const res = await this.prisma.client.user.update({
+      where: {
+        id: id,
       },
-      data:{
-        memberShip:'VIP',
-        subscriptionStatus:"ACTIVE"
-      }
-    })
-    return res
+      data: {
+        memberShip: 'VIP',
+        subscriptionStatus: 'ACTIVE',
+      },
+    });
+    return res;
   }
 }
