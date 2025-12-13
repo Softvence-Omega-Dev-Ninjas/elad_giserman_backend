@@ -80,8 +80,7 @@ export class S3Controller {
     return this.s3Service.getFileById(id);
   }
 
-
-   @Post('upload-to-vps')
+  @Post('upload-to-vps')
   @ApiOperation({ summary: 'Upload multiple or single files to VPS' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -107,8 +106,7 @@ export class S3Controller {
       storage: multer.diskStorage({
         destination: './uploads',
         filename: (req, file, callback) => {
-          const uniqueName =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1e9);
           const fileExt = extname(file.originalname);
           callback(null, `${uniqueName}${fileExt}`);
         },
@@ -120,14 +118,14 @@ export class S3Controller {
     }),
   )
   async uploadToVps(@UploadedFiles() files: Express.Multer.File[]) {
-    console.log(files)
+    console.log(files);
     return {
       message: 'Files uploaded successfully',
       files: files.map((file) => ({
         originalName: file.originalname,
         filename: file.filename,
         path: file.path,
-         url: `${process.env.BASE_URL}/uploads/${file.filename}`,
+        url: `${process.env.BASE_URL}/uploads/${file.filename}`,
         size: file.size,
         mimetype: file.mimetype,
       })),

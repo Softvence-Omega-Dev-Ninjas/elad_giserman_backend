@@ -117,8 +117,7 @@ export class BusinessProfileService {
     return profile;
   }
 
-
-    async getSingleBusinessProfile(id: string) {
+  async getSingleBusinessProfile(id: string) {
     const profile = await this.prisma.client.businessProfile.findUnique({
       where: { id: id },
       include: {
@@ -128,7 +127,7 @@ export class BusinessProfileService {
         reedemOffer: true,
       },
     });
-    return profile
+    return profile;
   }
   //* update profile
   async update(

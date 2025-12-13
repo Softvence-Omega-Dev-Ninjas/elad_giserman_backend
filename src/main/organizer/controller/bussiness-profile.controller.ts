@@ -234,7 +234,8 @@ export class BusinessProfileController {
   @ApiOperation({ summary: 'Get single profile by ID (User View)' })
   async getSingleProfile(@Param('id') id: string) {
     try {
-      const res = await this.businessProfileService.getSingleBusinessProfile(id);
+      const res =
+        await this.businessProfileService.getSingleBusinessProfile(id);
       return {
         status: HttpStatus.OK,
         message: 'Restaurent fetched successful',
