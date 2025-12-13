@@ -16,8 +16,6 @@ export class UserInfoService {
     private readonly s3Service: S3Service,
   ) {}
 
-
-
   // find my profile
   async finMyProfile(userId: string) {
     const result = await this.prisma.client.user.findFirst({
@@ -32,9 +30,6 @@ export class UserInfoService {
     const { password, ...safeUser } = result;
     return safeUser;
   }
-
-
-
 
   // update user profile
   async updateUserProfile(
@@ -64,11 +59,6 @@ export class UserInfoService {
     return res;
   }
 
-
-
-
-
-
   // delete my account
   async deleteMyAccount(id: string) {
     const res = await this.prisma.client.user.delete({
@@ -78,10 +68,6 @@ export class UserInfoService {
     });
     return res;
   }
-
-
-
-
 
   // scan qr code for get offer-------
   // user will go to restaurate and scan the qr code and get the offer
@@ -130,98 +116,80 @@ export class UserInfoService {
     };
   }
 
-
-
-
-
-
-
-
-
-
   //* confimation Redeem offer  and store the data to database
-async redeemOffer(code: string, offerId: string, userId: string) {
+  async redeemOffer(code: string, offerId: string, userId: string) {
+    const isUserPremiun = await this.prisma.client.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
 
-  const isUserPremiun=await this.prisma.client.user.findFirst({
-    where:{
-      id:userId,
+    if (isUserPremiun?.memberShip === 'FREE') {
+      throw new BadRequestException('Only premium users can redeem offers');
     }
-  })
 
-  if(isUserPremiun?.memberShip === "FREE"){
-    throw new BadRequestException('Only premium users can redeem offers');
-  }
-
-  const isAlreadyRedeem=await this.prisma.client.reedemaOffer.findFirst({
-    where:{
-      userId:userId,
-      offerId:offerId,
+    const isAlreadyRedeem = await this.prisma.client.reedemaOffer.findFirst({
+      where: {
+        userId: userId,
+        offerId: offerId,
+      },
+    });
+    if (isAlreadyRedeem) {
+      throw new BadRequestException('You already redeemed this offer');
     }
-  })
-  if(isAlreadyRedeem){
-    throw new BadRequestException('You already redeemed this offer');
+    const offer = await this.prisma.client.offer.findFirst({
+      where: {
+        id: offerId,
+        code,
+      },
+    });
+
+    if (!offer) {
+      throw new NotFoundException('Offer not found');
+    }
+
+    if (!offer.isActive) {
+      throw new BadRequestException('Offer inactive');
+    }
+
+    if (offer.expiredsAt && offer.expiredsAt < new Date()) {
+      throw new BadRequestException('Offer has expired');
+    }
+
+    if (offer.status !== 'APPROVED') {
+      throw new BadRequestException('Offer cannot be redeemed');
+    }
+
+    const alreadyRedeemed = await this.prisma.client.reedemaOffer.findFirst({
+      where: { offerId: offer.id, userId },
+    });
+
+    if (alreadyRedeemed) {
+      throw new BadRequestException('Already redeemed');
+    }
+
+    const log = await this.prisma.client.reedemaOffer.create({
+      data: {
+        offerId: offer.id,
+        userId,
+        redeemedAt: new Date(),
+        expiresAt: new Date(),
+        code: offer.code,
+        bussinessId: offer.businessId,
+        isRedeemed: true,
+      },
+    });
+
+    return {
+      success: true,
+      message: 'Offer redeemed successfully!',
+      offer: {
+        id: offer.id,
+        title: offer.title,
+        logId: log.id,
+      },
+    };
   }
-  const offer = await this.prisma.client.offer.findFirst({
-    where: {
-      id: offerId,
-      code,
-    },
-  });
-
-  if (!offer) {
-    throw new NotFoundException('Offer not found');
-  }
-
-  if (!offer.isActive) {
-    throw new BadRequestException('Offer inactive');
-  }
-
-  
-  if (offer.expiredsAt && offer.expiredsAt < new Date()) {
-    throw new BadRequestException('Offer has expired');
-  }
-
-  if (offer.status !== 'APPROVED') {
-    throw new BadRequestException('Offer cannot be redeemed');
-  }
-
-  const alreadyRedeemed = await this.prisma.client.reedemaOffer.findFirst({
-    where: { offerId: offer.id, userId },
-  });
-
-  if (alreadyRedeemed) {
-    throw new BadRequestException('Already redeemed');
-  }
-
-  const log = await this.prisma.client.reedemaOffer.create({
-    data: {
-      offerId: offer.id,
-      userId,
-      redeemedAt: new Date(),
-      expiresAt: new Date(),
-      code: offer.code,
-      bussinessId: offer.businessId,
-      isRedeemed: true,
-    },
-  });
-
-  return {
-    success: true,
-    message: 'Offer redeemed successfully!',
-    offer: {
-      id: offer.id,
-      title: offer.title,
-      logId: log.id,
-    },
-  };
-}
-
-
-
-
-
-
-
 
   async getUserRedeemedOffers(userId: string) {
     return this.prisma.client.reedemaOffer.findMany({
@@ -230,12 +198,6 @@ async redeemOffer(code: string, offerId: string, userId: string) {
       orderBy: { createdAt: 'desc' },
     });
   }
-
-
-
-
-
-
 
   async getUserNotifications(userId: string) {
     // Get today start (00:00)
@@ -282,13 +244,6 @@ async redeemOffer(code: string, offerId: string, userId: string) {
     };
   }
 
-
-
-
-
-
-
-
   //* store spin history for user
   async createSpinHistory(userId: string, dto: SpinHistoryDto) {
     const now = new Date();
@@ -328,12 +283,6 @@ async redeemOffer(code: string, offerId: string, userId: string) {
 
     return res;
   }
-
-
-
-
-
-
 
   //*claimed offer
   async claimOffer(id: string, userId: string) {
