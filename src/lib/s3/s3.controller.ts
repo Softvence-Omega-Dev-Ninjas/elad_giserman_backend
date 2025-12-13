@@ -26,6 +26,7 @@ import { DeleteFilesRequestDto } from './dto/delete-file.dto';
 import { UploadFilesRequestDto } from './dto/upload-file-request.dto';
 import { UploadFilesResponseDto } from './dto/upload-file-response.dto';
 import { S3Service } from './s3.service';
+import { extname } from 'path';
 
 @ApiBearerAuth()
 @ValidateAuth()
@@ -77,5 +78,59 @@ export class S3Controller {
   @ApiOperation({ summary: 'Get a specific file from S3' })
   async getFileById(@Param('id') id: string) {
     return this.s3Service.getFileById(id);
+  }
+
+
+   @Post('upload-to-vps')
+  @ApiOperation({ summary: 'Upload multiple or single files to VPS' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        files: {
+          type: 'array',
+          items: {
+            type: 'string',
+            format: 'binary',
+          },
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Files uploaded successfully',
+  })
+  @UseInterceptors(
+    FilesInterceptor('files', 5, {
+      storage: multer.diskStorage({
+        destination: './uploads',
+        filename: (req, file, callback) => {
+          const uniqueName =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          const fileExt = extname(file.originalname);
+          callback(null, `${uniqueName}${fileExt}`);
+        },
+      }),
+      limits: {
+        files: 5,
+        fileSize: 10 * 1024 * 1024,
+      },
+    }),
+  )
+  async uploadToVps(@UploadedFiles() files: Express.Multer.File[]) {
+    console.log(files)
+    return {
+      message: 'Files uploaded successfully',
+      files: files.map((file) => ({
+        originalName: file.originalname,
+        filename: file.filename,
+        path: file.path,
+         url: `${process.env.BASE_URL}/uploads/${file.filename}`,
+        size: file.size,
+        mimetype: file.mimetype,
+      })),
+    };
   }
 }

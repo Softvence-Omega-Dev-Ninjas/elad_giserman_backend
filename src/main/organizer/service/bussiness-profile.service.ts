@@ -103,7 +103,7 @@ export class BusinessProfileService {
     });
   }
 
-  //* get my businessProfile
+  //* get my businessProfile...
   async getBusinessProfile(id: string) {
     const profile = await this.prisma.client.businessProfile.findUnique({
       where: { ownerId: id },
@@ -114,12 +114,21 @@ export class BusinessProfileService {
         reedemOffer: true,
       },
     });
-
-    if (!profile) {
-      throw new NotFoundException('You do not have a business profile yet.');
-    }
-
     return profile;
+  }
+
+
+    async getSingleBusinessProfile(id: string) {
+    const profile = await this.prisma.client.businessProfile.findUnique({
+      where: { id: id },
+      include: {
+        gallery: true,
+        offers: true,
+        reviews: true,
+        reedemOffer: true,
+      },
+    });
+    return profile
   }
   //* update profile
   async update(
