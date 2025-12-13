@@ -134,7 +134,7 @@ export class UserInfoService {
         offerId: offerId,
       },
     });
-    
+
     if (isAlreadyRedeem?.isClaimed) {
       throw new BadRequestException('You already redeemed this offer');
     }

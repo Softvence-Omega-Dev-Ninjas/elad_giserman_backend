@@ -459,7 +459,7 @@ export class BusinessProfileController {
       );
       return {
         status: HttpStatus.OK,
-        message: 'Redemtions fetched successfully',
+        message: 'Reservation fetched successfully',
         res,
       };
     } catch (error) {
