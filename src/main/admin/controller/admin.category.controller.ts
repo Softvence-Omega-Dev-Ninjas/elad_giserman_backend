@@ -41,7 +41,7 @@ export class CategoryContoller {
       const categories = await this.categoryService.getAllCategories();
       return {
         status: HttpStatus.OK,
-        message: 'Categories fetched successfully',
+        message: 'Categproxy_pass http://127.0.0.1:3000;ories fetched successfully',
         data: categories,
       };
     } catch (error) {
