@@ -75,7 +75,7 @@ async function bootstrap() {
   );
 
   const upload_dir = join(process.cwd(), 'uploads');
-  
+
   if (!fs.existsSync(upload_dir)) {
     fs.mkdirSync(upload_dir, { recursive: true });
     console.log('Created uploads folder at', upload_dir);
