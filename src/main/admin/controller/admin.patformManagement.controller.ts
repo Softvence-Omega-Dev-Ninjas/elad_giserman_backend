@@ -391,7 +391,6 @@ export class AdminPlatformManagementController {
     }
   }
 
-  
   @Get('customAppDetails')
   async getCustomAppDetails() {
     try {
