@@ -424,4 +424,25 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(message);
     }
   }
+
+
+
+
+
+  @Patch('demo-premiun/:id')
+  @ApiOperation({summary:"JUST FOR test user will be make premium"})
+  async makeDemoPremium(@Param('id') id:string){
+    try {
+      const res = await this.platformManagementService.makeDemoPremium(id);
+      return {
+        status: HttpStatus.OK,
+        message: 'User updated successfully',
+        data: res,
+      };
+    } catch (error) {
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save spin data`, error.stack);
+      throw new InternalServerErrorException(message);
+    }
+}
 }
