@@ -8,7 +8,9 @@ import * as bodyParser from 'body-parser';
 import { AppModule } from './app.module';
 import { ENVEnum } from './common/enum/env.enum';
 import { AllExceptionsFilter } from './common/filter/http-exception.filter';
-
+import { join } from 'path';
+import * as fs from 'fs';
+import * as express from 'express';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { rawBody: true });
   const configService = app.get(ConfigService);
@@ -29,6 +31,8 @@ async function bootstrap() {
       'http://localhost:5180',
       'https://yamiz.org',
       'http://54.79.222.232:3000',
+      'https://api.yamiz.org/api',
+      'http://31.97.125.159:3000',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
@@ -71,6 +75,14 @@ async function bootstrap() {
     '/api/subscription/webhook/stripe',
     bodyParser.raw({ type: 'application/json' }),
   );
+
+  const upload_dir = join(process.cwd(), 'uploads');
+
+  if (!fs.existsSync(upload_dir)) {
+    fs.mkdirSync(upload_dir, { recursive: true });
+    console.log('Created uploads folder at', upload_dir);
+  }
+  app.use('/api/uploads', express.static(upload_dir));
 
   const port = parseInt(configService.get<string>(ENVEnum.PORT) ?? '5050', 10);
   await app.listen(port);

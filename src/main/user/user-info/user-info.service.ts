@@ -116,17 +116,58 @@ export class UserInfoService {
     };
   }
 
-  // confimation Redeem offer  and store the data to database
-  async redeemOffer(code: string, userId: string) {
-    const offer = await this.prisma.client.offer.findFirst({
-      where: { code },
+  //* confimation Redeem offer  and store the data to database
+  async redeemOffer(code: string, offerId: string, userId: string) {
+    const isUserPremiun = await this.prisma.client.user.findFirst({
+      where: {
+        id: userId,
+      },
     });
-    if (!offer) throw new NotFoundException('Offer not found');
 
-    const redeemed = await this.prisma.client.reedemaOffer.findFirst({
+    if (isUserPremiun?.memberShip === 'FREE') {
+      throw new BadRequestException('Only premium users can redeem offers');
+    }
+
+    const isAlreadyRedeem = await this.prisma.client.reedemaOffer.findFirst({
+      where: {
+        userId: userId,
+        offerId: offerId,
+      },
+    });
+
+    if (isAlreadyRedeem?.isClaimed) {
+      throw new BadRequestException('You already redeemed this offer');
+    }
+    const offer = await this.prisma.client.offer.findFirst({
+      where: {
+        id: offerId,
+        code,
+      },
+    });
+
+    if (!offer) {
+      throw new NotFoundException('Offer not found');
+    }
+
+    if (!offer.isActive) {
+      throw new BadRequestException('Offer inactive');
+    }
+
+    if (offer.expiredsAt && offer.expiredsAt < new Date()) {
+      throw new BadRequestException('Offer has expired');
+    }
+
+    if (offer.status !== 'APPROVED') {
+      throw new BadRequestException('Offer cannot be redeemed');
+    }
+
+    const alreadyRedeemed = await this.prisma.client.reedemaOffer.findFirst({
       where: { offerId: offer.id, userId },
     });
-    if (redeemed) throw new BadRequestException('Already redeemed');
+
+    if (alreadyRedeemed) {
+      throw new BadRequestException('Already redeemed');
+    }
 
     const log = await this.prisma.client.reedemaOffer.create({
       data: {
@@ -143,7 +184,11 @@ export class UserInfoService {
     return {
       success: true,
       message: 'Offer redeemed successfully!',
-      offer: { id: offer.id, title: offer.title, logId: log.id },
+      offer: {
+        id: offer.id,
+        title: offer.title,
+        logId: log.id,
+      },
     };
   }
 

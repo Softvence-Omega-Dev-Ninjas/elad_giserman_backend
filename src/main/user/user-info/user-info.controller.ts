@@ -92,9 +92,10 @@ export class UserInfoController {
   @Post('redeem/:code')
   async redeemOffer(
     @Param('code') code: string,
+    @Param('offerId') offerId: string,
     @GetUser('sub') userId: string,
   ) {
-    return this.userInfoService.redeemOffer(code, userId);
+    return this.userInfoService.redeemOffer(code, offerId, userId);
   }
 
   //  User sees all redeemed offers
