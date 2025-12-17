@@ -199,19 +199,11 @@ export class UserInfoService {
       orderBy: { createdAt: 'desc' },
     });
   }
-
   async getUserNotifications(userId: string) {
-    // Get today start (00:00)
+    // Today start (00:00)
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
 
-    const yesterdayStart = new Date(todayStart);
-    yesterdayStart.setDate(todayStart.getDate() - 1);
-
-    //* Yesterday end (23:59:59)
-    const yesterdayEnd = new Date(todayStart);
-
-    // * Today notifications
     const today = await this.prisma.client.userNotification.findMany({
       where: {
         userId,
@@ -225,13 +217,11 @@ export class UserInfoService {
       orderBy: { createdAt: 'desc' },
     });
 
-    //* Yesterday notifications
-    const yesterday = await this.prisma.client.userNotification.findMany({
+    const previous = await this.prisma.client.userNotification.findMany({
       where: {
         userId,
         createdAt: {
-          gte: yesterdayStart,
-          lt: yesterdayEnd,
+          lt: todayStart,
         },
       },
       include: {
@@ -239,9 +229,18 @@ export class UserInfoService {
       },
       orderBy: { createdAt: 'desc' },
     });
+
+    const unreadCount = await this.prisma.client.userNotification.count({
+      where: {
+        userId,
+        read: false,
+      },
+    });
+
     return {
+      unreadCount,
       today,
-      yesterday,
+      previous,
     };
   }
 
@@ -306,6 +305,20 @@ export class UserInfoService {
       },
       data: {
         isClaimed: true,
+      },
+    });
+    return res;
+  }
+
+  //
+  async markAllNotificationsAsRead(userId: string) {
+    const res = await this.prisma.client.userNotification.updateMany({
+      where: {
+        userId: userId,
+        read: false,
+      },
+      data: {
+        read: true,
       },
     });
     return res;

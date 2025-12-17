@@ -21,10 +21,10 @@ export class OfferService {
   ) {}
   // ** Create offer by organizer
   async createOffer(userId: string, dto: CreateOfferDto) {
+    // 1️⃣ Find the business profile
     const business = await this.prisma.client.businessProfile.findUnique({
       where: { ownerId: userId },
     });
-
     if (!business) throw new NotFoundException('No business profile found');
 
     const offer = await this.prisma.client.offer.create({
@@ -35,48 +35,22 @@ export class OfferService {
         expiredsAt: dto.expiresAt,
         businessId: business.id,
         isActive: true,
+        qrCodeUrl: null,
       },
     });
 
-    const redeemUrl = `${process.env.SERVER_URL}/offers/scan/${offer.code}`;
-    const qrBuffer = await generateQRCodeBuffer(redeemUrl);
-
-    const file: Express.Multer.File = {
-      fieldname: 'file',
-      originalname: `offer-${offer.id}.png`,
-      encoding: '7bit',
-      mimetype: 'image/png',
-      size: qrBuffer.length,
-      buffer: qrBuffer,
-      destination: '',
-      filename: `offer-${offer.id}.png`,
-      path: '',
-      stream: Readable.from(qrBuffer),
-    };
-
-    const uploaded = await this.s3Service.uploadFile(file);
-
-    const updatedOffer = await this.prisma.client.offer.update({
-      where: { id: offer.id },
-      data: { qrCodeUrl: uploaded?.url ?? null },
-    });
-
-    //* get all users who is primum  and get thire fcm token for firebase notifiction
     const allPremiumUser = await this.prisma.client.user.findMany({
-      where: {
-        subscriptionStatus: 'ACTIVE',
-      },
-      select: {
-        fcmToken: true,
-        id: true,
-      },
+      where: { subscriptionStatus: 'ACTIVE' },
+      select: { fcmToken: true, id: true },
     });
-    const fcmArray: string[] = [];
-    //* this loop will push all fcm token to an array and then it will passs for notifications
-    for (const user of allPremiumUser) {
-      fcmArray.push(user.fcmToken as string);
+
+    const fcmArray = allPremiumUser
+      .map((u) => u.fcmToken)
+      .filter((token): token is string => !!token);
+
+    if (fcmArray.length > 0) {
+      await this.firebase.sendPushNotification(fcmArray, dto.title, dto.code);
     }
-    await this.firebase.sendPushNotification(fcmArray, dto.title, dto.code);
 
     const notification = await this.prisma.client.notification.create({
       data: {
@@ -90,15 +64,17 @@ export class OfferService {
       },
     });
 
-    // * Create UserNotification entries
-    await this.prisma.client.userNotification.createMany({
-      data: allPremiumUser.map((u) => ({
-        userId: u.id,
-        notificationId: notification.id,
-      })),
-      skipDuplicates: true,
-    });
-    return updatedOffer;
+    if (allPremiumUser.length > 0) {
+      await this.prisma.client.userNotification.createMany({
+        data: allPremiumUser.map((u) => ({
+          userId: u.id,
+          notificationId: notification.id,
+        })),
+        skipDuplicates: true,
+      });
+    }
+
+    return offer;
   }
 
   //** find arrpove offer only...
@@ -266,15 +242,41 @@ export class OfferService {
     const redemption = await this.prisma.client.reedemaOffer.findFirst({
       where: { id: redemtionId },
     });
-    if (!redemption) throw new NotFoundException('Redemption not found');
-    if (redemption.isOrganizedApproved)
+
+    if (!redemption) {
+      throw new NotFoundException('Redemption not found');
+    }
+
+    if (redemption.isOrganizedApproved) {
       throw new BadRequestException('Already approved');
+    }
+
+    //  Approve redemption
     const updatedRedemption = await this.prisma.client.reedemaOffer.update({
       where: { id: redemtionId },
       data: {
         isOrganizedApproved: true,
       },
     });
+
+    // Create notification
+    await this.prisma.client.notification.create({
+      data: {
+        type: 'OFFER_REDEMPTION_APPROVED',
+        title: 'Offer Approved 🎉',
+        message: 'Your offer redemption has been approved successfully.',
+        meta: {
+          redemptionId: updatedRedemption.id,
+          offerId: updatedRedemption.offerId,
+        },
+        users: {
+          create: {
+            userId: updatedRedemption.userId,
+          },
+        },
+      },
+    });
+
     return updatedRedemption;
   }
 }
