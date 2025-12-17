@@ -20,77 +20,52 @@ export class OfferService {
     private readonly firebase: FirebaseService,
   ) {}
   // ** Create offer by organizer
-  async createOffer(userId: string, dto: CreateOfferDto) {
-    const business = await this.prisma.client.businessProfile.findUnique({
-      where: { ownerId: userId },
-    });
+ async createOffer(userId: string, dto: CreateOfferDto) {
+  // 1️⃣ Find the business profile
+  const business = await this.prisma.client.businessProfile.findUnique({
+    where: { ownerId: userId },
+  });
+  if (!business) throw new NotFoundException('No business profile found');
 
-    if (!business) throw new NotFoundException('No business profile found');
+  const offer = await this.prisma.client.offer.create({
+    data: {
+      title: dto.title,
+      description: dto.description,
+      code: dto.code,
+      expiredsAt: dto.expiresAt,
+      businessId: business.id,
+      isActive: true,
+      qrCodeUrl: null,
+    },
+  });
 
-    const offer = await this.prisma.client.offer.create({
-      data: {
-        title: dto.title,
-        description: dto.description,
-        code: dto.code,
-        expiredsAt: dto.expiresAt,
-        businessId: business.id,
-        isActive: true,
-      },
-    });
 
-    const redeemUrl = `${process.env.SERVER_URL}/offers/scan/${offer.code}`;
-    const qrBuffer = await generateQRCodeBuffer(redeemUrl);
+  const allPremiumUser = await this.prisma.client.user.findMany({
+    where: { subscriptionStatus: 'ACTIVE' },
+    select: { fcmToken: true, id: true },
+  });
 
-    const file: Express.Multer.File = {
-      fieldname: 'file',
-      originalname: `offer-${offer.id}.png`,
-      encoding: '7bit',
-      mimetype: 'image/png',
-      size: qrBuffer.length,
-      buffer: qrBuffer,
-      destination: '',
-      filename: `offer-${offer.id}.png`,
-      path: '',
-      stream: Readable.from(qrBuffer),
-    };
+  const fcmArray = allPremiumUser
+    .map((u) => u.fcmToken)
+    .filter((token): token is string => !!token);
 
-    const uploaded = await this.s3Service.uploadFile(file);
-
-    const updatedOffer = await this.prisma.client.offer.update({
-      where: { id: offer.id },
-      data: { qrCodeUrl: uploaded?.url ?? null },
-    });
-
-    //* get all users who is primum  and get thire fcm token for firebase notifiction
-    const allPremiumUser = await this.prisma.client.user.findMany({
-      where: {
-        subscriptionStatus: 'ACTIVE',
-      },
-      select: {
-        fcmToken: true,
-        id: true,
-      },
-    });
-    const fcmArray: string[] = [];
-    //* this loop will push all fcm token to an array and then it will passs for notifications
-    for (const user of allPremiumUser) {
-      fcmArray.push(user.fcmToken as string);
-    }
+  if (fcmArray.length > 0) {
     await this.firebase.sendPushNotification(fcmArray, dto.title, dto.code);
+  }
 
-    const notification = await this.prisma.client.notification.create({
-      data: {
-        type: 'OFFER',
-        title: dto.title,
-        message: dto.description ?? dto.code,
-        meta: {
-          offerId: offer.id,
-          businessId: business.id,
-        },
+  const notification = await this.prisma.client.notification.create({
+    data: {
+      type: 'OFFER',
+      title: dto.title,
+      message: dto.description ?? dto.code,
+      meta: {
+        offerId: offer.id,
+        businessId: business.id,
       },
-    });
+    },
+  });
 
-    // * Create UserNotification entries
+  if (allPremiumUser.length > 0) {
     await this.prisma.client.userNotification.createMany({
       data: allPremiumUser.map((u) => ({
         userId: u.id,
@@ -98,8 +73,11 @@ export class OfferService {
       })),
       skipDuplicates: true,
     });
-    return updatedOffer;
   }
+
+  return offer;
+}
+
 
   //** find arrpove offer only...
   async findApprovedOffers(userId: string) {
@@ -262,19 +240,46 @@ export class OfferService {
     return null;
   }
 
-  async approveUserOfferClaimed(redemtionId: string) {
-    const redemption = await this.prisma.client.reedemaOffer.findFirst({
-      where: { id: redemtionId },
-    });
-    if (!redemption) throw new NotFoundException('Redemption not found');
-    if (redemption.isOrganizedApproved)
-      throw new BadRequestException('Already approved');
-    const updatedRedemption = await this.prisma.client.reedemaOffer.update({
-      where: { id: redemtionId },
-      data: {
-        isOrganizedApproved: true,
-      },
-    });
-    return updatedRedemption;
+async approveUserOfferClaimed(redemtionId: string) {
+  const redemption = await this.prisma.client.reedemaOffer.findFirst({
+    where: { id: redemtionId },
+  });
+
+  if (!redemption) {
+    throw new NotFoundException('Redemption not found');
   }
+
+  if (redemption.isOrganizedApproved) {
+    throw new BadRequestException('Already approved');
+  }
+
+  //  Approve redemption
+  const updatedRedemption = await this.prisma.client.reedemaOffer.update({
+    where: { id: redemtionId },
+    data: {
+      isOrganizedApproved: true,
+    },
+  });
+
+  // Create notification
+  await this.prisma.client.notification.create({
+    data: {
+      type: 'OFFER_REDEMPTION_APPROVED',
+      title: 'Offer Approved 🎉',
+      message: 'Your offer redemption has been approved successfully.',
+      meta: {
+        redemptionId: updatedRedemption.id,
+        offerId: updatedRedemption.offerId,
+      },
+      users: {
+        create: {
+          userId: updatedRedemption.userId,
+        },
+      },
+    },
+  });
+
+  return updatedRedemption;
+}
+
 }

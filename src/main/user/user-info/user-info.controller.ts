@@ -158,4 +158,20 @@ export class UserInfoController {
       throw new InternalServerErrorException(err.message, err.status);
     }
   }
+
+  @ValidateAuth()
+  @Patch('mark-as-read')
+  @ApiOperation({ summary: 'Mark all notifications as read' })
+  async markAllNotificationsAsRead(@GetUser('sub') userId: string) {
+    try {
+      const res = await this.userInfoService.markAllNotificationsAsRead(userId);
+      return {
+        status: HttpStatus.OK,
+        message: 'Notifications marked as read successful',
+        data: res,
+      };
+    } catch (err) {
+      throw new InternalServerErrorException(err.message, err.status);
+    }
+  }
 }
