@@ -200,56 +200,55 @@ export class UserInfoService {
     });
   }
 
-async getUserNotifications(userId: string) {
-  const todayStart = new Date();
-  todayStart.setHours(0, 0, 0, 0);
+  async getUserNotifications(userId: string) {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
 
-  const yesterdayStart = new Date(todayStart);
-  yesterdayStart.setDate(todayStart.getDate() - 1);
+    const yesterdayStart = new Date(todayStart);
+    yesterdayStart.setDate(todayStart.getDate() - 1);
 
-  const yesterdayEnd = new Date(todayStart);
+    const yesterdayEnd = new Date(todayStart);
 
-  const today = await this.prisma.client.userNotification.findMany({
-    where: {
-      userId,
-      createdAt: {
-        gte: todayStart,
+    const today = await this.prisma.client.userNotification.findMany({
+      where: {
+        userId,
+        createdAt: {
+          gte: todayStart,
+        },
       },
-    },
-    include: {
-      notification: true,
-    },
-    orderBy: { createdAt: 'desc' },
-  });
-
-  const yesterday = await this.prisma.client.userNotification.findMany({
-    where: {
-      userId,
-      createdAt: {
-        gte: yesterdayStart,
-        lt: yesterdayEnd,
+      include: {
+        notification: true,
       },
-    },
-    include: {
-      notification: true,
-    },
-    orderBy: { createdAt: 'desc' },
-  });
+      orderBy: { createdAt: 'desc' },
+    });
 
-  const unreadCount = await this.prisma.client.userNotification.count({
-    where: {
-      userId,
-      read: false,
-    },
-  });
+    const yesterday = await this.prisma.client.userNotification.findMany({
+      where: {
+        userId,
+        createdAt: {
+          gte: yesterdayStart,
+          lt: yesterdayEnd,
+        },
+      },
+      include: {
+        notification: true,
+      },
+      orderBy: { createdAt: 'desc' },
+    });
 
-  return {
-    unreadCount,
-    today,
-    yesterday,
-  };
-}
+    const unreadCount = await this.prisma.client.userNotification.count({
+      where: {
+        userId,
+        read: false,
+      },
+    });
 
+    return {
+      unreadCount,
+      today,
+      yesterday,
+    };
+  }
 
   //* store spin history for user
   async createSpinHistory(userId: string, dto: SpinHistoryDto) {
@@ -317,9 +316,8 @@ async getUserNotifications(userId: string) {
     return res;
   }
 
-
-  // 
-  async markAllNotificationsAsRead(userId:string){
+  //
+  async markAllNotificationsAsRead(userId: string) {
     const res = await this.prisma.client.userNotification.updateMany({
       where: {
         userId: userId,
@@ -331,5 +329,4 @@ async getUserNotifications(userId: string) {
     });
     return res;
   }
-
 }

@@ -565,46 +565,45 @@ export class BusinessProfileService {
 
   // *Accept Reservation
   async acceptReservation(id: string) {
-  const reservation = await this.prisma.client.reservation.findFirst({
-    where: { id },
-    include: {
-      user: true, // or shipper / customer relation
-    },
-  });
-
-  if (!reservation) {
-    throw new NotFoundException('Reservation not found');
-  }
-
-  // 1️Update reservation
-  const updatedReservation = await this.prisma.client.reservation.update({
-    where: { id },
-    data: {
-      aproval: true,
-    },
-  });
-
-  // 2 Create notification
-  const notification = await this.prisma.client.notification.create({
-    data: {
-      type: 'RESERVATION_ACCEPTED',
-      title: 'Reservation Accepted',
-      message: 'Your reservation has been accepted successfully.',
-      meta: {
-        reservationId: reservation.id,
+    const reservation = await this.prisma.client.reservation.findFirst({
+      where: { id },
+      include: {
+        user: true, // or shipper / customer relation
       },
-      users: {
-        create: {
-          userId: reservation.userId, 
+    });
+
+    if (!reservation) {
+      throw new NotFoundException('Reservation not found');
+    }
+
+    // 1️Update reservation
+    const updatedReservation = await this.prisma.client.reservation.update({
+      where: { id },
+      data: {
+        aproval: true,
+      },
+    });
+
+    // 2 Create notification
+    const notification = await this.prisma.client.notification.create({
+      data: {
+        type: 'RESERVATION_ACCEPTED',
+        title: 'Reservation Accepted',
+        message: 'Your reservation has been accepted successfully.',
+        meta: {
+          reservationId: reservation.id,
+        },
+        users: {
+          create: {
+            userId: reservation.userId,
+          },
         },
       },
-    },
-  });
+    });
 
-  return {
-    reservation: updatedReservation,
-    notification,
-  };
-}
-
+    return {
+      reservation: updatedReservation,
+      notification,
+    };
+  }
 }
