@@ -44,7 +44,7 @@ async function bootstrap() {
       transformOptions: {
         enableImplicitConversion: true,
       },
-    }), 
+    }),
   );
 
   // * add global filters
