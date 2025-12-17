@@ -199,56 +199,52 @@ export class UserInfoService {
       orderBy: { createdAt: 'desc' },
     });
   }
+async getUserNotifications(userId: string) {
+  // Today start (00:00)
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
 
-  async getUserNotifications(userId: string) {
-    const todayStart = new Date();
-    todayStart.setHours(0, 0, 0, 0);
 
-    const yesterdayStart = new Date(todayStart);
-    yesterdayStart.setDate(todayStart.getDate() - 1);
-
-    const yesterdayEnd = new Date(todayStart);
-
-    const today = await this.prisma.client.userNotification.findMany({
-      where: {
-        userId,
-        createdAt: {
-          gte: todayStart,
-        },
+  const today = await this.prisma.client.userNotification.findMany({
+    where: {
+      userId,
+      createdAt: {
+        gte: todayStart,
       },
-      include: {
-        notification: true,
-      },
-      orderBy: { createdAt: 'desc' },
-    });
+    },
+    include: {
+      notification: true,
+    },
+    orderBy: { createdAt: 'desc' },
+  });
 
-    const yesterday = await this.prisma.client.userNotification.findMany({
-      where: {
-        userId,
-        createdAt: {
-          gte: yesterdayStart,
-          lt: yesterdayEnd,
-        },
+  const previous = await this.prisma.client.userNotification.findMany({
+    where: {
+      userId,
+      createdAt: {
+        lt: todayStart, 
       },
-      include: {
-        notification: true,
-      },
-      orderBy: { createdAt: 'desc' },
-    });
+    },
+    include: {
+      notification: true,
+    },
+    orderBy: { createdAt: 'desc' },
+  });
 
-    const unreadCount = await this.prisma.client.userNotification.count({
-      where: {
-        userId,
-        read: false,
-      },
-    });
+  const unreadCount = await this.prisma.client.userNotification.count({
+    where: {
+      userId,
+      read: false,
+    },
+  });
 
-    return {
-      unreadCount,
-      today,
-      yesterday,
-    };
-  }
+  return {
+    unreadCount,
+    today,
+    previous,
+  };
+}
+
 
   //* store spin history for user
   async createSpinHistory(userId: string, dto: SpinHistoryDto) {
