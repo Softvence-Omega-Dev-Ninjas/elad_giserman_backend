@@ -9,6 +9,7 @@ model SubscriptionPlan {
   stripePriceId             String             @unique
   currency                  String             @default("usd")
   priceCents                Int
+  yearlyPriceCents          Int?
   priceWithoutDiscountCents Int
   discountPercent           Int                @default(0)
   billingPeriod             BillingPeriod
