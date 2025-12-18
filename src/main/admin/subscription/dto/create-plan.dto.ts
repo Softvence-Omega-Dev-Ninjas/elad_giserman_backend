@@ -71,6 +71,7 @@ export class CreateSubscriptionPlanDto {
   })
   @Type(() => Number)
   @IsNumber()
+  @IsOptional()
   yearlyPrice: number;
 
   @ApiProperty({
