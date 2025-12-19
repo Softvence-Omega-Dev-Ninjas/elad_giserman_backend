@@ -66,6 +66,15 @@ export class CreateSubscriptionPlanDto {
   price: number;
 
   @ApiProperty({
+    description: 'Plan price in USD dollars',
+    example: 99,
+  })
+  @Type(() => Number)
+  @IsNumber()
+  @IsOptional()
+  yearlyPrice: number;
+
+  @ApiProperty({
     description: 'Billing period for the plan',
     enum: BillingPeriod,
     example: BillingPeriod.MONTHLY,

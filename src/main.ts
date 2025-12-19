@@ -31,8 +31,6 @@ async function bootstrap() {
       'http://localhost:5180',
       'https://yamiz.org',
       'http://54.79.222.232:3000',
-      'https://api.yamiz.org/api',
-      'http://31.97.125.159:3000',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,

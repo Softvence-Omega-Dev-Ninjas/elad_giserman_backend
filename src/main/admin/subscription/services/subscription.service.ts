@@ -42,6 +42,7 @@ export class SubscriptionService {
 
     // 2. Compute discounted and non-discounted amounts (convert to cents)
     const priceWithoutDiscountDollars = dto.price;
+    const yearlyPriceWithoutDiscountDollars = dto.yearlyPrice;
     const discountPercent = dto.discountPercent ?? 0;
 
     const finalPriceDollars = (
@@ -49,10 +50,18 @@ export class SubscriptionService {
       (1 - discountPercent / 100)
     ).toFixed(2);
 
+    const yearlyFinalPriceDollars = (
+      yearlyPriceWithoutDiscountDollars *
+      (1 - discountPercent / 100)
+    ).toFixed(2);
     // Convert to cents for Stripe and DB
     const priceCents = Math.round(Number(finalPriceDollars) * 100);
     const priceWithoutDiscountCents = Math.round(
       priceWithoutDiscountDollars * 100,
+    );
+    const yearlyPriceCents = Math.round(Number(yearlyFinalPriceDollars) * 100);
+    const yearlyPriceWithoutDiscountCents = Math.round(
+      yearlyPriceWithoutDiscountDollars * 100,
     );
 
     this.logger.log(`Final price: $${finalPriceDollars} (${priceCents}¢)`);
@@ -94,6 +103,7 @@ export class SubscriptionService {
         stripePriceId: stripePrice.id,
         billingPeriod: dto.billingPeriod,
         priceCents,
+        yearlyPriceCents,
         discountPercent,
         priceWithoutDiscountCents,
         currency: stripePrice.currency,

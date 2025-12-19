@@ -319,6 +319,7 @@ export const SubscriptionPlanScalarFieldEnum = {
   stripePriceId: 'stripePriceId',
   currency: 'currency',
   priceCents: 'priceCents',
+  yearlyPriceCents: 'yearlyPriceCents',
   priceWithoutDiscountCents: 'priceWithoutDiscountCents',
   discountPercent: 'discountPercent',
   billingPeriod: 'billingPeriod',

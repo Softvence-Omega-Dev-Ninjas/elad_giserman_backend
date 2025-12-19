@@ -28,12 +28,14 @@ export type AggregateSubscriptionPlan = {
 
 export type SubscriptionPlanAvgAggregateOutputType = {
   priceCents: number | null;
+  yearlyPriceCents: number | null;
   priceWithoutDiscountCents: number | null;
   discountPercent: number | null;
 };
 
 export type SubscriptionPlanSumAggregateOutputType = {
   priceCents: number | null;
+  yearlyPriceCents: number | null;
   priceWithoutDiscountCents: number | null;
   discountPercent: number | null;
 };
@@ -48,6 +50,7 @@ export type SubscriptionPlanMinAggregateOutputType = {
   stripePriceId: string | null;
   currency: string | null;
   priceCents: number | null;
+  yearlyPriceCents: number | null;
   priceWithoutDiscountCents: number | null;
   discountPercent: number | null;
   billingPeriod: $Enums.BillingPeriod | null;
@@ -65,6 +68,7 @@ export type SubscriptionPlanMaxAggregateOutputType = {
   stripePriceId: string | null;
   currency: string | null;
   priceCents: number | null;
+  yearlyPriceCents: number | null;
   priceWithoutDiscountCents: number | null;
   discountPercent: number | null;
   billingPeriod: $Enums.BillingPeriod | null;
@@ -83,6 +87,7 @@ export type SubscriptionPlanCountAggregateOutputType = {
   stripePriceId: number;
   currency: number;
   priceCents: number;
+  yearlyPriceCents: number;
   priceWithoutDiscountCents: number;
   discountPercent: number;
   billingPeriod: number;
@@ -93,12 +98,14 @@ export type SubscriptionPlanCountAggregateOutputType = {
 
 export type SubscriptionPlanAvgAggregateInputType = {
   priceCents?: true;
+  yearlyPriceCents?: true;
   priceWithoutDiscountCents?: true;
   discountPercent?: true;
 };
 
 export type SubscriptionPlanSumAggregateInputType = {
   priceCents?: true;
+  yearlyPriceCents?: true;
   priceWithoutDiscountCents?: true;
   discountPercent?: true;
 };
@@ -113,6 +120,7 @@ export type SubscriptionPlanMinAggregateInputType = {
   stripePriceId?: true;
   currency?: true;
   priceCents?: true;
+  yearlyPriceCents?: true;
   priceWithoutDiscountCents?: true;
   discountPercent?: true;
   billingPeriod?: true;
@@ -130,6 +138,7 @@ export type SubscriptionPlanMaxAggregateInputType = {
   stripePriceId?: true;
   currency?: true;
   priceCents?: true;
+  yearlyPriceCents?: true;
   priceWithoutDiscountCents?: true;
   discountPercent?: true;
   billingPeriod?: true;
@@ -148,6 +157,7 @@ export type SubscriptionPlanCountAggregateInputType = {
   stripePriceId?: true;
   currency?: true;
   priceCents?: true;
+  yearlyPriceCents?: true;
   priceWithoutDiscountCents?: true;
   discountPercent?: true;
   billingPeriod?: true;
@@ -264,6 +274,7 @@ export type SubscriptionPlanGroupByOutputType = {
   stripePriceId: string;
   currency: string;
   priceCents: number;
+  yearlyPriceCents: number | null;
   priceWithoutDiscountCents: number;
   discountPercent: number;
   billingPeriod: $Enums.BillingPeriod;
@@ -304,6 +315,10 @@ export type SubscriptionPlanWhereInput = {
   stripePriceId?: Prisma.StringFilter<'SubscriptionPlan'> | string;
   currency?: Prisma.StringFilter<'SubscriptionPlan'> | string;
   priceCents?: Prisma.IntFilter<'SubscriptionPlan'> | number;
+  yearlyPriceCents?:
+    | Prisma.IntNullableFilter<'SubscriptionPlan'>
+    | number
+    | null;
   priceWithoutDiscountCents?: Prisma.IntFilter<'SubscriptionPlan'> | number;
   discountPercent?: Prisma.IntFilter<'SubscriptionPlan'> | number;
   billingPeriod?:
@@ -326,6 +341,7 @@ export type SubscriptionPlanOrderByWithRelationInput = {
   stripePriceId?: Prisma.SortOrder;
   currency?: Prisma.SortOrder;
   priceCents?: Prisma.SortOrder;
+  yearlyPriceCents?: Prisma.SortOrderInput | Prisma.SortOrder;
   priceWithoutDiscountCents?: Prisma.SortOrder;
   discountPercent?: Prisma.SortOrder;
   billingPeriod?: Prisma.SortOrder;
@@ -357,6 +373,10 @@ export type SubscriptionPlanWhereUniqueInput = Prisma.AtLeast<
     isActive?: Prisma.BoolFilter<'SubscriptionPlan'> | boolean;
     currency?: Prisma.StringFilter<'SubscriptionPlan'> | string;
     priceCents?: Prisma.IntFilter<'SubscriptionPlan'> | number;
+    yearlyPriceCents?:
+      | Prisma.IntNullableFilter<'SubscriptionPlan'>
+      | number
+      | null;
     priceWithoutDiscountCents?: Prisma.IntFilter<'SubscriptionPlan'> | number;
     discountPercent?: Prisma.IntFilter<'SubscriptionPlan'> | number;
     billingPeriod?:
@@ -381,6 +401,7 @@ export type SubscriptionPlanOrderByWithAggregationInput = {
   stripePriceId?: Prisma.SortOrder;
   currency?: Prisma.SortOrder;
   priceCents?: Prisma.SortOrder;
+  yearlyPriceCents?: Prisma.SortOrderInput | Prisma.SortOrder;
   priceWithoutDiscountCents?: Prisma.SortOrder;
   discountPercent?: Prisma.SortOrder;
   billingPeriod?: Prisma.SortOrder;
@@ -418,6 +439,10 @@ export type SubscriptionPlanScalarWhereWithAggregatesInput = {
     | string;
   currency?: Prisma.StringWithAggregatesFilter<'SubscriptionPlan'> | string;
   priceCents?: Prisma.IntWithAggregatesFilter<'SubscriptionPlan'> | number;
+  yearlyPriceCents?:
+    | Prisma.IntNullableWithAggregatesFilter<'SubscriptionPlan'>
+    | number
+    | null;
   priceWithoutDiscountCents?:
     | Prisma.IntWithAggregatesFilter<'SubscriptionPlan'>
     | number;
@@ -446,6 +471,7 @@ export type SubscriptionPlanCreateInput = {
   stripePriceId: string;
   currency?: string;
   priceCents: number;
+  yearlyPriceCents?: number | null;
   priceWithoutDiscountCents: number;
   discountPercent?: number;
   billingPeriod: $Enums.BillingPeriod;
@@ -466,6 +492,7 @@ export type SubscriptionPlanUncheckedCreateInput = {
   stripePriceId: string;
   currency?: string;
   priceCents: number;
+  yearlyPriceCents?: number | null;
   priceWithoutDiscountCents: number;
   discountPercent?: number;
   billingPeriod: $Enums.BillingPeriod;
@@ -486,6 +513,10 @@ export type SubscriptionPlanUpdateInput = {
   stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   priceCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  yearlyPriceCents?:
+    | Prisma.NullableIntFieldUpdateOperationsInput
+    | number
+    | null;
   priceWithoutDiscountCents?: Prisma.IntFieldUpdateOperationsInput | number;
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number;
   billingPeriod?:
@@ -508,6 +539,10 @@ export type SubscriptionPlanUncheckedUpdateInput = {
   stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   priceCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  yearlyPriceCents?:
+    | Prisma.NullableIntFieldUpdateOperationsInput
+    | number
+    | null;
   priceWithoutDiscountCents?: Prisma.IntFieldUpdateOperationsInput | number;
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number;
   billingPeriod?:
@@ -530,6 +565,7 @@ export type SubscriptionPlanCreateManyInput = {
   stripePriceId: string;
   currency?: string;
   priceCents: number;
+  yearlyPriceCents?: number | null;
   priceWithoutDiscountCents: number;
   discountPercent?: number;
   billingPeriod: $Enums.BillingPeriod;
@@ -548,6 +584,10 @@ export type SubscriptionPlanUpdateManyMutationInput = {
   stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   priceCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  yearlyPriceCents?:
+    | Prisma.NullableIntFieldUpdateOperationsInput
+    | number
+    | null;
   priceWithoutDiscountCents?: Prisma.IntFieldUpdateOperationsInput | number;
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number;
   billingPeriod?:
@@ -568,6 +608,10 @@ export type SubscriptionPlanUncheckedUpdateManyInput = {
   stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   priceCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  yearlyPriceCents?:
+    | Prisma.NullableIntFieldUpdateOperationsInput
+    | number
+    | null;
   priceWithoutDiscountCents?: Prisma.IntFieldUpdateOperationsInput | number;
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number;
   billingPeriod?:
@@ -596,6 +640,7 @@ export type SubscriptionPlanCountOrderByAggregateInput = {
   stripePriceId?: Prisma.SortOrder;
   currency?: Prisma.SortOrder;
   priceCents?: Prisma.SortOrder;
+  yearlyPriceCents?: Prisma.SortOrder;
   priceWithoutDiscountCents?: Prisma.SortOrder;
   discountPercent?: Prisma.SortOrder;
   billingPeriod?: Prisma.SortOrder;
@@ -605,6 +650,7 @@ export type SubscriptionPlanCountOrderByAggregateInput = {
 
 export type SubscriptionPlanAvgOrderByAggregateInput = {
   priceCents?: Prisma.SortOrder;
+  yearlyPriceCents?: Prisma.SortOrder;
   priceWithoutDiscountCents?: Prisma.SortOrder;
   discountPercent?: Prisma.SortOrder;
 };
@@ -619,6 +665,7 @@ export type SubscriptionPlanMaxOrderByAggregateInput = {
   stripePriceId?: Prisma.SortOrder;
   currency?: Prisma.SortOrder;
   priceCents?: Prisma.SortOrder;
+  yearlyPriceCents?: Prisma.SortOrder;
   priceWithoutDiscountCents?: Prisma.SortOrder;
   discountPercent?: Prisma.SortOrder;
   billingPeriod?: Prisma.SortOrder;
@@ -636,6 +683,7 @@ export type SubscriptionPlanMinOrderByAggregateInput = {
   stripePriceId?: Prisma.SortOrder;
   currency?: Prisma.SortOrder;
   priceCents?: Prisma.SortOrder;
+  yearlyPriceCents?: Prisma.SortOrder;
   priceWithoutDiscountCents?: Prisma.SortOrder;
   discountPercent?: Prisma.SortOrder;
   billingPeriod?: Prisma.SortOrder;
@@ -645,6 +693,7 @@ export type SubscriptionPlanMinOrderByAggregateInput = {
 
 export type SubscriptionPlanSumOrderByAggregateInput = {
   priceCents?: Prisma.SortOrder;
+  yearlyPriceCents?: Prisma.SortOrder;
   priceWithoutDiscountCents?: Prisma.SortOrder;
   discountPercent?: Prisma.SortOrder;
 };
@@ -738,6 +787,7 @@ export type SubscriptionPlanCreateWithoutUserSubscriptionsInput = {
   stripePriceId: string;
   currency?: string;
   priceCents: number;
+  yearlyPriceCents?: number | null;
   priceWithoutDiscountCents: number;
   discountPercent?: number;
   billingPeriod: $Enums.BillingPeriod;
@@ -757,6 +807,7 @@ export type SubscriptionPlanUncheckedCreateWithoutUserSubscriptionsInput = {
   stripePriceId: string;
   currency?: string;
   priceCents: number;
+  yearlyPriceCents?: number | null;
   priceWithoutDiscountCents: number;
   discountPercent?: number;
   billingPeriod: $Enums.BillingPeriod;
@@ -805,6 +856,10 @@ export type SubscriptionPlanUpdateWithoutUserSubscriptionsInput = {
   stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   priceCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  yearlyPriceCents?:
+    | Prisma.NullableIntFieldUpdateOperationsInput
+    | number
+    | null;
   priceWithoutDiscountCents?: Prisma.IntFieldUpdateOperationsInput | number;
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number;
   billingPeriod?:
@@ -826,6 +881,10 @@ export type SubscriptionPlanUncheckedUpdateWithoutUserSubscriptionsInput = {
   stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   priceCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  yearlyPriceCents?:
+    | Prisma.NullableIntFieldUpdateOperationsInput
+    | number
+    | null;
   priceWithoutDiscountCents?: Prisma.IntFieldUpdateOperationsInput | number;
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number;
   billingPeriod?:
@@ -847,6 +906,7 @@ export type SubscriptionPlanCreateWithoutUserInput = {
   stripePriceId: string;
   currency?: string;
   priceCents: number;
+  yearlyPriceCents?: number | null;
   priceWithoutDiscountCents: number;
   discountPercent?: number;
   billingPeriod: $Enums.BillingPeriod;
@@ -866,6 +926,7 @@ export type SubscriptionPlanUncheckedCreateWithoutUserInput = {
   stripePriceId: string;
   currency?: string;
   priceCents: number;
+  yearlyPriceCents?: number | null;
   priceWithoutDiscountCents: number;
   discountPercent?: number;
   billingPeriod: $Enums.BillingPeriod;
@@ -913,6 +974,10 @@ export type SubscriptionPlanUpdateWithoutUserInput = {
   stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   priceCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  yearlyPriceCents?:
+    | Prisma.NullableIntFieldUpdateOperationsInput
+    | number
+    | null;
   priceWithoutDiscountCents?: Prisma.IntFieldUpdateOperationsInput | number;
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number;
   billingPeriod?:
@@ -934,6 +999,10 @@ export type SubscriptionPlanUncheckedUpdateWithoutUserInput = {
   stripePriceId?: Prisma.StringFieldUpdateOperationsInput | string;
   currency?: Prisma.StringFieldUpdateOperationsInput | string;
   priceCents?: Prisma.IntFieldUpdateOperationsInput | number;
+  yearlyPriceCents?:
+    | Prisma.NullableIntFieldUpdateOperationsInput
+    | number
+    | null;
   priceWithoutDiscountCents?: Prisma.IntFieldUpdateOperationsInput | number;
   discountPercent?: Prisma.IntFieldUpdateOperationsInput | number;
   billingPeriod?:
@@ -1011,6 +1080,7 @@ export type SubscriptionPlanSelect<
     stripePriceId?: boolean;
     currency?: boolean;
     priceCents?: boolean;
+    yearlyPriceCents?: boolean;
     priceWithoutDiscountCents?: boolean;
     discountPercent?: boolean;
     billingPeriod?: boolean;
@@ -1042,6 +1112,7 @@ export type SubscriptionPlanSelectCreateManyAndReturn<
     stripePriceId?: boolean;
     currency?: boolean;
     priceCents?: boolean;
+    yearlyPriceCents?: boolean;
     priceWithoutDiscountCents?: boolean;
     discountPercent?: boolean;
     billingPeriod?: boolean;
@@ -1066,6 +1137,7 @@ export type SubscriptionPlanSelectUpdateManyAndReturn<
     stripePriceId?: boolean;
     currency?: boolean;
     priceCents?: boolean;
+    yearlyPriceCents?: boolean;
     priceWithoutDiscountCents?: boolean;
     discountPercent?: boolean;
     billingPeriod?: boolean;
@@ -1086,6 +1158,7 @@ export type SubscriptionPlanSelectScalar = {
   stripePriceId?: boolean;
   currency?: boolean;
   priceCents?: boolean;
+  yearlyPriceCents?: boolean;
   priceWithoutDiscountCents?: boolean;
   discountPercent?: boolean;
   billingPeriod?: boolean;
@@ -1107,6 +1180,7 @@ export type SubscriptionPlanOmit<
   | 'stripePriceId'
   | 'currency'
   | 'priceCents'
+  | 'yearlyPriceCents'
   | 'priceWithoutDiscountCents'
   | 'discountPercent'
   | 'billingPeriod'
@@ -1154,6 +1228,7 @@ export type $SubscriptionPlanPayload<
       stripePriceId: string;
       currency: string;
       priceCents: number;
+      yearlyPriceCents: number | null;
       priceWithoutDiscountCents: number;
       discountPercent: number;
       billingPeriod: $Enums.BillingPeriod;
@@ -1810,6 +1885,7 @@ export interface SubscriptionPlanFieldRefs {
   readonly stripePriceId: Prisma.FieldRef<'SubscriptionPlan', 'String'>;
   readonly currency: Prisma.FieldRef<'SubscriptionPlan', 'String'>;
   readonly priceCents: Prisma.FieldRef<'SubscriptionPlan', 'Int'>;
+  readonly yearlyPriceCents: Prisma.FieldRef<'SubscriptionPlan', 'Int'>;
   readonly priceWithoutDiscountCents: Prisma.FieldRef<
     'SubscriptionPlan',
     'Int'
