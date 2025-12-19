@@ -13,7 +13,6 @@ import { PlatformFilter } from '../dto/getPlatform.dto';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
-import { count } from 'node:console';
 import { ReservationFilter } from '@/main/organizer/dto/getReservation.dto';
 // import { log } from 'console';
 @Injectable()
@@ -116,7 +115,6 @@ export class AdminPlatfromManagementService {
       // Business count
       this.prisma.client.businessProfile.count(),
 
-      ,
       // ⭐ FIXED — apply filtering + take top 5
       // Recent users
       this.prisma.client.user.findMany({

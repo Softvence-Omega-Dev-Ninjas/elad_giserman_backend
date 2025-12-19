@@ -58,14 +58,16 @@ export class SubscriptionService {
   @HandleError('Error getting subscription status')
   async getCurrentSubscriptionStatus(userId: string): Promise<TResponse<any>> {
     this.logger.log('Getting subscription status for user');
+
     const userSubscription =
       await this.prismaService.client.userSubscription.findFirst({
-        where: { userId, status: { in: ['ACTIVE', 'PENDING'] } },
+        where: { userId, status: { in: ['ACTIVE', 'PENDING', 'CANCELED'] } },
         orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
         include: { plan: true },
       });
 
-    if (!userSubscription) {
+    // If no subscription or cancelled, return fallback
+    if (!userSubscription || userSubscription.status === 'CANCELED') {
       return successResponse(
         {
           status: 'NONE',
@@ -77,11 +79,6 @@ export class SubscriptionService {
         'No subscription found',
       );
     }
-
-    this.logger.log(
-      'Subscription status fetched successfully',
-      userSubscription,
-    );
 
     const now = DateTime.now();
     const start = userSubscription.planStartedAt
