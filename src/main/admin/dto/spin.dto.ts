@@ -15,7 +15,7 @@ export class CreateSpinDto {
   @ApiProperty({ example: '10% discount on pizza or free a coke' })
   @IsOptional()
   @IsString()
-  useCase?:string
+  useCase?: string;
 }
 
 export class UpdateSpinDto {
@@ -29,9 +29,8 @@ export class UpdateSpinDto {
   @IsInt()
   probablity?: number;
 
-
   @ApiProperty({ example: '10% discount on pizza or free a coke' })
   @IsOptional()
   @IsString()
-  useCase?:string
+  useCase?: string;
 }

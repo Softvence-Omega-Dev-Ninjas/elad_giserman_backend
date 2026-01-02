@@ -672,43 +672,43 @@ export class AdminPlatfromManagementService {
   }
 
   // create bussiness owner
-async createBussinessOwner(dto: CreateBussinessOwnerDTO) {
-  // Check if email already exists
-  const isEmailExist = await this.prisma.client.user.findUnique({
-    where: { email: dto.email },
-  });
-  if (isEmailExist) {
-    throw new BadRequestException('Email already exists');
+  async createBussinessOwner(dto: CreateBussinessOwnerDTO) {
+    // Check if email already exists
+    const isEmailExist = await this.prisma.client.user.findUnique({
+      where: { email: dto.email },
+    });
+    if (isEmailExist) {
+      throw new BadRequestException('Email already exists');
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(dto.password, 10);
+
+    // Create user
+    const user = await this.prisma.client.user.create({
+      data: {
+        email: dto.email,
+        username: dto.username,
+        password: hashedPassword,
+        memberShip: 'FREE',
+        subscriptionStatus: 'ACTIVE',
+        role: 'ORGANIZER',
+        isVerified: true,
+      },
+    });
+
+    // Create business profile
+    const businessProfile = await this.prisma.client.businessProfile.create({
+      data: {
+        ownerId: user.id,
+        title: '',
+        description: '',
+        location: '',
+        openingTime: '',
+        closingTime: '',
+      },
+    });
+
+    return { user, businessProfile };
   }
-
-  // Hash password
-  const hashedPassword = await bcrypt.hash(dto.password, 10);
-
-  // Create user
-  const user = await this.prisma.client.user.create({
-    data: {
-      email: dto.email,
-      username: dto.username,
-      password: hashedPassword,
-      memberShip: 'FREE',
-      subscriptionStatus: 'ACTIVE',
-      role: 'ORGANIZER',
-      isVerified: true,
-    },
-  });
-
-  // Create business profile
-  const businessProfile = await this.prisma.client.businessProfile.create({
-    data: {
-      ownerId: user.id,
-      title: '',
-      description: '',
-      location: '',
-      openingTime: '',
-      closingTime: '',
-    },
-  });
-
-  return { user, businessProfile };
-}
 }
