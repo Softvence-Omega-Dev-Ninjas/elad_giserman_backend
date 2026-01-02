@@ -11,7 +11,7 @@ model User {
   status                       UserStatus               @default(ACTIVE)
   isVerified                   Boolean                  @default(false)
   timezone                     String                   @default("UTC")
-  language                     UserLanguage             @default(EN)
+  language                     UserLanguage             @default(en)
   allowNotification            Boolean                  @default(true)
   isLoggedIn                   Boolean                  @default(false)
   lastLoginAt                  DateTime?
@@ -71,6 +71,6 @@ enum MemberShip {
 }
 
 enum UserLanguage {
-  EN
-  HE
+  en
+  he
 }
