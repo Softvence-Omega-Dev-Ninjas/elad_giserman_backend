@@ -245,7 +245,7 @@ export class UserInfoService {
   }
 
   //* store spin history for user
-  async createSpinHistory(userId: string, dto:string) {
+  async createSpinHistory(userId: string, dto: string) {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const endOfMonth = new Date(
@@ -276,7 +276,7 @@ export class UserInfoService {
     // Create new spin history
     const res = await this.prisma.client.spinHistory.create({
       data: {
-        spinId:dto,
+        spinId: dto,
         userId,
       },
     });
@@ -324,12 +324,12 @@ export class UserInfoService {
     return res;
   }
 
-  async getUserSpinHistory(userId:string){
+  async getUserSpinHistory(userId: string) {
     const res = await this.prisma.client.spinHistory.findMany({
-      where:{userId:userId},
-      include:{spin:true},
-      orderBy:{createdAt:'desc'}
-    })
+      where: { userId: userId },
+      include: { spin: true },
+      orderBy: { createdAt: 'desc' },
+    });
     return res;
   }
 }

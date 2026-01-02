@@ -1,4 +1,4 @@
-import {  ValidateAdmin } from '@/common/jwt/jwt.decorator';
+import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import {
   Body,
   Controller,
@@ -444,10 +444,11 @@ export class AdminPlatformManagementController {
 
   @Post('create-bussiness-owner')
   @ApiOperation({ summary: 'Create a bussiness owner account' })
-  @ApiBody({ type:CreateBussinessOwnerDTO })
-  async createBussinessOwnerAccount(@Body() dto:any) {
+  @ApiBody({ type: CreateBussinessOwnerDTO })
+  async createBussinessOwnerAccount(@Body() dto: any) {
     try {
-      const res = await this.platformManagementService.createBussinessOwner(dto);
+      const res =
+        await this.platformManagementService.createBussinessOwner(dto);
       return {
         status: HttpStatus.OK,
         message: 'Bussiness owner account created successfully',

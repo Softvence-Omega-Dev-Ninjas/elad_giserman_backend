@@ -132,7 +132,7 @@ export class UserInfoController {
     @Param('id') id: string,
   ) {
     try {
-      const res = await this.userInfoService.createSpinHistory(userId,id);
+      const res = await this.userInfoService.createSpinHistory(userId, id);
       return {
         status: HttpStatus.CREATED,
         message: 'Your spin restult stored successful',
