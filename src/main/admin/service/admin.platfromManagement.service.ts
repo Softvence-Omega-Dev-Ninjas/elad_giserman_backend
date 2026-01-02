@@ -6,7 +6,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { format, subDays } from 'date-fns';
+import { format, isValid, subDays } from 'date-fns';
 import { CreateCustomAppDto } from '../dto/customApp.dto';
 import { GetOffersDto } from '../dto/getOffer.dto';
 import { PlatformFilter } from '../dto/getPlatform.dto';
@@ -14,6 +14,8 @@ import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { ReservationFilter } from '@/main/organizer/dto/getReservation.dto';
+import * as bcrypt from 'bcrypt';
+import { CreateBussinessOwnerDTO } from '../dto/create-bussiness-owner.dto';
 // import { log } from 'console';
 @Injectable()
 export class AdminPlatfromManagementService {
@@ -668,4 +670,45 @@ export class AdminPlatfromManagementService {
     });
     return res;
   }
+
+  // create bussiness owner
+async createBussinessOwner(dto: CreateBussinessOwnerDTO) {
+  // Check if email already exists
+  const isEmailExist = await this.prisma.client.user.findUnique({
+    where: { email: dto.email },
+  });
+  if (isEmailExist) {
+    throw new BadRequestException('Email already exists');
+  }
+
+  // Hash password
+  const hashedPassword = await bcrypt.hash(dto.password, 10);
+
+  // Create user
+  const user = await this.prisma.client.user.create({
+    data: {
+      email: dto.email,
+      username: dto.username,
+      password: hashedPassword,
+      memberShip: 'FREE',
+      subscriptionStatus: 'ACTIVE',
+      role: 'ORGANIZER',
+      isVerified: true,
+    },
+  });
+
+  // Create business profile
+  const businessProfile = await this.prisma.client.businessProfile.create({
+    data: {
+      ownerId: user.id,
+      title: '',
+      description: '',
+      location: '',
+      openingTime: '',
+      closingTime: '',
+    },
+  });
+
+  return { user, businessProfile };
+}
 }

@@ -1,4 +1,4 @@
-import { ValidateAdmin } from '@/common/jwt/jwt.decorator';
+import {  ValidateAdmin } from '@/common/jwt/jwt.decorator';
 import {
   Body,
   Controller,
@@ -34,6 +34,7 @@ import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { ReservationFilter } from '@/main/organizer/dto/getReservation.dto';
+import { CreateBussinessOwnerDTO } from '../dto/create-bussiness-owner.dto';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -432,6 +433,24 @@ export class AdminPlatformManagementController {
       return {
         status: HttpStatus.OK,
         message: 'User updated successfully',
+        data: res,
+      };
+    } catch (error) {
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild to save spin data`, error.stack);
+      throw new InternalServerErrorException(message);
+    }
+  }
+
+  @Post('create-bussiness-owner')
+  @ApiOperation({ summary: 'Create a bussiness owner account' })
+  @ApiBody({ type:CreateBussinessOwnerDTO })
+  async createBussinessOwnerAccount(@Body() dto:any) {
+    try {
+      const res = await this.platformManagementService.createBussinessOwner(dto);
+      return {
+        status: HttpStatus.OK,
+        message: 'Bussiness owner account created successfully',
         data: res,
       };
     } catch (error) {
