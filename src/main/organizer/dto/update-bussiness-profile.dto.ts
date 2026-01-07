@@ -16,6 +16,15 @@ export class UpdateBusinessProfileDto {
   @IsString()
   description?: string;
 
+    @ApiProperty({
+    example: 'Update you phone numsebr',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
+
   @ApiProperty({ example: 'Gulshan, Dhaka', required: false })
   @IsOptional()
   @IsString()
