@@ -2135,6 +2135,7 @@ export const BusinessProfileScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
+  phone: 'phone',
   location: 'location',
   isActive: 'isActive',
   openingTime: 'openingTime',
