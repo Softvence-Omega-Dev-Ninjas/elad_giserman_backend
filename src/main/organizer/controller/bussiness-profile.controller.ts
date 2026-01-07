@@ -153,7 +153,7 @@ export class BusinessProfileController {
         title: { type: 'string', example: 'Updated Coffee Spot' },
         description: { type: 'string', example: 'Now with new pastries!' },
         location: { type: 'string', example: 'Banani, Dhaka' },
-        phone  : {type:'string',example:"4094954484"},
+        phone: { type: 'string', example: '4094954484' },
         openingTime: { type: 'string', example: '09:00 AM' },
         closingTime: { type: 'string', example: '11:00 PM' },
         isActive: { type: 'boolean', example: true },
