@@ -6,18 +6,18 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { 
-  format, 
-  isValid, 
+import {
+  format,
+  isValid,
   subDays,
-  startOfWeek, 
-  endOfWeek, 
-  startOfMonth, 
-  endOfMonth, 
-  subWeeks, 
-  subMonths, 
-  eachDayOfInterval, 
-  eachMonthOfInterval 
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  subWeeks,
+  subMonths,
+  eachDayOfInterval,
+  eachMonthOfInterval,
 } from 'date-fns';
 import { CreateCustomAppDto } from '../dto/customApp.dto';
 import { GetOffersDto } from '../dto/getOffer.dto';
@@ -313,149 +313,154 @@ export class AdminPlatfromManagementService {
   }
 
   // *get redeemtion growth
-async getRedemptionGrowth(period: 'weekly' | 'monthly' | 'all-time' = 'weekly') {
-  const today = new Date();
-  let startDate: Date;
-  let endDate: Date;
-  let groupFormat: string;
-  let dateIntervals: Date[];
+  async getRedemptionGrowth(
+    period: 'weekly' | 'monthly' | 'all-time' = 'weekly',
+  ) {
+    const today = new Date();
+    let startDate: Date;
+    let endDate: Date;
+    let groupFormat: string;
+    let dateIntervals: Date[];
 
-  switch (period) {
-    case 'weekly':
-      // Last week (Monday to Sunday)
-      startDate = startOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
-      endDate = endOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
-      groupFormat = 'yyyy-MM-dd';
-      
-      // Get each day of last week
-      dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
-      break;
+    switch (period) {
+      case 'weekly':
+        // Last week (Monday to Sunday)
+        startDate = startOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
+        endDate = endOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
+        groupFormat = 'yyyy-MM-dd';
 
-    case 'monthly':
-      // Last month (1st to last day)
-      startDate = startOfMonth(subMonths(today, 1));
-      endDate = endOfMonth(subMonths(today, 1));
-      groupFormat = 'yyyy-MM-dd';
-      
-      // Get each day of last month
-      dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
-      break;
+        // Get each day of last week
+        dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
+        break;
 
-    case 'all-time':
-      // Get ALL redemption data from the very beginning
-      const firstRedemption = await this.prisma.client.reedemaOffer.findFirst({
+      case 'monthly':
+        // Last month (1st to last day)
+        startDate = startOfMonth(subMonths(today, 1));
+        endDate = endOfMonth(subMonths(today, 1));
+        groupFormat = 'yyyy-MM-dd';
+
+        // Get each day of last month
+        dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
+        break;
+
+      case 'all-time':
+        // Get ALL redemption data from the very beginning
+        const firstRedemption = await this.prisma.client.reedemaOffer.findFirst(
+          {
+            where: {
+              redeemedAt: { not: null },
+            },
+            orderBy: {
+              redeemedAt: 'asc',
+            },
+            select: {
+              redeemedAt: true,
+            },
+          },
+        );
+
+        // If no redemptions exist, use current month
+        if (!firstRedemption?.redeemedAt) {
+          startDate = startOfMonth(today);
+          endDate = endOfMonth(today);
+        } else {
+          startDate = startOfMonth(firstRedemption.redeemedAt);
+          endDate = endOfMonth(today); // Up to current month
+        }
+
+        groupFormat = 'yyyy-MM';
+
+        // Get each month from the very first redemption to now
+        dateIntervals = eachMonthOfInterval({ start: startDate, end: endDate });
+        break;
+
+      default:
+        startDate = startOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
+        endDate = endOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
+        groupFormat = 'yyyy-MM-dd';
+        dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
+    }
+
+    // Fetch redemption logs for the period
+    const logs = await this.prisma.client.reedemaOffer.findMany({
+      where: {
+        redeemedAt: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      select: {
+        redeemedAt: true,
+      },
+    });
+
+    // Initialize growth map with all dates/months
+    const growthMap: Record<string, number> = {};
+    dateIntervals.forEach((date) => {
+      const key = format(date, groupFormat);
+      growthMap[key] = 0;
+    });
+
+    // Count redemptions by date
+    logs.forEach((log) => {
+      if (log.redeemedAt) {
+        const dateKey = format(log.redeemedAt, groupFormat);
+        if (growthMap[dateKey] !== undefined) {
+          growthMap[dateKey] += 1;
+        }
+      }
+    });
+
+    // Format response with proper labels
+    const growth = Object.keys(growthMap)
+      .sort()
+      .map((date) => {
+        let label: string;
+
+        if (period === 'weekly') {
+          label = format(new Date(date), 'EEEE'); // Monday, Tuesday, etc.
+        } else if (period === 'monthly') {
+          label = format(new Date(date), 'MMM dd'); // Jan 01, Jan 02, etc.
+        } else {
+          label = format(new Date(date + '-01'), 'MMM yyyy'); // Jan 2024, Feb 2024, etc.
+        }
+
+        return {
+          date,
+          count: growthMap[date],
+          label,
+        };
+      });
+
+    // Calculate total redemptions
+    const totalRedemptions = logs.length;
+
+    // For all-time, also get the grand total count
+    let grandTotal = totalRedemptions;
+    if (period === 'all-time') {
+      grandTotal = await this.prisma.client.reedemaOffer.count({
         where: {
           redeemedAt: { not: null },
         },
-        orderBy: {
-          redeemedAt: 'asc',
-        },
-        select: {
-          redeemedAt: true,
-        },
       });
-
-      // If no redemptions exist, use current month
-      if (!firstRedemption?.redeemedAt) {
-        startDate = startOfMonth(today);
-        endDate = endOfMonth(today);
-      } else {
-        startDate = startOfMonth(firstRedemption.redeemedAt);
-        endDate = endOfMonth(today); // Up to current month
-      }
-      
-      groupFormat = 'yyyy-MM';
-      
-      // Get each month from the very first redemption to now
-      dateIntervals = eachMonthOfInterval({ start: startDate, end: endDate });
-      break;
-
-    default:
-      startDate = startOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
-      endDate = endOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
-      groupFormat = 'yyyy-MM-dd';
-      dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
-  }
-
-  // Fetch redemption logs for the period
-  const logs = await this.prisma.client.reedemaOffer.findMany({
-    where: {
-      redeemedAt: {
-        gte: startDate,
-        lte: endDate,
-      },
-    },
-    select: {
-      redeemedAt: true,
-    },
-  });
-
-  // Initialize growth map with all dates/months
-  const growthMap: Record<string, number> = {};
-  dateIntervals.forEach((date) => {
-    const key = format(date, groupFormat);
-    growthMap[key] = 0;
-  });
-
-  // Count redemptions by date
-  logs.forEach((log) => {
-    if (log.redeemedAt) {
-      const dateKey = format(log.redeemedAt, groupFormat);
-      if (growthMap[dateKey] !== undefined) {
-        growthMap[dateKey] += 1;
-      }
     }
-  });
 
-  // Format response with proper labels
-  const growth = Object.keys(growthMap)
-    .sort()
-    .map((date) => {
-      let label: string;
-      
-      if (period === 'weekly') {
-        label = format(new Date(date), 'EEEE'); // Monday, Tuesday, etc.
-      } else if (period === 'monthly') {
-        label = format(new Date(date), 'MMM dd'); // Jan 01, Jan 02, etc.
-      } else {
-        label = format(new Date(date + '-01'), 'MMM yyyy'); // Jan 2024, Feb 2024, etc.
-      }
-
-      return {
-        date,
-        count: growthMap[date],
-        label,
-      };
-    });
-
-  // Calculate total redemptions
-  const totalRedemptions = logs.length;
-
-  // For all-time, also get the grand total count
-  let grandTotal = totalRedemptions;
-  if (period === 'all-time') {
-    grandTotal = await this.prisma.client.reedemaOffer.count({
-      where: {
-        redeemedAt: { not: null },
+    return {
+      period,
+      data: growth,
+      summary: {
+        total: grandTotal,
+        startDate: format(startDate, 'yyyy-MM-dd'),
+        endDate: format(endDate, 'yyyy-MM-dd'),
+        periodLabel:
+          period === 'weekly'
+            ? 'Last Week'
+            : period === 'monthly'
+              ? 'Last Month'
+              : 'All Time',
       },
-    });
+    };
   }
-
-  return {
-    period,
-    data: growth,
-    summary: {
-      total: grandTotal,
-      startDate: format(startDate, 'yyyy-MM-dd'),
-      endDate: format(endDate, 'yyyy-MM-dd'),
-      periodLabel: period === 'weekly' 
-        ? 'Last Week'
-        : period === 'monthly'
-        ? 'Last Month'
-        : 'All Time',
-    },
-  };
-}
 
   //* Customize app
   async customizeApp(dto: CreateCustomAppDto, files: any) {
@@ -829,6 +834,4 @@ async getRedemptionGrowth(period: 'weekly' | 'monthly' | 'all-time' = 'weekly') 
 
     return { user, businessProfile };
   }
-
-
 }

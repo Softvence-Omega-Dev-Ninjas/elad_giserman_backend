@@ -1,15 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+  IsBoolean,
+  IsEnum,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class AdminActivityDto {
-  @ApiProperty({
-    description: 'Unique identifier for the admin activity',
-    example: '123e4567-e89b-12d3-a456-426614174000',
-    type: String,
-  })
-  @IsUUID()
-  id: string;
-
   @ApiProperty({
     description: 'Stripe connection status',
     example: true,
@@ -104,9 +102,7 @@ export class AdminActivityDto {
   updatedAt: Date;
 }
 
-
 import { ApiPropertyOptional } from '@nestjs/swagger';
-
 
 export enum RedemptionPeriod {
   WEEKLY = 'weekly',

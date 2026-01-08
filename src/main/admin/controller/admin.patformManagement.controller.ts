@@ -89,25 +89,23 @@ export class AdminPlatformManagementController {
     }
   }
 
-@Get('redemption-growth')
-@ApiOperation({ summary: 'Get redemption growth statistics' })
-@ApiResponse({ 
-  status: 200, 
-  description: 'Redemption growth fetched successfully' 
-})
-async getRedemptionGrowth(
-  @Query() filter: RedemptionFilterDto
-) {
-  const res = await this.platformManagementService.getRedemptionGrowth(
-    filter.period || 'weekly'
-  );
+  @Get('redemption-growth')
+  @ApiOperation({ summary: 'Get redemption growth statistics' })
+  @ApiResponse({
+    status: 200,
+    description: 'Redemption growth fetched successfully',
+  })
+  async getRedemptionGrowth(@Query() filter: RedemptionFilterDto) {
+    const res = await this.platformManagementService.getRedemptionGrowth(
+      filter.period || 'weekly',
+    );
 
-  return {
-    status: HttpStatus.OK,
-    message: 'Redemption growth fetched successfully',
-    data: res,
-  };
-}
+    return {
+      status: HttpStatus.OK,
+      message: 'Redemption growth fetched successfully',
+      data: res,
+    };
+  }
 
   @ValidateAdmin()
   @Patch('update-status/:id')
@@ -448,7 +446,4 @@ async getRedemptionGrowth(
       throw new InternalServerErrorException(message);
     }
   }
-
-  
-
 }

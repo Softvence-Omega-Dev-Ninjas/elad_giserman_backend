@@ -49,26 +49,40 @@ export class AdminOfferService {
   }
 
   async createAdminActivityLog(dto: AdminActivityDto) {
-  const existingRecord = await this.prisma.client.adminActivity.findFirst();
+    const existingRecord = await this.prisma.client.adminActivity.findFirst();
 
-  if (existingRecord) {
-    const res = await this.prisma.client.adminActivity.update({
-      where: {
-        id: existingRecord.id,
-      },
-      data: {
-        ...dto,
-      },
-    });
-    return res;
-  } else {
-    // Create a new record
-    const res = await this.prisma.client.adminActivity.create({
-      data: {
-        ...dto,
-      },
-    });
-    return res;
+    if (existingRecord) {
+      const res = await this.prisma.client.adminActivity.update({
+        where: {
+          id: existingRecord.id,
+        },
+        data: {
+          ...dto,
+        },
+      });
+      return res;
+    } else {
+      // Create a new record
+      const res = await this.prisma.client.adminActivity.create({
+        data: {
+          ...dto,
+        },
+      });
+      return res;
+    }
   }
-}
+
+  async getAdminActivityLogs() {
+    const records = await this.prisma.client.adminActivity.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    if (!records.length) {
+      throw new NotFoundException('No records found');
+    }
+
+    return records;
+  }
 }
