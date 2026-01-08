@@ -251,35 +251,35 @@ export class BusinessProfileService {
       };
     }
 
-   const profiles = await this.prisma.client.businessProfile.findMany({
-  skip,
-  take: limit,
-  where,
-  select: {
-    id: true,
-    phone: true,
-
-    category: true,
-    gallery: true,
-    reservation: true,
-
-    owner: {
+    const profiles = await this.prisma.client.businessProfile.findMany({
+      skip,
+      take: limit,
+      where,
       select: {
         id: true,
-        name: true,
-        email: true,
-      },
-    },
+        phone: true,
 
-    _count: {
-      select: {
-        offers: true,
-        reedemOffer: true,
+        category: true,
+        gallery: true,
         reservation: true,
+
+        owner: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+
+        _count: {
+          select: {
+            offers: true,
+            reedemOffer: true,
+            reservation: true,
+          },
+        },
       },
-    },
-  },
-});
+    });
     // Shuffle profiles randomly
     const shuffledProfiles = shuffleArray(profiles);
 
