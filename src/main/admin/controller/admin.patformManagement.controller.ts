@@ -110,7 +110,6 @@ export class AdminPlatformManagementController {
     }
   }
 
-
   @ValidateAdmin()
   @Get('subscription-growth')
   async getSubscriptionGrouth() {
@@ -127,7 +126,7 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(message);
     }
   }
-  
+
   @ValidateAdmin()
   @Get('redemetion-growth')
   async getRedemetionGrowth() {
