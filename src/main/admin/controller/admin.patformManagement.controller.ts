@@ -35,6 +35,7 @@ import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { ReservationFilter } from '@/main/organizer/dto/getReservation.dto';
 import { CreateBussinessOwnerDTO } from '../dto/create-bussiness-owner.dto';
+import { RedemptionFilterDto, RedemptionPeriod } from '../dto/admin.activity';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -129,9 +130,13 @@ export class AdminPlatformManagementController {
 
   @ValidateAdmin()
   @Get('redemetion-growth')
-  async getRedemetionGrowth() {
+  async getRedemetionGrowth(
+    @Query() filter: RedemptionFilterDto,
+  ) {
     try {
-      const res = await this.platformManagementService.getRedemptionGrowth();
+      const res = await this.platformManagementService.getRedemptionGrowth(
+        filter.period || RedemptionPeriod.WEEKLY
+      );
       return {
         status: HttpStatus.OK,
         message: 'Redemption growth fetched successfully',
