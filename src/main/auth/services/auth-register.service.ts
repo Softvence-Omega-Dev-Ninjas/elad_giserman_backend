@@ -108,7 +108,7 @@ export class AuthRegisterService {
       data: {
         email,
         username,
-        name:username,
+        name: username,
         password: await this.utils.hash(password),
         role: UserRole.ORGANIZER,
         otp: hashedOtp,
