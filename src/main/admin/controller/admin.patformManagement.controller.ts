@@ -19,8 +19,6 @@ import {
   ApiBody,
   ApiConsumes,
   ApiOperation,
-  ApiQuery,
-  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { PlatformFilter } from '../dto/getPlatform.dto';
@@ -37,7 +35,6 @@ import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 import { ReservationFilter } from '@/main/organizer/dto/getReservation.dto';
 import { CreateBussinessOwnerDTO } from '../dto/create-bussiness-owner.dto';
-import { RedemptionFilterDto } from '../dto/admin.activity';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -89,26 +86,9 @@ export class AdminPlatformManagementController {
     }
   }
 
-  @Get('redemption-growth')
-  @ApiOperation({ summary: 'Get redemption growth statistics' })
-  @ApiResponse({
-    status: 200,
-    description: 'Redemption growth fetched successfully',
-  })
-  async getRedemptionGrowth(@Query() filter: RedemptionFilterDto) {
-    const res = await this.platformManagementService.getRedemptionGrowth(
-      filter.period || 'weekly',
-    );
-
-    return {
-      status: HttpStatus.OK,
-      message: 'Redemption growth fetched successfully',
-      data: res,
-    };
-  }
-
   @ValidateAdmin()
   @Patch('update-status/:id')
+  // @ApiConsumes('multipart/formdata')
   async updateUserStatus(
     @Body() dto: UpdateStatusDto,
     @Param('id') id: string,
@@ -127,6 +107,39 @@ export class AdminPlatformManagementController {
       const message = extractLastLine(error.message);
       this.logger.error(`Faild to Update by ID=${id}`, error.stack);
       throw new InternalServerErrorException(message);
+    }
+  }
+
+
+  @ValidateAdmin()
+  @Get('subscription-growth')
+  async getSubscriptionGrouth() {
+    try {
+      const res = await this.platformManagementService.getSubscriptionGrowth();
+      return {
+        status: HttpStatus.OK,
+        message: 'Subscription growth fetched successfully',
+        data: res,
+      };
+    } catch (error) {
+      const message = extractLastLine(error.message);
+      this.logger.error(`Faild fetch growth`, error.stack);
+      throw new InternalServerErrorException(message);
+    }
+  }
+  
+  @ValidateAdmin()
+  @Get('redemetion-growth')
+  async getRedemetionGrowth() {
+    try {
+      const res = await this.platformManagementService.getRedemptionGrowth();
+      return {
+        status: HttpStatus.OK,
+        message: 'Redemption growth fetched successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
     }
   }
 
@@ -330,9 +343,11 @@ export class AdminPlatformManagementController {
 
   @Get('offer/redemtions')
   async getAllRedemtions(@Query() query: GetRedemtionsDto) {
+    // Convert query params with defaults
     const page = query.page ? Number(query.page) : 1;
     const limit = query.limit ? Number(query.limit) : 10;
 
+    // Call service to get users
     const users = await this.platformManagementService.getAlRedemtions({
       page,
       limit,
