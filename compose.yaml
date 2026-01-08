@@ -1,8 +1,8 @@
 services:
   caddy:
-    image: caddy
-    container_name: ${PACKAGE_NAME}_caddy
-    restart: always
+    image: caddy:latest
+    container_name: caddy
+    restart: unless-stopped
     ports:
       - '80:80'
       - '443:443'
@@ -10,14 +10,13 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
-    depends_on:
-      server:
-        condition: service_healthy
     healthcheck:
       test: ['CMD-SHELL', 'caddy validate --config /etc/caddy/Caddyfile']
       interval: 30s
       timeout: 5s
       retries: 3
+    networks:
+      - web
 
   server:
     platform: linux/amd64
@@ -30,11 +29,11 @@ services:
       NODE_ENV: production
       DATABASE_URL: postgresql://postgres:postgres@db:5432/${PACKAGE_NAME}_db
 
-      REDIS_HOST: redis
+      REDIS_HOST: redis-master
       REDIS_PORT: 6379
 
       BASE_URL: https://api.yamiz.org/api
-      FRONTEND_BASE: http://yamiz.org
+      FRONTEND_BASE: https://yamiz.org
       PORT: 5050
     ports:
       - '5050:5050'
@@ -58,6 +57,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    networks:
+      - web
 
   db:
     image: postgres:16
@@ -77,6 +78,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - web
 
   redis-master:
     image: redis
@@ -92,13 +95,15 @@ services:
         'no',
       ]
     ports:
-      - '22376:6379'
+      - '127.0.0.1:22376:6379'
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
       interval: 5s
       timeout: 3s
       retries: 5
     restart: always
+    networks:
+      - web
 
   redis-replica:
     image: redis
@@ -115,10 +120,12 @@ services:
         'no',
       ]
     ports:
-      - '22377:6379'
+      - '127.0.0.1:22377:6379'
     depends_on:
       - redis-master
     restart: always
+    networks:
+      - web
 
 volumes:
   db_data:
@@ -127,7 +134,5 @@ volumes:
   caddy_config:
 
 networks:
-  default:
-    name: ${PACKAGE_NAME}_network
-    labels:
-      - 'project=${PACKAGE_NAME}'
+  web:
+    external: true
