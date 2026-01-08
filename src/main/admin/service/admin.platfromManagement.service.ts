@@ -566,7 +566,7 @@ export class AdminPlatfromManagementService {
     };
   }
 
-  async toggleSipinOnOf(){
+  async toggleSipinOnOf() {
     const isSpinExist = await this.prisma.client.adminActivity.findFirst();
     if (!isSpinExist) {
       throw new NotFoundException('Spin data not found to delete');
@@ -580,7 +580,6 @@ export class AdminPlatfromManagementService {
       },
     });
     return res;
-
   }
   //*CRETE TERMS AND CONDITIONS
   async createAdminTermsAdnConditions(dto: CreateTermsAndConditionsDto) {

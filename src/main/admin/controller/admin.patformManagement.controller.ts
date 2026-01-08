@@ -262,17 +262,16 @@ export class AdminPlatformManagementController {
     }
   }
 
-    @Patch('toggle-sipin-table')
+  @Patch('toggle-sipin-table')
   @ApiOperation({ summary: 'Toggle sipin status' })
-  async toggleSipinOnOf(){
-      const res=await this.platformManagementService.toggleSipinOnOf()
-      return {
-        status: HttpStatus.OK,
-        message: 'Sipin status updated successfully',
-        data: res,
-      };
-  
-    }
+  async toggleSipinOnOf() {
+    const res = await this.platformManagementService.toggleSipinOnOf();
+    return {
+      status: HttpStatus.OK,
+      message: 'Sipin status updated successfully',
+      data: res,
+    };
+  }
   @ValidateAdmin()
   @Post('create-termsCondition')
   @ApiBody({ type: CreateTermsAndConditionsDto })
@@ -471,7 +470,4 @@ export class AdminPlatformManagementController {
       throw new InternalServerErrorException(message);
     }
   }
-
-
-
 }
