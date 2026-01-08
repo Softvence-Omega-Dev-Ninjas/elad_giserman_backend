@@ -566,6 +566,21 @@ export class AdminPlatfromManagementService {
     };
   }
 
+  async toggleSipinOnOf() {
+    const isSpinExist = await this.prisma.client.adminActivity.findFirst();
+    if (!isSpinExist) {
+      throw new NotFoundException('Spin data not found to delete');
+    }
+    const res = await this.prisma.client.adminActivity.update({
+      where: {
+        id: isSpinExist.id,
+      },
+      data: {
+        isSpinAvaiable: !isSpinExist.isSpinAvaiable,
+      },
+    });
+    return res;
+  }
   //*CRETE TERMS AND CONDITIONS
   async createAdminTermsAdnConditions(dto: CreateTermsAndConditionsDto) {
     const isExistTerm = await this.prisma.client.termsAndConditions.findFirst();
