@@ -255,11 +255,22 @@ export class BusinessProfileService {
       skip,
       take: limit,
       where,
-      include: {
+      select: {
+        id: true,
+        phone: true,
+
         category: true,
         gallery: true,
         reservation: true,
-        owner: { select: { name: true } },
+
+        owner: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+
         _count: {
           select: {
             offers: true,
@@ -269,7 +280,6 @@ export class BusinessProfileService {
         },
       },
     });
-
     // Shuffle profiles randomly
     const shuffledProfiles = shuffleArray(profiles);
 
