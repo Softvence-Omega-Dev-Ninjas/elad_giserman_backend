@@ -3,8 +3,7 @@ import {
   IsBoolean,
   IsEnum,
   IsOptional,
-  IsString,
-  IsUUID,
+  IsString
 } from 'class-validator';
 
 export class AdminActivityDto {
