@@ -20,24 +20,14 @@ export type SpinHistoryModel =
 
 export type AggregateSpinHistory = {
   _count: SpinHistoryCountAggregateOutputType | null;
-  _avg: SpinHistoryAvgAggregateOutputType | null;
-  _sum: SpinHistorySumAggregateOutputType | null;
   _min: SpinHistoryMinAggregateOutputType | null;
   _max: SpinHistoryMaxAggregateOutputType | null;
-};
-
-export type SpinHistoryAvgAggregateOutputType = {
-  result: number | null;
-};
-
-export type SpinHistorySumAggregateOutputType = {
-  result: number | null;
 };
 
 export type SpinHistoryMinAggregateOutputType = {
   id: string | null;
   userId: string | null;
-  result: number | null;
+  spinId: string | null;
   isUsed: boolean | null;
   createdAt: Date | null;
   updatedAt: Date | null;
@@ -46,7 +36,7 @@ export type SpinHistoryMinAggregateOutputType = {
 export type SpinHistoryMaxAggregateOutputType = {
   id: string | null;
   userId: string | null;
-  result: number | null;
+  spinId: string | null;
   isUsed: boolean | null;
   createdAt: Date | null;
   updatedAt: Date | null;
@@ -55,25 +45,17 @@ export type SpinHistoryMaxAggregateOutputType = {
 export type SpinHistoryCountAggregateOutputType = {
   id: number;
   userId: number;
-  result: number;
+  spinId: number;
   isUsed: number;
   createdAt: number;
   updatedAt: number;
   _all: number;
 };
 
-export type SpinHistoryAvgAggregateInputType = {
-  result?: true;
-};
-
-export type SpinHistorySumAggregateInputType = {
-  result?: true;
-};
-
 export type SpinHistoryMinAggregateInputType = {
   id?: true;
   userId?: true;
-  result?: true;
+  spinId?: true;
   isUsed?: true;
   createdAt?: true;
   updatedAt?: true;
@@ -82,7 +64,7 @@ export type SpinHistoryMinAggregateInputType = {
 export type SpinHistoryMaxAggregateInputType = {
   id?: true;
   userId?: true;
-  result?: true;
+  spinId?: true;
   isUsed?: true;
   createdAt?: true;
   updatedAt?: true;
@@ -91,7 +73,7 @@ export type SpinHistoryMaxAggregateInputType = {
 export type SpinHistoryCountAggregateInputType = {
   id?: true;
   userId?: true;
-  result?: true;
+  spinId?: true;
   isUsed?: true;
   createdAt?: true;
   updatedAt?: true;
@@ -141,18 +123,6 @@ export type SpinHistoryAggregateArgs<
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    *
-   * Select which fields to average
-   **/
-  _avg?: SpinHistoryAvgAggregateInputType;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   *
-   * Select which fields to sum
-   **/
-  _sum?: SpinHistorySumAggregateInputType;
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   *
    * Select which fields to find the minimum value
    **/
   _min?: SpinHistoryMinAggregateInputType;
@@ -185,22 +155,18 @@ export type SpinHistoryGroupByArgs<
   take?: number;
   skip?: number;
   _count?: SpinHistoryCountAggregateInputType | true;
-  _avg?: SpinHistoryAvgAggregateInputType;
-  _sum?: SpinHistorySumAggregateInputType;
   _min?: SpinHistoryMinAggregateInputType;
   _max?: SpinHistoryMaxAggregateInputType;
 };
 
 export type SpinHistoryGroupByOutputType = {
   id: string;
-  userId: string;
-  result: number;
+  userId: string | null;
+  spinId: string | null;
   isUsed: boolean;
   createdAt: Date;
   updatedAt: Date;
   _count: SpinHistoryCountAggregateOutputType | null;
-  _avg: SpinHistoryAvgAggregateOutputType | null;
-  _sum: SpinHistorySumAggregateOutputType | null;
   _min: SpinHistoryMinAggregateOutputType | null;
   _max: SpinHistoryMaxAggregateOutputType | null;
 };
@@ -223,21 +189,29 @@ export type SpinHistoryWhereInput = {
   OR?: Prisma.SpinHistoryWhereInput[];
   NOT?: Prisma.SpinHistoryWhereInput | Prisma.SpinHistoryWhereInput[];
   id?: Prisma.StringFilter<'SpinHistory'> | string;
-  userId?: Prisma.StringFilter<'SpinHistory'> | string;
-  result?: Prisma.IntFilter<'SpinHistory'> | number;
+  userId?: Prisma.StringNullableFilter<'SpinHistory'> | string | null;
+  spinId?: Prisma.StringNullableFilter<'SpinHistory'> | string | null;
   isUsed?: Prisma.BoolFilter<'SpinHistory'> | boolean;
   createdAt?: Prisma.DateTimeFilter<'SpinHistory'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'SpinHistory'> | Date | string;
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+  spin?: Prisma.XOR<
+    Prisma.SpinNullableScalarRelationFilter,
+    Prisma.SpinWhereInput
+  > | null;
+  user?: Prisma.XOR<
+    Prisma.UserNullableScalarRelationFilter,
+    Prisma.UserWhereInput
+  > | null;
 };
 
 export type SpinHistoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
-  userId?: Prisma.SortOrder;
-  result?: Prisma.SortOrder;
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder;
+  spinId?: Prisma.SortOrderInput | Prisma.SortOrder;
   isUsed?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  spin?: Prisma.SpinOrderByWithRelationInput;
   user?: Prisma.UserOrderByWithRelationInput;
 };
 
@@ -247,28 +221,33 @@ export type SpinHistoryWhereUniqueInput = Prisma.AtLeast<
     AND?: Prisma.SpinHistoryWhereInput | Prisma.SpinHistoryWhereInput[];
     OR?: Prisma.SpinHistoryWhereInput[];
     NOT?: Prisma.SpinHistoryWhereInput | Prisma.SpinHistoryWhereInput[];
-    userId?: Prisma.StringFilter<'SpinHistory'> | string;
-    result?: Prisma.IntFilter<'SpinHistory'> | number;
+    userId?: Prisma.StringNullableFilter<'SpinHistory'> | string | null;
+    spinId?: Prisma.StringNullableFilter<'SpinHistory'> | string | null;
     isUsed?: Prisma.BoolFilter<'SpinHistory'> | boolean;
     createdAt?: Prisma.DateTimeFilter<'SpinHistory'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'SpinHistory'> | Date | string;
-    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    spin?: Prisma.XOR<
+      Prisma.SpinNullableScalarRelationFilter,
+      Prisma.SpinWhereInput
+    > | null;
+    user?: Prisma.XOR<
+      Prisma.UserNullableScalarRelationFilter,
+      Prisma.UserWhereInput
+    > | null;
   },
   'id'
 >;
 
 export type SpinHistoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
-  userId?: Prisma.SortOrder;
-  result?: Prisma.SortOrder;
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder;
+  spinId?: Prisma.SortOrderInput | Prisma.SortOrder;
   isUsed?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   _count?: Prisma.SpinHistoryCountOrderByAggregateInput;
-  _avg?: Prisma.SpinHistoryAvgOrderByAggregateInput;
   _max?: Prisma.SpinHistoryMaxOrderByAggregateInput;
   _min?: Prisma.SpinHistoryMinOrderByAggregateInput;
-  _sum?: Prisma.SpinHistorySumOrderByAggregateInput;
 };
 
 export type SpinHistoryScalarWhereWithAggregatesInput = {
@@ -280,8 +259,14 @@ export type SpinHistoryScalarWhereWithAggregatesInput = {
     | Prisma.SpinHistoryScalarWhereWithAggregatesInput
     | Prisma.SpinHistoryScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'SpinHistory'> | string;
-  userId?: Prisma.StringWithAggregatesFilter<'SpinHistory'> | string;
-  result?: Prisma.IntWithAggregatesFilter<'SpinHistory'> | number;
+  userId?:
+    | Prisma.StringNullableWithAggregatesFilter<'SpinHistory'>
+    | string
+    | null;
+  spinId?:
+    | Prisma.StringNullableWithAggregatesFilter<'SpinHistory'>
+    | string
+    | null;
   isUsed?: Prisma.BoolWithAggregatesFilter<'SpinHistory'> | boolean;
   createdAt?:
     | Prisma.DateTimeWithAggregatesFilter<'SpinHistory'>
@@ -295,17 +280,17 @@ export type SpinHistoryScalarWhereWithAggregatesInput = {
 
 export type SpinHistoryCreateInput = {
   id?: string;
-  result: number;
   isUsed?: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  user: Prisma.UserCreateNestedOneWithoutSpinHistoryInput;
+  spin?: Prisma.SpinCreateNestedOneWithoutSpinhisotryInput;
+  user?: Prisma.UserCreateNestedOneWithoutSpinHistoryInput;
 };
 
 export type SpinHistoryUncheckedCreateInput = {
   id?: string;
-  userId: string;
-  result: number;
+  userId?: string | null;
+  spinId?: string | null;
   isUsed?: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -313,17 +298,17 @@ export type SpinHistoryUncheckedCreateInput = {
 
 export type SpinHistoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  result?: Prisma.IntFieldUpdateOperationsInput | number;
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  user?: Prisma.UserUpdateOneRequiredWithoutSpinHistoryNestedInput;
+  spin?: Prisma.SpinUpdateOneWithoutSpinhisotryNestedInput;
+  user?: Prisma.UserUpdateOneWithoutSpinHistoryNestedInput;
 };
 
 export type SpinHistoryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  userId?: Prisma.StringFieldUpdateOperationsInput | string;
-  result?: Prisma.IntFieldUpdateOperationsInput | number;
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  spinId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -331,8 +316,8 @@ export type SpinHistoryUncheckedUpdateInput = {
 
 export type SpinHistoryCreateManyInput = {
   id?: string;
-  userId: string;
-  result: number;
+  userId?: string | null;
+  spinId?: string | null;
   isUsed?: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -340,7 +325,6 @@ export type SpinHistoryCreateManyInput = {
 
 export type SpinHistoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  result?: Prisma.IntFieldUpdateOperationsInput | number;
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -348,46 +332,11 @@ export type SpinHistoryUpdateManyMutationInput = {
 
 export type SpinHistoryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  userId?: Prisma.StringFieldUpdateOperationsInput | string;
-  result?: Prisma.IntFieldUpdateOperationsInput | number;
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  spinId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-};
-
-export type SpinHistoryCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder;
-  userId?: Prisma.SortOrder;
-  result?: Prisma.SortOrder;
-  isUsed?: Prisma.SortOrder;
-  createdAt?: Prisma.SortOrder;
-  updatedAt?: Prisma.SortOrder;
-};
-
-export type SpinHistoryAvgOrderByAggregateInput = {
-  result?: Prisma.SortOrder;
-};
-
-export type SpinHistoryMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder;
-  userId?: Prisma.SortOrder;
-  result?: Prisma.SortOrder;
-  isUsed?: Prisma.SortOrder;
-  createdAt?: Prisma.SortOrder;
-  updatedAt?: Prisma.SortOrder;
-};
-
-export type SpinHistoryMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder;
-  userId?: Prisma.SortOrder;
-  result?: Prisma.SortOrder;
-  isUsed?: Prisma.SortOrder;
-  createdAt?: Prisma.SortOrder;
-  updatedAt?: Prisma.SortOrder;
-};
-
-export type SpinHistorySumOrderByAggregateInput = {
-  result?: Prisma.SortOrder;
 };
 
 export type SpinHistoryListRelationFilter = {
@@ -398,6 +347,143 @@ export type SpinHistoryListRelationFilter = {
 
 export type SpinHistoryOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder;
+};
+
+export type SpinHistoryCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder;
+  userId?: Prisma.SortOrder;
+  spinId?: Prisma.SortOrder;
+  isUsed?: Prisma.SortOrder;
+  createdAt?: Prisma.SortOrder;
+  updatedAt?: Prisma.SortOrder;
+};
+
+export type SpinHistoryMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder;
+  userId?: Prisma.SortOrder;
+  spinId?: Prisma.SortOrder;
+  isUsed?: Prisma.SortOrder;
+  createdAt?: Prisma.SortOrder;
+  updatedAt?: Prisma.SortOrder;
+};
+
+export type SpinHistoryMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder;
+  userId?: Prisma.SortOrder;
+  spinId?: Prisma.SortOrder;
+  isUsed?: Prisma.SortOrder;
+  createdAt?: Prisma.SortOrder;
+  updatedAt?: Prisma.SortOrder;
+};
+
+export type SpinHistoryCreateNestedManyWithoutSpinInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.SpinHistoryCreateWithoutSpinInput,
+        Prisma.SpinHistoryUncheckedCreateWithoutSpinInput
+      >
+    | Prisma.SpinHistoryCreateWithoutSpinInput[]
+    | Prisma.SpinHistoryUncheckedCreateWithoutSpinInput[];
+  connectOrCreate?:
+    | Prisma.SpinHistoryCreateOrConnectWithoutSpinInput
+    | Prisma.SpinHistoryCreateOrConnectWithoutSpinInput[];
+  createMany?: Prisma.SpinHistoryCreateManySpinInputEnvelope;
+  connect?:
+    | Prisma.SpinHistoryWhereUniqueInput
+    | Prisma.SpinHistoryWhereUniqueInput[];
+};
+
+export type SpinHistoryUncheckedCreateNestedManyWithoutSpinInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.SpinHistoryCreateWithoutSpinInput,
+        Prisma.SpinHistoryUncheckedCreateWithoutSpinInput
+      >
+    | Prisma.SpinHistoryCreateWithoutSpinInput[]
+    | Prisma.SpinHistoryUncheckedCreateWithoutSpinInput[];
+  connectOrCreate?:
+    | Prisma.SpinHistoryCreateOrConnectWithoutSpinInput
+    | Prisma.SpinHistoryCreateOrConnectWithoutSpinInput[];
+  createMany?: Prisma.SpinHistoryCreateManySpinInputEnvelope;
+  connect?:
+    | Prisma.SpinHistoryWhereUniqueInput
+    | Prisma.SpinHistoryWhereUniqueInput[];
+};
+
+export type SpinHistoryUpdateManyWithoutSpinNestedInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.SpinHistoryCreateWithoutSpinInput,
+        Prisma.SpinHistoryUncheckedCreateWithoutSpinInput
+      >
+    | Prisma.SpinHistoryCreateWithoutSpinInput[]
+    | Prisma.SpinHistoryUncheckedCreateWithoutSpinInput[];
+  connectOrCreate?:
+    | Prisma.SpinHistoryCreateOrConnectWithoutSpinInput
+    | Prisma.SpinHistoryCreateOrConnectWithoutSpinInput[];
+  upsert?:
+    | Prisma.SpinHistoryUpsertWithWhereUniqueWithoutSpinInput
+    | Prisma.SpinHistoryUpsertWithWhereUniqueWithoutSpinInput[];
+  createMany?: Prisma.SpinHistoryCreateManySpinInputEnvelope;
+  set?:
+    | Prisma.SpinHistoryWhereUniqueInput
+    | Prisma.SpinHistoryWhereUniqueInput[];
+  disconnect?:
+    | Prisma.SpinHistoryWhereUniqueInput
+    | Prisma.SpinHistoryWhereUniqueInput[];
+  delete?:
+    | Prisma.SpinHistoryWhereUniqueInput
+    | Prisma.SpinHistoryWhereUniqueInput[];
+  connect?:
+    | Prisma.SpinHistoryWhereUniqueInput
+    | Prisma.SpinHistoryWhereUniqueInput[];
+  update?:
+    | Prisma.SpinHistoryUpdateWithWhereUniqueWithoutSpinInput
+    | Prisma.SpinHistoryUpdateWithWhereUniqueWithoutSpinInput[];
+  updateMany?:
+    | Prisma.SpinHistoryUpdateManyWithWhereWithoutSpinInput
+    | Prisma.SpinHistoryUpdateManyWithWhereWithoutSpinInput[];
+  deleteMany?:
+    | Prisma.SpinHistoryScalarWhereInput
+    | Prisma.SpinHistoryScalarWhereInput[];
+};
+
+export type SpinHistoryUncheckedUpdateManyWithoutSpinNestedInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.SpinHistoryCreateWithoutSpinInput,
+        Prisma.SpinHistoryUncheckedCreateWithoutSpinInput
+      >
+    | Prisma.SpinHistoryCreateWithoutSpinInput[]
+    | Prisma.SpinHistoryUncheckedCreateWithoutSpinInput[];
+  connectOrCreate?:
+    | Prisma.SpinHistoryCreateOrConnectWithoutSpinInput
+    | Prisma.SpinHistoryCreateOrConnectWithoutSpinInput[];
+  upsert?:
+    | Prisma.SpinHistoryUpsertWithWhereUniqueWithoutSpinInput
+    | Prisma.SpinHistoryUpsertWithWhereUniqueWithoutSpinInput[];
+  createMany?: Prisma.SpinHistoryCreateManySpinInputEnvelope;
+  set?:
+    | Prisma.SpinHistoryWhereUniqueInput
+    | Prisma.SpinHistoryWhereUniqueInput[];
+  disconnect?:
+    | Prisma.SpinHistoryWhereUniqueInput
+    | Prisma.SpinHistoryWhereUniqueInput[];
+  delete?:
+    | Prisma.SpinHistoryWhereUniqueInput
+    | Prisma.SpinHistoryWhereUniqueInput[];
+  connect?:
+    | Prisma.SpinHistoryWhereUniqueInput
+    | Prisma.SpinHistoryWhereUniqueInput[];
+  update?:
+    | Prisma.SpinHistoryUpdateWithWhereUniqueWithoutSpinInput
+    | Prisma.SpinHistoryUpdateWithWhereUniqueWithoutSpinInput[];
+  updateMany?:
+    | Prisma.SpinHistoryUpdateManyWithWhereWithoutSpinInput
+    | Prisma.SpinHistoryUpdateManyWithWhereWithoutSpinInput[];
+  deleteMany?:
+    | Prisma.SpinHistoryScalarWhereInput
+    | Prisma.SpinHistoryScalarWhereInput[];
 };
 
 export type SpinHistoryCreateNestedManyWithoutUserInput = {
@@ -510,17 +596,92 @@ export type SpinHistoryUncheckedUpdateManyWithoutUserNestedInput = {
     | Prisma.SpinHistoryScalarWhereInput[];
 };
 
-export type SpinHistoryCreateWithoutUserInput = {
+export type SpinHistoryCreateWithoutSpinInput = {
   id?: string;
-  result: number;
+  isUsed?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  user?: Prisma.UserCreateNestedOneWithoutSpinHistoryInput;
+};
+
+export type SpinHistoryUncheckedCreateWithoutSpinInput = {
+  id?: string;
+  userId?: string | null;
   isUsed?: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
 
+export type SpinHistoryCreateOrConnectWithoutSpinInput = {
+  where: Prisma.SpinHistoryWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.SpinHistoryCreateWithoutSpinInput,
+    Prisma.SpinHistoryUncheckedCreateWithoutSpinInput
+  >;
+};
+
+export type SpinHistoryCreateManySpinInputEnvelope = {
+  data:
+    | Prisma.SpinHistoryCreateManySpinInput
+    | Prisma.SpinHistoryCreateManySpinInput[];
+  skipDuplicates?: boolean;
+};
+
+export type SpinHistoryUpsertWithWhereUniqueWithoutSpinInput = {
+  where: Prisma.SpinHistoryWhereUniqueInput;
+  update: Prisma.XOR<
+    Prisma.SpinHistoryUpdateWithoutSpinInput,
+    Prisma.SpinHistoryUncheckedUpdateWithoutSpinInput
+  >;
+  create: Prisma.XOR<
+    Prisma.SpinHistoryCreateWithoutSpinInput,
+    Prisma.SpinHistoryUncheckedCreateWithoutSpinInput
+  >;
+};
+
+export type SpinHistoryUpdateWithWhereUniqueWithoutSpinInput = {
+  where: Prisma.SpinHistoryWhereUniqueInput;
+  data: Prisma.XOR<
+    Prisma.SpinHistoryUpdateWithoutSpinInput,
+    Prisma.SpinHistoryUncheckedUpdateWithoutSpinInput
+  >;
+};
+
+export type SpinHistoryUpdateManyWithWhereWithoutSpinInput = {
+  where: Prisma.SpinHistoryScalarWhereInput;
+  data: Prisma.XOR<
+    Prisma.SpinHistoryUpdateManyMutationInput,
+    Prisma.SpinHistoryUncheckedUpdateManyWithoutSpinInput
+  >;
+};
+
+export type SpinHistoryScalarWhereInput = {
+  AND?:
+    | Prisma.SpinHistoryScalarWhereInput
+    | Prisma.SpinHistoryScalarWhereInput[];
+  OR?: Prisma.SpinHistoryScalarWhereInput[];
+  NOT?:
+    | Prisma.SpinHistoryScalarWhereInput
+    | Prisma.SpinHistoryScalarWhereInput[];
+  id?: Prisma.StringFilter<'SpinHistory'> | string;
+  userId?: Prisma.StringNullableFilter<'SpinHistory'> | string | null;
+  spinId?: Prisma.StringNullableFilter<'SpinHistory'> | string | null;
+  isUsed?: Prisma.BoolFilter<'SpinHistory'> | boolean;
+  createdAt?: Prisma.DateTimeFilter<'SpinHistory'> | Date | string;
+  updatedAt?: Prisma.DateTimeFilter<'SpinHistory'> | Date | string;
+};
+
+export type SpinHistoryCreateWithoutUserInput = {
+  id?: string;
+  isUsed?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  spin?: Prisma.SpinCreateNestedOneWithoutSpinhisotryInput;
+};
+
 export type SpinHistoryUncheckedCreateWithoutUserInput = {
   id?: string;
-  result: number;
+  spinId?: string | null;
   isUsed?: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -569,25 +730,41 @@ export type SpinHistoryUpdateManyWithWhereWithoutUserInput = {
   >;
 };
 
-export type SpinHistoryScalarWhereInput = {
-  AND?:
-    | Prisma.SpinHistoryScalarWhereInput
-    | Prisma.SpinHistoryScalarWhereInput[];
-  OR?: Prisma.SpinHistoryScalarWhereInput[];
-  NOT?:
-    | Prisma.SpinHistoryScalarWhereInput
-    | Prisma.SpinHistoryScalarWhereInput[];
-  id?: Prisma.StringFilter<'SpinHistory'> | string;
-  userId?: Prisma.StringFilter<'SpinHistory'> | string;
-  result?: Prisma.IntFilter<'SpinHistory'> | number;
-  isUsed?: Prisma.BoolFilter<'SpinHistory'> | boolean;
-  createdAt?: Prisma.DateTimeFilter<'SpinHistory'> | Date | string;
-  updatedAt?: Prisma.DateTimeFilter<'SpinHistory'> | Date | string;
+export type SpinHistoryCreateManySpinInput = {
+  id?: string;
+  userId?: string | null;
+  isUsed?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+};
+
+export type SpinHistoryUpdateWithoutSpinInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  user?: Prisma.UserUpdateOneWithoutSpinHistoryNestedInput;
+};
+
+export type SpinHistoryUncheckedUpdateWithoutSpinInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+
+export type SpinHistoryUncheckedUpdateManyWithoutSpinInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
 export type SpinHistoryCreateManyUserInput = {
   id?: string;
-  result: number;
+  spinId?: string | null;
   isUsed?: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -595,15 +772,15 @@ export type SpinHistoryCreateManyUserInput = {
 
 export type SpinHistoryUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  result?: Prisma.IntFieldUpdateOperationsInput | number;
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  spin?: Prisma.SpinUpdateOneWithoutSpinhisotryNestedInput;
 };
 
 export type SpinHistoryUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  result?: Prisma.IntFieldUpdateOperationsInput | number;
+  spinId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -611,7 +788,7 @@ export type SpinHistoryUncheckedUpdateWithoutUserInput = {
 
 export type SpinHistoryUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  result?: Prisma.IntFieldUpdateOperationsInput | number;
+  spinId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   isUsed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -624,11 +801,12 @@ export type SpinHistorySelect<
   {
     id?: boolean;
     userId?: boolean;
-    result?: boolean;
+    spinId?: boolean;
     isUsed?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    spin?: boolean | Prisma.SpinHistory$spinArgs<ExtArgs>;
+    user?: boolean | Prisma.SpinHistory$userArgs<ExtArgs>;
   },
   ExtArgs['result']['spinHistory']
 >;
@@ -640,11 +818,12 @@ export type SpinHistorySelectCreateManyAndReturn<
   {
     id?: boolean;
     userId?: boolean;
-    result?: boolean;
+    spinId?: boolean;
     isUsed?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    spin?: boolean | Prisma.SpinHistory$spinArgs<ExtArgs>;
+    user?: boolean | Prisma.SpinHistory$userArgs<ExtArgs>;
   },
   ExtArgs['result']['spinHistory']
 >;
@@ -656,11 +835,12 @@ export type SpinHistorySelectUpdateManyAndReturn<
   {
     id?: boolean;
     userId?: boolean;
-    result?: boolean;
+    spinId?: boolean;
     isUsed?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    spin?: boolean | Prisma.SpinHistory$spinArgs<ExtArgs>;
+    user?: boolean | Prisma.SpinHistory$userArgs<ExtArgs>;
   },
   ExtArgs['result']['spinHistory']
 >;
@@ -668,7 +848,7 @@ export type SpinHistorySelectUpdateManyAndReturn<
 export type SpinHistorySelectScalar = {
   id?: boolean;
   userId?: boolean;
-  result?: boolean;
+  spinId?: boolean;
   isUsed?: boolean;
   createdAt?: boolean;
   updatedAt?: boolean;
@@ -678,26 +858,29 @@ export type SpinHistoryOmit<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-  'id' | 'userId' | 'result' | 'isUsed' | 'createdAt' | 'updatedAt',
+  'id' | 'userId' | 'spinId' | 'isUsed' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['spinHistory']
 >;
 export type SpinHistoryInclude<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+  spin?: boolean | Prisma.SpinHistory$spinArgs<ExtArgs>;
+  user?: boolean | Prisma.SpinHistory$userArgs<ExtArgs>;
 };
 export type SpinHistoryIncludeCreateManyAndReturn<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+  spin?: boolean | Prisma.SpinHistory$spinArgs<ExtArgs>;
+  user?: boolean | Prisma.SpinHistory$userArgs<ExtArgs>;
 };
 export type SpinHistoryIncludeUpdateManyAndReturn<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+  spin?: boolean | Prisma.SpinHistory$spinArgs<ExtArgs>;
+  user?: boolean | Prisma.SpinHistory$userArgs<ExtArgs>;
 };
 
 export type $SpinHistoryPayload<
@@ -706,13 +889,14 @@ export type $SpinHistoryPayload<
 > = {
   name: 'SpinHistory';
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>;
+    spin: Prisma.$SpinPayload<ExtArgs> | null;
+    user: Prisma.$UserPayload<ExtArgs> | null;
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
       id: string;
-      userId: string;
-      result: number;
+      userId: string | null;
+      spinId: string | null;
       isUsed: boolean;
       createdAt: Date;
       updatedAt: Date;
@@ -1269,17 +1453,29 @@ export interface Prisma__SpinHistoryClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise';
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>,
+  spin<T extends Prisma.SpinHistory$spinArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.SpinHistory$spinArgs<ExtArgs>>,
+  ): Prisma.Prisma__SpinClient<
+    runtime.Types.Result.GetResult<
+      Prisma.$SpinPayload<ExtArgs>,
+      T,
+      'findUniqueOrThrow',
+      GlobalOmitOptions
+    > | null,
+    null,
+    ExtArgs,
+    GlobalOmitOptions
+  >;
+  user<T extends Prisma.SpinHistory$userArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.SpinHistory$userArgs<ExtArgs>>,
   ): Prisma.Prisma__UserClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$UserPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
+    runtime.Types.Result.GetResult<
+      Prisma.$UserPayload<ExtArgs>,
+      T,
+      'findUniqueOrThrow',
+      GlobalOmitOptions
+    > | null,
+    null,
     ExtArgs,
     GlobalOmitOptions
   >;
@@ -1327,7 +1523,7 @@ export interface Prisma__SpinHistoryClient<
 export interface SpinHistoryFieldRefs {
   readonly id: Prisma.FieldRef<'SpinHistory', 'String'>;
   readonly userId: Prisma.FieldRef<'SpinHistory', 'String'>;
-  readonly result: Prisma.FieldRef<'SpinHistory', 'Int'>;
+  readonly spinId: Prisma.FieldRef<'SpinHistory', 'String'>;
   readonly isUsed: Prisma.FieldRef<'SpinHistory', 'Boolean'>;
   readonly createdAt: Prisma.FieldRef<'SpinHistory', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'SpinHistory', 'DateTime'>;
@@ -1795,6 +1991,50 @@ export type SpinHistoryDeleteManyArgs<
    * Limit how many SpinHistories to delete.
    */
   limit?: number;
+};
+
+/**
+ * SpinHistory.spin
+ */
+export type SpinHistory$spinArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the Spin
+   */
+  select?: Prisma.SpinSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the Spin
+   */
+  omit?: Prisma.SpinOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpinInclude<ExtArgs> | null;
+  where?: Prisma.SpinWhereInput;
+};
+
+/**
+ * SpinHistory.user
+ */
+export type SpinHistory$userArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null;
+  where?: Prisma.UserWhereInput;
 };
 
 /**

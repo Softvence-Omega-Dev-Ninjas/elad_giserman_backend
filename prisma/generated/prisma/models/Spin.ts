@@ -28,15 +28,21 @@ export type AggregateSpin = {
 
 export type SpinAvgAggregateOutputType = {
   spinValue1: number | null;
+  probablity: number | null;
 };
 
 export type SpinSumAggregateOutputType = {
   spinValue1: number | null;
+  probablity: number | null;
 };
 
 export type SpinMinAggregateOutputType = {
   id: string | null;
   spinValue1: number | null;
+  probablity: number | null;
+  useCase: string | null;
+  expireAt: Date | null;
+  restName: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
@@ -44,6 +50,10 @@ export type SpinMinAggregateOutputType = {
 export type SpinMaxAggregateOutputType = {
   id: string | null;
   spinValue1: number | null;
+  probablity: number | null;
+  useCase: string | null;
+  expireAt: Date | null;
+  restName: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
@@ -51,6 +61,10 @@ export type SpinMaxAggregateOutputType = {
 export type SpinCountAggregateOutputType = {
   id: number;
   spinValue1: number;
+  probablity: number;
+  useCase: number;
+  expireAt: number;
+  restName: number;
   createdAt: number;
   updatedAt: number;
   _all: number;
@@ -58,15 +72,21 @@ export type SpinCountAggregateOutputType = {
 
 export type SpinAvgAggregateInputType = {
   spinValue1?: true;
+  probablity?: true;
 };
 
 export type SpinSumAggregateInputType = {
   spinValue1?: true;
+  probablity?: true;
 };
 
 export type SpinMinAggregateInputType = {
   id?: true;
   spinValue1?: true;
+  probablity?: true;
+  useCase?: true;
+  expireAt?: true;
+  restName?: true;
   createdAt?: true;
   updatedAt?: true;
 };
@@ -74,6 +94,10 @@ export type SpinMinAggregateInputType = {
 export type SpinMaxAggregateInputType = {
   id?: true;
   spinValue1?: true;
+  probablity?: true;
+  useCase?: true;
+  expireAt?: true;
+  restName?: true;
   createdAt?: true;
   updatedAt?: true;
 };
@@ -81,6 +105,10 @@ export type SpinMaxAggregateInputType = {
 export type SpinCountAggregateInputType = {
   id?: true;
   spinValue1?: true;
+  probablity?: true;
+  useCase?: true;
+  expireAt?: true;
+  restName?: true;
   createdAt?: true;
   updatedAt?: true;
   _all?: true;
@@ -182,6 +210,10 @@ export type SpinGroupByArgs<
 export type SpinGroupByOutputType = {
   id: string;
   spinValue1: number | null;
+  probablity: number | null;
+  useCase: string | null;
+  expireAt: Date | null;
+  restName: string | null;
   createdAt: Date;
   updatedAt: Date;
   _count: SpinCountAggregateOutputType | null;
@@ -209,15 +241,25 @@ export type SpinWhereInput = {
   NOT?: Prisma.SpinWhereInput | Prisma.SpinWhereInput[];
   id?: Prisma.StringFilter<'Spin'> | string;
   spinValue1?: Prisma.IntNullableFilter<'Spin'> | number | null;
+  probablity?: Prisma.IntNullableFilter<'Spin'> | number | null;
+  useCase?: Prisma.StringNullableFilter<'Spin'> | string | null;
+  expireAt?: Prisma.DateTimeNullableFilter<'Spin'> | Date | string | null;
+  restName?: Prisma.StringNullableFilter<'Spin'> | string | null;
   createdAt?: Prisma.DateTimeFilter<'Spin'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Spin'> | Date | string;
+  spinhisotry?: Prisma.SpinHistoryListRelationFilter;
 };
 
 export type SpinOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
   spinValue1?: Prisma.SortOrderInput | Prisma.SortOrder;
+  probablity?: Prisma.SortOrderInput | Prisma.SortOrder;
+  useCase?: Prisma.SortOrderInput | Prisma.SortOrder;
+  expireAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+  restName?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  spinhisotry?: Prisma.SpinHistoryOrderByRelationAggregateInput;
 };
 
 export type SpinWhereUniqueInput = Prisma.AtLeast<
@@ -227,8 +269,13 @@ export type SpinWhereUniqueInput = Prisma.AtLeast<
     OR?: Prisma.SpinWhereInput[];
     NOT?: Prisma.SpinWhereInput | Prisma.SpinWhereInput[];
     spinValue1?: Prisma.IntNullableFilter<'Spin'> | number | null;
+    probablity?: Prisma.IntNullableFilter<'Spin'> | number | null;
+    useCase?: Prisma.StringNullableFilter<'Spin'> | string | null;
+    expireAt?: Prisma.DateTimeNullableFilter<'Spin'> | Date | string | null;
+    restName?: Prisma.StringNullableFilter<'Spin'> | string | null;
     createdAt?: Prisma.DateTimeFilter<'Spin'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'Spin'> | Date | string;
+    spinhisotry?: Prisma.SpinHistoryListRelationFilter;
   },
   'id'
 >;
@@ -236,6 +283,10 @@ export type SpinWhereUniqueInput = Prisma.AtLeast<
 export type SpinOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
   spinValue1?: Prisma.SortOrderInput | Prisma.SortOrder;
+  probablity?: Prisma.SortOrderInput | Prisma.SortOrder;
+  useCase?: Prisma.SortOrderInput | Prisma.SortOrder;
+  expireAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+  restName?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   _count?: Prisma.SpinCountOrderByAggregateInput;
@@ -255,6 +306,14 @@ export type SpinScalarWhereWithAggregatesInput = {
     | Prisma.SpinScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'Spin'> | string;
   spinValue1?: Prisma.IntNullableWithAggregatesFilter<'Spin'> | number | null;
+  probablity?: Prisma.IntNullableWithAggregatesFilter<'Spin'> | number | null;
+  useCase?: Prisma.StringNullableWithAggregatesFilter<'Spin'> | string | null;
+  expireAt?:
+    | Prisma.DateTimeNullableWithAggregatesFilter<'Spin'>
+    | Date
+    | string
+    | null;
+  restName?: Prisma.StringNullableWithAggregatesFilter<'Spin'> | string | null;
   createdAt?: Prisma.DateTimeWithAggregatesFilter<'Spin'> | Date | string;
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<'Spin'> | Date | string;
 };
@@ -262,34 +321,66 @@ export type SpinScalarWhereWithAggregatesInput = {
 export type SpinCreateInput = {
   id?: string;
   spinValue1?: number | null;
+  probablity?: number | null;
+  useCase?: string | null;
+  expireAt?: Date | string | null;
+  restName?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  spinhisotry?: Prisma.SpinHistoryCreateNestedManyWithoutSpinInput;
 };
 
 export type SpinUncheckedCreateInput = {
   id?: string;
   spinValue1?: number | null;
+  probablity?: number | null;
+  useCase?: string | null;
+  expireAt?: Date | string | null;
+  restName?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  spinhisotry?: Prisma.SpinHistoryUncheckedCreateNestedManyWithoutSpinInput;
 };
 
 export type SpinUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   spinValue1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+  probablity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  expireAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  restName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  spinhisotry?: Prisma.SpinHistoryUpdateManyWithoutSpinNestedInput;
 };
 
 export type SpinUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   spinValue1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+  probablity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  expireAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  restName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  spinhisotry?: Prisma.SpinHistoryUncheckedUpdateManyWithoutSpinNestedInput;
 };
 
 export type SpinCreateManyInput = {
   id?: string;
   spinValue1?: number | null;
+  probablity?: number | null;
+  useCase?: string | null;
+  expireAt?: Date | string | null;
+  restName?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -297,6 +388,14 @@ export type SpinCreateManyInput = {
 export type SpinUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   spinValue1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+  probablity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  expireAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  restName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -304,6 +403,14 @@ export type SpinUpdateManyMutationInput = {
 export type SpinUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   spinValue1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+  probablity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  expireAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  restName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -311,17 +418,26 @@ export type SpinUncheckedUpdateManyInput = {
 export type SpinCountOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   spinValue1?: Prisma.SortOrder;
+  probablity?: Prisma.SortOrder;
+  useCase?: Prisma.SortOrder;
+  expireAt?: Prisma.SortOrder;
+  restName?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
 
 export type SpinAvgOrderByAggregateInput = {
   spinValue1?: Prisma.SortOrder;
+  probablity?: Prisma.SortOrder;
 };
 
 export type SpinMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   spinValue1?: Prisma.SortOrder;
+  probablity?: Prisma.SortOrder;
+  useCase?: Prisma.SortOrder;
+  expireAt?: Prisma.SortOrder;
+  restName?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
@@ -329,12 +445,22 @@ export type SpinMaxOrderByAggregateInput = {
 export type SpinMinOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   spinValue1?: Prisma.SortOrder;
+  probablity?: Prisma.SortOrder;
+  useCase?: Prisma.SortOrder;
+  expireAt?: Prisma.SortOrder;
+  restName?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
 
 export type SpinSumOrderByAggregateInput = {
   spinValue1?: Prisma.SortOrder;
+  probablity?: Prisma.SortOrder;
+};
+
+export type SpinNullableScalarRelationFilter = {
+  is?: Prisma.SpinWhereInput | null;
+  isNot?: Prisma.SpinWhereInput | null;
 };
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -345,6 +471,152 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number;
 };
 
+export type SpinCreateNestedOneWithoutSpinhisotryInput = {
+  create?: Prisma.XOR<
+    Prisma.SpinCreateWithoutSpinhisotryInput,
+    Prisma.SpinUncheckedCreateWithoutSpinhisotryInput
+  >;
+  connectOrCreate?: Prisma.SpinCreateOrConnectWithoutSpinhisotryInput;
+  connect?: Prisma.SpinWhereUniqueInput;
+};
+
+export type SpinUpdateOneWithoutSpinhisotryNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.SpinCreateWithoutSpinhisotryInput,
+    Prisma.SpinUncheckedCreateWithoutSpinhisotryInput
+  >;
+  connectOrCreate?: Prisma.SpinCreateOrConnectWithoutSpinhisotryInput;
+  upsert?: Prisma.SpinUpsertWithoutSpinhisotryInput;
+  disconnect?: Prisma.SpinWhereInput | boolean;
+  delete?: Prisma.SpinWhereInput | boolean;
+  connect?: Prisma.SpinWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.SpinUpdateToOneWithWhereWithoutSpinhisotryInput,
+      Prisma.SpinUpdateWithoutSpinhisotryInput
+    >,
+    Prisma.SpinUncheckedUpdateWithoutSpinhisotryInput
+  >;
+};
+
+export type SpinCreateWithoutSpinhisotryInput = {
+  id?: string;
+  spinValue1?: number | null;
+  probablity?: number | null;
+  useCase?: string | null;
+  expireAt?: Date | string | null;
+  restName?: string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+};
+
+export type SpinUncheckedCreateWithoutSpinhisotryInput = {
+  id?: string;
+  spinValue1?: number | null;
+  probablity?: number | null;
+  useCase?: string | null;
+  expireAt?: Date | string | null;
+  restName?: string | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+};
+
+export type SpinCreateOrConnectWithoutSpinhisotryInput = {
+  where: Prisma.SpinWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.SpinCreateWithoutSpinhisotryInput,
+    Prisma.SpinUncheckedCreateWithoutSpinhisotryInput
+  >;
+};
+
+export type SpinUpsertWithoutSpinhisotryInput = {
+  update: Prisma.XOR<
+    Prisma.SpinUpdateWithoutSpinhisotryInput,
+    Prisma.SpinUncheckedUpdateWithoutSpinhisotryInput
+  >;
+  create: Prisma.XOR<
+    Prisma.SpinCreateWithoutSpinhisotryInput,
+    Prisma.SpinUncheckedCreateWithoutSpinhisotryInput
+  >;
+  where?: Prisma.SpinWhereInput;
+};
+
+export type SpinUpdateToOneWithWhereWithoutSpinhisotryInput = {
+  where?: Prisma.SpinWhereInput;
+  data: Prisma.XOR<
+    Prisma.SpinUpdateWithoutSpinhisotryInput,
+    Prisma.SpinUncheckedUpdateWithoutSpinhisotryInput
+  >;
+};
+
+export type SpinUpdateWithoutSpinhisotryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  spinValue1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+  probablity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  expireAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  restName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+
+export type SpinUncheckedUpdateWithoutSpinhisotryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  spinValue1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+  probablity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+  useCase?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  expireAt?:
+    | Prisma.NullableDateTimeFieldUpdateOperationsInput
+    | Date
+    | string
+    | null;
+  restName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+
+/**
+ * Count Type SpinCountOutputType
+ */
+
+export type SpinCountOutputType = {
+  spinhisotry: number;
+};
+
+export type SpinCountOutputTypeSelect<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  spinhisotry?: boolean | SpinCountOutputTypeCountSpinhisotryArgs;
+};
+
+/**
+ * SpinCountOutputType without action
+ */
+export type SpinCountOutputTypeDefaultArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the SpinCountOutputType
+   */
+  select?: Prisma.SpinCountOutputTypeSelect<ExtArgs> | null;
+};
+
+/**
+ * SpinCountOutputType without action
+ */
+export type SpinCountOutputTypeCountSpinhisotryArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.SpinHistoryWhereInput;
+};
+
 export type SpinSelect<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
@@ -352,8 +624,14 @@ export type SpinSelect<
   {
     id?: boolean;
     spinValue1?: boolean;
+    probablity?: boolean;
+    useCase?: boolean;
+    expireAt?: boolean;
+    restName?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    spinhisotry?: boolean | Prisma.Spin$spinhisotryArgs<ExtArgs>;
+    _count?: boolean | Prisma.SpinCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['spin']
 >;
@@ -365,6 +643,10 @@ export type SpinSelectCreateManyAndReturn<
   {
     id?: boolean;
     spinValue1?: boolean;
+    probablity?: boolean;
+    useCase?: boolean;
+    expireAt?: boolean;
+    restName?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
   },
@@ -378,6 +660,10 @@ export type SpinSelectUpdateManyAndReturn<
   {
     id?: boolean;
     spinValue1?: boolean;
+    probablity?: boolean;
+    useCase?: boolean;
+    expireAt?: boolean;
+    restName?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
   },
@@ -387,6 +673,10 @@ export type SpinSelectUpdateManyAndReturn<
 export type SpinSelectScalar = {
   id?: boolean;
   spinValue1?: boolean;
+  probablity?: boolean;
+  useCase?: boolean;
+  expireAt?: boolean;
+  restName?: boolean;
   createdAt?: boolean;
   updatedAt?: boolean;
 };
@@ -395,20 +685,48 @@ export type SpinOmit<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-  'id' | 'spinValue1' | 'createdAt' | 'updatedAt',
+  | 'id'
+  | 'spinValue1'
+  | 'probablity'
+  | 'useCase'
+  | 'expireAt'
+  | 'restName'
+  | 'createdAt'
+  | 'updatedAt',
   ExtArgs['result']['spin']
 >;
+export type SpinInclude<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  spinhisotry?: boolean | Prisma.Spin$spinhisotryArgs<ExtArgs>;
+  _count?: boolean | Prisma.SpinCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type SpinIncludeCreateManyAndReturn<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {};
+export type SpinIncludeUpdateManyAndReturn<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {};
 
 export type $SpinPayload<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
   name: 'Spin';
-  objects: {};
+  objects: {
+    spinhisotry: Prisma.$SpinHistoryPayload<ExtArgs>[];
+  };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
       id: string;
       spinValue1: number | null;
+      probablity: number | null;
+      useCase: string | null;
+      expireAt: Date | null;
+      restName: string | null;
       createdAt: Date;
       updatedAt: Date;
     },
@@ -961,6 +1279,17 @@ export interface Prisma__SpinClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise';
+  spinhisotry<T extends Prisma.Spin$spinhisotryArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Spin$spinhisotryArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$SpinHistoryPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1005,6 +1334,10 @@ export interface Prisma__SpinClient<
 export interface SpinFieldRefs {
   readonly id: Prisma.FieldRef<'Spin', 'String'>;
   readonly spinValue1: Prisma.FieldRef<'Spin', 'Int'>;
+  readonly probablity: Prisma.FieldRef<'Spin', 'Int'>;
+  readonly useCase: Prisma.FieldRef<'Spin', 'String'>;
+  readonly expireAt: Prisma.FieldRef<'Spin', 'DateTime'>;
+  readonly restName: Prisma.FieldRef<'Spin', 'String'>;
   readonly createdAt: Prisma.FieldRef<'Spin', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'Spin', 'DateTime'>;
 }
@@ -1025,6 +1358,10 @@ export type SpinFindUniqueArgs<
    * Omit specific fields from the Spin
    */
   omit?: Prisma.SpinOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpinInclude<ExtArgs> | null;
   /**
    * Filter, which Spin to fetch.
    */
@@ -1047,6 +1384,10 @@ export type SpinFindUniqueOrThrowArgs<
    */
   omit?: Prisma.SpinOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpinInclude<ExtArgs> | null;
+  /**
    * Filter, which Spin to fetch.
    */
   where: Prisma.SpinWhereUniqueInput;
@@ -1067,6 +1408,10 @@ export type SpinFindFirstArgs<
    * Omit specific fields from the Spin
    */
   omit?: Prisma.SpinOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpinInclude<ExtArgs> | null;
   /**
    * Filter, which Spin to fetch.
    */
@@ -1121,6 +1466,10 @@ export type SpinFindFirstOrThrowArgs<
    */
   omit?: Prisma.SpinOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpinInclude<ExtArgs> | null;
+  /**
    * Filter, which Spin to fetch.
    */
   where?: Prisma.SpinWhereInput;
@@ -1174,6 +1523,10 @@ export type SpinFindManyArgs<
    */
   omit?: Prisma.SpinOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpinInclude<ExtArgs> | null;
+  /**
    * Filter, which Spins to fetch.
    */
   where?: Prisma.SpinWhereInput;
@@ -1221,6 +1574,10 @@ export type SpinCreateArgs<
    * Omit specific fields from the Spin
    */
   omit?: Prisma.SpinOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpinInclude<ExtArgs> | null;
   /**
    * The data needed to create a Spin.
    */
@@ -1278,6 +1635,10 @@ export type SpinUpdateArgs<
    * Omit specific fields from the Spin
    */
   omit?: Prisma.SpinOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpinInclude<ExtArgs> | null;
   /**
    * The data needed to update a Spin.
    */
@@ -1360,6 +1721,10 @@ export type SpinUpsertArgs<
    */
   omit?: Prisma.SpinOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpinInclude<ExtArgs> | null;
+  /**
    * The filter to search for the Spin to update in case it exists.
    */
   where: Prisma.SpinWhereUniqueInput;
@@ -1389,6 +1754,10 @@ export type SpinDeleteArgs<
    */
   omit?: Prisma.SpinOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpinInclude<ExtArgs> | null;
+  /**
    * Filter which Spin to delete.
    */
   where: Prisma.SpinWhereUniqueInput;
@@ -1412,6 +1781,37 @@ export type SpinDeleteManyArgs<
 };
 
 /**
+ * Spin.spinhisotry
+ */
+export type Spin$spinhisotryArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the SpinHistory
+   */
+  select?: Prisma.SpinHistorySelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the SpinHistory
+   */
+  omit?: Prisma.SpinHistoryOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpinHistoryInclude<ExtArgs> | null;
+  where?: Prisma.SpinHistoryWhereInput;
+  orderBy?:
+    | Prisma.SpinHistoryOrderByWithRelationInput
+    | Prisma.SpinHistoryOrderByWithRelationInput[];
+  cursor?: Prisma.SpinHistoryWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.SpinHistoryScalarFieldEnum
+    | Prisma.SpinHistoryScalarFieldEnum[];
+};
+
+/**
  * Spin without action
  */
 export type SpinDefaultArgs<
@@ -1426,4 +1826,8 @@ export type SpinDefaultArgs<
    * Omit specific fields from the Spin
    */
   omit?: Prisma.SpinOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpinInclude<ExtArgs> | null;
 };

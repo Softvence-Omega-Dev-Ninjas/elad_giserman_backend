@@ -2123,6 +2123,7 @@ export const AdminActivityScalarFieldEnum = {
   subscriptionStatus: 'subscriptionStatus',
   reedemtionStatus: 'reedemtionStatus',
   pushNotifications: 'pushNotifications',
+  isSpinAvaiable: 'isSpinAvaiable',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
 } as const;
@@ -2134,6 +2135,7 @@ export const BusinessProfileScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
+  phone: 'phone',
   location: 'location',
   isActive: 'isActive',
   openingTime: 'openingTime',
@@ -2310,6 +2312,10 @@ export type ReviewReplyScalarFieldEnum =
 export const SpinScalarFieldEnum = {
   id: 'id',
   spinValue1: 'spinValue1',
+  probablity: 'probablity',
+  useCase: 'useCase',
+  expireAt: 'expireAt',
+  restName: 'restName',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
 } as const;
@@ -2320,7 +2326,7 @@ export type SpinScalarFieldEnum =
 export const SpinHistoryScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  result: 'result',
+  spinId: 'spinId',
   isUsed: 'isUsed',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',

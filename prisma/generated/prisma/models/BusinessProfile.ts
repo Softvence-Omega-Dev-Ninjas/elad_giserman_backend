@@ -28,6 +28,7 @@ export type BusinessProfileMinAggregateOutputType = {
   id: string | null;
   title: string | null;
   description: string | null;
+  phone: string | null;
   location: string | null;
   isActive: boolean | null;
   openingTime: string | null;
@@ -50,6 +51,7 @@ export type BusinessProfileMaxAggregateOutputType = {
   id: string | null;
   title: string | null;
   description: string | null;
+  phone: string | null;
   location: string | null;
   isActive: boolean | null;
   openingTime: string | null;
@@ -72,6 +74,7 @@ export type BusinessProfileCountAggregateOutputType = {
   id: number;
   title: number;
   description: number;
+  phone: number;
   location: number;
   isActive: number;
   openingTime: number;
@@ -95,6 +98,7 @@ export type BusinessProfileMinAggregateInputType = {
   id?: true;
   title?: true;
   description?: true;
+  phone?: true;
   location?: true;
   isActive?: true;
   openingTime?: true;
@@ -117,6 +121,7 @@ export type BusinessProfileMaxAggregateInputType = {
   id?: true;
   title?: true;
   description?: true;
+  phone?: true;
   location?: true;
   isActive?: true;
   openingTime?: true;
@@ -139,6 +144,7 @@ export type BusinessProfileCountAggregateInputType = {
   id?: true;
   title?: true;
   description?: true;
+  phone?: true;
   location?: true;
   isActive?: true;
   openingTime?: true;
@@ -245,6 +251,7 @@ export type BusinessProfileGroupByOutputType = {
   id: string;
   title: string;
   description: string | null;
+  phone: string | null;
   location: string;
   isActive: boolean;
   openingTime: string;
@@ -287,6 +294,7 @@ export type BusinessProfileWhereInput = {
   id?: Prisma.StringFilter<'BusinessProfile'> | string;
   title?: Prisma.StringFilter<'BusinessProfile'> | string;
   description?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+  phone?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
   location?: Prisma.StringFilter<'BusinessProfile'> | string;
   isActive?: Prisma.BoolFilter<'BusinessProfile'> | boolean;
   openingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
@@ -323,6 +331,7 @@ export type BusinessProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
   title?: Prisma.SortOrder;
   description?: Prisma.SortOrderInput | Prisma.SortOrder;
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder;
   location?: Prisma.SortOrder;
   isActive?: Prisma.SortOrder;
   openingTime?: Prisma.SortOrder;
@@ -361,6 +370,7 @@ export type BusinessProfileWhereUniqueInput = Prisma.AtLeast<
       | Prisma.StringNullableFilter<'BusinessProfile'>
       | string
       | null;
+    phone?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
     location?: Prisma.StringFilter<'BusinessProfile'> | string;
     isActive?: Prisma.BoolFilter<'BusinessProfile'> | boolean;
     openingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
@@ -398,6 +408,7 @@ export type BusinessProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
   title?: Prisma.SortOrder;
   description?: Prisma.SortOrderInput | Prisma.SortOrder;
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder;
   location?: Prisma.SortOrder;
   isActive?: Prisma.SortOrder;
   openingTime?: Prisma.SortOrder;
@@ -430,6 +441,10 @@ export type BusinessProfileScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<'BusinessProfile'> | string;
   title?: Prisma.StringWithAggregatesFilter<'BusinessProfile'> | string;
   description?:
+    | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
+    | string
+    | null;
+  phone?:
     | Prisma.StringNullableWithAggregatesFilter<'BusinessProfile'>
     | string
     | null;
@@ -488,6 +503,7 @@ export type BusinessProfileCreateInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -516,6 +532,7 @@ export type BusinessProfileUncheckedCreateInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -544,6 +561,7 @@ export type BusinessProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -575,6 +593,7 @@ export type BusinessProfileUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -606,6 +625,7 @@ export type BusinessProfileCreateManyInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -628,6 +648,7 @@ export type BusinessProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -651,6 +672,7 @@ export type BusinessProfileUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -676,6 +698,7 @@ export type BusinessProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   title?: Prisma.SortOrder;
   description?: Prisma.SortOrder;
+  phone?: Prisma.SortOrder;
   location?: Prisma.SortOrder;
   isActive?: Prisma.SortOrder;
   openingTime?: Prisma.SortOrder;
@@ -698,6 +721,7 @@ export type BusinessProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   title?: Prisma.SortOrder;
   description?: Prisma.SortOrder;
+  phone?: Prisma.SortOrder;
   location?: Prisma.SortOrder;
   isActive?: Prisma.SortOrder;
   openingTime?: Prisma.SortOrder;
@@ -720,6 +744,7 @@ export type BusinessProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   title?: Prisma.SortOrder;
   description?: Prisma.SortOrder;
+  phone?: Prisma.SortOrder;
   location?: Prisma.SortOrder;
   isActive?: Prisma.SortOrder;
   openingTime?: Prisma.SortOrder;
@@ -1168,6 +1193,7 @@ export type BusinessProfileCreateWithoutCategoryInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1195,6 +1221,7 @@ export type BusinessProfileUncheckedCreateWithoutCategoryInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1272,6 +1299,7 @@ export type BusinessProfileScalarWhereInput = {
   id?: Prisma.StringFilter<'BusinessProfile'> | string;
   title?: Prisma.StringFilter<'BusinessProfile'> | string;
   description?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
+  phone?: Prisma.StringNullableFilter<'BusinessProfile'> | string | null;
   location?: Prisma.StringFilter<'BusinessProfile'> | string;
   isActive?: Prisma.BoolFilter<'BusinessProfile'> | boolean;
   openingTime?: Prisma.StringFilter<'BusinessProfile'> | string;
@@ -1297,6 +1325,7 @@ export type BusinessProfileCreateWithoutFavoriteInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1324,6 +1353,7 @@ export type BusinessProfileUncheckedCreateWithoutFavoriteInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1379,6 +1409,7 @@ export type BusinessProfileUpdateWithoutFavoriteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1409,6 +1440,7 @@ export type BusinessProfileUncheckedUpdateWithoutFavoriteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1439,6 +1471,7 @@ export type BusinessProfileCreateWithoutGalleryInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1466,6 +1499,7 @@ export type BusinessProfileUncheckedCreateWithoutGalleryInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1529,6 +1563,7 @@ export type BusinessProfileCreateWithoutOffersInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1556,6 +1591,7 @@ export type BusinessProfileUncheckedCreateWithoutOffersInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1611,6 +1647,7 @@ export type BusinessProfileUpdateWithoutOffersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1641,6 +1678,7 @@ export type BusinessProfileUncheckedUpdateWithoutOffersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1671,6 +1709,7 @@ export type BusinessProfileCreateWithoutReedemOfferInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1698,6 +1737,7 @@ export type BusinessProfileUncheckedCreateWithoutReedemOfferInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1753,6 +1793,7 @@ export type BusinessProfileUpdateWithoutReedemOfferInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1783,6 +1824,7 @@ export type BusinessProfileUncheckedUpdateWithoutReedemOfferInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1813,6 +1855,7 @@ export type BusinessProfileCreateWithoutReservationInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1840,6 +1883,7 @@ export type BusinessProfileUncheckedCreateWithoutReservationInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1895,6 +1939,7 @@ export type BusinessProfileUpdateWithoutReservationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1925,6 +1970,7 @@ export type BusinessProfileUncheckedUpdateWithoutReservationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1955,6 +2001,7 @@ export type BusinessProfileCreateWithoutReviewsInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -1982,6 +2029,7 @@ export type BusinessProfileUncheckedCreateWithoutReviewsInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -2037,6 +2085,7 @@ export type BusinessProfileUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -2067,6 +2116,7 @@ export type BusinessProfileUncheckedUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -2097,6 +2147,7 @@ export type BusinessProfileCreateWithoutOwnerInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -2124,6 +2175,7 @@ export type BusinessProfileUncheckedCreateWithoutOwnerInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -2179,6 +2231,7 @@ export type BusinessProfileUpdateWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -2209,6 +2262,7 @@ export type BusinessProfileUncheckedUpdateWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -2239,6 +2293,7 @@ export type BusinessProfileCreateManyCategoryInput = {
   id?: string;
   title: string;
   description?: string | null;
+  phone?: string | null;
   location: string;
   isActive?: boolean;
   openingTime: string;
@@ -2260,6 +2315,7 @@ export type BusinessProfileUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -2290,6 +2346,7 @@ export type BusinessProfileUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -2320,6 +2377,7 @@ export type BusinessProfileUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -2344,6 +2402,7 @@ export type BusinessProfileUpdateWithoutGalleryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -2374,6 +2433,7 @@ export type BusinessProfileUncheckedUpdateWithoutGalleryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -2404,6 +2464,7 @@ export type BusinessProfileUncheckedUpdateManyWithoutGalleryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   title?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   location?: Prisma.StringFieldUpdateOperationsInput | string;
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   openingTime?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -2531,6 +2592,7 @@ export type BusinessProfileSelect<
     id?: boolean;
     title?: boolean;
     description?: boolean;
+    phone?: boolean;
     location?: boolean;
     isActive?: boolean;
     openingTime?: boolean;
@@ -2570,6 +2632,7 @@ export type BusinessProfileSelectCreateManyAndReturn<
     id?: boolean;
     title?: boolean;
     description?: boolean;
+    phone?: boolean;
     location?: boolean;
     isActive?: boolean;
     openingTime?: boolean;
@@ -2600,6 +2663,7 @@ export type BusinessProfileSelectUpdateManyAndReturn<
     id?: boolean;
     title?: boolean;
     description?: boolean;
+    phone?: boolean;
     location?: boolean;
     isActive?: boolean;
     openingTime?: boolean;
@@ -2626,6 +2690,7 @@ export type BusinessProfileSelectScalar = {
   id?: boolean;
   title?: boolean;
   description?: boolean;
+  phone?: boolean;
   location?: boolean;
   isActive?: boolean;
   openingTime?: boolean;
@@ -2651,6 +2716,7 @@ export type BusinessProfileOmit<
   | 'id'
   | 'title'
   | 'description'
+  | 'phone'
   | 'location'
   | 'isActive'
   | 'openingTime'
@@ -2718,6 +2784,7 @@ export type $BusinessProfilePayload<
       id: string;
       title: string;
       description: string | null;
+      phone: string | null;
       location: string;
       isActive: boolean;
       openingTime: string;
@@ -3434,6 +3501,7 @@ export interface BusinessProfileFieldRefs {
   readonly id: Prisma.FieldRef<'BusinessProfile', 'String'>;
   readonly title: Prisma.FieldRef<'BusinessProfile', 'String'>;
   readonly description: Prisma.FieldRef<'BusinessProfile', 'String'>;
+  readonly phone: Prisma.FieldRef<'BusinessProfile', 'String'>;
   readonly location: Prisma.FieldRef<'BusinessProfile', 'String'>;
   readonly isActive: Prisma.FieldRef<'BusinessProfile', 'Boolean'>;
   readonly openingTime: Prisma.FieldRef<'BusinessProfile', 'String'>;

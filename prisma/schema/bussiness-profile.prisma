@@ -2,6 +2,7 @@ model BusinessProfile {
   id              String         @id @default(uuid())
   title           String
   description     String?
+  phone           String?
   location        String
   isActive        Boolean        @default(true)
   openingTime     String

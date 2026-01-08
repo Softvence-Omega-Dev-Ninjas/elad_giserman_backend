@@ -1,18 +1,25 @@
 model Spin {
-  id         String   @id @default(uuid())
-  spinValue1 Int?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
+  id          String        @id @default(uuid())
+  spinValue1  Int?
+  probablity  Int?
+  useCase     String?
+  expireAt    DateTime?
+  restName    String?
+  spinhisotry SpinHistory[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
   @@map("spin")
 }
 
 model SpinHistory {
-  id        String   @id @default(uuid())
-  userId    String
-  result    Int
-  isUsed    Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String      @id @default(uuid())
+  userId    String?  
+  spinId    String?
+  spin      Spin?       @relation(fields: [spinId], references: [id])
+  isUsed    Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  user      User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("spinhistory")
 }

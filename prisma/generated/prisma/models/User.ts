@@ -1067,6 +1067,11 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput;
 };
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null;
+  isNot?: Prisma.UserWhereInput | null;
+};
+
 export type UserListRelationFilter = {
   every?: Prisma.UserWhereInput;
   some?: Prisma.UserWhereInput;
@@ -1075,11 +1080,6 @@ export type UserListRelationFilter = {
 
 export type UserOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder;
-};
-
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null;
-  isNot?: Prisma.UserWhereInput | null;
 };
 
 export type UserCountOrderByAggregateInput = {
@@ -1372,13 +1372,15 @@ export type UserCreateNestedOneWithoutSpinHistoryInput = {
   connect?: Prisma.UserWhereUniqueInput;
 };
 
-export type UserUpdateOneRequiredWithoutSpinHistoryNestedInput = {
+export type UserUpdateOneWithoutSpinHistoryNestedInput = {
   create?: Prisma.XOR<
     Prisma.UserCreateWithoutSpinHistoryInput,
     Prisma.UserUncheckedCreateWithoutSpinHistoryInput
   >;
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutSpinHistoryInput;
   upsert?: Prisma.UserUpsertWithoutSpinHistoryInput;
+  disconnect?: Prisma.UserWhereInput | boolean;
+  delete?: Prisma.UserWhereInput | boolean;
   connect?: Prisma.UserWhereUniqueInput;
   update?: Prisma.XOR<
     Prisma.XOR<

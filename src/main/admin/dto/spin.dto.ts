@@ -1,11 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsOptional } from 'class-validator';
+import { IsInt, IsOptional, IsString } from 'class-validator';
 
 export class CreateSpinDto {
   @ApiProperty({ example: 10 })
   @IsOptional()
   @IsInt()
   spinValue1?: number;
+
+  @ApiProperty({ example: 10 })
+  @IsOptional()
+  @IsInt()
+  probablity?: number;
+
+  @ApiProperty({ example: '10% discount on pizza or free a coke' })
+  @IsOptional()
+  @IsString()
+  useCase?: string;
 }
 
 export class UpdateSpinDto {
@@ -13,4 +23,14 @@ export class UpdateSpinDto {
   @IsOptional()
   @IsInt()
   spinValue1?: number;
+
+  @ApiProperty({ example: 10 })
+  @IsOptional()
+  @IsInt()
+  probablity?: number;
+
+  @ApiProperty({ example: '10% discount on pizza or free a coke' })
+  @IsOptional()
+  @IsString()
+  useCase?: string;
 }

@@ -89,8 +89,8 @@ export const MemberShip = {
 export type MemberShip = (typeof MemberShip)[keyof typeof MemberShip];
 
 export const UserLanguage = {
-  EN: 'EN',
-  HE: 'HE',
+  en: 'en',
+  he: 'he',
 } as const;
 
 export type UserLanguage = (typeof UserLanguage)[keyof typeof UserLanguage];

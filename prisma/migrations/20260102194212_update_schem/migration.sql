@@ -1,7 +1,4 @@
 -- CreateEnum
-CREATE TYPE "ProfileType" AS ENUM ('CAFE', 'RESTURANTES', 'BAR');
-
--- CreateEnum
 CREATE TYPE "FileType" AS ENUM ('image', 'docs', 'link', 'document', 'any', 'video', 'audio');
 
 -- CreateEnum
@@ -29,7 +26,7 @@ CREATE TYPE "OtpType" AS ENUM ('REGISTER', 'LOGIN', 'RESET');
 CREATE TYPE "MemberShip" AS ENUM ('FREE', 'VIP');
 
 -- CreateEnum
-CREATE TYPE "UserLanguage" AS ENUM ('EN', 'HE');
+CREATE TYPE "UserLanguage" AS ENUM ('en', 'he');
 
 -- CreateTable
 CREATE TABLE "AdminActivity" (
@@ -41,6 +38,7 @@ CREATE TABLE "AdminActivity" (
     "subscriptionStatus" BOOLEAN DEFAULT false,
     "reedemtionStatus" BOOLEAN DEFAULT false,
     "pushNotifications" BOOLEAN DEFAULT false,
+    "isSpinAvaiable" BOOLEAN DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -60,6 +58,14 @@ CREATE TABLE "business_profiles" (
     "ownerId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "profileTypeName" TEXT,
+    "facebook" TEXT,
+    "instagram" TEXT,
+    "linkedin" TEXT,
+    "pinterest" TEXT,
+    "twitter" TEXT,
+    "website" TEXT,
+    "youtube" TEXT,
 
     CONSTRAINT "business_profiles_pkey" PRIMARY KEY ("id")
 );
@@ -86,6 +92,17 @@ CREATE TABLE "CustomApp" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "CustomApp_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Favorite" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "restaurantId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Favorite_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -155,11 +172,29 @@ CREATE TABLE "redeemable_offers" (
     "redeemedAt" TIMESTAMP(3),
     "bussinessId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
+    "isClaimed" BOOLEAN DEFAULT false,
+    "isOrganizedApproved" BOOLEAN NOT NULL DEFAULT false,
     "expiresAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "redeemable_offers_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Reservation" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "restaurntId" TEXT NOT NULL,
+    "date" TEXT NOT NULL,
+    "time" TEXT NOT NULL,
+    "phoneNumber" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "isActive" BOOLEAN DEFAULT true,
+    "aproval" BOOLEAN DEFAULT false,
+
+    CONSTRAINT "Reservation_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -188,34 +223,29 @@ CREATE TABLE "review_replies" (
 );
 
 -- CreateTable
-CREATE TABLE "Spin" (
+CREATE TABLE "spin" (
     "id" TEXT NOT NULL,
     "spinValue1" INTEGER,
-    "spinValue2" INTEGER,
-    "spinValue3" INTEGER,
-    "spinValue4" INTEGER,
-    "spinValue5" INTEGER,
-    "spinValue6" INTEGER,
-    "spinValue7" INTEGER,
-    "spinValue8" INTEGER,
-    "spinValue9" INTEGER,
-    "spinValue10" INTEGER,
+    "probablity" INTEGER,
+    "useCase" TEXT,
+    "expireAt" TIMESTAMP(3),
+    "restName" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Spin_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "spin_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "SpinHistory" (
+CREATE TABLE "spinhistory" (
     "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "result" INTEGER NOT NULL,
+    "userId" TEXT,
+    "spinId" TEXT,
     "isUsed" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "SpinHistory_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "spinhistory_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -230,6 +260,7 @@ CREATE TABLE "subscription_plans" (
     "stripePriceId" TEXT NOT NULL,
     "currency" TEXT NOT NULL DEFAULT 'usd',
     "priceCents" INTEGER NOT NULL,
+    "yearlyPriceCents" INTEGER,
     "priceWithoutDiscountCents" INTEGER NOT NULL,
     "discountPercent" INTEGER NOT NULL DEFAULT 0,
     "billingPeriod" "BillingPeriod" NOT NULL,
@@ -253,8 +284,27 @@ CREATE TABLE "user_subscriptions" (
     "failedAt" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "billingCycle" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "user_subscriptions_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "invoices" (
+    "id" TEXT NOT NULL,
+    "stripeInvoiceId" TEXT NOT NULL,
+    "currency" TEXT NOT NULL DEFAULT 'usd',
+    "status" "InvoiceStatus" NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "amount" DOUBLE PRECISION NOT NULL,
+    "dueAt" TIMESTAMP(3),
+    "failedAt" TIMESTAMP(3),
+    "paidAt" TIMESTAMP(3),
+    "subscriptionId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "invoices_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -278,38 +328,19 @@ CREATE TABLE "TermsAndConditions" (
 -- CreateTable
 CREATE TABLE "UserTermsAndConditions" (
     "id" TEXT NOT NULL,
-    "account" TEXT NOT NULL,
-    "subscription" TEXT[],
-    "offerAndRedemtions" TEXT[],
-    "reservations" TEXT[],
-    "businesses" TEXT[],
-    "adminRight" TEXT[],
-    "dataAndPolicy" TEXT NOT NULL,
     "liability" TEXT NOT NULL,
-    "governingLaw" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "arrvalAndSeatingPolicy" TEXT[],
+    "canceletionAndNoShows" TEXT[],
+    "conductAndBehaviour" TEXT[],
+    "generalAgrement" TEXT,
+    "modifications" TEXT[],
+    "policyUpdate" TEXT,
+    "reservationConfirmation" TEXT[],
+    "businessProfileId" TEXT,
 
     CONSTRAINT "UserTermsAndConditions_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "invoices" (
-    "id" TEXT NOT NULL,
-    "invoiceNumber" TEXT NOT NULL,
-    "userSubscriptionId" TEXT NOT NULL,
-    "stripeInvoiceId" TEXT,
-    "amountCents" INTEGER NOT NULL,
-    "paidCents" INTEGER NOT NULL DEFAULT 0,
-    "currency" TEXT NOT NULL DEFAULT 'usd',
-    "status" "InvoiceStatus" NOT NULL DEFAULT 'DRAFT',
-    "periodStart" TIMESTAMP(3) NOT NULL,
-    "periodEnd" TIMESTAMP(3) NOT NULL,
-    "dueDate" TIMESTAMP(3),
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "invoices_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -326,7 +357,7 @@ CREATE TABLE "users" (
     "status" "UserStatus" NOT NULL DEFAULT 'ACTIVE',
     "isVerified" BOOLEAN NOT NULL DEFAULT false,
     "timezone" TEXT NOT NULL DEFAULT 'UTC',
-    "language" "UserLanguage" NOT NULL DEFAULT 'EN',
+    "language" "UserLanguage" NOT NULL DEFAULT 'en',
     "allowNotification" BOOLEAN NOT NULL DEFAULT true,
     "isLoggedIn" BOOLEAN NOT NULL DEFAULT false,
     "lastLoginAt" TIMESTAMP(3),
@@ -384,16 +415,7 @@ CREATE INDEX "user_subscriptions_userId_idx" ON "user_subscriptions"("userId");
 CREATE INDEX "user_subscriptions_planId_idx" ON "user_subscriptions"("planId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "invoices_invoiceNumber_key" ON "invoices"("invoiceNumber");
-
--- CreateIndex
 CREATE UNIQUE INDEX "invoices_stripeInvoiceId_key" ON "invoices"("stripeInvoiceId");
-
--- CreateIndex
-CREATE INDEX "invoices_userSubscriptionId_idx" ON "invoices"("userSubscriptionId");
-
--- CreateIndex
-CREATE INDEX "invoices_status_idx" ON "invoices"("status");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
@@ -420,28 +442,40 @@ ALTER TABLE "business_profiles" ADD CONSTRAINT "business_profiles_categoryId_fke
 ALTER TABLE "business_profiles" ADD CONSTRAINT "business_profiles_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "user_notifications" ADD CONSTRAINT "user_notifications_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Favorite" ADD CONSTRAINT "Favorite_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Favorite" ADD CONSTRAINT "Favorite_restaurantId_fkey" FOREIGN KEY ("restaurantId") REFERENCES "business_profiles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "user_notifications" ADD CONSTRAINT "user_notifications_notificationId_fkey" FOREIGN KEY ("notificationId") REFERENCES "notifications"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "offers" ADD CONSTRAINT "offers_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "business_profiles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "user_notifications" ADD CONSTRAINT "user_notifications_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "redeemable_offers" ADD CONSTRAINT "redeemable_offers_offerId_fkey" FOREIGN KEY ("offerId") REFERENCES "offers"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "offers" ADD CONSTRAINT "offers_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "business_profiles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "redeemable_offers" ADD CONSTRAINT "redeemable_offers_bussinessId_fkey" FOREIGN KEY ("bussinessId") REFERENCES "business_profiles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "redeemable_offers" ADD CONSTRAINT "redeemable_offers_offerId_fkey" FOREIGN KEY ("offerId") REFERENCES "offers"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "redeemable_offers" ADD CONSTRAINT "redeemable_offers_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "reviews" ADD CONSTRAINT "reviews_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Reservation" ADD CONSTRAINT "Reservation_restaurntId_fkey" FOREIGN KEY ("restaurntId") REFERENCES "business_profiles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Reservation" ADD CONSTRAINT "Reservation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "reviews" ADD CONSTRAINT "reviews_businessProfileId_fkey" FOREIGN KEY ("businessProfileId") REFERENCES "business_profiles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "reviews" ADD CONSTRAINT "reviews_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "review_replies" ADD CONSTRAINT "review_replies_reviewId_fkey" FOREIGN KEY ("reviewId") REFERENCES "reviews"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -450,16 +484,25 @@ ALTER TABLE "review_replies" ADD CONSTRAINT "review_replies_reviewId_fkey" FOREI
 ALTER TABLE "review_replies" ADD CONSTRAINT "review_replies_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "SpinHistory" ADD CONSTRAINT "SpinHistory_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "spinhistory" ADD CONSTRAINT "spinhistory_spinId_fkey" FOREIGN KEY ("spinId") REFERENCES "spin"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "user_subscriptions" ADD CONSTRAINT "user_subscriptions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "spinhistory" ADD CONSTRAINT "spinhistory_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "user_subscriptions" ADD CONSTRAINT "user_subscriptions_planId_fkey" FOREIGN KEY ("planId") REFERENCES "subscription_plans"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "invoices" ADD CONSTRAINT "invoices_userSubscriptionId_fkey" FOREIGN KEY ("userSubscriptionId") REFERENCES "user_subscriptions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "user_subscriptions" ADD CONSTRAINT "user_subscriptions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "invoices" ADD CONSTRAINT "invoices_subscriptionId_fkey" FOREIGN KEY ("subscriptionId") REFERENCES "user_subscriptions"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "invoices" ADD CONSTRAINT "invoices_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserTermsAndConditions" ADD CONSTRAINT "UserTermsAndConditions_businessProfileId_fkey" FOREIGN KEY ("businessProfileId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "users" ADD CONSTRAINT "users_currentPlanId_fkey" FOREIGN KEY ("currentPlanId") REFERENCES "subscription_plans"("id") ON DELETE SET NULL ON UPDATE CASCADE;

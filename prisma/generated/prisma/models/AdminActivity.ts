@@ -33,6 +33,7 @@ export type AdminActivityMinAggregateOutputType = {
   subscriptionStatus: boolean | null;
   reedemtionStatus: boolean | null;
   pushNotifications: boolean | null;
+  isSpinAvaiable: boolean | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
@@ -46,6 +47,7 @@ export type AdminActivityMaxAggregateOutputType = {
   subscriptionStatus: boolean | null;
   reedemtionStatus: boolean | null;
   pushNotifications: boolean | null;
+  isSpinAvaiable: boolean | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
@@ -59,6 +61,7 @@ export type AdminActivityCountAggregateOutputType = {
   subscriptionStatus: number;
   reedemtionStatus: number;
   pushNotifications: number;
+  isSpinAvaiable: number;
   createdAt: number;
   updatedAt: number;
   _all: number;
@@ -73,6 +76,7 @@ export type AdminActivityMinAggregateInputType = {
   subscriptionStatus?: true;
   reedemtionStatus?: true;
   pushNotifications?: true;
+  isSpinAvaiable?: true;
   createdAt?: true;
   updatedAt?: true;
 };
@@ -86,6 +90,7 @@ export type AdminActivityMaxAggregateInputType = {
   subscriptionStatus?: true;
   reedemtionStatus?: true;
   pushNotifications?: true;
+  isSpinAvaiable?: true;
   createdAt?: true;
   updatedAt?: true;
 };
@@ -99,6 +104,7 @@ export type AdminActivityCountAggregateInputType = {
   subscriptionStatus?: true;
   reedemtionStatus?: true;
   pushNotifications?: true;
+  isSpinAvaiable?: true;
   createdAt?: true;
   updatedAt?: true;
   _all?: true;
@@ -196,6 +202,7 @@ export type AdminActivityGroupByOutputType = {
   subscriptionStatus: boolean | null;
   reedemtionStatus: boolean | null;
   pushNotifications: boolean | null;
+  isSpinAvaiable: boolean | null;
   createdAt: Date;
   updatedAt: Date;
   _count: AdminActivityCountAggregateOutputType | null;
@@ -244,6 +251,7 @@ export type AdminActivityWhereInput = {
     | Prisma.BoolNullableFilter<'AdminActivity'>
     | boolean
     | null;
+  isSpinAvaiable?: Prisma.BoolNullableFilter<'AdminActivity'> | boolean | null;
   createdAt?: Prisma.DateTimeFilter<'AdminActivity'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'AdminActivity'> | Date | string;
 };
@@ -257,6 +265,7 @@ export type AdminActivityOrderByWithRelationInput = {
   subscriptionStatus?: Prisma.SortOrderInput | Prisma.SortOrder;
   reedemtionStatus?: Prisma.SortOrderInput | Prisma.SortOrder;
   pushNotifications?: Prisma.SortOrderInput | Prisma.SortOrder;
+  isSpinAvaiable?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
@@ -292,6 +301,10 @@ export type AdminActivityWhereUniqueInput = Prisma.AtLeast<
       | Prisma.BoolNullableFilter<'AdminActivity'>
       | boolean
       | null;
+    isSpinAvaiable?:
+      | Prisma.BoolNullableFilter<'AdminActivity'>
+      | boolean
+      | null;
     createdAt?: Prisma.DateTimeFilter<'AdminActivity'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'AdminActivity'> | Date | string;
   },
@@ -307,6 +320,7 @@ export type AdminActivityOrderByWithAggregationInput = {
   subscriptionStatus?: Prisma.SortOrderInput | Prisma.SortOrder;
   reedemtionStatus?: Prisma.SortOrderInput | Prisma.SortOrder;
   pushNotifications?: Prisma.SortOrderInput | Prisma.SortOrder;
+  isSpinAvaiable?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   _count?: Prisma.AdminActivityCountOrderByAggregateInput;
@@ -351,6 +365,10 @@ export type AdminActivityScalarWhereWithAggregatesInput = {
     | Prisma.BoolNullableWithAggregatesFilter<'AdminActivity'>
     | boolean
     | null;
+  isSpinAvaiable?:
+    | Prisma.BoolNullableWithAggregatesFilter<'AdminActivity'>
+    | boolean
+    | null;
   createdAt?:
     | Prisma.DateTimeWithAggregatesFilter<'AdminActivity'>
     | Date
@@ -370,6 +388,7 @@ export type AdminActivityCreateInput = {
   subscriptionStatus?: boolean | null;
   reedemtionStatus?: boolean | null;
   pushNotifications?: boolean | null;
+  isSpinAvaiable?: boolean | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -383,6 +402,7 @@ export type AdminActivityUncheckedCreateInput = {
   subscriptionStatus?: boolean | null;
   reedemtionStatus?: boolean | null;
   pushNotifications?: boolean | null;
+  isSpinAvaiable?: boolean | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -411,6 +431,10 @@ export type AdminActivityUpdateInput = {
     | boolean
     | null;
   pushNotifications?:
+    | Prisma.NullableBoolFieldUpdateOperationsInput
+    | boolean
+    | null;
+  isSpinAvaiable?:
     | Prisma.NullableBoolFieldUpdateOperationsInput
     | boolean
     | null;
@@ -445,6 +469,10 @@ export type AdminActivityUncheckedUpdateInput = {
     | Prisma.NullableBoolFieldUpdateOperationsInput
     | boolean
     | null;
+  isSpinAvaiable?:
+    | Prisma.NullableBoolFieldUpdateOperationsInput
+    | boolean
+    | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -458,6 +486,7 @@ export type AdminActivityCreateManyInput = {
   subscriptionStatus?: boolean | null;
   reedemtionStatus?: boolean | null;
   pushNotifications?: boolean | null;
+  isSpinAvaiable?: boolean | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -486,6 +515,10 @@ export type AdminActivityUpdateManyMutationInput = {
     | boolean
     | null;
   pushNotifications?:
+    | Prisma.NullableBoolFieldUpdateOperationsInput
+    | boolean
+    | null;
+  isSpinAvaiable?:
     | Prisma.NullableBoolFieldUpdateOperationsInput
     | boolean
     | null;
@@ -520,6 +553,10 @@ export type AdminActivityUncheckedUpdateManyInput = {
     | Prisma.NullableBoolFieldUpdateOperationsInput
     | boolean
     | null;
+  isSpinAvaiable?:
+    | Prisma.NullableBoolFieldUpdateOperationsInput
+    | boolean
+    | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -533,6 +570,7 @@ export type AdminActivityCountOrderByAggregateInput = {
   subscriptionStatus?: Prisma.SortOrder;
   reedemtionStatus?: Prisma.SortOrder;
   pushNotifications?: Prisma.SortOrder;
+  isSpinAvaiable?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
@@ -546,6 +584,7 @@ export type AdminActivityMaxOrderByAggregateInput = {
   subscriptionStatus?: Prisma.SortOrder;
   reedemtionStatus?: Prisma.SortOrder;
   pushNotifications?: Prisma.SortOrder;
+  isSpinAvaiable?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
@@ -559,6 +598,7 @@ export type AdminActivityMinOrderByAggregateInput = {
   subscriptionStatus?: Prisma.SortOrder;
   reedemtionStatus?: Prisma.SortOrder;
   pushNotifications?: Prisma.SortOrder;
+  isSpinAvaiable?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
@@ -592,6 +632,7 @@ export type AdminActivitySelect<
     subscriptionStatus?: boolean;
     reedemtionStatus?: boolean;
     pushNotifications?: boolean;
+    isSpinAvaiable?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
   },
@@ -611,6 +652,7 @@ export type AdminActivitySelectCreateManyAndReturn<
     subscriptionStatus?: boolean;
     reedemtionStatus?: boolean;
     pushNotifications?: boolean;
+    isSpinAvaiable?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
   },
@@ -630,6 +672,7 @@ export type AdminActivitySelectUpdateManyAndReturn<
     subscriptionStatus?: boolean;
     reedemtionStatus?: boolean;
     pushNotifications?: boolean;
+    isSpinAvaiable?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
   },
@@ -645,6 +688,7 @@ export type AdminActivitySelectScalar = {
   subscriptionStatus?: boolean;
   reedemtionStatus?: boolean;
   pushNotifications?: boolean;
+  isSpinAvaiable?: boolean;
   createdAt?: boolean;
   updatedAt?: boolean;
 };
@@ -661,6 +705,7 @@ export type AdminActivityOmit<
   | 'subscriptionStatus'
   | 'reedemtionStatus'
   | 'pushNotifications'
+  | 'isSpinAvaiable'
   | 'createdAt'
   | 'updatedAt',
   ExtArgs['result']['adminActivity']
@@ -682,6 +727,7 @@ export type $AdminActivityPayload<
       subscriptionStatus: boolean | null;
       reedemtionStatus: boolean | null;
       pushNotifications: boolean | null;
+      isSpinAvaiable: boolean | null;
       createdAt: Date;
       updatedAt: Date;
     },
@@ -1293,6 +1339,7 @@ export interface AdminActivityFieldRefs {
   readonly subscriptionStatus: Prisma.FieldRef<'AdminActivity', 'Boolean'>;
   readonly reedemtionStatus: Prisma.FieldRef<'AdminActivity', 'Boolean'>;
   readonly pushNotifications: Prisma.FieldRef<'AdminActivity', 'Boolean'>;
+  readonly isSpinAvaiable: Prisma.FieldRef<'AdminActivity', 'Boolean'>;
   readonly createdAt: Prisma.FieldRef<'AdminActivity', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'AdminActivity', 'DateTime'>;
 }
