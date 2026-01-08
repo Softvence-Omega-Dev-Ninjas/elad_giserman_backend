@@ -1,4 +1,3 @@
-import { AppError } from '@/common/error/handle-error.app';
 import { HandleError } from '@/common/error/handle-error.decorator';
 import { successResponse, TResponse } from '@/common/utils/response.util';
 import { PrismaService } from '@/lib/prisma/prisma.service';
@@ -16,6 +15,7 @@ export class CancelSubscriptionService {
 
   @HandleError('Failed to cancel subscription')
   async cancelSubscriptionImmediately(userId: string): Promise<TResponse<any>> {
+    // Fetch subscription
     const subscription =
       await this.prismaService.client.userSubscription.findFirst({
         where: { userId, status: { in: ['ACTIVE', 'PENDING'] } },
@@ -23,40 +23,47 @@ export class CancelSubscriptionService {
         include: { plan: true },
       });
 
-    if (!subscription || !subscription.stripeSubscriptionId) {
-      throw new AppError(400, 'No active subscription found');
+    const stripeSubscriptionId = subscription?.stripeSubscriptionId;
+
+    // Cancel immediately on Stripe if exists
+    if (stripeSubscriptionId) {
+      try {
+        await this.stripeService.cancelSubscription({
+          subscriptionId: stripeSubscriptionId,
+          atPeriodEnd: false,
+        });
+        this.logger.log(
+          `Stripe subscription ${stripeSubscriptionId} cancelled`,
+        );
+      } catch (err) {
+        this.logger.error(
+          `Failed to cancel Stripe subscription: ${err.message}`,
+        );
+      }
     }
 
-    const stripeSubscriptionId = subscription.stripeSubscriptionId;
-
-    // Cancel immediately on Stripe
-    await this.stripeService.cancelSubscription({
-      subscriptionId: stripeSubscriptionId,
-      atPeriodEnd: false,
-    });
-
-    // Update local DB subscription & user
-    await this.prismaService.client.$transaction([
-      this.prismaService.client.userSubscription.update({
+    // Update subscription if exists
+    if (subscription) {
+      await this.prismaService.client.userSubscription.update({
         where: { id: subscription.id },
         data: {
           status: 'CANCELED',
           planEndedAt: new Date(),
         },
-      }),
-      this.prismaService.client.user.update({
-        where: { id: userId },
-        data: {
-          subscriptionStatus: 'CANCELED',
-          currentPlan: undefined,
-          memberShip: 'FREE',
-        },
-      }),
-    ]);
+      });
+    }
 
-    this.logger.log(
-      `Subscription ${stripeSubscriptionId} for user ${userId} cancelled immediately`,
-    );
+    // Always update user
+    await this.prismaService.client.user.update({
+      where: { id: userId },
+      data: {
+        subscriptionStatus: 'CANCELED',
+        currentPlan: undefined,
+        memberShip: 'FREE',
+      },
+    });
+
+    this.logger.log(`User ${userId} subscription status updated to FREE`);
 
     return successResponse(null, 'Subscription cancelled successfully');
   }
