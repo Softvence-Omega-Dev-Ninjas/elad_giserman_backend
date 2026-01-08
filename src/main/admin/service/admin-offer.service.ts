@@ -2,6 +2,8 @@ import { PrismaService } from '@/lib/prisma/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { AdminUpdateOfferDto } from '../dto/admin-update-offer.dto';
+import { AdminActivity } from '@prisma';
+import { AdminActivityDto } from '../dto/admin.activity';
 
 @Injectable()
 export class AdminOfferService {
@@ -45,4 +47,28 @@ export class AdminOfferService {
       },
     });
   }
+
+  async createAdminActivityLog(dto: AdminActivityDto) {
+  const existingRecord = await this.prisma.client.adminActivity.findFirst();
+
+  if (existingRecord) {
+    const res = await this.prisma.client.adminActivity.update({
+      where: {
+        id: existingRecord.id,
+      },
+      data: {
+        ...dto,
+      },
+    });
+    return res;
+  } else {
+    // Create a new record
+    const res = await this.prisma.client.adminActivity.create({
+      data: {
+        ...dto,
+      },
+    });
+    return res;
+  }
+}
 }

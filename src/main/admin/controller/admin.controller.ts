@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -11,6 +11,7 @@ import { handleRequest } from '@/common/utils/handle.request';
 import { AdminUpdateOfferDto } from '../dto/admin-update-offer.dto';
 import { AdminOfferService } from '../service/admin-offer.service';
 import { GetOffersDto2 } from '../dto/getOffer.dto';
+import { AdminActivityDto } from '../dto/admin.activity';
 
 @ApiBearerAuth()
 @ValidateAdmin()
@@ -51,4 +52,20 @@ export class AdminController {
       'All offers fetched successfully',
     );
   }
+
+  @Post('create-admin-activity')
+  @ApiOperation({ summary: 'Create admin activity log (Only for admin)' })
+  @ApiResponse({ status: 200, description: 'Admin activity log created' })
+  async createAdminActivityLog(@Body() dto:AdminActivityDto) {
+  try{
+      const res=await  this.adminOfferService.createAdminActivityLog(dto)
+   return {
+           status: HttpStatus.OK,
+           message: 'Reviews fetched successfully',
+           data: res,
+         };
+  }catch(err){
+    throw new Error(err.message)
+  }
+}
 }

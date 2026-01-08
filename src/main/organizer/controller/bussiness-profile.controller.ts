@@ -43,6 +43,7 @@ import {
   UpdateUserTermsAndConditionsDto,
 } from '../dto/termsAndContidion.dto';
 import { ReservationFilter } from '../dto/getReservation.dto';
+import { RedemptionFilterDto, RedemptionPeriod } from '@/main/admin/dto/admin.activity';
 
 @ApiTags('Business Profiles')
 @ApiBearerAuth()
@@ -498,4 +499,23 @@ export class BusinessProfileController {
       throw new InternalServerErrorException(error.message, error.status);
     }
   }
+
+
+  @Get('organizer-redeemtion-stat')
+  @ValidateOrganizer()
+  async getOrganizerRedemtionStat(
+    @Query() filter: RedemptionFilterDto,
+    @GetUser('sub') userId: string) {
+    try {
+      const res = await this.offerService.getRedemptionGrowth(userId, filter.period || RedemptionPeriod.WEEKLY);
+      return {
+        status: HttpStatus.OK,
+        message: 'Redemtions fetched successfully',
+        data: res,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message, error.status);
+    }
+  }
+
 }
