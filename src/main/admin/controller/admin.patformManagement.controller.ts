@@ -130,12 +130,10 @@ export class AdminPlatformManagementController {
 
   @ValidateAdmin()
   @Get('redemetion-growth')
-  async getRedemetionGrowth(
-    @Query() filter: RedemptionFilterDto,
-  ) {
+  async getRedemetionGrowth(@Query() filter: RedemptionFilterDto) {
     try {
       const res = await this.platformManagementService.getRedemptionGrowth(
-        filter.period || RedemptionPeriod.WEEKLY
+        filter.period || RedemptionPeriod.WEEKLY,
       );
       return {
         status: HttpStatus.OK,

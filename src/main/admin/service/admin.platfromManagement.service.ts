@@ -312,92 +312,91 @@ export class AdminPlatfromManagementService {
   }
 
   // *get redeemtion growth
-async getRedemptionGrowth(
-  period: RedemptionPeriod = RedemptionPeriod.WEEKLY,
-) {
-  const today = new Date();
+  async getRedemptionGrowth(
+    period: RedemptionPeriod = RedemptionPeriod.WEEKLY,
+  ) {
+    const today = new Date();
 
-  let startDate: Date;
-  let endDate: Date;
-  let dateIntervals: Date[];
+    let startDate: Date;
+    let endDate: Date;
+    let dateIntervals: Date[];
 
-  const business = await this.prisma.client.businessProfile.findFirst({
-    select: { id: true },
-  });
+    const business = await this.prisma.client.businessProfile.findFirst({
+      select: { id: true },
+    });
 
-  if (!business) {
-    return [];
-  }
+    if (!business) {
+      return [];
+    }
 
-  switch (period) {
-    case RedemptionPeriod.WEEKLY:
-      startDate = startOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
-      endDate = endOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
-      dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
-      break;
+    switch (period) {
+      case RedemptionPeriod.WEEKLY:
+        startDate = startOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
+        endDate = endOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
+        dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
+        break;
 
-    case RedemptionPeriod.MONTHLY:
-      startDate = startOfMonth(subMonths(today, 1));
-      endDate = endOfMonth(subMonths(today, 1));
-      dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
-      break;
+      case RedemptionPeriod.MONTHLY:
+        startDate = startOfMonth(subMonths(today, 1));
+        endDate = endOfMonth(subMonths(today, 1));
+        dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
+        break;
 
-    case RedemptionPeriod.ALL_TIME:
-      const firstRedemption =
-        await this.prisma.client.reedemaOffer.findFirst({
-          where: {
-            bussinessId: business.id,
-            redeemedAt: { not: null },
+      case RedemptionPeriod.ALL_TIME:
+        const firstRedemption = await this.prisma.client.reedemaOffer.findFirst(
+          {
+            where: {
+              bussinessId: business.id,
+              redeemedAt: { not: null },
+            },
+            orderBy: { redeemedAt: 'asc' },
+            select: { redeemedAt: true },
           },
-          orderBy: { redeemedAt: 'asc' },
-          select: { redeemedAt: true },
-        });
+        );
 
-      if (!firstRedemption?.redeemedAt) {
-        startDate = startOfMonth(today);
-      } else {
-        startDate = startOfMonth(firstRedemption.redeemedAt);
-      }
+        if (!firstRedemption?.redeemedAt) {
+          startDate = startOfMonth(today);
+        } else {
+          startDate = startOfMonth(firstRedemption.redeemedAt);
+        }
 
-      endDate = endOfMonth(today);
-      dateIntervals = eachMonthOfInterval({ start: startDate, end: endDate });
-      break;
+        endDate = endOfMonth(today);
+        dateIntervals = eachMonthOfInterval({ start: startDate, end: endDate });
+        break;
 
-    default:
-      startDate = startOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
-      endDate = endOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
-      dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
-  }
+      default:
+        startDate = startOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
+        endDate = endOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
+        dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
+    }
 
-  const logs = await this.prisma.client.reedemaOffer.findMany({
-    where: {
-      bussinessId: business.id,
-      redeemedAt: {
-        gte: startDate,
-        lte: endDate,
+    const logs = await this.prisma.client.reedemaOffer.findMany({
+      where: {
+        bussinessId: business.id,
+        redeemedAt: {
+          gte: startDate,
+          lte: endDate,
+        },
       },
-    },
-    select: {
-      redeemedAt: true,
-    },
-  });
+      select: {
+        redeemedAt: true,
+      },
+    });
 
-  return {
-    period,
-    startDate,
-    endDate,
-    totalRedemptions: logs.length,
-    dataPoints: dateIntervals.map((date) => ({
-      date,
-      count: logs.filter(
-        (l) =>
-          l.redeemedAt &&
-          l.redeemedAt.toDateString() === date.toDateString(),
-      ).length,
-    })),
-  };
-}
-
+    return {
+      period,
+      startDate,
+      endDate,
+      totalRedemptions: logs.length,
+      dataPoints: dateIntervals.map((date) => ({
+        date,
+        count: logs.filter(
+          (l) =>
+            l.redeemedAt && l.redeemedAt.toDateString() === date.toDateString(),
+        ).length,
+      })),
+    };
+  }
 
   //* Customize app
   async customizeApp(dto: CreateCustomAppDto, files: any) {
