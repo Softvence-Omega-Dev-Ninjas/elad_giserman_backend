@@ -763,6 +763,7 @@ export class AdminPlatfromManagementService {
       data: {
         email: dto.email,
         username: dto.username,
+        name:dto.username,
         password: hashedPassword,
         memberShip: 'FREE',
         subscriptionStatus: 'ACTIVE',
