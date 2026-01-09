@@ -275,6 +275,7 @@ export class AdminPlatformManagementController {
       data: res,
     };
   }
+  
   @ValidateAdmin()
   @Post('create-termsCondition')
   @ApiBody({ type: CreateTermsAndConditionsDto })

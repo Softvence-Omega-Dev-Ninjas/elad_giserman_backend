@@ -55,7 +55,7 @@ export class AdminPlatfromManagementService {
     }
 
     if (userType) {
-      userWhere.memberShip = userType; // FREE / VIP
+      userWhere.memberShip = userType;
     }
 
     if (date) {
@@ -130,7 +130,7 @@ export class AdminPlatfromManagementService {
       // Business count
       this.prisma.client.businessProfile.count(),
 
-      // ⭐ FIXED — apply filtering + take top 5
+      // FIXED — apply filtering + take top 5
       // Recent users
       this.prisma.client.user.findMany({
         where: userWhere,
@@ -507,7 +507,7 @@ export class AdminPlatfromManagementService {
   async toggleSipinOnOf() {
     const isSpinExist = await this.prisma.client.adminActivity.findFirst();
     if (!isSpinExist) {
-      throw new NotFoundException('Spin data not found to delete');
+      throw new NotFoundException('spin table not found to change active or inactive');
     }
     const res = await this.prisma.client.adminActivity.update({
       where: {
@@ -519,6 +519,7 @@ export class AdminPlatfromManagementService {
     });
     return res;
   }
+
   //*CRETE TERMS AND CONDITIONS
   async createAdminTermsAdnConditions(dto: CreateTermsAndConditionsDto) {
     const isExistTerm = await this.prisma.client.termsAndConditions.findFirst();
