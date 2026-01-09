@@ -508,7 +508,7 @@ export class AdminPlatfromManagementService {
     const isSpinExist = await this.prisma.client.adminActivity.findFirst();
     if (!isSpinExist) {
       throw new NotFoundException(
-        'spin table not found to change active or inactive',
+        'Admin activity table Not found',
       );
     }
     const res = await this.prisma.client.adminActivity.update({
