@@ -507,9 +507,7 @@ export class AdminPlatfromManagementService {
   async toggleSipinOnOf() {
     const isSpinExist = await this.prisma.client.adminActivity.findFirst();
     if (!isSpinExist) {
-      throw new NotFoundException(
-        'Admin activity table Not found',
-      );
+      throw new NotFoundException('Admin activity table Not found');
     }
     const res = await this.prisma.client.adminActivity.update({
       where: {
