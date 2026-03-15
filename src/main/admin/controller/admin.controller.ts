@@ -52,7 +52,6 @@ export class AdminController {
   }
 
   @Get('offers')
-  @ValidateAdmin()
   @ApiOperation({ summary: 'Get all offers (Only for admin)' })
   @ApiResponse({ status: 200, description: 'All offers fetched' })
   getAllOffers(@Query() Query: GetOffersDto2) {

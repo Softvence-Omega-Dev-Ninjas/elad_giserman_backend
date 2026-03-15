@@ -18,4 +18,16 @@ export class CreateCustomAppDto {
   @IsOptional()
   @IsString()
   description?: string;
+
+  @IsOptional()
+  @IsString()
+  removeLogo?: string;
+
+  @IsOptional()
+  @IsString()
+  removeBannerCard?: string;
+
+  @IsOptional()
+  @IsString()
+  removeBannerPhoto?: string;
 }
