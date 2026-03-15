@@ -1,34 +1,31 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { S3Service } from '@/lib/s3/s3.service';
+import { ReservationFilter } from '@/main/organizer/dto/getReservation.dto';
 import {
   BadRequestException,
   HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import {
-  format,
-  isValid,
-  subDays,
-  startOfWeek,
-  endOfWeek,
-  startOfMonth,
-  endOfMonth,
-  subWeeks,
-  subMonths,
   eachDayOfInterval,
   eachMonthOfInterval,
+  endOfMonth,
+  endOfWeek,
+  startOfMonth,
+  startOfWeek,
+  subMonths,
+  subWeeks,
 } from 'date-fns';
+import { RedemptionPeriod } from '../dto/admin.activity';
+import { CreateBussinessOwnerDTO } from '../dto/create-bussiness-owner.dto';
 import { CreateCustomAppDto } from '../dto/customApp.dto';
 import { GetOffersDto } from '../dto/getOffer.dto';
 import { PlatformFilter } from '../dto/getPlatform.dto';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
-import { ReservationFilter } from '@/main/organizer/dto/getReservation.dto';
-import * as bcrypt from 'bcrypt';
-import { CreateBussinessOwnerDTO } from '../dto/create-bussiness-owner.dto';
-import { RedemptionPeriod } from '../dto/admin.activity';
 // import { log } from 'console';
 @Injectable()
 export class AdminPlatfromManagementService {
@@ -400,7 +397,6 @@ export class AdminPlatfromManagementService {
 
   //* Customize app
   async customizeApp(dto: CreateCustomAppDto, files: any) {
-    // Upload each file to S3 (if provided)
     let logoUrl = null;
     let bannerCardUrl = null;
     let bannerPhotoUrl = null;
@@ -416,30 +412,54 @@ export class AdminPlatfromManagementService {
     if (files.bannerPhoto?.[0]) {
       bannerPhotoUrl = await this.s3Service.uploadFile(files.bannerPhoto[0]);
     }
-    // Check if record exists
+
     const existing = await this.prisma.client.customApp.findFirst();
 
-    // CREATE if no record exists
+    // Resolve each image field:
+    // - new file uploaded → use new URL
+    // - remove flag sent → set null (clear)
+    // - nothing → undefined (keep existing)
+    const resolveImage = (
+      newUrl: string | null,
+      removeFlag: string | undefined,
+      existingUrl: string | null | undefined,
+    ) => {
+      if (newUrl) return newUrl;
+      if (removeFlag === 'true') return null;
+      return existingUrl ?? undefined;
+    };
+
+    const logoValue = resolveImage(
+      logoUrl?.url ?? null,
+      dto.removeLogo,
+      existing?.logo,
+    );
+    const bannerCardValue = resolveImage(
+      bannerCardUrl?.url ?? null,
+      dto.removeBannerCard,
+      existing?.bannerCard,
+    );
+    const bannerPhotoValue = resolveImage(
+      bannerPhotoUrl?.url ?? null,
+      dto.removeBannerPhoto,
+      existing?.bannerPhoto,
+    );
+
+    const payload = {
+      title: dto.title ?? '',
+      description: dto.description ?? '',
+      logo: logoValue,
+      bannerCard: bannerCardValue,
+      bannerPhoto: bannerPhotoValue,
+    };
+
     if (!existing) {
-      return await this.prisma.client.customApp.create({
-        data: {
-          ...dto,
-          bannerCard: bannerCardUrl?.url,
-          bannerPhoto: bannerPhotoUrl?.url,
-          logo: logoUrl?.url,
-        },
-      });
+      return await this.prisma.client.customApp.create({ data: payload });
     }
 
-    // UPDATE existing record
     return await this.prisma.client.customApp.update({
       where: { id: existing.id },
-      data: {
-        ...dto,
-        bannerCard: bannerCardUrl?.url,
-        bannerPhoto: bannerPhotoUrl?.url,
-        logo: logoUrl?.url,
-      },
+      data: payload,
     });
   }
 
