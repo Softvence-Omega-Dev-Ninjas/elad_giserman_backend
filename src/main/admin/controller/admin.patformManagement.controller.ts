@@ -25,7 +25,10 @@ import { PlatformFilter } from '../dto/getPlatform.dto';
 import { AdminPlatfromManagementService } from '../service/admin.platfromManagement.service';
 
 import { extractLastLine } from '@/lib/common';
+import { ReservationFilter } from '@/main/organizer/dto/getReservation.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { RedemptionFilterDto, RedemptionPeriod } from '../dto/admin.activity';
+import { CreateBussinessOwnerDTO } from '../dto/create-bussiness-owner.dto';
 import { CreateCustomAppDto } from '../dto/customApp.dto';
 import { GetOffersDto } from '../dto/getOffer.dto';
 import { GetRedemtionsDto } from '../dto/getRedemtion.dto';
@@ -33,9 +36,6 @@ import { GetUserDto } from '../dto/getuser.dto';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
 import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
-import { ReservationFilter } from '@/main/organizer/dto/getReservation.dto';
-import { CreateBussinessOwnerDTO } from '../dto/create-bussiness-owner.dto';
-import { RedemptionFilterDto, RedemptionPeriod } from '../dto/admin.activity';
 
 @Controller('platform')
 @ApiTags('Platform management')
@@ -83,6 +83,26 @@ export class AdminPlatformManagementController {
     } catch (error) {
       const message = extractLastLine(error.message);
       this.logger.error(`Faild to delete user by ID=${id}`, error.stack);
+      throw new InternalServerErrorException(message);
+    }
+  }
+
+  @ValidateAdmin()
+  @Delete('delete-business/:userId')
+  async deleteBusinessByAdmin(@Param('userId') userId: string) {
+    try {
+      const res = await this.platformManagementService.deleteBusiness(userId);
+      return {
+        status: HttpStatus.OK,
+        message: 'Business deleted successfully',
+        data: res,
+      };
+    } catch (error) {
+      const message = extractLastLine(error.message);
+      this.logger.error(
+        `Failed to delete business by userId=${userId}`,
+        error.stack,
+      );
       throw new InternalServerErrorException(message);
     }
   }

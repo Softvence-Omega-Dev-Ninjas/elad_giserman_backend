@@ -227,6 +227,25 @@ export class AdminPlatfromManagementService {
     };
   }
 
+  //* delete business owner and their business profile
+  async deleteBusiness(userId: string) {
+    if (!userId) {
+      throw new BadRequestException('User Id is required');
+    }
+    const user = await this.prisma.client.user.findUnique({
+      where: { id: userId },
+      include: { businessProfile: true },
+    });
+    if (!user) {
+      throw new NotFoundException(`User not found with id ${userId}`);
+    }
+    // Delete user (cascade will handle businessProfile and related data)
+    await this.prisma.client.user.delete({
+      where: { id: userId },
+    });
+    return { message: 'Business and owner deleted successfully' };
+  }
+
   //* update user status
   async UpdateUserStatus(dto: UpdateStatusDto, userId: string) {
     if (!userId) {
