@@ -24,7 +24,10 @@ import { CreateCustomAppDto } from '../dto/customApp.dto';
 import { GetOffersDto } from '../dto/getOffer.dto';
 import { PlatformFilter } from '../dto/getPlatform.dto';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
-import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
+import {
+  CreateTermsAndConditionsDto,
+  UpdateTermsAndConditionsDto,
+} from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 // import { log } from 'console';
 @Injectable()
@@ -358,7 +361,7 @@ export class AdminPlatfromManagementService {
         dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
         break;
 
-      case RedemptionPeriod.ALL_TIME:
+      case RedemptionPeriod.ALL_TIME: {
         const firstRedemption = await this.prisma.client.reedemaOffer.findFirst(
           {
             where: {
@@ -379,6 +382,7 @@ export class AdminPlatfromManagementService {
         endDate = endOfMonth(today);
         dateIntervals = eachMonthOfInterval({ start: startDate, end: endDate });
         break;
+      }
 
       default:
         startDate = startOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
@@ -569,30 +573,48 @@ export class AdminPlatfromManagementService {
     }
     return this.prisma.client.termsAndConditions.create({
       data: {
-        ...dto,
+        sections: {
+          create: dto.sections.map((s) => ({
+            title: s.title,
+            content: s.content,
+            order: s.order,
+          })),
+        },
       },
+      include: { sections: { orderBy: { order: 'asc' } } },
     });
   }
 
   //*UPDATE TERMS AND CONDITIONS
-  async updateAdminTermsAndConditions(dto: CreateTermsAndConditionsDto) {
+  async updateAdminTermsAndConditions(dto: UpdateTermsAndConditionsDto) {
     const isExistTerm = await this.prisma.client.termsAndConditions.findFirst();
     if (!isExistTerm) {
       throw new NotFoundException('Terms and Conditions not found to update');
     }
+    // Delete old sections and create new ones
+    await this.prisma.client.termsSection.deleteMany({
+      where: { termsId: isExistTerm.id },
+    });
     return this.prisma.client.termsAndConditions.update({
-      where: {
-        id: isExistTerm.id,
-      },
+      where: { id: isExistTerm.id },
       data: {
-        ...dto,
+        sections: {
+          create: dto.sections.map((s) => ({
+            title: s.title,
+            content: s.content,
+            order: s.order,
+          })),
+        },
       },
+      include: { sections: { orderBy: { order: 'asc' } } },
     });
   }
 
   //*GET TERMS AND CONDITIONS
   async getTemsAndConditions() {
-    const isExistTerm = await this.prisma.client.termsAndConditions.findFirst();
+    const isExistTerm = await this.prisma.client.termsAndConditions.findFirst({
+      include: { sections: { orderBy: { order: 'asc' } } },
+    });
     if (!isExistTerm) {
       throw new NotFoundException('Terms and Conditions not found');
     }

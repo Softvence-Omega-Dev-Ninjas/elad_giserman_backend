@@ -431,6 +431,7 @@ export const ModelName = {
   UserSubscription: 'UserSubscription',
   Invoice: 'Invoice',
   TermsAndConditions: 'TermsAndConditions',
+  TermsSection: 'TermsSection',
   UserTermsAndConditions: 'UserTermsAndConditions',
   User: 'User',
 } as const;
@@ -474,6 +475,7 @@ export type TypeMap<
       | 'userSubscription'
       | 'invoice'
       | 'termsAndConditions'
+      | 'termsSection'
       | 'userTermsAndConditions'
       | 'user';
     txIsolationLevel: TransactionIsolationLevel;
@@ -1923,6 +1925,82 @@ export type TypeMap<
         };
       };
     };
+    TermsSection: {
+      payload: Prisma.$TermsSectionPayload<ExtArgs>;
+      fields: Prisma.TermsSectionFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.TermsSectionFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TermsSectionPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.TermsSectionFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TermsSectionPayload>;
+        };
+        findFirst: {
+          args: Prisma.TermsSectionFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TermsSectionPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.TermsSectionFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TermsSectionPayload>;
+        };
+        findMany: {
+          args: Prisma.TermsSectionFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TermsSectionPayload>[];
+        };
+        create: {
+          args: Prisma.TermsSectionCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TermsSectionPayload>;
+        };
+        createMany: {
+          args: Prisma.TermsSectionCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        createManyAndReturn: {
+          args: Prisma.TermsSectionCreateManyAndReturnArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TermsSectionPayload>[];
+        };
+        delete: {
+          args: Prisma.TermsSectionDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TermsSectionPayload>;
+        };
+        update: {
+          args: Prisma.TermsSectionUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TermsSectionPayload>;
+        };
+        deleteMany: {
+          args: Prisma.TermsSectionDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.TermsSectionUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateManyAndReturn: {
+          args: Prisma.TermsSectionUpdateManyAndReturnArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TermsSectionPayload>[];
+        };
+        upsert: {
+          args: Prisma.TermsSectionUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TermsSectionPayload>;
+        };
+        aggregate: {
+          args: Prisma.TermsSectionAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTermsSection>;
+        };
+        groupBy: {
+          args: Prisma.TermsSectionGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.TermsSectionGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.TermsSectionCountArgs<ExtArgs>;
+          result:
+            | runtime.Types.Utils.Optional<Prisma.TermsSectionCountAggregateOutputType>
+            | number;
+        };
+      };
+    };
     UserTermsAndConditions: {
       payload: Prisma.$UserTermsAndConditionsPayload<ExtArgs>;
       fields: Prisma.UserTermsAndConditionsFieldRefs;
@@ -2396,21 +2474,23 @@ export type InvoiceScalarFieldEnum =
 
 export const TermsAndConditionsScalarFieldEnum = {
   id: 'id',
-  account: 'account',
-  subscription: 'subscription',
-  offerAndRedemtions: 'offerAndRedemtions',
-  reservations: 'reservations',
-  businesses: 'businesses',
-  adminRight: 'adminRight',
-  dataAndPolicy: 'dataAndPolicy',
-  liability: 'liability',
-  governingLaw: 'governingLaw',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
 } as const;
 
 export type TermsAndConditionsScalarFieldEnum =
   (typeof TermsAndConditionsScalarFieldEnum)[keyof typeof TermsAndConditionsScalarFieldEnum];
+
+export const TermsSectionScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  order: 'order',
+  termsId: 'termsId',
+} as const;
+
+export type TermsSectionScalarFieldEnum =
+  (typeof TermsSectionScalarFieldEnum)[keyof typeof TermsSectionScalarFieldEnum];
 
 export const UserTermsAndConditionsScalarFieldEnum = {
   id: 'id',
@@ -2853,6 +2933,7 @@ export type GlobalOmitConfig = {
   userSubscription?: Prisma.UserSubscriptionOmit;
   invoice?: Prisma.InvoiceOmit;
   termsAndConditions?: Prisma.TermsAndConditionsOmit;
+  termsSection?: Prisma.TermsSectionOmit;
   userTermsAndConditions?: Prisma.UserTermsAndConditionsOmit;
   user?: Prisma.UserOmit;
 };

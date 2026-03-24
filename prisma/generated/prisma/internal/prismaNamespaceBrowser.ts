@@ -73,6 +73,7 @@ export const ModelName = {
   UserSubscription: 'UserSubscription',
   Invoice: 'Invoice',
   TermsAndConditions: 'TermsAndConditions',
+  TermsSection: 'TermsSection',
   UserTermsAndConditions: 'UserTermsAndConditions',
   User: 'User',
 } as const;
@@ -375,21 +376,23 @@ export type InvoiceScalarFieldEnum =
 
 export const TermsAndConditionsScalarFieldEnum = {
   id: 'id',
-  account: 'account',
-  subscription: 'subscription',
-  offerAndRedemtions: 'offerAndRedemtions',
-  reservations: 'reservations',
-  businesses: 'businesses',
-  adminRight: 'adminRight',
-  dataAndPolicy: 'dataAndPolicy',
-  liability: 'liability',
-  governingLaw: 'governingLaw',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
 } as const;
 
 export type TermsAndConditionsScalarFieldEnum =
   (typeof TermsAndConditionsScalarFieldEnum)[keyof typeof TermsAndConditionsScalarFieldEnum];
+
+export const TermsSectionScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  order: 'order',
+  termsId: 'termsId',
+} as const;
+
+export type TermsSectionScalarFieldEnum =
+  (typeof TermsSectionScalarFieldEnum)[keyof typeof TermsSectionScalarFieldEnum];
 
 export const UserTermsAndConditionsScalarFieldEnum = {
   id: 'id',

@@ -1,16 +1,17 @@
 model TermsAndConditions {
-  id                 String   @id @default(uuid())
-  account            String
-  subscription       String[]
-  offerAndRedemtions String[]
-  reservations       String[]
-  businesses         String[]
-  adminRight         String[]
-  dataAndPolicy      String
-  liability          String
-  governingLaw       String
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  id        String         @id @default(uuid())
+  sections  TermsSection[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model TermsSection {
+  id       String   @id @default(uuid())
+  title    String
+  content  String[]
+  order    Int
+  termsId  String
+  terms    TermsAndConditions @relation(fields: [termsId], references: [id], onDelete: Cascade)
 }
 
 model UserTermsAndConditions {

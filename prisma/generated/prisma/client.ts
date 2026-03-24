@@ -138,6 +138,11 @@ export type Invoice = Prisma.InvoiceModel;
  */
 export type TermsAndConditions = Prisma.TermsAndConditionsModel;
 /**
+ * Model TermsSection
+ *
+ */
+export type TermsSection = Prisma.TermsSectionModel;
+/**
  * Model UserTermsAndConditions
  *
  */

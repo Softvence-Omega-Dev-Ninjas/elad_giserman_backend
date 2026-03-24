@@ -26,35 +26,18 @@ export type AggregateTermsAndConditions = {
 
 export type TermsAndConditionsMinAggregateOutputType = {
   id: string | null;
-  account: string | null;
-  dataAndPolicy: string | null;
-  liability: string | null;
-  governingLaw: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
 
 export type TermsAndConditionsMaxAggregateOutputType = {
   id: string | null;
-  account: string | null;
-  dataAndPolicy: string | null;
-  liability: string | null;
-  governingLaw: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
 
 export type TermsAndConditionsCountAggregateOutputType = {
   id: number;
-  account: number;
-  subscription: number;
-  offerAndRedemtions: number;
-  reservations: number;
-  businesses: number;
-  adminRight: number;
-  dataAndPolicy: number;
-  liability: number;
-  governingLaw: number;
   createdAt: number;
   updatedAt: number;
   _all: number;
@@ -62,35 +45,18 @@ export type TermsAndConditionsCountAggregateOutputType = {
 
 export type TermsAndConditionsMinAggregateInputType = {
   id?: true;
-  account?: true;
-  dataAndPolicy?: true;
-  liability?: true;
-  governingLaw?: true;
   createdAt?: true;
   updatedAt?: true;
 };
 
 export type TermsAndConditionsMaxAggregateInputType = {
   id?: true;
-  account?: true;
-  dataAndPolicy?: true;
-  liability?: true;
-  governingLaw?: true;
   createdAt?: true;
   updatedAt?: true;
 };
 
 export type TermsAndConditionsCountAggregateInputType = {
   id?: true;
-  account?: true;
-  subscription?: true;
-  offerAndRedemtions?: true;
-  reservations?: true;
-  businesses?: true;
-  adminRight?: true;
-  dataAndPolicy?: true;
-  liability?: true;
-  governingLaw?: true;
   createdAt?: true;
   updatedAt?: true;
   _all?: true;
@@ -183,15 +149,6 @@ export type TermsAndConditionsGroupByArgs<
 
 export type TermsAndConditionsGroupByOutputType = {
   id: string;
-  account: string;
-  subscription: string[];
-  offerAndRedemtions: string[];
-  reservations: string[];
-  businesses: string[];
-  adminRight: string[];
-  dataAndPolicy: string;
-  liability: string;
-  governingLaw: string;
   createdAt: Date;
   updatedAt: Date;
   _count: TermsAndConditionsCountAggregateOutputType | null;
@@ -223,32 +180,16 @@ export type TermsAndConditionsWhereInput = {
     | Prisma.TermsAndConditionsWhereInput
     | Prisma.TermsAndConditionsWhereInput[];
   id?: Prisma.StringFilter<'TermsAndConditions'> | string;
-  account?: Prisma.StringFilter<'TermsAndConditions'> | string;
-  subscription?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-  offerAndRedemtions?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-  reservations?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-  businesses?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-  adminRight?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-  dataAndPolicy?: Prisma.StringFilter<'TermsAndConditions'> | string;
-  liability?: Prisma.StringFilter<'TermsAndConditions'> | string;
-  governingLaw?: Prisma.StringFilter<'TermsAndConditions'> | string;
   createdAt?: Prisma.DateTimeFilter<'TermsAndConditions'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'TermsAndConditions'> | Date | string;
+  sections?: Prisma.TermsSectionListRelationFilter;
 };
 
 export type TermsAndConditionsOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
-  account?: Prisma.SortOrder;
-  subscription?: Prisma.SortOrder;
-  offerAndRedemtions?: Prisma.SortOrder;
-  reservations?: Prisma.SortOrder;
-  businesses?: Prisma.SortOrder;
-  adminRight?: Prisma.SortOrder;
-  dataAndPolicy?: Prisma.SortOrder;
-  liability?: Prisma.SortOrder;
-  governingLaw?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  sections?: Prisma.TermsSectionOrderByRelationAggregateInput;
 };
 
 export type TermsAndConditionsWhereUniqueInput = Prisma.AtLeast<
@@ -261,32 +202,15 @@ export type TermsAndConditionsWhereUniqueInput = Prisma.AtLeast<
     NOT?:
       | Prisma.TermsAndConditionsWhereInput
       | Prisma.TermsAndConditionsWhereInput[];
-    account?: Prisma.StringFilter<'TermsAndConditions'> | string;
-    subscription?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-    offerAndRedemtions?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-    reservations?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-    businesses?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-    adminRight?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-    dataAndPolicy?: Prisma.StringFilter<'TermsAndConditions'> | string;
-    liability?: Prisma.StringFilter<'TermsAndConditions'> | string;
-    governingLaw?: Prisma.StringFilter<'TermsAndConditions'> | string;
     createdAt?: Prisma.DateTimeFilter<'TermsAndConditions'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'TermsAndConditions'> | Date | string;
+    sections?: Prisma.TermsSectionListRelationFilter;
   },
   'id'
 >;
 
 export type TermsAndConditionsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
-  account?: Prisma.SortOrder;
-  subscription?: Prisma.SortOrder;
-  offerAndRedemtions?: Prisma.SortOrder;
-  reservations?: Prisma.SortOrder;
-  businesses?: Prisma.SortOrder;
-  adminRight?: Prisma.SortOrder;
-  dataAndPolicy?: Prisma.SortOrder;
-  liability?: Prisma.SortOrder;
-  governingLaw?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
   _count?: Prisma.TermsAndConditionsCountOrderByAggregateInput;
@@ -303,19 +227,6 @@ export type TermsAndConditionsScalarWhereWithAggregatesInput = {
     | Prisma.TermsAndConditionsScalarWhereWithAggregatesInput
     | Prisma.TermsAndConditionsScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'TermsAndConditions'> | string;
-  account?: Prisma.StringWithAggregatesFilter<'TermsAndConditions'> | string;
-  subscription?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-  offerAndRedemtions?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-  reservations?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-  businesses?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-  adminRight?: Prisma.StringNullableListFilter<'TermsAndConditions'>;
-  dataAndPolicy?:
-    | Prisma.StringWithAggregatesFilter<'TermsAndConditions'>
-    | string;
-  liability?: Prisma.StringWithAggregatesFilter<'TermsAndConditions'> | string;
-  governingLaw?:
-    | Prisma.StringWithAggregatesFilter<'TermsAndConditions'>
-    | string;
   createdAt?:
     | Prisma.DateTimeWithAggregatesFilter<'TermsAndConditions'>
     | Date
@@ -328,201 +239,187 @@ export type TermsAndConditionsScalarWhereWithAggregatesInput = {
 
 export type TermsAndConditionsCreateInput = {
   id?: string;
-  account: string;
-  subscription?: Prisma.TermsAndConditionsCreatesubscriptionInput | string[];
-  offerAndRedemtions?:
-    | Prisma.TermsAndConditionsCreateofferAndRedemtionsInput
-    | string[];
-  reservations?: Prisma.TermsAndConditionsCreatereservationsInput | string[];
-  businesses?: Prisma.TermsAndConditionsCreatebusinessesInput | string[];
-  adminRight?: Prisma.TermsAndConditionsCreateadminRightInput | string[];
-  dataAndPolicy: string;
-  liability: string;
-  governingLaw: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  sections?: Prisma.TermsSectionCreateNestedManyWithoutTermsInput;
 };
 
 export type TermsAndConditionsUncheckedCreateInput = {
   id?: string;
-  account: string;
-  subscription?: Prisma.TermsAndConditionsCreatesubscriptionInput | string[];
-  offerAndRedemtions?:
-    | Prisma.TermsAndConditionsCreateofferAndRedemtionsInput
-    | string[];
-  reservations?: Prisma.TermsAndConditionsCreatereservationsInput | string[];
-  businesses?: Prisma.TermsAndConditionsCreatebusinessesInput | string[];
-  adminRight?: Prisma.TermsAndConditionsCreateadminRightInput | string[];
-  dataAndPolicy: string;
-  liability: string;
-  governingLaw: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  sections?: Prisma.TermsSectionUncheckedCreateNestedManyWithoutTermsInput;
 };
 
 export type TermsAndConditionsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  account?: Prisma.StringFieldUpdateOperationsInput | string;
-  subscription?: Prisma.TermsAndConditionsUpdatesubscriptionInput | string[];
-  offerAndRedemtions?:
-    | Prisma.TermsAndConditionsUpdateofferAndRedemtionsInput
-    | string[];
-  reservations?: Prisma.TermsAndConditionsUpdatereservationsInput | string[];
-  businesses?: Prisma.TermsAndConditionsUpdatebusinessesInput | string[];
-  adminRight?: Prisma.TermsAndConditionsUpdateadminRightInput | string[];
-  dataAndPolicy?: Prisma.StringFieldUpdateOperationsInput | string;
-  liability?: Prisma.StringFieldUpdateOperationsInput | string;
-  governingLaw?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  sections?: Prisma.TermsSectionUpdateManyWithoutTermsNestedInput;
 };
 
 export type TermsAndConditionsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  account?: Prisma.StringFieldUpdateOperationsInput | string;
-  subscription?: Prisma.TermsAndConditionsUpdatesubscriptionInput | string[];
-  offerAndRedemtions?:
-    | Prisma.TermsAndConditionsUpdateofferAndRedemtionsInput
-    | string[];
-  reservations?: Prisma.TermsAndConditionsUpdatereservationsInput | string[];
-  businesses?: Prisma.TermsAndConditionsUpdatebusinessesInput | string[];
-  adminRight?: Prisma.TermsAndConditionsUpdateadminRightInput | string[];
-  dataAndPolicy?: Prisma.StringFieldUpdateOperationsInput | string;
-  liability?: Prisma.StringFieldUpdateOperationsInput | string;
-  governingLaw?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  sections?: Prisma.TermsSectionUncheckedUpdateManyWithoutTermsNestedInput;
 };
 
 export type TermsAndConditionsCreateManyInput = {
   id?: string;
-  account: string;
-  subscription?: Prisma.TermsAndConditionsCreatesubscriptionInput | string[];
-  offerAndRedemtions?:
-    | Prisma.TermsAndConditionsCreateofferAndRedemtionsInput
-    | string[];
-  reservations?: Prisma.TermsAndConditionsCreatereservationsInput | string[];
-  businesses?: Prisma.TermsAndConditionsCreatebusinessesInput | string[];
-  adminRight?: Prisma.TermsAndConditionsCreateadminRightInput | string[];
-  dataAndPolicy: string;
-  liability: string;
-  governingLaw: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
 
 export type TermsAndConditionsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  account?: Prisma.StringFieldUpdateOperationsInput | string;
-  subscription?: Prisma.TermsAndConditionsUpdatesubscriptionInput | string[];
-  offerAndRedemtions?:
-    | Prisma.TermsAndConditionsUpdateofferAndRedemtionsInput
-    | string[];
-  reservations?: Prisma.TermsAndConditionsUpdatereservationsInput | string[];
-  businesses?: Prisma.TermsAndConditionsUpdatebusinessesInput | string[];
-  adminRight?: Prisma.TermsAndConditionsUpdateadminRightInput | string[];
-  dataAndPolicy?: Prisma.StringFieldUpdateOperationsInput | string;
-  liability?: Prisma.StringFieldUpdateOperationsInput | string;
-  governingLaw?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
 export type TermsAndConditionsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  account?: Prisma.StringFieldUpdateOperationsInput | string;
-  subscription?: Prisma.TermsAndConditionsUpdatesubscriptionInput | string[];
-  offerAndRedemtions?:
-    | Prisma.TermsAndConditionsUpdateofferAndRedemtionsInput
-    | string[];
-  reservations?: Prisma.TermsAndConditionsUpdatereservationsInput | string[];
-  businesses?: Prisma.TermsAndConditionsUpdatebusinessesInput | string[];
-  adminRight?: Prisma.TermsAndConditionsUpdateadminRightInput | string[];
-  dataAndPolicy?: Prisma.StringFieldUpdateOperationsInput | string;
-  liability?: Prisma.StringFieldUpdateOperationsInput | string;
-  governingLaw?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
 export type TermsAndConditionsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  account?: Prisma.SortOrder;
-  subscription?: Prisma.SortOrder;
-  offerAndRedemtions?: Prisma.SortOrder;
-  reservations?: Prisma.SortOrder;
-  businesses?: Prisma.SortOrder;
-  adminRight?: Prisma.SortOrder;
-  dataAndPolicy?: Prisma.SortOrder;
-  liability?: Prisma.SortOrder;
-  governingLaw?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
 
 export type TermsAndConditionsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  account?: Prisma.SortOrder;
-  dataAndPolicy?: Prisma.SortOrder;
-  liability?: Prisma.SortOrder;
-  governingLaw?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
 
 export type TermsAndConditionsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder;
-  account?: Prisma.SortOrder;
-  dataAndPolicy?: Prisma.SortOrder;
-  liability?: Prisma.SortOrder;
-  governingLaw?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
 };
 
-export type TermsAndConditionsCreatesubscriptionInput = {
-  set: string[];
+export type TermsAndConditionsScalarRelationFilter = {
+  is?: Prisma.TermsAndConditionsWhereInput;
+  isNot?: Prisma.TermsAndConditionsWhereInput;
 };
 
-export type TermsAndConditionsCreateofferAndRedemtionsInput = {
-  set: string[];
+export type TermsAndConditionsCreateNestedOneWithoutSectionsInput = {
+  create?: Prisma.XOR<
+    Prisma.TermsAndConditionsCreateWithoutSectionsInput,
+    Prisma.TermsAndConditionsUncheckedCreateWithoutSectionsInput
+  >;
+  connectOrCreate?: Prisma.TermsAndConditionsCreateOrConnectWithoutSectionsInput;
+  connect?: Prisma.TermsAndConditionsWhereUniqueInput;
 };
 
-export type TermsAndConditionsCreatereservationsInput = {
-  set: string[];
+export type TermsAndConditionsUpdateOneRequiredWithoutSectionsNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.TermsAndConditionsCreateWithoutSectionsInput,
+    Prisma.TermsAndConditionsUncheckedCreateWithoutSectionsInput
+  >;
+  connectOrCreate?: Prisma.TermsAndConditionsCreateOrConnectWithoutSectionsInput;
+  upsert?: Prisma.TermsAndConditionsUpsertWithoutSectionsInput;
+  connect?: Prisma.TermsAndConditionsWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.TermsAndConditionsUpdateToOneWithWhereWithoutSectionsInput,
+      Prisma.TermsAndConditionsUpdateWithoutSectionsInput
+    >,
+    Prisma.TermsAndConditionsUncheckedUpdateWithoutSectionsInput
+  >;
 };
 
-export type TermsAndConditionsCreatebusinessesInput = {
-  set: string[];
+export type TermsAndConditionsCreateWithoutSectionsInput = {
+  id?: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
 };
 
-export type TermsAndConditionsCreateadminRightInput = {
-  set: string[];
+export type TermsAndConditionsUncheckedCreateWithoutSectionsInput = {
+  id?: string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
 };
 
-export type TermsAndConditionsUpdatesubscriptionInput = {
-  set?: string[];
-  push?: string | string[];
+export type TermsAndConditionsCreateOrConnectWithoutSectionsInput = {
+  where: Prisma.TermsAndConditionsWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.TermsAndConditionsCreateWithoutSectionsInput,
+    Prisma.TermsAndConditionsUncheckedCreateWithoutSectionsInput
+  >;
 };
 
-export type TermsAndConditionsUpdateofferAndRedemtionsInput = {
-  set?: string[];
-  push?: string | string[];
+export type TermsAndConditionsUpsertWithoutSectionsInput = {
+  update: Prisma.XOR<
+    Prisma.TermsAndConditionsUpdateWithoutSectionsInput,
+    Prisma.TermsAndConditionsUncheckedUpdateWithoutSectionsInput
+  >;
+  create: Prisma.XOR<
+    Prisma.TermsAndConditionsCreateWithoutSectionsInput,
+    Prisma.TermsAndConditionsUncheckedCreateWithoutSectionsInput
+  >;
+  where?: Prisma.TermsAndConditionsWhereInput;
 };
 
-export type TermsAndConditionsUpdatereservationsInput = {
-  set?: string[];
-  push?: string | string[];
+export type TermsAndConditionsUpdateToOneWithWhereWithoutSectionsInput = {
+  where?: Prisma.TermsAndConditionsWhereInput;
+  data: Prisma.XOR<
+    Prisma.TermsAndConditionsUpdateWithoutSectionsInput,
+    Prisma.TermsAndConditionsUncheckedUpdateWithoutSectionsInput
+  >;
 };
 
-export type TermsAndConditionsUpdatebusinessesInput = {
-  set?: string[];
-  push?: string | string[];
+export type TermsAndConditionsUpdateWithoutSectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type TermsAndConditionsUpdateadminRightInput = {
-  set?: string[];
-  push?: string | string[];
+export type TermsAndConditionsUncheckedUpdateWithoutSectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+
+/**
+ * Count Type TermsAndConditionsCountOutputType
+ */
+
+export type TermsAndConditionsCountOutputType = {
+  sections: number;
+};
+
+export type TermsAndConditionsCountOutputTypeSelect<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  sections?: boolean | TermsAndConditionsCountOutputTypeCountSectionsArgs;
+};
+
+/**
+ * TermsAndConditionsCountOutputType without action
+ */
+export type TermsAndConditionsCountOutputTypeDefaultArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the TermsAndConditionsCountOutputType
+   */
+  select?: Prisma.TermsAndConditionsCountOutputTypeSelect<ExtArgs> | null;
+};
+
+/**
+ * TermsAndConditionsCountOutputType without action
+ */
+export type TermsAndConditionsCountOutputTypeCountSectionsArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.TermsSectionWhereInput;
 };
 
 export type TermsAndConditionsSelect<
@@ -531,17 +428,12 @@ export type TermsAndConditionsSelect<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    account?: boolean;
-    subscription?: boolean;
-    offerAndRedemtions?: boolean;
-    reservations?: boolean;
-    businesses?: boolean;
-    adminRight?: boolean;
-    dataAndPolicy?: boolean;
-    liability?: boolean;
-    governingLaw?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    sections?: boolean | Prisma.TermsAndConditions$sectionsArgs<ExtArgs>;
+    _count?:
+      | boolean
+      | Prisma.TermsAndConditionsCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['termsAndConditions']
 >;
@@ -552,15 +444,6 @@ export type TermsAndConditionsSelectCreateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    account?: boolean;
-    subscription?: boolean;
-    offerAndRedemtions?: boolean;
-    reservations?: boolean;
-    businesses?: boolean;
-    adminRight?: boolean;
-    dataAndPolicy?: boolean;
-    liability?: boolean;
-    governingLaw?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
   },
@@ -573,15 +456,6 @@ export type TermsAndConditionsSelectUpdateManyAndReturn<
 > = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
-    account?: boolean;
-    subscription?: boolean;
-    offerAndRedemtions?: boolean;
-    reservations?: boolean;
-    businesses?: boolean;
-    adminRight?: boolean;
-    dataAndPolicy?: boolean;
-    liability?: boolean;
-    governingLaw?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
   },
@@ -590,15 +464,6 @@ export type TermsAndConditionsSelectUpdateManyAndReturn<
 
 export type TermsAndConditionsSelectScalar = {
   id?: boolean;
-  account?: boolean;
-  subscription?: boolean;
-  offerAndRedemtions?: boolean;
-  reservations?: boolean;
-  businesses?: boolean;
-  adminRight?: boolean;
-  dataAndPolicy?: boolean;
-  liability?: boolean;
-  governingLaw?: boolean;
   createdAt?: boolean;
   updatedAt?: boolean;
 };
@@ -607,39 +472,38 @@ export type TermsAndConditionsOmit<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-  | 'id'
-  | 'account'
-  | 'subscription'
-  | 'offerAndRedemtions'
-  | 'reservations'
-  | 'businesses'
-  | 'adminRight'
-  | 'dataAndPolicy'
-  | 'liability'
-  | 'governingLaw'
-  | 'createdAt'
-  | 'updatedAt',
+  'id' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['termsAndConditions']
 >;
+export type TermsAndConditionsInclude<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  sections?: boolean | Prisma.TermsAndConditions$sectionsArgs<ExtArgs>;
+  _count?:
+    | boolean
+    | Prisma.TermsAndConditionsCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type TermsAndConditionsIncludeCreateManyAndReturn<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {};
+export type TermsAndConditionsIncludeUpdateManyAndReturn<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {};
 
 export type $TermsAndConditionsPayload<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
   name: 'TermsAndConditions';
-  objects: {};
+  objects: {
+    sections: Prisma.$TermsSectionPayload<ExtArgs>[];
+  };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
       id: string;
-      account: string;
-      subscription: string[];
-      offerAndRedemtions: string[];
-      reservations: string[];
-      businesses: string[];
-      adminRight: string[];
-      dataAndPolicy: string;
-      liability: string;
-      governingLaw: string;
       createdAt: Date;
       updatedAt: Date;
     },
@@ -1214,6 +1078,17 @@ export interface Prisma__TermsAndConditionsClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise';
+  sections<T extends Prisma.TermsAndConditions$sectionsArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.TermsAndConditions$sectionsArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$TermsSectionPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1257,18 +1132,6 @@ export interface Prisma__TermsAndConditionsClient<
  */
 export interface TermsAndConditionsFieldRefs {
   readonly id: Prisma.FieldRef<'TermsAndConditions', 'String'>;
-  readonly account: Prisma.FieldRef<'TermsAndConditions', 'String'>;
-  readonly subscription: Prisma.FieldRef<'TermsAndConditions', 'String[]'>;
-  readonly offerAndRedemtions: Prisma.FieldRef<
-    'TermsAndConditions',
-    'String[]'
-  >;
-  readonly reservations: Prisma.FieldRef<'TermsAndConditions', 'String[]'>;
-  readonly businesses: Prisma.FieldRef<'TermsAndConditions', 'String[]'>;
-  readonly adminRight: Prisma.FieldRef<'TermsAndConditions', 'String[]'>;
-  readonly dataAndPolicy: Prisma.FieldRef<'TermsAndConditions', 'String'>;
-  readonly liability: Prisma.FieldRef<'TermsAndConditions', 'String'>;
-  readonly governingLaw: Prisma.FieldRef<'TermsAndConditions', 'String'>;
   readonly createdAt: Prisma.FieldRef<'TermsAndConditions', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'TermsAndConditions', 'DateTime'>;
 }
@@ -1289,6 +1152,10 @@ export type TermsAndConditionsFindUniqueArgs<
    * Omit specific fields from the TermsAndConditions
    */
   omit?: Prisma.TermsAndConditionsOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TermsAndConditionsInclude<ExtArgs> | null;
   /**
    * Filter, which TermsAndConditions to fetch.
    */
@@ -1311,6 +1178,10 @@ export type TermsAndConditionsFindUniqueOrThrowArgs<
    */
   omit?: Prisma.TermsAndConditionsOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TermsAndConditionsInclude<ExtArgs> | null;
+  /**
    * Filter, which TermsAndConditions to fetch.
    */
   where: Prisma.TermsAndConditionsWhereUniqueInput;
@@ -1331,6 +1202,10 @@ export type TermsAndConditionsFindFirstArgs<
    * Omit specific fields from the TermsAndConditions
    */
   omit?: Prisma.TermsAndConditionsOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TermsAndConditionsInclude<ExtArgs> | null;
   /**
    * Filter, which TermsAndConditions to fetch.
    */
@@ -1387,6 +1262,10 @@ export type TermsAndConditionsFindFirstOrThrowArgs<
    */
   omit?: Prisma.TermsAndConditionsOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TermsAndConditionsInclude<ExtArgs> | null;
+  /**
    * Filter, which TermsAndConditions to fetch.
    */
   where?: Prisma.TermsAndConditionsWhereInput;
@@ -1442,6 +1321,10 @@ export type TermsAndConditionsFindManyArgs<
    */
   omit?: Prisma.TermsAndConditionsOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TermsAndConditionsInclude<ExtArgs> | null;
+  /**
    * Filter, which TermsAndConditions to fetch.
    */
   where?: Prisma.TermsAndConditionsWhereInput;
@@ -1491,6 +1374,10 @@ export type TermsAndConditionsCreateArgs<
    * Omit specific fields from the TermsAndConditions
    */
   omit?: Prisma.TermsAndConditionsOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TermsAndConditionsInclude<ExtArgs> | null;
   /**
    * The data needed to create a TermsAndConditions.
    */
@@ -1555,6 +1442,10 @@ export type TermsAndConditionsUpdateArgs<
    * Omit specific fields from the TermsAndConditions
    */
   omit?: Prisma.TermsAndConditionsOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TermsAndConditionsInclude<ExtArgs> | null;
   /**
    * The data needed to update a TermsAndConditions.
    */
@@ -1640,6 +1531,10 @@ export type TermsAndConditionsUpsertArgs<
    */
   omit?: Prisma.TermsAndConditionsOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TermsAndConditionsInclude<ExtArgs> | null;
+  /**
    * The filter to search for the TermsAndConditions to update in case it exists.
    */
   where: Prisma.TermsAndConditionsWhereUniqueInput;
@@ -1675,6 +1570,10 @@ export type TermsAndConditionsDeleteArgs<
    */
   omit?: Prisma.TermsAndConditionsOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TermsAndConditionsInclude<ExtArgs> | null;
+  /**
    * Filter which TermsAndConditions to delete.
    */
   where: Prisma.TermsAndConditionsWhereUniqueInput;
@@ -1698,6 +1597,37 @@ export type TermsAndConditionsDeleteManyArgs<
 };
 
 /**
+ * TermsAndConditions.sections
+ */
+export type TermsAndConditions$sectionsArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the TermsSection
+   */
+  select?: Prisma.TermsSectionSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the TermsSection
+   */
+  omit?: Prisma.TermsSectionOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TermsSectionInclude<ExtArgs> | null;
+  where?: Prisma.TermsSectionWhereInput;
+  orderBy?:
+    | Prisma.TermsSectionOrderByWithRelationInput
+    | Prisma.TermsSectionOrderByWithRelationInput[];
+  cursor?: Prisma.TermsSectionWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?:
+    | Prisma.TermsSectionScalarFieldEnum
+    | Prisma.TermsSectionScalarFieldEnum[];
+};
+
+/**
  * TermsAndConditions without action
  */
 export type TermsAndConditionsDefaultArgs<
@@ -1712,4 +1642,8 @@ export type TermsAndConditionsDefaultArgs<
    * Omit specific fields from the TermsAndConditions
    */
   omit?: Prisma.TermsAndConditionsOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TermsAndConditionsInclude<ExtArgs> | null;
 };

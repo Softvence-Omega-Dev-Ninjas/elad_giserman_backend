@@ -34,7 +34,10 @@ import { GetOffersDto } from '../dto/getOffer.dto';
 import { GetRedemtionsDto } from '../dto/getRedemtion.dto';
 import { GetUserDto } from '../dto/getuser.dto';
 import { CreateSpinDto, UpdateSpinDto } from '../dto/spin.dto';
-import { CreateTermsAndConditionsDto } from '../dto/termAndCondition.dto';
+import {
+  CreateTermsAndConditionsDto,
+  UpdateTermsAndConditionsDto,
+} from '../dto/termAndCondition.dto';
 import { UpdateStatusDto } from '../dto/updateStatus.dto';
 
 @Controller('platform')
@@ -317,8 +320,8 @@ export class AdminPlatformManagementController {
 
   @ValidateAdmin()
   @Patch('update-termsCondition')
-  @ApiBody({ type: CreateTermsAndConditionsDto })
-  async updatePlatformTerm(@Body() dto: CreateTermsAndConditionsDto) {
+  @ApiBody({ type: UpdateTermsAndConditionsDto })
+  async updatePlatformTerm(@Body() dto: UpdateTermsAndConditionsDto) {
     try {
       const res =
         await this.platformManagementService.updateAdminTermsAndConditions(dto);

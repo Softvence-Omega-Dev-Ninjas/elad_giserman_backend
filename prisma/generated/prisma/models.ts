@@ -26,6 +26,7 @@ export type * from './models/SubscriptionPlan';
 export type * from './models/UserSubscription';
 export type * from './models/Invoice';
 export type * from './models/TermsAndConditions';
+export type * from './models/TermsSection';
 export type * from './models/UserTermsAndConditions';
 export type * from './models/User';
 export type * from './commonInputTypes';

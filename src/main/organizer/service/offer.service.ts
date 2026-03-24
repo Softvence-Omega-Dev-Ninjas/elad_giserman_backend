@@ -325,7 +325,7 @@ export class OfferService {
         dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
         break;
 
-      case RedemptionPeriod.ALL_TIME:
+      case RedemptionPeriod.ALL_TIME: {
         const firstRedemption = await this.prisma.client.reedemaOffer.findFirst(
           {
             where: {
@@ -346,6 +346,7 @@ export class OfferService {
         endDate = endOfMonth(today);
         dateIntervals = eachMonthOfInterval({ start: startDate, end: endDate });
         break;
+      }
 
       default:
         startDate = startOfWeek(subWeeks(today, 1), { weekStartsOn: 1 });
