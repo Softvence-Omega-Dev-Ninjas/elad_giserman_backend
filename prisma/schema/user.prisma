@@ -22,7 +22,7 @@ model User {
   otpType                      OtpType?
   stripeCustomerId             String?                  @unique
   stripeDefaultPaymentMethodId String?                  @unique
-  memberShip                   MemberShip               @default(FREE)
+  memberShip                   MemberShip               @default(VIP)
   trialEndsAt                  DateTime?
   subscriptionStatus           SubscriptionStatus?
   currentPlanId                String?

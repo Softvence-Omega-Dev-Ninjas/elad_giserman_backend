@@ -40,10 +40,8 @@ export class AuthRegisterService {
     const { otp, expiryTime } = this.utils.generateOtpAndExpiry();
     const hashedOtp = await this.utils.hash(otp.toString());
 
-    // Trial ends in 3 months
-    const trialEndsAt: Date = new Date();
-    trialEndsAt.setDate(trialEndsAt.getDate() - 1);
-    trialEndsAt.setMonth(trialEndsAt.getMonth() + 3);
+    // Lifetime VIP — set trialEndsAt far in the future
+    const trialEndsAt: Date = new Date('2099-12-31T23:59:59.000Z');
 
     // Create new user
     const newUser = await this.prisma.client.user.create({
@@ -52,7 +50,7 @@ export class AuthRegisterService {
         username,
         password: await this.utils.hash(password),
         trialEndsAt,
-        memberShip: 'FREE',
+        memberShip: 'VIP',
         otp: hashedOtp,
         otpType: 'REGISTER',
         otpExpiresAt: expiryTime,

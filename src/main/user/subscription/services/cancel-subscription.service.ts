@@ -59,7 +59,7 @@ export class CancelSubscriptionService {
       data: {
         subscriptionStatus: 'CANCELED',
         currentPlan: undefined,
-        memberShip: 'FREE',
+        memberShip: 'VIP',
       },
     });
 

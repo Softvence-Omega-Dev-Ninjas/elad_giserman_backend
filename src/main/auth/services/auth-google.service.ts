@@ -57,9 +57,8 @@ export class AuthGoogleService {
     email: string,
   ): Promise<User> {
     const user = await this.prisma.client.user.findUnique({ where: { email } });
-    const trialEndsAt: Date = new Date();
-    trialEndsAt.setDate(trialEndsAt.getDate() - 1);
-    trialEndsAt.setMonth(trialEndsAt.getMonth() + 3);
+    // Lifetime VIP — set trialEndsAt far in the future
+    const trialEndsAt: Date = new Date('2099-12-31T23:59:59.000Z');
 
     // === CASE 1: No user exists → create new Firebase Google user ===
     if (!user) {
@@ -72,7 +71,7 @@ export class AuthGoogleService {
           isLoggedIn: true,
           lastLoginAt: new Date(),
           trialEndsAt,
-          memberShip: 'FREE',
+          memberShip: 'VIP',
           name: decodedToken.name || 'Unnamed User',
           avatarUrl:
             decodedToken.picture ||
