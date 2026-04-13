@@ -89,10 +89,20 @@ export class UserInfoController {
   // }
 
   // Redeem after user confirms
-  @Post('redeem/:code')
+  @Post('redeem')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['code', 'offerId'],
+      properties: {
+        code: { type: 'string', example: 'A1' },
+        offerId: { type: 'string', example: 'uuid-of-offer' },
+      },
+    },
+  })
   async redeemOffer(
-    @Param('code') code: string,
-    @Param('offerId') offerId: string,
+    @Body('code') code: string,
+    @Body('offerId') offerId: string,
     @GetUser('sub') userId: string,
   ) {
     return this.userInfoService.redeemOffer(code, offerId, userId);
