@@ -90,25 +90,21 @@ export class UserInfoController {
   // }
 
   // Redeem after user confirms
-  @Post('redeem')
+  @Post('redeem/:code')
   @ApiBody({
     schema: {
       type: 'object',
-      required: ['code', 'offerId'],
+      required: ['offerId'],
       properties: {
-        code: { type: 'string', example: 'A1' },
         offerId: { type: 'string', example: 'uuid-of-offer' },
       },
     },
   })
   async redeemOffer(
-    @Body('code') code: string,
+    @Param('code') code: string,
     @Body('offerId') offerId: string,
     @GetUser('sub') userId: string,
   ) {
-    if (!code) {
-      throw new BadRequestException('code is required');
-    }
     if (!offerId) {
       throw new BadRequestException('offerId is required');
     }
