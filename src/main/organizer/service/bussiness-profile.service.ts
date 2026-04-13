@@ -126,6 +126,13 @@ export class BusinessProfileService {
         offers: true,
         reviews: true,
         reedemOffer: true,
+        owner: {
+          select: {
+            name: true,
+            username: true,
+            avatarUrl: true,
+          },
+        },
       },
     });
     return profile;
