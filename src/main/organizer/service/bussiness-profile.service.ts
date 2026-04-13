@@ -124,7 +124,18 @@ export class BusinessProfileService {
       include: {
         gallery: true,
         offers: true,
-        reviews: true,
+        reviews: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                username: true,
+                avatarUrl: true,
+              },
+            },
+          },
+        },
         reedemOffer: true,
         owner: {
           select: {
