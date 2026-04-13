@@ -1,5 +1,6 @@
 import { GetUser, ValidateAuth } from '@/common/jwt/jwt.decorator';
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -105,6 +106,12 @@ export class UserInfoController {
     @Body('offerId') offerId: string,
     @GetUser('sub') userId: string,
   ) {
+    if (!code) {
+      throw new BadRequestException('code is required');
+    }
+    if (!offerId) {
+      throw new BadRequestException('offerId is required');
+    }
     return this.userInfoService.redeemOffer(code, offerId, userId);
   }
 
